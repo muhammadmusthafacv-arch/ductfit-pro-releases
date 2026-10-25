@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+scratch/
+*.log
+.locked_stage_backup/
+
+# Large binaries and raw archive folders
+ASHRAE Duct Fitting Database v5.0.10(1)/
+ASHRAE Duct Fitting Database V6.0/
+ASHRAE Library/
+Duct Fitting Database/
+McQuay Duct Sizer/
+ashrae_db_dump/
+ashrae_extracted/
+extracted_wmf/
+
+# Large reference PDFs
+*.pdf
+test_*.png
+test_*.wmf

@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32200 20000" preserveAspectRatio="xMidYMid meet">
+  <polyline points="16566,8558 1156,8558" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16566,13303 1156,13303" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="4825,10930 2402,10930" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="4825,10851 4825,11010 5299,10930" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="4825,10851 4825,11010 5299,10930 4825,10851" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24667,8558 24667,13303" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="31699,8558 31699,13303" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24667,13303 31699,13303" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24667,8558 31699,8558" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="1156,7943 1156,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="1890,10506 1156,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="421,11355 1156,11355" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="421,11355 1890,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="1156,11355 1156,13870" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16566,11355 16566,13870" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15831,11355 17300,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15831,11355 16566,11355" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="17300,10506 16566,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16566,7943 16566,10506" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8071,13842 8071,7883" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="23170,9300 23170,9458 23644,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="23170,9300 23170,9458 23644,9379 23170,9300" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23170,9379 22164,9379" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22638,12466 23644,12466" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="22638,12387 22638,12545 22164,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="22638,12387 22638,12545 22164,12466 22638,12387" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="3565,10261 3520,10284 3475,10329 3453,10374 3430,10442 3430,10555 3453,10622 3475,10668 3520,10713 3565,10735 3656,10735 3701,10713 3746,10668 3769,10622 3791,10555 3791,10442 3769,10374 3746,10329 3701,10284 3656,10261 3565,10261" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="3633,10645 3769,10781" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="3449,11632 3630,11158 3810,11632" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="3517,11474 3743,11474" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="4013,11444 3972,11458 3945,11498 3932,11566 3932,11607 3945,11675 3972,11715 4013,11729 4040,11729 4081,11715 4108,11675 4121,11607 4121,11566 4108,11498 4081,11458 4040,11444 4013,11444" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="23749,12308 23749,12624 29980,12308" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="23749,12624 29980,12308 29980,12624" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="23749,12308 23749,12624 29980,12624 29980,12308 23749,12308" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,12624 29980,12308 30214,12562" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,12308 30214,12562 30056,12288" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,12624 29980,12308 30056,12288 30214,12562 29980,12624" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,12562 30056,12288 30384,12391" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,12288 30384,12391 30111,12233" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,12562 30056,12288 30111,12233 30384,12391 30214,12562" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,12391 30111,12233 30447,12157" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,12233 30447,12157 30131,12157" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,12391 30111,12233 30131,12157 30447,12157 30384,12391" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30447,12157 30131,12157 30384,11924" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30131,12157 30384,11924 30111,12082" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30447,12157 30131,12157 30111,12082 30384,11924 30447,12157" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,11924 30111,12082 30214,11753" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,12082 30214,11753 30056,12027" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,11924 30111,12082 30056,12027 30214,11753 30384,11924" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,11753 30056,12027 29980,11691" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,12027 29980,11691 29980,12007" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,11753 30056,12027 29980,12007 29980,11691 30214,11753" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,12007 29980,11691 24581,12007" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,11691 24581,12007 24581,11691" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,12007 29980,11691 24581,11691 24581,12007 29980,12007" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24581,11073 24581,11390 24348,11136" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24581,11390 24348,11136 24506,11410" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24581,11073 24581,11390 24506,11410 24348,11136 24581,11073" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24348,11136 24506,11410 24177,11307" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24506,11410 24177,11307 24451,11465" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24348,11136 24506,11410 24451,11465 24177,11307 24348,11136" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24177,11307 24451,11465 24114,11540" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24451,11465 24114,11540 24430,11540" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24177,11307 24451,11465 24430,11540 24114,11540 24177,11307" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24114,11540 24430,11540 24177,11773" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24430,11540 24177,11773 24451,11615" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24114,11540 24430,11540 24451,11615 24177,11773 24114,11540" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24177,11773 24451,11615 24348,11944" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24451,11615 24348,11944 24506,11670" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24177,11773 24451,11615 24506,11670 24348,11944 24177,11773" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24348,11944 24506,11670 24581,12007" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24506,11670 24581,12007 24581,11691" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24348,11944 24506,11670 24581,11691 24581,12007 24348,11944" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24581,11073 24581,11390 29980,11073" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24581,11390 29980,11073 29980,11390" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24581,11073 24581,11390 29980,11390 29980,11073 24581,11073" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,11390 29980,11073 30214,11327" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,11073 30214,11327 30056,11053" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,11390 29980,11073 30056,11053 30214,11327 29980,11390" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,11327 30056,11053 30384,11156" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,11053 30384,11156 30111,10998" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,11327 30056,11053 30111,10998 30384,11156 30214,11327" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,11156 30111,10998 30447,10923" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,10998 30447,10923 30131,10923" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,11156 30111,10998 30131,10923 30447,10923 30384,11156" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30447,10923 30131,10923 30384,10689" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30131,10923 30384,10689 30111,10847" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30447,10923 30131,10923 30111,10847 30384,10689 30447,10923" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,10689 30111,10847 30214,10518" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,10847 30214,10518 30056,10792" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,10689 30111,10847 30056,10792 30214,10518 30384,10689" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,10518 30056,10792 29980,10456" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,10792 29980,10456 29980,10772" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,10518 30056,10792 29980,10772 29980,10456 30214,10518" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,10772 29980,10456 24581,10772" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,10456 24581,10772 24581,10456" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,10772 29980,10456 24581,10456 24581,10772 29980,10772" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24581,9839 24581,10155 24348,9901" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24581,10155 24348,9901 24506,10175" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24581,9839 24581,10155 24506,10175 24348,9901 24581,9839" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24348,9901 24506,10175 24177,10072" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24506,10175 24177,10072 24451,10230" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24348,9901 24506,10175 24451,10230 24177,10072 24348,9901" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24177,10072 24451,10230 24114,10305" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24451,10230 24114,10305 24430,10305" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24177,10072 24451,10230 24430,10305 24114,10305 24177,10072" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24114,10305 24430,10305 24177,10539" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24430,10305 24177,10539 24451,10381" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24114,10305 24430,10305 24451,10381 24177,10539 24114,10305" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24177,10539 24451,10381 24348,10710" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24451,10381 24348,10710 24506,10436" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24177,10539 24451,10381 24506,10436 24348,10710 24177,10539" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24348,10710 24506,10436 24581,10772" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24506,10436 24581,10772 24581,10456" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24348,10710 24506,10436 24581,10456 24581,10772 24348,10710" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="24581,9839 24581,10155 29980,9839" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="24581,10155 29980,9839 29980,10155" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="24581,9839 24581,10155 29980,10155 29980,9839 24581,9839" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,10155 29980,9839 30214,10092" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,9839 30214,10092 30056,9818" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,10155 29980,9839 30056,9818 30214,10092 29980,10155" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,10092 30056,9818 30384,9921" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,9818 30384,9921 30111,9763" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,10092 30056,9818 30111,9763 30384,9921 30214,10092" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,9921 30111,9763 30447,9688" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,9763 30447,9688 30131,9688" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,9921 30111,9763 30131,9688 30447,9688 30384,9921" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30447,9688 30131,9688 30384,9455" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30131,9688 30384,9455 30111,9613" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30447,9688 30131,9688 30111,9613 30384,9455 30447,9688" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30384,9455 30111,9613 30214,9284" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30111,9613 30214,9284 30056,9558" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30384,9455 30111,9613 30056,9558 30214,9284 30384,9455" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="30214,9284 30056,9558 29980,9221" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="30056,9558 29980,9221 29980,9537" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="30214,9284 30056,9558 29980,9537 29980,9221 30214,9284" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="29980,9537 29980,9221 23749,9537" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="29980,9221 23749,9537 23749,9221" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="29980,9537 29980,9221 23749,9221 23749,9537 29980,9537" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,9379 8972,9267 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,9379 8972,9267 8861,9379 9019,9379" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,9267 8861,9221 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,9267 8861,9221 8861,9379 8972,9267" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,9221 8749,9267 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,9221 8749,9267 8861,9379 8861,9221" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,9267 8703,9379 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,9267 8703,9379 8861,9379 8749,9267" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,9379 8749,9491 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,9379 8749,9491 8861,9379 8703,9379" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,9491 8861,9537 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,9491 8861,9537 8861,9379 8749,9491" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,9537 8972,9491 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,9537 8972,9491 8861,9379 8861,9537" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,9491 9019,9379 8861,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,9491 9019,9379 8861,9379 8972,9491" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,9997 8972,9885 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,9997 8972,9885 8861,9997 9019,9997" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,9885 8861,9839 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,9885 8861,9839 8861,9997 8972,9885" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,9839 8749,9885 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,9839 8749,9885 8861,9997 8861,9839" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,9885 8703,9997 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,9885 8703,9997 8861,9997 8749,9885" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,9997 8749,10108 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,9997 8749,10108 8861,9997 8703,9997" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,10108 8861,10155 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,10108 8861,10155 8861,9997 8749,10108" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,10155 8972,10108 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,10155 8972,10108 8861,9997 8861,10155" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,10108 9019,9997 8861,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,10108 9019,9997 8861,9997 8972,10108" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,10614 8972,10502 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,10614 8972,10502 8861,10614 9019,10614" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,10502 8861,10456 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,10502 8861,10456 8861,10614 8972,10502" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,10456 8749,10502 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,10456 8749,10502 8861,10614 8861,10456" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,10502 8703,10614 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,10502 8703,10614 8861,10614 8749,10502" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,10614 8749,10726 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,10614 8749,10726 8861,10614 8703,10614" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,10726 8861,10772 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,10726 8861,10772 8861,10614 8749,10726" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,10772 8972,10726 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,10772 8972,10726 8861,10614 8861,10772" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,10726 9019,10614 8861,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,10726 9019,10614 8861,10614 8972,10726" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,11231 8972,11120 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,11231 8972,11120 8861,11231 9019,11231" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,11120 8861,11073 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,11120 8861,11073 8861,11231 8972,11120" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,11073 8749,11120 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,11073 8749,11120 8861,11231 8861,11073" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,11120 8703,11231 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,11120 8703,11231 8861,11231 8749,11120" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,11231 8749,11343 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,11231 8749,11343 8861,11231 8703,11231" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,11343 8861,11390 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,11343 8861,11390 8861,11231 8749,11343" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,11390 8972,11343 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,11390 8972,11343 8861,11231 8861,11390" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,11343 9019,11231 8861,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,11343 9019,11231 8861,11231 8972,11343" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,11849 8972,11737 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,11849 8972,11737 8861,11849 9019,11849" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,11737 8861,11691 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,11737 8861,11691 8861,11849 8972,11737" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,11691 8749,11737 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,11691 8749,11737 8861,11849 8861,11691" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,11737 8703,11849 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,11737 8703,11849 8861,11849 8749,11737" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,11849 8749,11961 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,11849 8749,11961 8861,11849 8703,11849" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,11961 8861,12007 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,11961 8861,12007 8861,11849 8749,11961" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,12007 8972,11961 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,12007 8972,11961 8861,11849 8861,12007" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,11961 9019,11849 8861,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,11961 9019,11849 8861,11849 8972,11961" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9019,12466 8972,12354 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9019,12466 8972,12354 8861,12466 9019,12466" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,12354 8861,12308 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,12354 8861,12308 8861,12466 8972,12354" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,12308 8749,12354 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,12308 8749,12354 8861,12466 8861,12308" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,12354 8703,12466 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,12354 8703,12466 8861,12466 8749,12354" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8703,12466 8749,12578 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8703,12466 8749,12578 8861,12466 8703,12466" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8749,12578 8861,12624 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8749,12578 8861,12624 8861,12466 8749,12578" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8861,12624 8972,12578 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8861,12624 8972,12578 8861,12466 8861,12624" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8972,12578 9019,12466 8861,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8972,12578 9019,12466 8861,12466 8972,12578" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10441,13842 10441,7883" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,12466 9763,12354 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,12466 9763,12354 9651,12466 9809,12466" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,12354 9651,12308 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,12354 9651,12308 9651,12466 9763,12354" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,12308 9539,12354 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,12308 9539,12354 9651,12466 9651,12308" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,12354 9493,12466 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,12354 9493,12466 9651,12466 9539,12354" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,12466 9539,12578 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,12466 9539,12578 9651,12466 9493,12466" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,12578 9651,12624 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,12578 9651,12624 9651,12466 9539,12578" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,12624 9763,12578 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,12624 9763,12578 9651,12466 9651,12624" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,12578 9809,12466 9651,12466" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,12578 9809,12466 9651,12466 9763,12578" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,11849 9763,11737 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,11849 9763,11737 9651,11849 9809,11849" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,11737 9651,11691 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,11737 9651,11691 9651,11849 9763,11737" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,11691 9539,11737 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,11691 9539,11737 9651,11849 9651,11691" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,11737 9493,11849 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,11737 9493,11849 9651,11849 9539,11737" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,11849 9539,11961 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,11849 9539,11961 9651,11849 9493,11849" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,11961 9651,12007 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,11961 9651,12007 9651,11849 9539,11961" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,12007 9763,11961 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,12007 9763,11961 9651,11849 9651,12007" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,11961 9809,11849 9651,11849" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,11961 9809,11849 9651,11849 9763,11961" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,11231 9763,11120 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,11231 9763,11120 9651,11231 9809,11231" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,11120 9651,11073 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,11120 9651,11073 9651,11231 9763,11120" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,11073 9539,11120 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,11073 9539,11120 9651,11231 9651,11073" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,11120 9493,11231 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,11120 9493,11231 9651,11231 9539,11120" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,11231 9539,11343 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,11231 9539,11343 9651,11231 9493,11231" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,11343 9651,11390 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,11343 9651,11390 9651,11231 9539,11343" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,11390 9763,11343 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,11390 9763,11343 9651,11231 9651,11390" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,11343 9809,11231 9651,11231" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,11343 9809,11231 9651,11231 9763,11343" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,10614 9763,10502 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,10614 9763,10502 9651,10614 9809,10614" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,10502 9651,10456 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,10502 9651,10456 9651,10614 9763,10502" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,10456 9539,10502 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,10456 9539,10502 9651,10614 9651,10456" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,10502 9493,10614 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,10502 9493,10614 9651,10614 9539,10502" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,10614 9539,10726 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,10614 9539,10726 9651,10614 9493,10614" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,10726 9651,10772 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,10726 9651,10772 9651,10614 9539,10726" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,10772 9763,10726 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,10772 9763,10726 9651,10614 9651,10772" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,10726 9809,10614 9651,10614" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,10726 9809,10614 9651,10614 9763,10726" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,9997 9763,9885 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,9997 9763,9885 9651,9997 9809,9997" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,9885 9651,9839 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,9885 9651,9839 9651,9997 9763,9885" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,9839 9539,9885 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,9839 9539,9885 9651,9997 9651,9839" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,9885 9493,9997 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,9885 9493,9997 9651,9997 9539,9885" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,9997 9539,10108 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,9997 9539,10108 9651,9997 9493,9997" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,10108 9651,10155 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,10108 9651,10155 9651,9997 9539,10108" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,10155 9763,10108 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,10155 9763,10108 9651,9997 9651,10155" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,10108 9809,9997 9651,9997" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,10108 9809,9997 9651,9997 9763,10108" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9809,9379 9763,9267 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9809,9379 9763,9267 9651,9379 9809,9379" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,9267 9651,9221 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,9267 9651,9221 9651,9379 9763,9267" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,9221 9539,9267 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,9221 9539,9267 9651,9379 9651,9221" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,9267 9493,9379 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,9267 9493,9379 9651,9379 9539,9267" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9493,9379 9539,9491 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9493,9379 9539,9491 9651,9379 9493,9379" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9539,9491 9651,9537 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9539,9491 9651,9537 9651,9379 9539,9491" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9651,9537 9763,9491 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9651,9537 9763,9491 9651,9379 9651,9537" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9763,9491 9809,9379 9651,9379" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9763,9491 9809,9379 9651,9379 9763,9491" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12115,10712 12228,11186 12340,10712 12453,11186 12566,10712" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13153,10870 13401,11186" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13401,10870 13153,11186" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14033,10712 14033,11186" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14349,10712 14349,11186" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14033,10938 14349,10938" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="9544,8089 9398,8149 9650,8558" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="9544,8089 9398,8149 9650,8558 9544,8089" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9471,8119 8598,5978" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8598,5978 9425,5978" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9890,5741 9890,6215" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9732,5741 10048,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10116,5741 10228,6215 10341,5741 10454,6215 10567,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10815,5741 10770,5764 10725,5809 10703,5854 10680,5922 10680,6035 10703,6102 10725,6148 10770,6193 10815,6215 10906,6215 10951,6193 10996,6148 11019,6102 11041,6035 11041,5922 11019,5854 10996,5809 10951,5764 10906,5741 10815,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11673,6215 11673,5741 11876,5741 11944,5764 11967,5786 11989,5831 11989,5877 11967,5922 11944,5944 11876,5967 11673,5967" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11831,5967 11989,6215" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12260,5741 12215,5764 12170,5809 12147,5854 12125,5922 12125,6035 12147,6102 12170,6148 12215,6193 12260,6215 12350,6215 12396,6193 12441,6148 12463,6102 12486,6035 12486,5922 12463,5854 12441,5809 12396,5764 12350,5741 12260,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12599,5741 12712,6215 12824,5741 12937,6215 13050,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13976,5854 13953,5809 13908,5764 13863,5741 13773,5741 13727,5764 13682,5809 13660,5854 13637,5922 13637,6035 13660,6102 13682,6148 13727,6193 13773,6215 13863,6215 13908,6193 13953,6148 13976,6102" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14247,5741 14201,5764 14156,5809 14134,5854 14111,5922 14111,6035 14134,6102 14156,6148 14201,6193 14247,6215 14337,6215 14382,6193 14427,6148 14450,6102 14472,6035 14472,5922 14450,5854 14427,5809 14382,5764 14337,5741 14247,5741" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14630,5741 14630,6215" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14811,5741 14811,6215 15082,6215" fill="none" stroke="#000000" stroke-width="35.4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

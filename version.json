@@ -1,0 +1,378 @@
+{
+  "version": "1.060",
+  "major": 1,
+  "minor": 0,
+  "patch": 60,
+  "total_updates": 60,
+  "total_user_requests": 81,
+  "baseline_version": "1.000",
+  "last_updated": "2026-10-24 23:11:33",
+  "changelog": [
+    {
+      "version": "1.000",
+      "timestamp": "2026-10-20 04:11:18",
+      "description": "Baseline release: Named application Ductfit Pro and set initial baseline version 1.00.000",
+      "request_index": 21
+    },
+    {
+      "version": "1.001",
+      "timestamp": "2026-10-20 04:11:19",
+      "description": "Added ASHRAE Fitting Code Details button (Table 5 guide modal dialog)",
+      "request_index": 22
+    },
+    {
+      "version": "1.002",
+      "timestamp": "2026-10-20 04:52:57",
+      "description": "Integrated official ASHRAE Handbook Chapter 21 Colebrook equation for friction factor calculation",
+      "request_index": 23
+    },
+    {
+      "version": "1.003",
+      "timestamp": "2026-10-21 14:51:33",
+      "description": "Fixed server connectivity and verified daemon port 5052 stability",
+      "request_index": 24
+    },
+    {
+      "version": "1.004",
+      "timestamp": "2026-10-21 14:55:49",
+      "description": "Added KaTeX mathematical textbook formatting for calculation formulas",
+      "request_index": 25
+    },
+    {
+      "version": "1.005",
+      "timestamp": "2026-10-21 15:25:48",
+      "description": "Expanded catalog with official ASHRAE duct fitting database categories and tables",
+      "request_index": 26
+    },
+    {
+      "version": "1.006",
+      "timestamp": "2026-10-21 15:29:44",
+      "description": "Product branding finalized to 'Ductfit Pro'",
+      "request_index": 27
+    },
+    {
+      "version": "1.007",
+      "timestamp": "2026-10-21 15:36:09",
+      "description": "Reorganized UI into unified 3-part engineering calculation panel",
+      "request_index": 28
+    },
+    {
+      "version": "1.008",
+      "timestamp": "2026-10-21 15:51:57",
+      "description": "Cleaned up redundant interface elements and enhanced visual layout",
+      "request_index": 29
+    },
+    {
+      "version": "1.009",
+      "timestamp": "2026-10-21 16:11:29",
+      "description": "Moved Velocity (V) into input side with bi-directional continuity solving (Q = A * V)",
+      "request_index": 30
+    },
+    {
+      "version": "1.010",
+      "timestamp": "2026-10-21 16:32:26",
+      "description": "Converted inputs and outputs to authentic ASHRAE vertical column table layout",
+      "request_index": 31
+    },
+    {
+      "version": "1.011",
+      "timestamp": "2026-10-22 03:29:13",
+      "description": "Resilience checks and connection watchdog on port 5052",
+      "request_index": 32
+    },
+    {
+      "version": "1.012",
+      "timestamp": "2026-10-22 03:31:18",
+      "description": "Configured Equal Friction Method and multi-way bi-directional continuity solver",
+      "request_index": 33
+    },
+    {
+      "version": "1.013",
+      "timestamp": "2026-10-22 03:46:12",
+      "description": "Added reactive click handling and instant page synchronization for catalog items",
+      "request_index": 34
+    },
+    {
+      "version": "1.014",
+      "timestamp": "2026-10-22 03:46:12",
+      "description": "Added comprehensive duct fittings catalog dataset",
+      "request_index": 35
+    },
+    {
+      "version": "1.015",
+      "timestamp": "2026-10-22 03:46:13",
+      "description": "Added transitions and elbow fittings to catalog",
+      "request_index": 36
+    },
+    {
+      "version": "1.016",
+      "timestamp": "2026-10-22 03:46:13",
+      "description": "Added tees, wyes, and junction fittings to catalog",
+      "request_index": 37
+    },
+    {
+      "version": "1.017",
+      "timestamp": "2026-10-22 03:46:14",
+      "description": "Added diffusers, dampers, and terminal fittings",
+      "request_index": 38
+    },
+    {
+      "version": "1.018",
+      "timestamp": "2026-10-22 03:51:24",
+      "description": "Deep audit of McQuay Duct Sizer algorithm and thermodynamic properties",
+      "request_index": 39
+    },
+    {
+      "version": "1.019",
+      "timestamp": "2026-10-22 03:53:47",
+      "description": "Organized catalog hierarchy into official Supply, Common, and Exhaust/Return groups",
+      "request_index": 40
+    },
+    {
+      "version": "1.020",
+      "timestamp": "2026-10-22 04:11:02",
+      "description": "Auto Duct Sizer: Flow rate, target head loss, and automatic cross-dimension solver",
+      "request_index": 41
+    },
+    {
+      "version": "1.021",
+      "timestamp": "2026-10-22 04:26:50",
+      "description": "Removed redundant fitting loss elements from Auto Duct Sizer workflow",
+      "request_index": 42
+    },
+    {
+      "version": "1.022",
+      "timestamp": "2026-10-22 08:52:15",
+      "description": "Added McQuay-parity Air Condition panel (STP, Comfort Return, Supply, Warm, Cold)",
+      "request_index": 43
+    },
+    {
+      "version": "1.023",
+      "timestamp": "2026-10-22 08:53:13",
+      "description": "Harmonized thermodynamic density (ρ) and viscosity (μ) with ASHRAE Fundamentals",
+      "request_index": 44
+    },
+    {
+      "version": "1.024",
+      "timestamp": "2026-10-22 11:05:01",
+      "description": "Implemented dual-mode sizing for both Equal Friction and Velocity Limitation methods",
+      "request_index": 45
+    },
+    {
+      "version": "1.025",
+      "timestamp": "2026-10-22 11:09:54",
+      "description": "Added Step-by-Step Engineering Calculation Breakdown panel with symbolic and numeric substitutions",
+      "request_index": 46
+    },
+    {
+      "version": "1.026",
+      "timestamp": "2026-10-22 11:13:51",
+      "description": "Scoped Air Condition panel strictly to Auto Duct Sizer mode (hidden in Fitting Loss Analysis)",
+      "request_index": 47
+    },
+    {
+      "version": "1.027",
+      "timestamp": "2026-10-22 11:15:34",
+      "description": "Repositioned Auto Duct Sizer button to top navigation bar and cleaned catalog tree",
+      "request_index": 48
+    },
+    {
+      "version": "1.028",
+      "timestamp": "2026-10-22 12:19:01",
+      "description": "Configured initial opening state of Auto Duct Sizer to completely blank columns with placeholders",
+      "request_index": 49
+    },
+    {
+      "version": "1.029",
+      "timestamp": "2026-10-22 12:20:51",
+      "description": "Replaced hardcoded 0.80 Pa/m with dynamic project-specific design targets (1.20 Pa/m, 0.60 Pa/m, V constraint, IP units)",
+      "request_index": 50
+    },
+    {
+      "version": "1.030",
+      "timestamp": "2026-10-22 17:55:00",
+      "description": "Implemented automated incremental versioning system with version.json, /api/version, and UI badge binding",
+      "request_index": 51
+    },
+    {
+      "version": "1.031",
+      "timestamp": "2026-10-22 18:14:46",
+      "description": "Removed redundant Rect and Round pills from top navigation bar",
+      "request_index": 52
+    },
+    {
+      "version": "1.032",
+      "timestamp": "2026-10-22 20:00:08",
+      "description": "Unified Auto Duct Sizer with full McQuay parity: single unified cross-section interface, bi-directional multi-way solving, Reset/Clear button, and 2017 ASHRAE Ch. 21 core citation",
+      "request_index": 53
+    },
+    {
+      "version": "1.033",
+      "timestamp": "2026-10-22 21:22:44",
+      "description": "Step-by-step engineering breakdown enabled for fitting loss analysis and all equations matched to 2021 ASHRAE Handbook Ch. 21 PDF",
+      "request_index": 54
+    },
+    {
+      "version": "1.034",
+      "timestamp": "2026-10-22 21:35:36",
+      "description": "Updated UI badges, citations, and metadata to authoritative ASHRAE 2021 Edition (Ch. 21)",
+      "request_index": 55
+    },
+    {
+      "version": "1.035",
+      "timestamp": "2026-10-23 10:36:14",
+      "description": "Added Project Management: Create project with code/name/client/contractor/subcontractor, add calculated fittings, and interactive Project Summary Schedule table (ASHRAE Database Model)",
+      "request_index": 56
+    },
+    {
+      "version": "1.036",
+      "timestamp": "2026-10-23 11:08:52",
+      "description": "Added multi-page Fitduct pro PDF report generation matching AFA.pdf with master schedule cover page, project metadata, and dedicated per-fitting CAD blueprint + step-by-step engineering calculation breakdown",
+      "request_index": 57
+    },
+    {
+      "version": "1.037",
+      "timestamp": "2026-10-23 11:18:37",
+      "description": "Added dedicated option to download current step-by-step engineering calculation in PDF format from calculation breakdown panel and action row",
+      "request_index": 58
+    },
+    {
+      "version": "1.038",
+      "timestamp": "2026-10-23 11:27:39",
+      "description": "Added high-precision bi-directional SI <-> IP dynamic unit conversion preserving all user-entered inputs and controls",
+      "request_index": 59
+    },
+    {
+      "version": "1.039",
+      "timestamp": "2026-10-23 11:31:08",
+      "description": "Refined version format to v1.XXX standard (removed extra zeroes, e.g. v1.035 style)",
+      "request_index": 60
+    },
+    {
+      "version": "1.040",
+      "timestamp": "2026-10-23 11:35:33",
+      "description": "Removed download button from calculation breakdown header, kept primary Download PDF button in calculation action row",
+      "request_index": 61
+    },
+    {
+      "version": "1.041",
+      "timestamp": "2026-10-23 12:46:31",
+      "description": "Added dedicated Full Screen View and shortcut keys (C, Shift+F, F context-aware, Esc, +/- zoom) for Step-by-Step Engineering Calculation Breakdown",
+      "request_index": 62
+    },
+    {
+      "version": "1.042",
+      "timestamp": "2026-10-23 14:57:58",
+      "description": "Restored and enhanced ASHRAE Absolute Roughness Material Selector (e / ei) with interactive label link, material badge, quick picker button, and keyboard navigation modal",
+      "request_index": 63
+    },
+    {
+      "version": "1.043",
+      "timestamp": "2026-10-24 09:39:56",
+      "description": "Roughness field defaults to blank/nil on app startup, reload, and reset; stays persistent once entered by user",
+      "request_index": 64
+    },
+    {
+      "version": "1.044",
+      "timestamp": "2026-10-24 09:48:08",
+      "description": "Cleaned absolute roughness UX: clickable link opens picker, removed redundant right-box button and badge, removed placeholders and sample projects",
+      "request_index": 65
+    },
+    {
+      "version": "1.045",
+      "timestamp": "2026-10-24 10:04:08",
+      "description": "Purged all sample projects, sample schedules, and prefilled project metadata",
+      "request_index": 66
+    },
+    {
+      "version": "1.046",
+      "timestamp": "2026-10-24 10:09:39",
+      "description": "Highlighted pressure loss details in calculation output table",
+      "request_index": 67
+    },
+    {
+      "version": "1.047",
+      "timestamp": "2026-10-24 10:21:48",
+      "description": "Enforced strict ASHRAE Database standard air density 1.204 SI / 0.075 IP for Fitting Loss Analysis",
+      "request_index": 68
+    },
+    {
+      "version": "1.048",
+      "timestamp": "2026-10-24 10:25:18",
+      "description": "Removed velocity target badge from Actual Head Loss cell in Auto Duct Sizer",
+      "request_index": 69
+    },
+    {
+      "version": "1.049",
+      "timestamp": "2026-10-24 10:40:07",
+      "description": "Moved Velocity from Input table to Output table in Fitting Loss Analysis as per ASHRAE database standard",
+      "request_index": 70
+    },
+    {
+      "version": "1.050",
+      "timestamp": "2026-10-24 10:46:19",
+      "description": "Removed telephone and fax numbers from PDF report header on all pages",
+      "request_index": 71
+    },
+    {
+      "version": "1.051",
+      "timestamp": "2026-10-24 11:57:07",
+      "description": "Synchronized 234 official ASHRAE database fittings and junction output sections",
+      "request_index": 72
+    },
+    {
+      "version": "1.052",
+      "timestamp": "2026-10-24 15:51:16",
+      "description": "Full name in hoods restored without truncation in catalog and PDF; added draggable and one-click enlargement for complete Fitduct Pro Fitting Catalog area",
+      "request_index": 73
+    },
+    {
+      "version": "1.053",
+      "timestamp": "2026-10-24 17:50:25",
+      "description": "Removed enlarge button from catalog header and toolbar per user request while retaining smooth draggable border resizer",
+      "request_index": 74
+    },
+    {
+      "version": "1.054",
+      "timestamp": "2026-10-24 18:45:07",
+      "description": "patch",
+      "request_index": "Fix 3D table coordinate interpolation & comment parsing in ASHRAE Fitting Loss Analysis to achieve 100% exact parity with official database"
+    },
+    {
+      "version": "1.055",
+      "timestamp": "2026-10-24 18:54:59",
+      "description": "patch",
+      "request_index": "Fix 1D table title description year token parsing for ED5-6 and dual-unit round elbow fittings in Fitting Loss Analysis"
+    },
+    {
+      "version": "1.056",
+      "timestamp": "2026-10-24 20:53:36",
+      "description": "Fix CF11-1 straight flat oval duct aerodynamic calculations matching official ASHRAE database 100%",
+      "request_index": 77
+    },
+    {
+      "version": "1.057",
+      "timestamp": "2026-10-24 21:36:08",
+      "description": "Precision matching for CD11-1, CD11-2, CR6-4, CD3-15, CD3-3/4 and full Ductfit Pro rebrand",
+      "request_index": 78
+    },
+    {
+      "version": "1.058",
+      "timestamp": "2026-10-24 21:50:54",
+      "description": "Fix CD6-2 diameter overwrite, CD9-1 / SD2-6 / SD2-7 trailing dot table parsing, SD2-2 and SD2-7 input visibility",
+      "request_index": 79
+    },
+    {
+      "version": "1.059",
+      "timestamp": "2026-10-24 22:41:44",
+      "description": "Precision parity for SD5-11, SD5-15, SD5-16, SD5-23 matching official ASHRAE Duct Fitting Database",
+      "request_index": 80
+    },
+    {
+      "version": "1.060",
+      "timestamp": "2026-10-24 23:11:33",
+      "description": "Separated Auto Duct Sizer and Fitting Loss Analysis workflows, distinct schedules, dedicated Duct Sizing PDF report without CAD drawings, professional tabular fonts for numbers, replaced 2021 handbook mentions with ASHRAE Fundamentals Ch 21, and updated PDF report headers",
+      "request_index": 81
+    }
+  ]
+}

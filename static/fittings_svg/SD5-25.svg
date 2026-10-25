@@ -1,0 +1,384 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32566 20064" preserveAspectRatio="xMidYMid meet">
+  <polyline points="9984,7349 9984,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,12840 10842,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,7349 10842,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7349 16386,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7349 15928,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,12840 15928,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18272,8264 19129,8264" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18272,11925 19129,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19129,8264 19129,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7349 18170,8242" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18170,11947 16386,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10956,7349 10956,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10842,7349 10842,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10956,7349 10924,7311 10874,7311 10842,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10956,7349 11356,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10842,12840 10874,12877 10924,12877 10956,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18272,8264 18272,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18157,8264 18157,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18272,8264 18239,8227 18190,8227 18157,8264" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18157,11925 18190,11962 18239,11962 18272,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10956,12840 11356,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="6867,9985 6867,10204 7525,10094" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="6867,9985 6867,10204 7525,10094 6867,9985" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6867,10094 4685,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,773 13642,2402" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13533,773 13752,773 13642,114" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="13533,754 13533,773 13533,791 13752,791 13752,773 13752,754" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13533,754 13533,773 13533,791 13752,791 13752,773 13752,754 13533,754" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13752,773 13752,791 13774,791 13770,770" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13752,791 13774,791 13770,770" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13734,776 13752,773 13770,770 13660,111 13642,114 13624,117" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13734,776 13752,773 13770,770 13660,111 13642,114 13624,117 13734,776" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13642,114 13660,111 13642,1 13624,111" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13660,111 13642,1 13624,111" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13660,117 13642,114 13624,111 13515,770 13533,773 13551,776" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13660,117 13642,114 13624,111 13515,770 13533,773 13551,776 13660,117" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13533,773 13515,770 13511,791 13533,791" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13515,770 13511,791 13533,791" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23257,10094 21327,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="23257,9985 23257,10204 23916,10094" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="23257,9985 23257,10204 23916,10094 23257,9985" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6901,6175 6683,6480 7010,6480" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6901,6175 6901,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7184,6110 7162,6132 7140,6110 7162,6088 7184,6110 7184,6154 7162,6197 7140,6219" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7314,6110 7293,6132 7271,6110 7293,6088 7314,6110 7314,6154 7293,6197 7271,6219" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7597,6088 7554,6132 7510,6197 7467,6284 7445,6393 7445,6480 7467,6589 7510,6676 7554,6742 7597,6785" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7793,6262 7837,6241 7902,6175 7902,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8294,6175 8229,6197 8185,6262 8164,6371 8164,6437 8185,6546 8229,6611 8294,6633 8338,6633 8403,6611 8447,6546 8468,6437 8468,6371 8447,6262 8403,6197 8338,6175 8294,6175" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8730,6175 8664,6197 8621,6262 8599,6371 8599,6437 8621,6546 8664,6611 8730,6633 8773,6633 8838,6611 8882,6546 8904,6437 8904,6371 8882,6262 8838,6197 8773,6175 8730,6175" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9056,6328 9056,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9056,6415 9122,6350 9165,6328 9230,6328 9274,6350 9296,6415 9296,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9296,6415 9361,6350 9405,6328 9470,6328 9513,6350 9535,6415 9535,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9709,6328 9709,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9709,6415 9775,6350 9818,6328 9884,6328 9927,6350 9949,6415 9949,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9949,6415 10014,6350 10058,6328 10123,6328 10167,6350 10188,6415 10188,6633" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10341,6088 10384,6132 10428,6197 10471,6284 10493,6393 10493,6480 10471,6589 10428,6676 10384,6742 10341,6785" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13210,3627 13210,3169 13363,3169 13428,3191 13471,3235 13493,3278 13515,3343 13515,3452 13493,3518 13471,3561 13428,3605 13363,3627 13210,3627" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13743,3492 13743,3762" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13743,3620 13769,3595 13795,3582 13833,3582 13859,3595 13885,3620 13898,3659 13898,3685 13885,3723 13859,3749 13833,3762 13795,3762 13769,3749 13743,3723" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13988,3556 13988,3543 14000,3517 14013,3504 14039,3492 14091,3492 14116,3504 14129,3517 14142,3543 14142,3569 14129,3595 14103,3633 13975,3762 14155,3762" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12425,1167 12382,1189 12338,1232 12316,1276 12295,1341 12295,1450 12316,1516 12338,1559 12382,1603 12425,1625 12512,1625 12556,1603 12599,1559 12621,1516 12643,1450 12643,1341 12621,1276 12599,1232 12556,1189 12512,1167 12425,1167" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12491,1537 12621,1668" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12838,1489 12838,1760" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12838,1618 12864,1592 12890,1580 12928,1580 12954,1592 12980,1618 12993,1657 12993,1683 12980,1721 12954,1747 12928,1760 12890,1760 12864,1747 12838,1721" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13083,1554 13083,1541 13096,1515 13108,1502 13134,1489 13186,1489 13211,1502 13224,1515 13237,1541 13237,1567 13224,1592 13199,1631 13070,1760 13250,1760" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9180,10261 9167,10235 9141,10210 9116,10197 9064,10197 9038,10210 9013,10235 9000,10261 8987,10300 8987,10364 9000,10403 9013,10428 9038,10454 9064,10467 9116,10467 9141,10454 9167,10428 9180,10403" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8539,10332 8539,9874 8692,9874 8757,9896 8801,9940 8823,9983 8844,10049 8844,10158 8823,10223 8801,10266 8757,10310 8692,10332 8539,10332" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="5397,10752 5571,10294 5745,10752" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="5462,10599 5680,10599" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6151,10681 6138,10655 6112,10630 6086,10617 6035,10617 6009,10630 5984,10655 5971,10681 5958,10720 5958,10784 5971,10823 5984,10849 6009,10874 6035,10887 6086,10887 6112,10874 6138,10849 6151,10823" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22608,9683 22582,9657 22544,9644 22492,9644 22454,9657 22428,9683 22428,9709 22441,9734 22454,9747 22480,9760 22557,9786 22582,9799 22595,9812 22608,9837 22608,9876 22582,9902 22544,9915 22492,9915 22454,9902 22428,9876" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22035,9322 21991,9344 21948,9387 21926,9431 21904,9496 21904,9605 21926,9671 21948,9714 21991,9758 22035,9779 22122,9779 22166,9758 22209,9714 22231,9671 22253,9605 22253,9496 22231,9431 22209,9387 22166,9344 22122,9322 22035,9322" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22100,9692 22231,9823" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19899,10292 19899,9835 20052,9835 20117,9856 20161,9900 20182,9943 20204,10009 20204,10118 20182,10183 20161,10227 20117,10270 20052,10292 19899,10292" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20533,10196 20508,10170 20469,10157 20417,10157 20379,10170 20353,10196 20353,10221 20366,10247 20379,10260 20405,10273 20482,10299 20508,10311 20520,10324 20533,10350 20533,10389 20508,10414 20469,10427 20417,10427 20379,10414 20353,10389" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,10094 13185,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12728,10094 9527,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,10094 13642,10552" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,10094 14100,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14557,10094 19586,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,10094 13642,9637" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,9179 13642,4146" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6059,3246 6059,3224 6081,3181 6103,3159 6146,3137 6234,3137 6277,3159 6299,3181 6321,3224 6321,3268 6299,3311 6255,3377 6038,3595 6342,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6538,3072 6517,3094 6495,3072 6517,3050 6538,3072 6538,3115 6517,3159 6495,3181" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6669,3072 6647,3094 6625,3072 6647,3050 6669,3072 6669,3115 6647,3159 6625,3181" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6952,3050 6909,3094 6865,3159 6821,3246 6800,3355 6800,3442 6821,3551 6865,3638 6909,3704 6952,3747" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7344,3137 7126,3137 7105,3333 7126,3311 7192,3290 7257,3290 7322,3311 7366,3355 7388,3420 7388,3464 7366,3529 7322,3573 7257,3595 7192,3595 7126,3573 7105,3551 7083,3508" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7649,3137 7584,3159 7540,3224 7518,3333 7518,3399 7540,3508 7584,3573 7649,3595 7692,3595 7758,3573 7801,3508 7823,3399 7823,3333 7801,3224 7758,3159 7692,3137 7649,3137" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7975,3290 7975,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7975,3377 8041,3311 8084,3290 8150,3290 8193,3311 8215,3377 8215,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8215,3377 8280,3311 8324,3290 8389,3290 8433,3311 8454,3377 8454,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8629,3290 8629,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8629,3377 8694,3311 8737,3290 8803,3290 8846,3311 8868,3377 8868,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8868,3377 8933,3311 8977,3290 9042,3290 9086,3311 9108,3377 9108,3595" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9260,3050 9304,3094 9347,3159 9391,3246 9412,3355 9412,3442 9391,3551 9347,3638 9304,3704 9260,3747" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="17869,3265 17869,3244 17890,3200 17912,3178 17956,3157 18043,3157 18086,3178 18108,3200 18130,3244 18130,3287 18108,3331 18065,3396 17847,3614 18152,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18348,3091 18326,3113 18304,3091 18326,3069 18348,3091 18348,3135 18326,3178 18304,3200" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18478,3091 18456,3113 18435,3091 18456,3069 18478,3091 18478,3135 18456,3178 18435,3200" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18761,3069 18718,3113 18674,3178 18631,3265 18609,3374 18609,3462 18631,3570 18674,3658 18718,3723 18761,3767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19153,3157 18935,3157 18914,3353 18935,3331 19001,3309 19066,3309 19131,3331 19175,3374 19197,3440 19197,3483 19175,3549 19131,3592 19066,3614 19001,3614 18935,3592 18914,3570 18892,3527" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19458,3157 19393,3178 19349,3244 19327,3353 19327,3418 19349,3527 19393,3592 19458,3614 19502,3614 19567,3592 19610,3527 19632,3418 19632,3353 19610,3244 19567,3178 19502,3157 19458,3157" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19785,3309 19785,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19785,3396 19850,3331 19893,3309 19959,3309 20002,3331 20024,3396 20024,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20024,3396 20089,3331 20133,3309 20198,3309 20242,3331 20264,3396 20264,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20438,3309 20438,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20438,3396 20503,3331 20547,3309 20612,3309 20656,3331 20677,3396 20677,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20677,3396 20743,3331 20786,3309 20851,3309 20895,3331 20917,3396 20917,3614" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21069,3069 21113,3113 21156,3178 21200,3265 21222,3374 21222,3462 21200,3570 21156,3658 21113,3723 21069,3767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18666,6550 18666,6093 18818,6093 18884,6114 18927,6158 18949,6202 18971,6267 18971,6376 18949,6441 18927,6485 18884,6528 18818,6550 18666,6550" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19580,6354 19972,6354" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20146,6550 20146,6093 20299,6093 20364,6114 20408,6158 20429,6202 20451,6267 20451,6376 20429,6441 20408,6485 20364,6528 20299,6550 20146,6550" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21364,6652 21408,6631 21473,6565 21473,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21756,6674 21756,6652 21778,6609 21800,6587 21843,6565 21930,6565 21974,6587 21996,6609 22017,6652 22017,6696 21996,6739 21952,6805 21734,7023 22039,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22235,6500 22213,6522 22191,6500 22213,6478 22235,6500 22235,6543 22213,6587 22191,6609" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22366,6500 22344,6522 22322,6500 22344,6478 22366,6500 22366,6543 22344,6587 22322,6609" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22649,6478 22605,6522 22562,6587 22518,6674 22496,6783 22496,6870 22518,6979 22562,7066 22605,7132 22649,7175" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22823,6565 23062,6565 22932,6739 22997,6739 23041,6761 23062,6783 23084,6848 23084,6892 23062,6957 23019,7001 22954,7023 22888,7023 22823,7001 22801,6979 22779,6936" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23345,6565 23280,6587 23237,6652 23215,6761 23215,6827 23237,6936 23280,7001 23345,7023 23389,7023 23454,7001 23498,6936 23520,6827 23520,6761 23498,6652 23454,6587 23389,6565 23345,6565" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23781,6565 23716,6587 23672,6652 23650,6761 23650,6827 23672,6936 23716,7001 23781,7023 23824,7023 23890,7001 23933,6936 23955,6827 23955,6761 23933,6652 23890,6587 23824,6565 23781,6565" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24107,6718 24107,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24107,6805 24173,6739 24216,6718 24282,6718 24325,6739 24347,6805 24347,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24347,6805 24412,6739 24456,6718 24521,6718 24565,6739 24586,6805 24586,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24761,6718 24761,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24761,6805 24826,6739 24870,6718 24935,6718 24978,6739 25000,6805 25000,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25000,6805 25065,6739 25109,6718 25174,6718 25218,6739 25240,6805 25240,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25392,6478 25436,6522 25479,6587 25523,6674 25545,6783 25545,6870 25523,6979 25479,7066 25436,7132 25392,7175" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26176,6718 26176,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26176,6805 26241,6739 26285,6718 26350,6718 26394,6739 26415,6805 26415,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26415,6805 26481,6739 26524,6718 26590,6718 26633,6739 26655,6805 26655,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27069,6718 27069,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27069,6783 27025,6739 26982,6718 26916,6718 26873,6739 26829,6783 26807,6848 26807,6892 26829,6957 26873,7001 26916,7023 26982,7023 27025,7001 27069,6957" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27221,6718 27461,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27461,6718 27221,7023" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27635,6979 27613,7001 27635,7023 27656,7001 27635,6979" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19282,6482 19269,6456 19244,6431 19218,6418 19166,6418 19141,6431 19115,6456 19102,6482 19089,6521 19089,6585 19102,6624 19115,6649 19141,6675 19166,6688 19218,6688 19244,6675 19269,6649 19282,6624" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20774,6456 20749,6431 20710,6418 20659,6418 20620,6431 20594,6456 20594,6482 20607,6508 20620,6521 20646,6534 20723,6559 20749,6572 20762,6585 20774,6611 20774,6649 20749,6675 20710,6688 20659,6688 20620,6675 20594,6649" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7103 16386,6232" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18215,7975 18215,6232" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16828,6355 17772,6355" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="16828,6282 16828,6429 16386,6355" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="16828,6282 16828,6429 16386,6355 16828,6282" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="17772,6282 17772,6429 18215,6355" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="17772,6282 17772,6429 18215,6355 17772,6282" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7349 16387,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18215,8221 18216,8221" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18215,6355 18216,6355" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11356,7349 11800,5570" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15484,5570 15928,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,4604 15471,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,5462 11813,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,4604 15471,5462" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,5462 15471,5462" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,5576 15471,5576" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,5462 11776,5494 11776,5544 11813,5576" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,5576 15509,5544 15509,5494 15471,5462" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,11009 13642,16043" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11356,12840 11800,14618" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,14613 11776,14645 11776,14695 11813,14727" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,14727 11813,15585" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,14727 15471,14727" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,14613 15471,14613" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,15585 15471,15585" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,15585 15471,14727" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,14727 15509,14695 15509,14645 15471,14613" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15484,14618 15928,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,19291 13642,17662" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13533,19291 13752,19291 13642,19950" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polygon points="13533,19272 13533,19291 13533,19309 13752,19309 13752,19291 13752,19272" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13533,19272 13533,19291 13533,19309 13752,19309 13752,19291 13752,19272 13533,19272" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13752,19291 13752,19272 13774,19272 13770,19294" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13752,19272 13774,19272 13770,19294" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13770,19294 13752,19291 13734,19288 13624,19947 13642,19950 13660,19953" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13770,19294 13752,19291 13734,19288 13624,19947 13642,19950 13660,19953 13770,19294" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13642,19950 13660,19953 13642,20063 13624,19953" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13660,19953 13642,20063 13624,19953" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13624,19953 13642,19950 13660,19947 13551,19288 13533,19291 13515,19294" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13624,19953 13642,19950 13660,19947 13551,19288 13533,19291 13515,19294 13624,19953" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="13533,19291 13515,19294 13511,19272 13533,19272" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="13515,19294 13511,19272 13533,19272" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6981,13551 6763,13856 7090,13856" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6981,13551 6981,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7264,13485 7242,13507 7220,13485 7242,13464 7264,13485 7264,13529 7242,13573 7220,13594" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7394,13485 7373,13507 7351,13485 7373,13464 7394,13485 7394,13529 7373,13573 7351,13594" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7677,13464 7634,13507 7590,13573 7547,13660 7525,13769 7525,13856 7547,13965 7590,14052 7634,14117 7677,14161" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7873,13638 7917,13616 7982,13551 7982,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8374,13551 8309,13573 8265,13638 8244,13747 8244,13812 8265,13921 8309,13987 8374,14008 8418,14008 8483,13987 8527,13921 8548,13812 8548,13747 8527,13638 8483,13573 8418,13551 8374,13551" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8810,13551 8744,13573 8701,13638 8679,13747 8679,13812 8701,13921 8744,13987 8810,14008 8853,14008 8919,13987 8962,13921 8984,13812 8984,13747 8962,13638 8919,13573 8853,13551 8810,13551" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9136,13703 9136,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9136,13790 9202,13725 9245,13703 9310,13703 9354,13725 9376,13790 9376,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9376,13790 9441,13725 9485,13703 9550,13703 9594,13725 9615,13790 9615,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9789,13703 9789,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9789,13790 9855,13725 9898,13703 9964,13703 10007,13725 10029,13790 10029,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10029,13790 10094,13725 10138,13703 10203,13703 10247,13725 10268,13790 10268,14008" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10421,13464 10464,13507 10508,13573 10552,13660 10573,13769 10573,13856 10552,13965 10508,14052 10464,14117 10421,14161" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6059,16592 6059,16570 6081,16526 6103,16504 6146,16483 6234,16483 6277,16504 6299,16526 6321,16570 6321,16613 6299,16657 6255,16722 6038,16940 6342,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6538,16417 6517,16439 6495,16417 6517,16395 6538,16417 6538,16461 6517,16504 6495,16526" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6669,16417 6647,16439 6625,16417 6647,16395 6669,16417 6669,16461 6647,16504 6625,16526" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6952,16395 6909,16439 6865,16504 6821,16592 6800,16700 6800,16788 6821,16897 6865,16984 6909,17049 6952,17093" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7344,16483 7126,16483 7105,16679 7126,16657 7192,16635 7257,16635 7322,16657 7366,16700 7388,16766 7388,16809 7366,16875 7322,16918 7257,16940 7192,16940 7126,16918 7105,16897 7083,16853" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7649,16483 7584,16504 7540,16570 7518,16679 7518,16744 7540,16853 7584,16918 7649,16940 7692,16940 7758,16918 7801,16853 7823,16744 7823,16679 7801,16570 7758,16504 7692,16483 7649,16483" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7975,16635 7975,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="7975,16722 8041,16657 8084,16635 8150,16635 8193,16657 8215,16722 8215,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8215,16722 8280,16657 8324,16635 8389,16635 8433,16657 8454,16722 8454,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8629,16635 8629,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8629,16722 8694,16657 8737,16635 8803,16635 8846,16657 8868,16722 8868,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8868,16722 8933,16657 8977,16635 9042,16635 9086,16657 9108,16722 9108,16940" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9260,16395 9304,16439 9347,16504 9391,16592 9412,16700 9412,16788 9391,16897 9347,16984 9304,17049 9260,17093" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13273,16958 13273,16500 13425,16500 13491,16522 13534,16565 13556,16609 13578,16674 13578,16783 13556,16849 13534,16892 13491,16936 13425,16958 13273,16958" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13732,16837 13732,17108" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13732,16966 13758,16940 13783,16927 13822,16927 13848,16940 13873,16966 13886,17005 13886,17030 13873,17069 13848,17095 13822,17108 13783,17108 13758,17095 13732,17069" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14002,16889 14028,16876 14066,16837 14066,17108" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="17869,16611 17869,16589 17890,16546 17912,16524 17956,16502 18043,16502 18086,16524 18108,16546 18130,16589 18130,16633 18108,16676 18065,16742 17847,16960 18152,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18348,16437 18326,16458 18304,16437 18326,16415 18348,16437 18348,16480 18326,16524 18304,16546" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18478,16437 18456,16458 18435,16437 18456,16415 18478,16437 18478,16480 18456,16524 18435,16546" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="18761,16415 18718,16458 18674,16524 18631,16611 18609,16720 18609,16807 18631,16916 18674,17003 18718,17069 18761,17112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19153,16502 18935,16502 18914,16698 18935,16676 19001,16655 19066,16655 19131,16676 19175,16720 19197,16785 19197,16829 19175,16894 19131,16938 19066,16960 19001,16960 18935,16938 18914,16916 18892,16872" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19458,16502 19393,16524 19349,16589 19327,16698 19327,16763 19349,16872 19393,16938 19458,16960 19502,16960 19567,16938 19610,16872 19632,16763 19632,16698 19610,16589 19567,16524 19502,16502 19458,16502" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19785,16655 19785,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19785,16742 19850,16676 19893,16655 19959,16655 20002,16676 20024,16742 20024,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20024,16742 20089,16676 20133,16655 20198,16655 20242,16676 20264,16742 20264,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20438,16655 20438,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20438,16742 20503,16676 20547,16655 20612,16655 20656,16676 20677,16742 20677,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20677,16742 20743,16676 20786,16655 20851,16655 20895,16676 20917,16742 20917,16960" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21069,16415 21113,16458 21156,16524 21200,16611 21222,16720 21222,16807 21200,16916 21156,17003 21113,17069 21069,17112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12590,18175 12547,18196 12503,18240 12481,18284 12460,18349 12460,18458 12481,18523 12503,18567 12547,18610 12590,18632 12677,18632 12721,18610 12765,18567 12786,18523 12808,18458 12808,18349 12786,18284 12765,18240 12721,18196 12677,18175 12590,18175" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12656,18545 12786,18676" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12964,18512 12964,18782" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12964,18640 12990,18615 13015,18602 13054,18602 13080,18615 13105,18640 13118,18679 13118,18705 13105,18743 13080,18769 13054,18782 13015,18782 12990,18769 12964,18743" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13234,18563 13260,18550 13298,18512 13298,18782" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19375,8264 20383,8264" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19375,11925 20383,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20260,8707 20260,9572" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20260,11482 20260,10621" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="20334,8707 20186,8707 20260,8264" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="20334,8707 20186,8707 20260,8264 20334,8707" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="20334,11482 20186,11482 20260,11925" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="20334,11482 20186,11482 20260,11925 20334,11482" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19129,8264 19130,8264" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19129,11925 19130,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="20260,11925 20261,11925" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7103 16386,3299" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16828,3422 17270,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="17270,3422 17511,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="16828,3495 16828,3348 16386,3422" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="16828,3495 16828,3348 16386,3422 16828,3495" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,4604 15472,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,7349 16387,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,3422 16387,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,4358 15471,3299" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="15029,3495 15029,3348 15471,3422" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="15029,3495 15029,3348 15471,3422 15029,3495" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,4604 11814,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,4604 15472,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10899,7060 10899,3299" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,4358 11813,3299" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10457,3422 10015,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,3422 12895,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="12256,3495 12256,3348 11813,3422" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="12256,3495 12256,3348 11813,3422 12256,3495" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="10457,3495 10457,3348 10899,3422" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="10457,3495 10457,3348 10899,3422 10457,3495" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10899,7306 10900,7306" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,4604 11814,4604" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9739,12840 8744,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,7791 8867,9690" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,12397 8867,10656" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8940,7791 8793,7791 8867,7349" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8940,7791 8793,7791 8867,7349 8940,7791" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8940,12397 8793,12397 8867,12840" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8940,12397 8793,12397 8867,12840 8940,12397" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,7349 9985,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,12840 9985,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,12840 8868,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10899,13128 10899,16890" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,15831 11813,16890" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="12256,16767 12973,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10457,16767 10015,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="12256,16841 12256,16693 11813,16767" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="12256,16841 12256,16693 11813,16767 12256,16841" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="10457,16841 10457,16693 10899,16767" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="10457,16841 10457,16693 10899,16767 10457,16841" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="10899,12883 10900,12883" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11813,15585 11814,15585" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,15831 15471,16890" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,13085 16386,16890" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16828,16767 17270,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="17270,16767 17511,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="16828,16841 16828,16693 16386,16767" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="16828,16841 16828,16693 16386,16767 16828,16841" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="15029,16841 15029,16693 15471,16767" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="15029,16841 15029,16693 15471,16767 15029,16841" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15471,15585 15472,15585" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,12840 16387,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="16386,16767 16387,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15337,9655 15162,9225 14880,8855 14511,8573 14081,8398" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="15264,9665 15411,9646 15393,10094" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="15264,9665 15411,9646 15393,10094 15264,9665" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="14072,8471 14090,8325 13642,8342" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="14072,8471 14090,8325 13642,8342 14072,8471" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14557,10094 14558,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19129,10094 19130,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,9179 13643,9179" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,4146 13643,4146" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14081,11791 14511,11616 14880,11333 15162,10964 15337,10533" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="14072,11718 14090,11864 13642,11847" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="14072,11718 14090,11864 13642,11847 14072,11718" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="15264,10524 15411,10543 15393,10094" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="15264,10524 15411,10543 15393,10094 15264,10524" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14557,10094 14558,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="19129,10094 19130,10094" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,11009 13643,11009" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13642,14670 13643,14670" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9739,7349 8744,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11525,5519 8744,5519" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8940,5076 8793,5076 8867,5519" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8940,5076 8793,5076 8867,5519 8940,5076" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,7349 9985,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11771,5519 11772,5519" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,5519 8868,5519" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9739,12840 8744,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11525,14670 8744,14670" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polygon points="8940,15112 8793,15112 8867,14670" fill="#000000" stroke="#000000" stroke-width="1" />
+  <polyline points="8940,15112 8793,15112 8867,14670 8940,15112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="9984,12840 9985,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11771,14670 11772,14670" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,14670 8868,14670" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="11356,7349 11964,7675 12617,7897 13297,8010 13987,8010 14668,7897 15321,7675 15928,7349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15928,12840 15221,12444 14449,12199 13642,12116 12836,12199 12063,12444 11356,12840" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15367,8549 15350,8601 15315,8636 15262,8654 15244,8654 15192,8636 15157,8601 15139,8549 15139,8531 15157,8478 15192,8443 15244,8426 15262,8426 15315,8443 15350,8478 15367,8549 15367,8636 15350,8724 15315,8777 15262,8794 15227,8794 15174,8777 15157,8742" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15595,8426 15543,8443 15508,8496 15490,8584 15490,8636 15508,8724 15543,8777 15595,8794 15630,8794 15683,8777 15718,8724 15736,8636 15736,8584 15718,8496 15683,8443 15630,8426 15595,8426" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15876,8461 15866,8436 15841,8426 15816,8436 15806,8461 15816,8486 15841,8496 15866,8486 15876,8461" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15346,11470 15328,11523 15293,11558 15241,11576 15223,11576 15170,11558 15135,11523 15118,11470 15118,11453 15135,11400 15170,11365 15223,11347 15241,11347 15293,11365 15328,11400 15346,11470 15346,11558 15328,11646 15293,11699 15241,11716 15205,11716 15153,11699 15135,11664" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15574,11347 15521,11365 15486,11418 15469,11506 15469,11558 15486,11646 15521,11699 15574,11716 15609,11716 15662,11699 15697,11646 15714,11558 15714,11506 15697,11418 15662,11365 15609,11347 15574,11347" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="15855,11383 15844,11358 15820,11347 15795,11358 15784,11383 15795,11407 15820,11418 15844,11407 15855,11383" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,4621 8867,5076" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="6151,9736 6138,9710 6112,9685 6086,9672 6035,9672 6009,9685 5984,9710 5971,9736 5958,9775 5958,9839 5971,9878 5984,9903 6009,9929 6035,9942 6086,9942 6112,9929 6138,9903 6151,9878" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="5571,9349 5528,9371 5484,9415 5462,9458 5440,9524 5440,9633 5462,9698 5484,9742 5528,9785 5571,9807 5658,9807 5702,9785 5745,9742 5767,9698 5789,9633 5789,9524 5767,9458 5745,9415 5702,9371 5658,9349 5571,9349" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="5636,9720 5767,9850" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14525,1489 14525,1760" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14525,1618 14551,1592 14576,1580 14615,1580 14641,1592 14666,1618 14679,1657 14679,1683 14666,1721 14641,1747 14615,1760 14576,1760 14551,1747 14525,1721" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14769,1554 14769,1541 14782,1515 14795,1502 14821,1489 14872,1489 14898,1502 14911,1515 14924,1541 14924,1567 14911,1592 14885,1631 14756,1760 14937,1760" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13938,1625 14112,1167 14286,1625" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14003,1472 14221,1472" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14381,3422 15471,3422" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="8867,15692 8867,15112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14516,18512 14516,18782" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14516,18640 14542,18615 14568,18602 14606,18602 14632,18615 14658,18640 14671,18679 14671,18705 14658,18743 14632,18769 14606,18782 14568,18782 14542,18769 14516,18743" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14787,18563 14812,18550 14851,18512 14851,18782" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="13969,18632 14143,18175 14317,18632" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14034,18480 14252,18480" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="14309,16767 15471,16767" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21370,5742 21413,5720 21478,5655 21478,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21805,5589 21783,5611 21761,5589 21783,5567 21805,5589 21805,5633 21783,5676 21761,5698" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21936,5589 21914,5611 21892,5589 21914,5567 21936,5589 21936,5633 21914,5676 21892,5698" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22219,5567 22175,5611 22132,5676 22088,5763 22066,5872 22066,5960 22088,6069 22132,6156 22175,6221 22219,6265" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22371,5763 22371,5742 22393,5698 22415,5676 22458,5655 22545,5655 22589,5676 22611,5698 22632,5742 22632,5785 22611,5829 22567,5894 22349,6112 22654,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23046,5655 22828,5655 22807,5851 22828,5829 22894,5807 22959,5807 23024,5829 23068,5872 23090,5938 23090,5981 23068,6047 23024,6090 22959,6112 22894,6112 22828,6090 22807,6069 22785,6025" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23242,5807 23242,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23242,5894 23307,5829 23351,5807 23416,5807 23460,5829 23482,5894 23482,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23482,5894 23547,5829 23590,5807 23656,5807 23699,5829 23721,5894 23721,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23895,5807 23895,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="23895,5894 23961,5829 24004,5807 24069,5807 24113,5829 24135,5894 24135,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24135,5894 24200,5829 24244,5807 24309,5807 24352,5829 24374,5894 24374,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="24527,5567 24570,5611 24614,5676 24657,5763 24679,5872 24679,5960 24657,6069 24614,6156 24570,6221 24527,6265" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25310,5807 25310,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25310,5894 25376,5829 25419,5807 25485,5807 25528,5829 25550,5894 25550,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25550,5894 25615,5829 25659,5807 25724,5807 25768,5829 25789,5894 25789,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25942,5676 25964,5698 25985,5676 25964,5655 25942,5676" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="25964,5829 25964,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26138,5807 26138,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26138,5894 26203,5829 26247,5807 26312,5807 26356,5829 26377,5894 26377,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="26573,6069 26552,6090 26573,6112 26595,6090 26573,6069" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27314,5807 27270,5829 27226,5872 27205,5938 27205,5981 27226,6047 27270,6090 27314,6112 27379,6112 27422,6090 27466,6047 27488,5981 27488,5938 27466,5872 27422,5829 27379,5807 27314,5807" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27640,5807 27640,6112" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27640,5938 27662,5872 27705,5829 27749,5807 27814,5807" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="22608,10675 22582,10649 22544,10636 22492,10636 22454,10649 22428,10675 22428,10700 22441,10726 22454,10739 22480,10752 22557,10778 22582,10790 22595,10803 22608,10829 22608,10868 22582,10893 22544,10906 22492,10906 22454,10893 22428,10868" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21861,10771 22035,10314 22209,10771" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21926,10619 22144,10619" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21201,6273 21201,5524 21365,5524" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="21201,6273 21365,6273" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27879,7232 27879,6483 27715,6483" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="27715,7232 27879,7232" fill="none" stroke="#000000" stroke-width="35.8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
