@@ -1,0 +1,135 @@
+﻿[
+    {
+        "Variable":  "ADC",
+        "IPValue":  12,
+        "SIValue":  1000,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "ARC",
+        "IPValue":  144,
+        "SIValue":  1000000,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "DC",
+        "IPValue":  1,
+        "SIValue":  25,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "LC",
+        "IPValue":  12,
+        "SIValue":  1000,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "LEG",
+        "IPValue":  10630,
+        "SIValue":  4500,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "LEL",
+        "IPValue":  4.3,
+        "SIValue":  350,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "MU",
+        "IPValue":  0.0007335,
+        "SIValue":  1.818E-05,
+        "Description":  "Viscosity",
+        "Calculated":  true
+    },
+    {
+        "Variable":  "PI",
+        "IPValue":  3.141592654,
+        "SIValue":  3.141592654,
+        "Description":  "Pi",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "RC",
+        "IPValue":  12,
+        "SIValue":  1000,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "RHO",
+        "IPValue":  0.061,
+        "SIValue":  1.204,
+        "Description":  "Density",
+        "Calculated":  true
+    },
+    {
+        "Variable":  "TA",
+        "IPValue":  70,
+        "SIValue":  20,
+        "Description":  "Air Temperature",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "VC",
+        "IPValue":  2500,
+        "SIValue":  13,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "VELC",
+        "IPValue":  1,
+        "SIValue":  0.001,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "PB",
+        "IPValue":  14.7,
+        "SIValue":  101.3,
+        "Description":  "Barometric Pressure",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "RH",
+        "IPValue":  0,
+        "SIValue":  0,
+        "Description":  "Relative Humidity",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "VPC",
+        "IPValue":  4430.314018685,
+        "SIValue":  1.2887545145686365,
+        "Description":  null,
+        "Calculated":  true
+    },
+    {
+        "Variable":  "FD",
+        "IPValue":  162,
+        "SIValue":  4115,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "FOC",
+        "IPValue":  30,
+        "SIValue":  762,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    },
+    {
+        "Variable":  "FLEX",
+        "IPValue":  -0.126,
+        "SIValue":  -0.00496,
+        "Description":  "IP/SI Constant",
+        "Calculated":  false
+    }
+]

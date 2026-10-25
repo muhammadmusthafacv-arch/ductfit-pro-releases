@@ -1,0 +1,3202 @@
+﻿[
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-5",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction, with Wall",
+        "Title1":  "Conical Bellmouth/Sudden Contraction, with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 3-7)",
+        "DateCreated":  "\/Date(995172702000)\/",
+        "DateModified":  "\/Date(995172702000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-6",
+        "Order":  null,
+        "Label":  "Intake Hood",
+        "Title1":  "Intake Hood",
+        "Title2":  "(Idelchik 1986, Diagram 3-18)",
+        "DateCreated":  "\/Date(995172785000)\/",
+        "DateModified":  "\/Date(995172785000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-7",
+        "Order":  null,
+        "Label":  "Orifice, Sharp-Edged",
+        "Title1":  "Orifice, Sharp-Edged",
+        "Title2":  "(Brooks 1993)",
+        "DateCreated":  "\/Date(995172822000)\/",
+        "DateModified":  "\/Date(995172822000)\/"
+    },
+    {
+        "Parent":  "ER1",
+        "Key":  "ER1-1",
+        "Order":  null,
+        "Label":  "Duct Mounted in Wall",
+        "Title1":  "Duct Mounted in Wall (Idelchik 1986, Diagram 3-1)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995178490000)\/",
+        "DateModified":  "\/Date(995178490000)\/"
+    },
+    {
+        "Parent":  "ER1",
+        "Key":  "ER1-2",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction",
+        "Title1":  "Conical Bellmouth/Sudden Contraction",
+        "Title2":  "(Idelchik 1986, Diagram 3-6)",
+        "DateCreated":  "\/Date(994848388000)\/",
+        "DateModified":  "\/Date(994848388000)\/"
+    },
+    {
+        "Parent":  "ER1",
+        "Key":  "ER1-3",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction, with Wall",
+        "Title1":  "Conical Bellmouth/Sudden Contraction, with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 3-7)",
+        "DateCreated":  "\/Date(994848095000)\/",
+        "DateModified":  "\/Date(994848095000)\/"
+    },
+    {
+        "Parent":  "SD1",
+        "Key":  "SD1-1",
+        "Order":  10,
+        "Label":  "Bellmouth (Standard Radius), Plenum to Round",
+        "Title1":  "Bellmouth (Standard Radius), Plenum to Round, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 4-9 and 3-4)",
+        "DateCreated":  "\/Date(994673280000)\/",
+        "DateModified":  "\/Date(1314095636000)\/"
+    },
+    {
+        "Parent":  "SR1",
+        "Key":  "SR1-1",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction, Plenum to Rectangular",
+        "Title1":  "Conical Bellmouth/Sudden Contraction, Plenum to ",
+        "Title2":  "Rectangular, Supply Air Systems (Idelchik 1986, Diagram 4-9 and 3-7)",
+        "DateCreated":  "\/Date(993046708000)\/",
+        "DateModified":  "\/Date(993046708000)\/"
+    },
+    {
+        "Parent":  "ED2",
+        "Key":  "ED2-1",
+        "Order":  null,
+        "Label":  "Conical Diffuser, Round to Plenum",
+        "Title1":  "Conical Diffuser, Round to Plenum, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-8)",
+        "DateCreated":  "\/Date(995173681000)\/",
+        "DateModified":  "\/Date(995173681000)\/"
+    },
+    {
+        "Parent":  "ER2",
+        "Key":  "ER2-1",
+        "Order":  null,
+        "Label":  "Bellmouth, Plenum to Round",
+        "Title1":  "Bellmouth, Plenum to Round, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagram 4-9)",
+        "DateCreated":  "\/Date(995178920000)\/",
+        "DateModified":  "\/Date(995178920000)\/"
+    },
+    {
+        "Parent":  "ER2",
+        "Key":  "ER2-2",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction, Plenum to Round",
+        "Title1":  "Conical Bellmouth/Sudden Contraction, Plenum to Round,",
+        "Title2":  "Exhaust/Return Systems (Idelchik 1986, Diagram 4-9)",
+        "DateCreated":  "\/Date(995179295000)\/",
+        "DateModified":  "\/Date(995179295000)\/"
+    },
+    {
+        "Parent":  "ER2",
+        "Key":  "ER2-3",
+        "Order":  null,
+        "Label":  "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum",
+        "Title1":  "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum,",
+        "Title2":  "Exhaust/Return Systems (Idelchik 1986, Diagram 5-10)",
+        "DateCreated":  "\/Date(995179513000)\/",
+        "DateModified":  "\/Date(995179513000)\/"
+    },
+    {
+        "Parent":  "SD1",
+        "Key":  "SD1-2",
+        "Order":  10,
+        "Label":  "Conical Bellmouth/Sudden Contraction, Plenum to Round",
+        "Title1":  "Conical Bellmouth/Sudden Contraction, Plenum to Round, ",
+        "Title2":  "Supply Air Systems (Idelchik 1986, Diagram 4-9)",
+        "DateCreated":  "\/Date(1312606101000)\/",
+        "DateModified":  "\/Date(1415756414000)\/"
+    },
+    {
+        "Parent":  "ER2",
+        "Key":  "ER2-4",
+        "Order":  null,
+        "Label":  "Pyramidal Diffuser, Rectangular to Plenum",
+        "Title1":  "Pyramidal Diffuser, Rectangular to Plenum,",
+        "Title2":  "Exhaust/Return Systems (Idelchik 1986, Diagram 5-9)",
+        "DateCreated":  "\/Date(995179847000)\/",
+        "DateModified":  "\/Date(995179847000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-1",
+        "Order":  10,
+        "Label":  "Abrupt Exit",
+        "Title1":  "Abrupt Exit",
+        "Title2":  "(Idelchik 1986, Diagram 11-1)",
+        "DateCreated":  "\/Date(995890086000)\/",
+        "DateModified":  "\/Date(1313055428000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-2",
+        "Order":  20,
+        "Label":  "Discharge from a Duct Flush with Wall",
+        "Title1":  "Discharge from a Duct Flush with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 11-2)",
+        "DateCreated":  "\/Date(995890345000)\/",
+        "DateModified":  "\/Date(995890345000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-3",
+        "Order":  30,
+        "Label":  "Conical Diffuser, Free Discharge",
+        "Title1":  "Conical Diffuser, Free Discharge",
+        "Title2":  "(Idelchik 1986, Diagram 11-3)",
+        "DateCreated":  "\/Date(996062129000)\/",
+        "DateModified":  "\/Date(1313423228000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-4",
+        "Order":  40,
+        "Label":  "Conical Diffuser, with Wall",
+        "Title1":  "Conical Diffuser, with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 5-8)",
+        "DateCreated":  "\/Date(985497715000)\/",
+        "DateModified":  "\/Date(985497715000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-5",
+        "Order":  50,
+        "Label":  "Exhaust Hood",
+        "Title1":  "Exhaust Hood",
+        "Title2":  "(Idelchik 1986, Diagram 11-16)",
+        "DateCreated":  "\/Date(985497832000)\/",
+        "DateModified":  "\/Date(985497832000)\/"
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-6",
+        "Order":  60,
+        "Label":  "Stackhead (Dexit/D=1)",
+        "Title1":  "Stackhead (Dexit/D=1)",
+        "Title2":  "(Idelchik 1986, Diagram 11-23)",
+        "DateCreated":  "\/Date(985497957000)\/",
+        "DateModified":  "\/Date(985497957000)\/"
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-1",
+        "Order":  null,
+        "Label":  "Abrupt Exit",
+        "Title1":  "Abrupt Exit",
+        "Title2":  "(Idelchik 1986, Diagram 11-1)",
+        "DateCreated":  "\/Date(993046930000)\/",
+        "DateModified":  "\/Date(993046930000)\/"
+    },
+    {
+        "Parent":  null,
+        "Key":  "S",
+        "Order":  1,
+        "Label":  "Supply",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  null,
+        "Key":  "C",
+        "Order":  2,
+        "Label":  "Common",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  null,
+        "Key":  "E",
+        "Order":  3,
+        "Label":  "Exhaust/Return",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "S",
+        "Key":  "SD",
+        "Order":  5,
+        "Label":  "Round",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "S",
+        "Key":  "SR",
+        "Order":  6,
+        "Label":  "Rectangular",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "C",
+        "Key":  "CD",
+        "Order":  5,
+        "Label":  "Round",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "C",
+        "Key":  "CR",
+        "Order":  6,
+        "Label":  "Rectangular",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "E",
+        "Key":  "ED",
+        "Order":  5,
+        "Label":  "Round",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "E",
+        "Key":  "ER",
+        "Order":  6,
+        "Label":  "Rectangular",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD",
+        "Key":  "SD1",
+        "Order":  null,
+        "Label":  "Plenums",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD",
+        "Key":  "SD2",
+        "Order":  null,
+        "Label":  "Exits",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD",
+        "Key":  "SD4",
+        "Order":  null,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD",
+        "Key":  "SD5",
+        "Order":  null,
+        "Label":  "Junctions, Diverging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD",
+        "Key":  "SD7",
+        "Order":  null,
+        "Label":  "Fan \u0026 System Interactions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR1",
+        "Order":  null,
+        "Label":  "Plenums",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR2",
+        "Order":  null,
+        "Label":  "Exits",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR3",
+        "Order":  null,
+        "Label":  "Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR4",
+        "Order":  null,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR5",
+        "Order":  null,
+        "Label":  "Junctions, Diverging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR",
+        "Key":  "SR7",
+        "Order":  null,
+        "Label":  "Fan \u0026 System Interactions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD3",
+        "Order":  null,
+        "Label":  "Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD6",
+        "Order":  null,
+        "Label":  "Obstructions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD8",
+        "Order":  null,
+        "Label":  "Duct-Mounted Equipment",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD9",
+        "Order":  null,
+        "Label":  "Dampers",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD11-1",
+        "Order":  10,
+        "Label":  "Straight Duct",
+        "Title1":  "Straight Duct, Round",
+        "Title2":  "(Colebrook 1939)",
+        "DateCreated":  "\/Date(995163235000)\/",
+        "DateModified":  "\/Date(1416265038000)\/"
+    },
+    {
+        "Parent":  "CR",
+        "Key":  "CR3",
+        "Order":  null,
+        "Label":  "Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR",
+        "Key":  "CR6",
+        "Order":  null,
+        "Label":  "Obstructions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR",
+        "Key":  "CR8",
+        "Order":  null,
+        "Label":  "Duct-Mounted Equipment",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR",
+        "Key":  "CR9",
+        "Order":  null,
+        "Label":  "Dampers",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR",
+        "Key":  "CR11-1",
+        "Order":  null,
+        "Label":  "Straight Duct",
+        "Title1":  "Straight Duct, Rectangular",
+        "Title2":  "(Huebscher 1948)",
+        "DateCreated":  "\/Date(995167575000)\/",
+        "DateModified":  "\/Date(995167575000)\/"
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED1",
+        "Order":  null,
+        "Label":  "Entries",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED2",
+        "Order":  null,
+        "Label":  "Plenums",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED4",
+        "Order":  null,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED5",
+        "Order":  null,
+        "Label":  "Junctions, Converging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED7",
+        "Order":  null,
+        "Label":  "Fan \u0026 System Interactions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED",
+        "Key":  "ED10",
+        "Order":  null,
+        "Label":  "Hoods",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER1",
+        "Order":  10,
+        "Label":  "Entries",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER2",
+        "Order":  20,
+        "Label":  "Plenums",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER3",
+        "Order":  30,
+        "Label":  "Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER4",
+        "Order":  40,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER5",
+        "Order":  50,
+        "Label":  "Junctions, Converging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER",
+        "Key":  "ER7",
+        "Order":  90,
+        "Label":  "Fan \u0026 System Interactions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-1",
+        "Order":  null,
+        "Label":  "Duct Mounted in Wall",
+        "Title1":  "Duct Mounted in Wall",
+        "Title2":  "(Idelchik 1986, Diagram 3-1)",
+        "DateCreated":  "\/Date(995172170000)\/",
+        "DateModified":  "\/Date(995172170000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-2",
+        "Order":  null,
+        "Label":  "Bellmouth, Standard Radius",
+        "Title1":  "Bellmouth, Standard Radius ",
+        "Title2":  "(Idelchik 1986, Diagram 3-4)",
+        "DateCreated":  "\/Date(995172437000)\/",
+        "DateModified":  "\/Date(995172437000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-3",
+        "Order":  null,
+        "Label":  "Bellmouth (Standard Radius), with Wall",
+        "Title1":  "Bellmouth (Standard Radius) with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 3-4)",
+        "DateCreated":  "\/Date(995172473000)\/",
+        "DateModified":  "\/Date(995172473000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-4",
+        "Order":  null,
+        "Label":  "Conical Bellmouth/Sudden Contraction",
+        "Title1":  "Conical Bellmouth/Sudden Contraction",
+        "Title2":  "(Idelchik 1986, Diagram 3-6)",
+        "DateCreated":  "\/Date(995172608000)\/",
+        "DateModified":  "\/Date(995172608000)\/"
+    },
+    {
+        "Parent":  "CD3",
+        "Key":  "CD3M",
+        "Order":  null,
+        "Label":  "Mitered",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD3",
+        "Key":  "CD3-11",
+        "Order":  null,
+        "Label":  "Flat Back, 90 deg.",
+        "Title1":  "Elbow, Flat-back, 90 Degree (UMC 1985, Report SRF1285)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995163272000)\/",
+        "DateModified":  "\/Date(995163272000)\/"
+    },
+    {
+        "Parent":  "CD3DS",
+        "Key":  "CD3-1",
+        "Order":  null,
+        "Label":  "90 deg., r/D = 1.5",
+        "Title1":  "Elbow, Die Stamped, 90 Degree, r/D = 1.5",
+        "Title2":  "(UMC 1985, Report SRF785)",
+        "DateCreated":  "\/Date(995163407000)\/",
+        "DateModified":  "\/Date(995163407000)\/"
+    },
+    {
+        "Parent":  "CD3PL",
+        "Key":  "CD3-5",
+        "Order":  null,
+        "Label":  "90 deg.",
+        "Title1":  "Elbow, Pleated, 90 Degree, r/D = 1.5",
+        "Title2":  "(UMC 1989, Report SRS189)",
+        "DateCreated":  "\/Date(995165197000)\/",
+        "DateModified":  "\/Date(995165197000)\/"
+    },
+    {
+        "Parent":  "CD3PL",
+        "Key":  "CD3-7",
+        "Order":  null,
+        "Label":  "45 deg.",
+        "Title1":  "Elbow, Pleated, 45 Degree, r/D = 1.5",
+        "Title2":  "(UMC 1989, Report SRS189)",
+        "DateCreated":  "\/Date(995165266000)\/",
+        "DateModified":  "\/Date(995165266000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-9",
+        "Order":  9,
+        "Label":  "5-Gore, 90 deg., r/D=1.5",
+        "Title1":  "Elbow, 5 Gore, 90 Degree, r/D = 1.5",
+        "Title2":  "(UMC 1985, Report SRF1285)",
+        "DateCreated":  "\/Date(995165047000)\/",
+        "DateModified":  "\/Date(995165047000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-8",
+        "Order":  8,
+        "Label":  "SWSI, with Elbow, Position D",
+        "Title1":  "Fan Outlet, Centrifugal, SWSI, with Elbow (Position D)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162568000)\/",
+        "DateModified":  "\/Date(995162568000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-10",
+        "Order":  20,
+        "Label":  "7-Gore, 90 deg., r/D=2.5",
+        "Title1":  "Elbow, 7 Gore, 90 Degree, r/D = 2.5",
+        "Title2":  "(UMC 1985, Report SRF1285)",
+        "DateCreated":  "\/Date(995164508000)\/",
+        "DateModified":  "\/Date(995164508000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-12",
+        "Order":  8,
+        "Label":  "3-Gore, 90 deg., r/D=0.75 to 2.0",
+        "Title1":  "Elbow, 3 Gore, 90 Degree, r/D=0.75 to 2.0",
+        "Title2":  "(Locklin 1950, Fig. 10)",
+        "DateCreated":  "\/Date(995164684000)\/",
+        "DateModified":  "\/Date(995164684000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-13",
+        "Order":  7,
+        "Label":  "3-Gore, 60 deg., r/D=1.5",
+        "Title1":  "Elbow, 3 Gore, 60 Degree, r/D = 1.5",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995164886000)\/",
+        "DateModified":  "\/Date(995164886000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-14",
+        "Order":  5,
+        "Label":  "3-Gore, 45 deg., r/D=1.5",
+        "Title1":  "Elbow, 3 Gore, 45 Degree, r/D = 1.5",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995164969000)\/",
+        "DateModified":  "\/Date(995164969000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-15",
+        "Order":  5,
+        "Label":  "90 deg.",
+        "Title1":  "Elbow, Mitered, 90 Degree",
+        "Title2":  "(UMC 1985, Report SRF1285)",
+        "DateCreated":  "\/Date(995163874000)\/",
+        "DateModified":  "\/Date(1329988505000)\/"
+    },
+    {
+        "Parent":  "CR3",
+        "Key":  "CR3SR",
+        "Order":  null,
+        "Label":  "Smooth Radius",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR3",
+        "Key":  "CR3M",
+        "Order":  null,
+        "Label":  "Mitered",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR3",
+        "Key":  "CR3O",
+        "Order":  null,
+        "Label":  "Other Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR3SR",
+        "Key":  "CR3-1",
+        "Order":  null,
+        "Label":  "Without Vanes",
+        "Title1":  "Elbow, Smooth Radius without Vanes",
+        "Title2":  "(Idelchik 1986, Diagram 6-1)",
+        "DateCreated":  "\/Date(995170269000)\/",
+        "DateModified":  "\/Date(1415334444000)\/"
+    },
+    {
+        "Parent":  "CR3SR",
+        "Key":  "CR3-3",
+        "Order":  null,
+        "Label":  "One Splitter Vane",
+        "Title1":  "Elbow, Smooth Radius, One Splitter Vane",
+        "Title2":  "(Locklin 1950; Madison \u0026\u0026 Parker 1936)",
+        "DateCreated":  "\/Date(995170317000)\/",
+        "DateModified":  "\/Date(995170317000)\/"
+    },
+    {
+        "Parent":  "CR3SR",
+        "Key":  "CR3-4",
+        "Order":  null,
+        "Label":  "Two Splitter Vanes",
+        "Title1":  "Elbow, Smooth Radius, Two Splitter Vanes",
+        "Title2":  "(Locklin 1950; Madison \u0026\u0026 Parker 1936)",
+        "DateCreated":  "\/Date(995170640000)\/",
+        "DateModified":  "\/Date(995170640000)\/"
+    },
+    {
+        "Parent":  "CR3SR",
+        "Key":  "CR3-5",
+        "Order":  null,
+        "Label":  "Three Splitter Vanes",
+        "Title1":  "Elbow, Smooth Radius, Three Splitter Vanes",
+        "Title2":  "(Locklin 1950; Madison \u0026\u0026 Parker 1936)",
+        "DateCreated":  "\/Date(995170682000)\/",
+        "DateModified":  "\/Date(995170682000)\/"
+    },
+    {
+        "Parent":  "CR3M",
+        "Key":  "CR3-6",
+        "Order":  null,
+        "Label":  "Without Vanes",
+        "Title1":  "Elbow, Mitered (Idelchik 1986, Diagram 6-5)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995168819000)\/",
+        "DateModified":  "\/Date(995168819000)\/"
+    },
+    {
+        "Parent":  "CR3M",
+        "Key":  "CR3MST",
+        "Order":  null,
+        "Label":  "Single-Thickness Vanes",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR3M",
+        "Key":  "CR3MDT",
+        "Order":  null,
+        "Label":  "Double-Thickness Vanes",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-4",
+        "Order":  null,
+        "Label":  "Plain Diffuser (Two Sides Parallel), with Wall",
+        "Title1":  "Plain Diffuser (Two Sides Parallel), with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 5-10)",
+        "DateCreated":  "\/Date(993048192000)\/",
+        "DateModified":  "\/Date(993048192000)\/"
+    },
+    {
+        "Parent":  "CR3MST",
+        "Key":  "CR3-12",
+        "Order":  4,
+        "Label":  "3 1/4-in. Vane Spacing",
+        "Title1":  "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
+        "Title2":  "3 1/4-in. Vane Spacing (Brooks 1993)",
+        "DateCreated":  "\/Date(995169522000)\/",
+        "DateModified":  "\/Date(995169522000)\/"
+    },
+    {
+        "Parent":  "CD",
+        "Key":  "CD11-2",
+        "Order":  20,
+        "Label":  "Straight Duct, Flexible",
+        "Title1":  "Straight Duct, Flexible",
+        "Title2":  "(Abushakra 2004 and Culp 2011",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1415604687000)\/"
+    },
+    {
+        "Parent":  "CR3MDT",
+        "Key":  "CR3-14",
+        "Order":  null,
+        "Label":  "1 1/2-in. Vane Spacing",
+        "Title1":  "Elbow, Mitered, 90 Degree, Double-Thickness Vanes ",
+        "Title2":  "1 1/2-in. Vane Spacing (Brooks 1993)",
+        "DateCreated":  "\/Date(995169055000)\/",
+        "DateModified":  "\/Date(995169055000)\/"
+    },
+    {
+        "Parent":  "CR3MDT",
+        "Key":  "CR3-15",
+        "Order":  null,
+        "Label":  "2 1/8-in. Vane Spacing",
+        "Title1":  "Elbow, Mitered, 90 Degree, Double-Thickness Vanes ",
+        "Title2":  "2 1/8-in. Vane Spacing (Rozell 1974)",
+        "DateCreated":  "\/Date(995169086000)\/",
+        "DateModified":  "\/Date(995169086000)\/"
+    },
+    {
+        "Parent":  "CR3MDT",
+        "Key":  "CR3-16",
+        "Order":  null,
+        "Label":  "3 1/4-in. Vane Spacing",
+        "Title1":  "Elbow, Mitered, 90 Degree, Double-Thickness Vanes ",
+        "Title2":  "3 1/4-in. Vane Spacing (Brooks 1993)",
+        "DateCreated":  "\/Date(995169198000)\/",
+        "DateModified":  "\/Date(995169198000)\/"
+    },
+    {
+        "Parent":  "CR3O",
+        "Key":  "CR3-2",
+        "Order":  1,
+        "Label":  "Sharp Throat, Radius Heel",
+        "Title1":  "Elbow, Sharp Throat (r/W=0.5), Radius Heel, 90 Degree",
+        "Title2":  "(Idelchik 1986, Diagram 6-1)",
+        "DateCreated":  "\/Date(995170107000)\/",
+        "DateModified":  "\/Date(995170107000)\/"
+    },
+    {
+        "Parent":  "CR3O",
+        "Key":  "CR3-7",
+        "Order":  2,
+        "Label":  "Rounded Throat, Sharp Heel",
+        "Title1":  "Elbow, Rounded Throat, Sharp Heel, 90 Degree",
+        "Title2":  "(Idelchik 1986, Diagram 6-8)",
+        "DateCreated":  "\/Date(995170147000)\/",
+        "DateModified":  "\/Date(995170147000)\/"
+    },
+    {
+        "Parent":  "CR3O",
+        "Key":  "CR3-8",
+        "Order":  3,
+        "Label":  "Beveled Throat, Sharp Heel",
+        "Title1":  "Elbow, Beveled Throat, Sharp Heel, 90 Degree",
+        "Title2":  "(Idelchik 1986, Diagram 6-8)",
+        "DateCreated":  "\/Date(995170194000)\/",
+        "DateModified":  "\/Date(995170194000)\/"
+    },
+    {
+        "Parent":  "CR3O",
+        "Key":  "CR3-17",
+        "Order":  6,
+        "Label":  "Offset, Z-shaped Mitered Elbows",
+        "Title1":  "Elbow,  Z-Shape",
+        "Title2":  "(Idelchik 1986, Diagram 6-11)",
+        "DateCreated":  "\/Date(995169890000)\/",
+        "DateModified":  "\/Date(995169890000)\/"
+    },
+    {
+        "Parent":  "ER3",
+        "Key":  "ER3-1",
+        "Order":  null,
+        "Label":  "Variable Inlet/Outlet Areas",
+        "Title1":  "Elbow, 90 Degree, Variable Inlet/Outlet Areas,",
+        "Title2":  "Exhaust/ Return Systems (Idelchik 1986, Diagram 6-4)",
+        "DateCreated":  "\/Date(995180125000)\/",
+        "DateModified":  "\/Date(995180125000)\/"
+    },
+    {
+        "Parent":  "SR3",
+        "Key":  "SR3-1",
+        "Order":  null,
+        "Label":  "Variable Inlet/Outlet Areas",
+        "Title1":  "Elbow, 90 Degree, Variable Inlet/Outlet Areas, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 6-4)",
+        "DateCreated":  "\/Date(993049102000)\/",
+        "DateModified":  "\/Date(993049102000)\/"
+    },
+    {
+        "Parent":  "ED4",
+        "Key":  "ED4-1",
+        "Order":  null,
+        "Label":  "Round to Round",
+        "Title1":  "Transition, Round to Round, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagrams 5-2 \u0026\u0026 5-22)",
+        "DateCreated":  "\/Date(995174038000)\/",
+        "DateModified":  "\/Date(1414361061000)\/"
+    },
+    {
+        "Parent":  "ED4",
+        "Key":  "ED4-2",
+        "Order":  null,
+        "Label":  "Round to Rectangular",
+        "Title1":  "Transition, Round to Rectangular, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-27)",
+        "DateCreated":  "\/Date(995174330000)\/",
+        "DateModified":  "\/Date(1414361720000)\/"
+    },
+    {
+        "Parent":  "CR3MST",
+        "Key":  "CR3-9",
+        "Order":  1,
+        "Label":  "1 1/2-in. Vane Spacing",
+        "Title1":  "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
+        "Title2":  "1 1/2-in. Vane Spacing (Brooks 1993)",
+        "DateCreated":  "\/Date(995169627000)\/",
+        "DateModified":  "\/Date(995169627000)\/"
+    },
+    {
+        "Parent":  "ER4",
+        "Key":  "ER4-1",
+        "Order":  null,
+        "Label":  "Rectangular, 2 Sides Parallel, Symmetrical",
+        "Title1":  "Transition, Rectangular, Two Sides Parallel, Symmetrical,",
+        "Title2":  "Exhaust/Return Systems (Idelchik 1986, Diagram 5-5)",
+        "DateCreated":  "\/Date(995180328000)\/",
+        "DateModified":  "\/Date(1414363703000)\/"
+    },
+    {
+        "Parent":  "ER4",
+        "Key":  "ER4-2",
+        "Order":  null,
+        "Label":  "Pyramidal",
+        "Title1":  "Transition, Pyramidal, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-4)",
+        "DateCreated":  "\/Date(995180775000)\/",
+        "DateModified":  "\/Date(1414364026000)\/"
+    },
+    {
+        "Parent":  "ER4",
+        "Key":  "ER4-3",
+        "Order":  null,
+        "Label":  "Rectangular to Round",
+        "Title1":  "Transition, Rectangular to Round, Exhaust/Return Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-27)",
+        "DateCreated":  "\/Date(995180964000)\/",
+        "DateModified":  "\/Date(1414364422000)\/"
+    },
+    {
+        "Parent":  "SD4",
+        "Key":  "SD4-1",
+        "Order":  null,
+        "Label":  "Round to Round",
+        "Title1":  "Transition, Round to Round, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-2 \u0026\u0026 5-22)",
+        "DateCreated":  "\/Date(985498145000)\/",
+        "DateModified":  "\/Date(1414965831000)\/"
+    },
+    {
+        "Parent":  "SD4",
+        "Key":  "SD4-2",
+        "Order":  null,
+        "Label":  "Rectangular to Round",
+        "Title1":  "Transition, Rectangular to Round, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-27)",
+        "DateCreated":  "\/Date(985498394000)\/",
+        "DateModified":  "\/Date(1414966753000)\/"
+    },
+    {
+        "Parent":  "SR4",
+        "Key":  "SR4-3",
+        "Order":  null,
+        "Label":  "Round to Rectangular",
+        "Title1":  "Transition, Round to Rectangular, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-27)",
+        "DateCreated":  "\/Date(994845730000)\/",
+        "DateModified":  "\/Date(1414967200000)\/"
+    },
+    {
+        "Parent":  "ED5",
+        "Key":  "ED5W",
+        "Order":  null,
+        "Label":  "Wye",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED5",
+        "Key":  "ED5T",
+        "Order":  null,
+        "Label":  "Tee",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED5",
+        "Key":  "ED5-10",
+        "Order":  null,
+        "Label":  "Double Wye",
+        "Title1":  "Double Wye, 45 Degree, Ab1 = Ab2, As = Ac, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-27)",
+        "DateCreated":  "\/Date(995175012000)\/",
+        "DateModified":  "\/Date(995175012000)\/"
+    },
+    {
+        "Parent":  "ED5",
+        "Key":  "ED5-11",
+        "Order":  null,
+        "Label":  "Cross",
+        "Title1":  "Cross, Ab1 = Ab2, As = Ac, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-29)",
+        "DateCreated":  "\/Date(995175129000)\/",
+        "DateModified":  "\/Date(995175129000)\/"
+    },
+    {
+        "Parent":  "ED5",
+        "Key":  "ED5-8",
+        "Order":  null,
+        "Label":  "Heel-Tapped Elbow",
+        "Title1":  "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Converging",
+        "Title2":  "(UMC 1985, Report SRF785E)",
+        "DateCreated":  "\/Date(995175183000)\/",
+        "DateModified":  "\/Date(995175183000)\/"
+    },
+    {
+        "Parent":  "ED5W",
+        "Key":  "ED5-1",
+        "Order":  null,
+        "Label":  "30 degree",
+        "Title1":  "Wye, 30 Degree, Converging",
+        "Title2":  "(Sepsy 1973)",
+        "DateCreated":  "\/Date(995176767000)\/",
+        "DateModified":  "\/Date(995176767000)\/"
+    },
+    {
+        "Parent":  "ED5W",
+        "Key":  "ED5-2",
+        "Order":  null,
+        "Label":  "45 degree",
+        "Title1":  "Wye, 45 Degree, Converging",
+        "Title2":  "(Sepsy 1973)",
+        "DateCreated":  "\/Date(995177050000)\/",
+        "DateModified":  "\/Date(995177050000)\/"
+    },
+    {
+        "Parent":  "ED5W",
+        "Key":  "ED5-6",
+        "Order":  null,
+        "Label":  "Capped Wye, Br with 45 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Capped Wye, Branch with 45 Degree Elbow, Branch 90 Degrees",
+        "Title2":  "to Main, Converging (UMC 1983, Report SRN1083)",
+        "DateCreated":  "\/Date(995177124000)\/",
+        "DateModified":  "\/Date(995177124000)\/"
+    },
+    {
+        "Parent":  "ED5W",
+        "Key":  "ED5-9",
+        "Order":  null,
+        "Label":  "Symmetrical Wye, 60 degree",
+        "Title1":  "Symmetrical Wye, 60 Degree, Db1 \u003e or = Db2, Converging",
+        "Title2":  "(UMC 1985, Report SRF785E)",
+        "DateCreated":  "\/Date(995177406000)\/",
+        "DateModified":  "\/Date(995177406000)\/"
+    },
+    {
+        "Parent":  "ED5T",
+        "Key":  "ED5-3",
+        "Order":  null,
+        "Label":  "Tee",
+        "Title1":  "Tee, Converging",
+        "Title2":  "(Sepsy 1973)",
+        "DateCreated":  "\/Date(995176017000)\/",
+        "DateModified":  "\/Date(995176017000)\/"
+    },
+    {
+        "Parent":  "ED5T",
+        "Key":  "ED5TB",
+        "Order":  null,
+        "Label":  "Bullhead",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED5T",
+        "Key":  "ED5-7",
+        "Order":  null,
+        "Label":  "Capped",
+        "Title1":  "Capped Tee, Converging",
+        "Title2":  "(UMC 1983, Report SRN1083)",
+        "DateCreated":  "\/Date(995176130000)\/",
+        "DateModified":  "\/Date(995176130000)\/"
+    },
+    {
+        "Parent":  "ED5TB",
+        "Key":  "ED5-4",
+        "Order":  20,
+        "Label":  "Without Vanes",
+        "Title1":  "Bullhead Tee without Vanes, Db1 \u003e or = Db2, Converging",
+        "Title2":  "(UMC 1985, Report SRF785E)",
+        "DateCreated":  "\/Date(995176416000)\/",
+        "DateModified":  "\/Date(1330941759000)\/"
+    },
+    {
+        "Parent":  "ER5",
+        "Key":  "ER5W",
+        "Order":  null,
+        "Label":  "Wye",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER5",
+        "Key":  "ER5T",
+        "Order":  null,
+        "Label":  "Tee",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER5",
+        "Key":  "ER5-9",
+        "Order":  null,
+        "Label":  "Double Wye",
+        "Title1":  "Double Wye of the Type As = Ac, Ab1 = Ab2, 45 Degree, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-27)",
+        "DateCreated":  "\/Date(986705775000)\/",
+        "DateModified":  "\/Date(986705775000)\/"
+    },
+    {
+        "Parent":  "ER5",
+        "Key":  "ER5-10",
+        "Order":  null,
+        "Label":  "Cross",
+        "Title1":  "Cross of the Type As = Ac, Ab1 = Ab2, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-29)",
+        "DateCreated":  "\/Date(986018031000)\/",
+        "DateModified":  "\/Date(986018031000)\/"
+    },
+    {
+        "Parent":  "ER5W",
+        "Key":  "ER5-1",
+        "Order":  10,
+        "Label":  "Smooth Rad., Br 90 deg. to Main",
+        "Title1":  "Smooth Radius Wye of the Type As + Ab \u003e or = Ac, Branch 90",
+        "Title2":  "Degrees to Main, Converging (Idelchik 1986, Diagram 7-11)",
+        "DateCreated":  "\/Date(995181140000)\/",
+        "DateModified":  "\/Date(995181140000)\/"
+    },
+    {
+        "Parent":  "ER5W",
+        "Key":  "ER5-4",
+        "Order":  20,
+        "Label":  "Dovetail",
+        "Title1":  "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-24)",
+        "DateCreated":  "\/Date(995181451000)\/",
+        "DateModified":  "\/Date(995181451000)\/"
+    },
+    {
+        "Parent":  "ER5W",
+        "Key":  "ER5-8",
+        "Order":  50,
+        "Label":  "Ab1+Ab2=Ac, 90 degree",
+        "Title1":  "Symmetrical Wye of the Type Ab1 + Ab2 = Ac, Ab1 = Ab2,",
+        "Title2":  "90 Degree, Converging (Idelchik 1986, Diagrams 7-30)",
+        "DateCreated":  "\/Date(993050621000)\/",
+        "DateModified":  "\/Date(993050621000)\/"
+    },
+    {
+        "Parent":  "ER5T",
+        "Key":  "ER5-2",
+        "Order":  null,
+        "Label":  "Round Tap, Rect. Main",
+        "Title1":  "Tee, Round Tap to Rectangular Main [Ab/As=Ab/Ac=0.5;  As/Ac], Converging",
+        "Title2":  "(SMACNA 1990, Sepsy 1973)",
+        "DateCreated":  "\/Date(986726616000)\/",
+        "DateModified":  "\/Date(986726616000)\/"
+    },
+    {
+        "Parent":  "ER5T",
+        "Key":  "ER5-3",
+        "Order":  null,
+        "Label":  "45 degree Entry Branch",
+        "Title1":  "Tee, 45 Degree Entry Branch [Ab/As=Ab/Ac=0.5; As=Ac], Converging ",
+        "Title2":  "(SMACNA 1990, Sepsy 1973)",
+        "DateCreated":  "\/Date(986726107000)\/",
+        "DateModified":  "\/Date(986726107000)\/"
+    },
+    {
+        "Parent":  "ER5T",
+        "Key":  "ER5-5",
+        "Order":  null,
+        "Label":  "Bullhead, without Vanes",
+        "Title1":  "Bullhead Tee without Vanes, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-23)",
+        "DateCreated":  "\/Date(986725545000)\/",
+        "DateModified":  "\/Date(986725545000)\/"
+    },
+    {
+        "Parent":  "SD5",
+        "Key":  "SD5W",
+        "Order":  null,
+        "Label":  "Wye",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5",
+        "Key":  "SD5-23",
+        "Order":  null,
+        "Label":  "Double Wye",
+        "Title1":  "Double Wye, 45 Degree, Diverging",
+        "Title2":  "(UMC 1990, Fig. 33; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992755925000)\/",
+        "DateModified":  "\/Date(992755925000)\/"
+    },
+    {
+        "Parent":  "SD5",
+        "Key":  "SD5T",
+        "Order":  null,
+        "Label":  "Tee",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5",
+        "Key":  "SD5C",
+        "Order":  null,
+        "Label":  "Cross",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5",
+        "Key":  "SD5-21",
+        "Order":  null,
+        "Label":  "Heel-Tapped Elbow",
+        "Title1":  "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Diverging",
+        "Title2":  "(UMC 1990)",
+        "DateCreated":  "\/Date(992782425000)\/",
+        "DateModified":  "\/Date(992782425000)\/"
+    },
+    {
+        "Parent":  "SD5C",
+        "Key":  "SD5-20",
+        "Order":  null,
+        "Label":  "90 degree, Capped",
+        "Title1":  "Capped Cross, 90 Degree, Diverging",
+        "Title2":  "(Sepsy 1969)",
+        "DateCreated":  "\/Date(992757207000)\/",
+        "DateModified":  "\/Date(992757207000)\/"
+    },
+    {
+        "Parent":  "SD5C",
+        "Key":  "SD5-24",
+        "Order":  null,
+        "Label":  "90 degree",
+        "Title1":  "Cross, Diverging",
+        "Title2":  "(UMC 1990, Fig. 33; UMC 1986,  Report SRF386)",
+        "DateCreated":  "\/Date(992758915000)\/",
+        "DateModified":  "\/Date(992758915000)\/"
+    },
+    {
+        "Parent":  "SD5C",
+        "Key":  "SD5-25",
+        "Order":  null,
+        "Label":  "Conical Branches, Tapered into Body",
+        "Title1":  "Cross, Conical  Branches Tapered into Body, Diverging",
+        "Title2":  "(UMC 1990, Fig. 33; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992763415000)\/",
+        "DateModified":  "\/Date(992763415000)\/"
+    },
+    {
+        "Parent":  "SD5C",
+        "Key":  "SD5-26",
+        "Order":  null,
+        "Label":  "45 degree Entry Branches",
+        "Title1":  "Cross, 45 Degree Entry Branches, Diverging",
+        "Title2":  "(UMC 1990, Fig. 33; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992764239000)\/",
+        "DateModified":  "\/Date(992764239000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-1",
+        "Order":  null,
+        "Label":  "45 degree",
+        "Title1":  "Wye, 45 Degree, Diverging",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991989374000)\/",
+        "DateModified":  "\/Date(991989374000)\/"
+    },
+    {
+        "Parent":  "SD5WC",
+        "Key":  "SD5-2",
+        "Order":  null,
+        "Label":  "Conical Branch Tapered into Body, 45 degree",
+        "Title1":  "Wye, 45 Degree, Conical Branch Tapered into Body, Diverging",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991989735000)\/",
+        "DateModified":  "\/Date(991989735000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-3",
+        "Order":  null,
+        "Label":  "45 deg. Straight Body Branch with Transition",
+        "Title1":  "Wye, 45 Degree, Straight Body Branch with Reducing Transition, Diverging",
+        "Title2":  "(Jones 1969, Fig. 14: UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991990073000)\/",
+        "DateModified":  "\/Date(991990073000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-4",
+        "Order":  null,
+        "Label":  "45 deg. with 45 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Wye, 45 Degree, Branch with 45 Degree Elbow, Branch 90 Degrees to Main",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991990398000)\/",
+        "DateModified":  "\/Date(991990398000)\/"
+    },
+    {
+        "Parent":  "SD5WC",
+        "Key":  "SD5-5",
+        "Order":  null,
+        "Label":  "Con Br with 60 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Wye, 45 Deg., Conical Br.with 60 Deg. Elbow, Br. 90 Deg. to",
+        "Title2":  "Main, Diverging (Jones 1969, Fig. 20; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991990757000)\/",
+        "DateModified":  "\/Date(991990757000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-6",
+        "Order":  null,
+        "Label":  "45 deg. with 60 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Wye, 45 Degree, Branch with 60 Degree Elbow, Branch 90 Degrees",
+        "Title2":  " to Main, Diverging (Jones 1963, Fig. 3; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991991180000)\/",
+        "DateModified":  "\/Date(991991180000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-7",
+        "Order":  null,
+        "Label":  "45 deg. with 30 deg. Elbow, Br 45 deg. to Main",
+        "Title1":  "Wye, 45 Degree, Branch with 30 Deg. Elbow, Branch 45 Deg. to",
+        "Title2":  "Main, Diverging (Jones 1963, Fig. 2; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991991725000)\/",
+        "DateModified":  "\/Date(991991725000)\/"
+    },
+    {
+        "Parent":  "SD5WC",
+        "Key":  "SD5-8",
+        "Order":  null,
+        "Label":  "45 deg. Con Br with 30 deg. Elbow, Br 45 deg. to Main",
+        "Title1":  "Wye, 45 Deg., Conical Br. with 30 Deg. Elbow, Br. 45 Deg. to",
+        "Title2":  "Main, Diverging (Jones 1969, Fig. 24; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991992690000)\/",
+        "DateModified":  "\/Date(991992690000)\/"
+    },
+    {
+        "Parent":  "SD5WNC",
+        "Key":  "SD5-22",
+        "Order":  9,
+        "Label":  "Symmetrical Wye, 90 deg. with 45 deg. Elbows",
+        "Title1":  "Symmetrical Wye, w/45 Deg. Elbows,",
+        "Title2":  "Branches 90 Degrees to Main, Diverging  (Sepsy 1969)",
+        "DateCreated":  "\/Date(991993212000)\/",
+        "DateModified":  "\/Date(991993212000)\/"
+    },
+    {
+        "Parent":  "SD5T",
+        "Key":  "SD5TC",
+        "Order":  null,
+        "Label":  "Conical Branch",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5T",
+        "Key":  "SD5TNC",
+        "Order":  null,
+        "Label":  "Non-Conical Branch",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5T",
+        "Key":  "SD5TB",
+        "Order":  null,
+        "Label":  "Bullhead",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5TC",
+        "Key":  "SD5-10",
+        "Order":  null,
+        "Label":  "Conical Branch Tapered into Body",
+        "Title1":  "Tee, Conical Branch Tapered into Body, Diverging",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(991994328000)\/",
+        "DateModified":  "\/Date(991994328000)\/"
+    },
+    {
+        "Parent":  "SD5TC",
+        "Key":  "SD5-11",
+        "Order":  null,
+        "Label":  "Conical Branch",
+        "Title1":  "Tee, Conical Branch, Diverging",
+        "Title2":  "(Jones 1969, Fig. 12; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992143891000)\/",
+        "DateModified":  "\/Date(992143891000)\/"
+    },
+    {
+        "Parent":  "SD5TC",
+        "Key":  "SD5-14",
+        "Order":  null,
+        "Label":  "With 45 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Tee, Conical Branch with 45 Deg. Elbow,  Branch 90 Deg. to Main, Diverging",
+        "Title2":  "(Jones 1969, Fig. 19; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992753560000)\/",
+        "DateModified":  "\/Date(992753560000)\/"
+    },
+    {
+        "Parent":  "SD5TC",
+        "Key":  "SD5-17",
+        "Order":  null,
+        "Label":  "With 60 deg. Elbow, Br 45 deg. to Main",
+        "Title1":  "Tee, Conical Branch with 60 Deg. Elbow, Branch 45 Deg. to Main, Diverging",
+        "Title2":  "(Jones 1969, Fig. 23; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992753932000)\/",
+        "DateModified":  "\/Date(992753932000)\/"
+    },
+    {
+        "Parent":  "SD5TNC",
+        "Key":  "SD5-9",
+        "Order":  null,
+        "Label":  "90 degree",
+        "Title1":  "Tee, Diverging",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992754294000)\/",
+        "DateModified":  "\/Date(992754294000)\/"
+    },
+    {
+        "Parent":  "SD5TNC",
+        "Key":  "SD5-12",
+        "Order":  null,
+        "Label":  "45 deg. Entry Branch",
+        "Title1":  "Tee, 45 Degree Entry Branch, Diverging",
+        "Title2":  "(UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992754619000)\/",
+        "DateModified":  "\/Date(992754619000)\/"
+    },
+    {
+        "Parent":  "SD5TNC",
+        "Key":  "SD5-13",
+        "Order":  null,
+        "Label":  "With 45 deg. Elbows, Br 90 deg. to Main",
+        "Title1":  "Tee, Branch with 45 Degree Elbow, Branch 90 Degrees to Main, Diverging",
+        "Title2":  "(Jones 1969, Fig. 18; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992755092000)\/",
+        "DateModified":  "\/Date(992755092000)\/"
+    },
+    {
+        "Parent":  "SD5TNC",
+        "Key":  "SD5-15",
+        "Order":  null,
+        "Label":  "With 90 deg. Elbow, Br 90 deg. to Main",
+        "Title1":  "Tee, Branch with 90 Degree Elbow, Branch 90 Degrees to Main, Diverging ",
+        "Title2":  "(Jones 1969, Fig. 17; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992755506000)\/",
+        "DateModified":  "\/Date(992755506000)\/"
+    },
+    {
+        "Parent":  "SD5TNC",
+        "Key":  "SD5-16",
+        "Order":  null,
+        "Label":  "With 60 deg. Elbow, Br 45 deg. to Main",
+        "Title1":  "Tee, Branch with 60 Degree Elbow, Branch 45 Degrees to Main, Diverging",
+        "Title2":  "(Jones 1969, Fig. 22; UMC 1986, Report SRF386)",
+        "DateCreated":  "\/Date(992755833000)\/",
+        "DateModified":  "\/Date(992755833000)\/"
+    },
+    {
+        "Parent":  "SD5TB",
+        "Key":  "SD5-18",
+        "Order":  null,
+        "Label":  "Without Vanes",
+        "Title1":  "Bullhead Tee without Vanes, Diverging",
+        "Title2":  "(Sepsy 1969)",
+        "DateCreated":  "\/Date(992756430000)\/",
+        "DateModified":  "\/Date(992756430000)\/"
+    },
+    {
+        "Parent":  "SD5TB",
+        "Key":  "SD5-19",
+        "Order":  null,
+        "Label":  "With Vanes",
+        "Title1":  "Bullhead Tee with Vanes, Diverging",
+        "Title2":  "(Sepsy 1969)",
+        "DateCreated":  "\/Date(992756759000)\/",
+        "DateModified":  "\/Date(992756759000)\/"
+    },
+    {
+        "Parent":  "SR5",
+        "Key":  "SR5W",
+        "Order":  null,
+        "Label":  "Wye",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR5",
+        "Key":  "SR5T",
+        "Order":  null,
+        "Label":  "Tee",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR5",
+        "Key":  "SR5-20",
+        "Order":  null,
+        "Label":  "Double Wye",
+        "Title1":  "Double Wye of the Type As = Ac, 45 Degree, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-15, 7-17 \u0026\u0026 7-27)",
+        "DateCreated":  "\/Date(995182444000)\/",
+        "DateModified":  "\/Date(995182444000)\/"
+    },
+    {
+        "Parent":  "SR5",
+        "Key":  "SR5-21",
+        "Order":  null,
+        "Label":  "Cross",
+        "Title1":  "Cross of the Type As = Ac, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-15, 7-17 \u0026\u0026 7-29)",
+        "DateCreated":  "\/Date(995183406000)\/",
+        "DateModified":  "\/Date(995183406000)\/"
+    },
+    {
+        "Parent":  "SR5W",
+        "Key":  "SR5-1",
+        "Order":  null,
+        "Label":  "Smooth Radius",
+        "Title1":  "Smooth Radius Wye of the Type As + Ab \u003e or = Ac, Branch",
+        "Title2":  "90 Degrees to Main, Diverging (Idelchik 1986, Diagram 7-21)",
+        "DateCreated":  "\/Date(995186804000)\/",
+        "DateModified":  "\/Date(995186804000)\/"
+    },
+    {
+        "Parent":  "SR5W",
+        "Key":  "SR5WS",
+        "Order":  null,
+        "Label":  "Symmetrical",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR5W",
+        "Key":  "SR5WU",
+        "Order":  null,
+        "Label":  "Unsymmetrical",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR5WS",
+        "Key":  "SR5-14",
+        "Order":  null,
+        "Label":  "Dovetail",
+        "Title1":  "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Diverging",
+        "Title2":  "(Idelchik 1986, Diagram 7-24)",
+        "DateCreated":  "\/Date(994847133000)\/",
+        "DateModified":  "\/Date(994847133000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-5",
+        "Order":  null,
+        "Label":  "As+Ab\u003eAc, As=Ac",
+        "Title1":  "Tee of the Type As + Ab \u003e Ac,  As = Ac, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-15 \u0026\u0026 7-17)",
+        "DateCreated":  "\/Date(995186089000)\/",
+        "DateModified":  "\/Date(995186089000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-10",
+        "Order":  null,
+        "Label":  "As+Ab=Ac",
+        "Title1":  "Tee of the Type As + Ab = Ac, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-16 \u0026\u0026 7-17)",
+        "DateCreated":  "\/Date(995183486000)\/",
+        "DateModified":  "\/Date(995183486000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-11",
+        "Order":  null,
+        "Label":  "Rectangular Main to Round Tap",
+        "Title1":  "Tee, Rectangular Main to Round Tap, Diverging (Brooks 1993)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995184875000)\/",
+        "DateModified":  "\/Date(995184875000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-12",
+        "Order":  null,
+        "Label":  "Rectangular Main to Round Conical Tap",
+        "Title1":  "Tee, Rectangular Main to Round Conical Tap, Diverging",
+        "Title2":  "(Inoue 1980; Korst 1950; Brooks 1993)",
+        "DateCreated":  "\/Date(995185529000)\/",
+        "DateModified":  "\/Date(995185529000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-13",
+        "Order":  null,
+        "Label":  "45 degree Entry Branch",
+        "Title1":  "Tee, 45 Degree Entry Branch, Diverging (Brooks 1993)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995185595000)\/",
+        "DateModified":  "\/Date(995185595000)\/"
+    },
+    {
+        "Parent":  "SR5T",
+        "Key":  "SR5-15",
+        "Order":  null,
+        "Label":  "Bullhead, without Vanes",
+        "Title1":  "Bullhead Tee without Vanes, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-16 \u0026\u0026 7-30)",
+        "DateCreated":  "\/Date(995185966000)\/",
+        "DateModified":  "\/Date(995185966000)\/"
+    },
+    {
+        "Parent":  "CD6",
+        "Key":  "CD6-1",
+        "Order":  null,
+        "Label":  "Screen (Only)",
+        "Title1":  "Screen (Only)",
+        "Title2":  "(Idelchik 1986, Diagrams 8-6 and 3-15)",
+        "DateCreated":  "\/Date(995165719000)\/",
+        "DateModified":  "\/Date(995165719000)\/"
+    },
+    {
+        "Parent":  "CD6",
+        "Key":  "CD6-2",
+        "Order":  null,
+        "Label":  "Perforated Plate, Thick",
+        "Title1":  "Perforated Plate, Thick",
+        "Title2":  "(Idelchik 1986, Diagram 8-3)",
+        "DateCreated":  "\/Date(996148028000)\/",
+        "DateModified":  "\/Date(996148028000)\/"
+    },
+    {
+        "Parent":  "CD6",
+        "Key":  "CD6-3",
+        "Order":  null,
+        "Label":  "Obstruction, Smooth Cylinder in Round Duct",
+        "Title1":  "Obstruction, Smooth Cylinder in Round Duct",
+        "Title2":  "(Idelchik 1986, Diagram 10-1)",
+        "DateCreated":  "\/Date(995166057000)\/",
+        "DateModified":  "\/Date(995166057000)\/"
+    },
+    {
+        "Parent":  "CD3MG",
+        "Key":  "CD3-21",
+        "Order":  10,
+        "Label":  "5-Gore, 90 deg., r/D=1.0",
+        "Title1":  "Elbow, 5 Gore, 90 Degree, r/D = 1.0",
+        "Title2":  "(UMC 1985, Report SRF1285; Brooks 1993)",
+        "DateCreated":  "\/Date(995165047000)\/",
+        "DateModified":  "\/Date(995165047000)\/"
+    },
+    {
+        "Parent":  "SD5WC",
+        "Key":  "SD5-27",
+        "Order":  null,
+        "Label":  "90 deg. Staight Body Branches w/Transitions",
+        "Title1":  "Symetrical Wye, 90 Degrees, Diverging",
+        "Title2":  "(Sepsy 1969)",
+        "DateCreated":  "\/Date(1141583400000)\/",
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR6",
+        "Key":  "CR6-1",
+        "Order":  null,
+        "Label":  "Screen (Only)",
+        "Title1":  " Screen (Only) (Idelchik 1986, Diagrams 8-6 and 3-15)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995170783000)\/",
+        "DateModified":  "\/Date(995170783000)\/"
+    },
+    {
+        "Parent":  "CR6",
+        "Key":  "CR6-2",
+        "Order":  null,
+        "Label":  "Perforated Plate, Thick",
+        "Title1":  "Perforated Plate, Thick",
+        "Title2":  "(Idelchik 1986, Diagram 8-3)",
+        "DateCreated":  "\/Date(995170846000)\/",
+        "DateModified":  "\/Date(995170846000)\/"
+    },
+    {
+        "Parent":  "CR6",
+        "Key":  "CR6-3",
+        "Order":  null,
+        "Label":  "Orifice, Thick-Edged",
+        "Title1":  "Orifice, Thick-Edged",
+        "Title2":  "(Idelchik 1986, Diagram 4-15)",
+        "DateCreated":  "\/Date(995171023000)\/",
+        "DateModified":  "\/Date(995171023000)\/"
+    },
+    {
+        "Parent":  "CR6",
+        "Key":  "CR6-4",
+        "Order":  null,
+        "Label":  "Obstruction, Smooth Cylinder in Rectangular Duct",
+        "Title1":  "Obstruction, Smooth Cylinder in Rectangular Duct",
+        "Title2":  "(Idelchilk 1986, Diagram 10-1)",
+        "DateCreated":  "\/Date(995171061000)\/",
+        "DateModified":  "\/Date(995171061000)\/"
+    },
+    {
+        "Parent":  "ED7",
+        "Key":  "ED7-1",
+        "Order":  null,
+        "Label":  "Centrifugal Fan in Plenum or Cabinet",
+        "Title1":  "Centrifugal Fan Located in Plenum or Cabinet",
+        "Title2":  "(AMCA 1990, Fig. 9-11)",
+        "DateCreated":  "\/Date(995377019000)\/",
+        "DateModified":  "\/Date(995377019000)\/"
+    },
+    {
+        "Parent":  "ED7",
+        "Key":  "ED7C",
+        "Order":  null,
+        "Label":  "Fan Inlet, Centrifugal",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED7",
+        "Key":  "ED7T",
+        "Order":  null,
+        "Label":  "Fan Inlet, Tubeaxial",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED7",
+        "Key":  "ED7V",
+        "Order":  null,
+        "Label":  "Fan Inlet, Vaneaxial",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ED7V",
+        "Key":  "ED7-8",
+        "Order":  null,
+        "Label":  "0.61 Hub-Tip Ratio, with 4-Gore Elbow",
+        "Title1":  "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with 4-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-2)",
+        "DateCreated":  "\/Date(995178362000)\/",
+        "DateModified":  "\/Date(995178362000)\/"
+    },
+    {
+        "Parent":  "ED7V",
+        "Key":  "ED7-9",
+        "Order":  null,
+        "Label":  "0.61 Hub-Tip Ratio, with Mitered Elbow",
+        "Title1":  "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with Mitered Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-2)",
+        "DateCreated":  "\/Date(995178423000)\/",
+        "DateModified":  "\/Date(995178423000)\/"
+    },
+    {
+        "Parent":  "ED7T",
+        "Key":  "ED7-5",
+        "Order":  null,
+        "Label":  "0.25 Hub-Tip Ratio, with 4-Gore Elbow",
+        "Title1":  "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with 4-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-2)",
+        "DateCreated":  "\/Date(995178167000)\/",
+        "DateModified":  "\/Date(995178167000)\/"
+    },
+    {
+        "Parent":  "ED7T",
+        "Key":  "ED7-6",
+        "Order":  null,
+        "Label":  "0.25 Hub-Tip Ratio, with Mitered Elbow",
+        "Title1":  "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with Mitered Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-2)",
+        "DateCreated":  "\/Date(995178229000)\/",
+        "DateModified":  "\/Date(995178229000)\/"
+    },
+    {
+        "Parent":  "ED7T",
+        "Key":  "ED7-7",
+        "Order":  null,
+        "Label":  "0.35 Hub-Tip Ratio, with Mitered Elbow",
+        "Title1":  "Fan Inlet, Tubeaxial, 0.35 Hub-Tip Ratio, with Mitered Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-2)",
+        "DateCreated":  "\/Date(995178294000)\/",
+        "DateModified":  "\/Date(995178294000)\/"
+    },
+    {
+        "Parent":  "ED7C",
+        "Key":  "ED7-2",
+        "Order":  null,
+        "Label":  "SWSI with 4-Gore Elbow",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, with 4-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-5)",
+        "DateCreated":  "\/Date(995177550000)\/",
+        "DateModified":  "\/Date(1414180017000)\/"
+    },
+    {
+        "Parent":  "S",
+        "Key":  "SO",
+        "Order":  7,
+        "Label":  "Flat Oval",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD2",
+        "Key":  "SD2-7",
+        "Order":  70,
+        "Label":  "Stackhead (Dexit/D\u003c1)",
+        "Title1":  "Stackhead (Dexit/D\u003c1)",
+        "Title2":  "(Idelchik 1986, Diagram 11-23)",
+        "DateCreated":  "\/Date(985497957000)\/",
+        "DateModified":  "\/Date(985497957000)\/"
+    },
+    {
+        "Parent":  "ED7C",
+        "Key":  "ED7-3",
+        "Order":  null,
+        "Label":  "SWSI with 3-Gore Elbow",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, with 3-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-5)",
+        "DateCreated":  "\/Date(995177793000)\/",
+        "DateModified":  "\/Date(995177793000)\/"
+    },
+    {
+        "Parent":  "ER7",
+        "Key":  "ER7C",
+        "Order":  null,
+        "Label":  "Fan Inlet, Centrifugal, SWSI",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "ER7C",
+        "Key":  "ER7-1",
+        "Order":  null,
+        "Label":  "90 deg. Smooth Radius Elbow",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
+        "Title2":  "(Square) (AMCA 1990, Fig. 9-6)",
+        "DateCreated":  "\/Date(986016644000)\/",
+        "DateModified":  "\/Date(986016644000)\/"
+    },
+    {
+        "Parent":  "ER7C",
+        "Key":  "ER7-2",
+        "Order":  null,
+        "Label":  "90 deg. Smooth Radius Elbow with Full Rad. Vanes",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, 90 Deg. Smooth Radius Elbow",
+        "Title2":  "(Square) with Fulll Radius Vanes (ACMA 1990, Fig. 9-6)",
+        "DateCreated":  "\/Date(986016248000)\/",
+        "DateModified":  "\/Date(986016248000)\/"
+    },
+    {
+        "Parent":  "ER7C",
+        "Key":  "ER7-3",
+        "Order":  null,
+        "Label":  "90 deg. Smooth Radius Elbow with Short Vanes",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
+        "Title2":  "(Square) with Short Vanes (AMCA 1990, Fig. 9-6)",
+        "DateCreated":  "\/Date(986481916000)\/",
+        "DateModified":  "\/Date(986481916000)\/"
+    },
+    {
+        "Parent":  "SD7",
+        "Key":  "SD7-1",
+        "Order":  null,
+        "Label":  "Fan, Vaneaxial, Discharging into a Plenum",
+        "Title1":  "Fan, Vaneaxial, Discharging into  Plenum",
+        "Title2":  "(AMCA 1990, Fig. 8-2)",
+        "DateCreated":  "\/Date(992782638000)\/",
+        "DateModified":  "\/Date(992782638000)\/"
+    },
+    {
+        "Parent":  "SD7",
+        "Key":  "SD7-2",
+        "Order":  null,
+        "Label":  "Fan Outlet, Tubeaxial, with 4-Gore Elbow",
+        "Title1":  "Fan Outlet, Tubeaxial, with 4-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 8-4)",
+        "DateCreated":  "\/Date(992782903000)\/",
+        "DateModified":  "\/Date(992782903000)\/"
+    },
+    {
+        "Parent":  "SD7",
+        "Key":  "SD7-3",
+        "Order":  null,
+        "Label":  "Fan Outlet, Tubeaxial, with Mitered Elbow",
+        "Title1":  "Fan Outlet, Tubeaxial, with Mitered Elbow ",
+        "Title2":  "(AMCA 1990, Fig. 8-4)",
+        "DateCreated":  "\/Date(992783185000)\/",
+        "DateModified":  "\/Date(992783185000)\/"
+    },
+    {
+        "Parent":  "SD7",
+        "Key":  "SD7-4",
+        "Order":  null,
+        "Label":  "Fan Outlet, Vaneaxial, with 4-Gore Elbow",
+        "Title1":  "Fan Outlet, Vaneaxial, with 4-Gore Elbow",
+        "Title2":  "(AMCA 1990, Fig. 8-4)",
+        "DateCreated":  "\/Date(992783699000)\/",
+        "DateModified":  "\/Date(992783699000)\/"
+    },
+    {
+        "Parent":  "CD3",
+        "Key":  "CD3DS",
+        "Order":  null,
+        "Label":  "Die Stamped",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD3",
+        "Key":  "CD3PL",
+        "Order":  null,
+        "Label":  "Pleated",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD7",
+        "Key":  "SD7-5",
+        "Order":  null,
+        "Label":  "Fan Outlet, Vaneaxial, with Mitered Elbow",
+        "Title1":  "Fan Outlet, Vaneaxial, with Mitered Elbow",
+        "Title2":  "(AMCA 1990, Fig. 8-4)",
+        "DateCreated":  "\/Date(992783899000)\/",
+        "DateModified":  "\/Date(992783899000)\/"
+    },
+    {
+        "Parent":  "SR7",
+        "Key":  "SR7-1",
+        "Order":  null,
+        "Label":  "Fan, Centrifugal, w/o Outlet Diffuser, Free Discharge",
+        "Title1":  "Fan, Centrifugal, without an Outlet Diffuser, Free Discharge",
+        "Title2":  "(AMCA 1990, Fig. 8-3)",
+        "DateCreated":  "\/Date(995159442000)\/",
+        "DateModified":  "\/Date(995159442000)\/"
+    },
+    {
+        "Parent":  "SR7",
+        "Key":  "SR7-4",
+        "Order":  null,
+        "Label":  "Fan, Centrifugal, Discharging into a Plenum",
+        "Title1":  "Fan, Centrifugal, Discharging into a Plenum",
+        "Title2":  "(AMCA 1990, Fig. 8-3)",
+        "DateCreated":  "\/Date(995159482000)\/",
+        "DateModified":  "\/Date(995159482000)\/"
+    },
+    {
+        "Parent":  "SR7",
+        "Key":  "SR7D",
+        "Order":  null,
+        "Label":  "Duffuser at Centrifugal Fan Outlet",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR7",
+        "Key":  "SR7O",
+        "Order":  null,
+        "Label":  "Fan Outlet, Centrifugal",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-10",
+        "Order":  2,
+        "Label":  "DWDI, with Elbow, Position B",
+        "Title1":  "Fan Outlet, Centrifugal, DWDI, with Elbow (Position B)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995161998000)\/",
+        "DateModified":  "\/Date(995161998000)\/"
+    },
+    {
+        "Parent":  "SR7D",
+        "Key":  "SR7-17",
+        "Order":  null,
+        "Label":  "Pyramidal, with Ductwork",
+        "Title1":  "Pyramidal Diffuser at Centrifugal Fan Outlet with Ductwork",
+        "Title2":  "(Idelchik 1986, Diagram 5-16)",
+        "DateCreated":  "\/Date(995160392000)\/",
+        "DateModified":  "\/Date(1414118674000)\/"
+    },
+    {
+        "Parent":  "SR7D",
+        "Key":  "SR7-3",
+        "Order":  null,
+        "Label":  "Pyramidal, Free Discharge",
+        "Title1":  "Pyramidal Diffuser at Centrifugal Fan Outlet, Free Discharge",
+        "Title2":  "(Idelchik 1986, Diagram 11-11)",
+        "DateCreated":  "\/Date(995160664000)\/",
+        "DateModified":  "\/Date(995160664000)\/"
+    },
+    {
+        "Parent":  "SR7D",
+        "Key":  "SR7-13",
+        "Order":  null,
+        "Label":  "Plane Symmetric, with Ductwork",
+        "Title1":  "Plane Symmetric Diffuser at Centrifugal Fan Outlet with",
+        "Title2":  "Ductwork (Idelchik 1986, Diagram 5-12)",
+        "DateCreated":  "\/Date(996141895000)\/",
+        "DateModified":  "\/Date(996141895000)\/"
+    },
+    {
+        "Parent":  "SR7D",
+        "Key":  "SR7DPA",
+        "Order":  null,
+        "Label":  "Plane Asymmetric",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR7DPA",
+        "Key":  "SR7-14",
+        "Order":  null,
+        "Label":  "With Ductwork, Configuration 1",
+        "Title1":  "Plane Asymmetric Diffuser (Configuration 1) at Centrifugal",
+        "Title2":  "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-13)",
+        "DateCreated":  "\/Date(996140410000)\/",
+        "DateModified":  "\/Date(996140410000)\/"
+    },
+    {
+        "Parent":  "CD8",
+        "Key":  "CD8D",
+        "Order":  null,
+        "Label":  "Silencer, Double Wall",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD8",
+        "Key":  "CD8S",
+        "Order":  null,
+        "Label":  "Silencer, Single Wall",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CD8D",
+        "Key":  "CD8-1",
+        "Order":  null,
+        "Label":  "With Bullet, Std (High) Pres Drop",
+        "Title1":  "Silencer, Ducted, Double Wall with Bullet, ",
+        "Title2":  "Standard (High) Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166518000)\/",
+        "DateModified":  "\/Date(995166518000)\/"
+    },
+    {
+        "Parent":  "CD8D",
+        "Key":  "CD8-2",
+        "Order":  null,
+        "Label":  "With Bullet \u0026 Tail Cone, Std (High) Pres Drop",
+        "Title1":  "Silencer, Ducted, Double Wall with Bullet and Tail Cone,",
+        "Title2":  "Standard (High) Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166662000)\/",
+        "DateModified":  "\/Date(995166662000)\/"
+    },
+    {
+        "Parent":  "CD8D",
+        "Key":  "CD8-3",
+        "Order":  null,
+        "Label":  "With Bullet, Low Pres Drop",
+        "Title1":  "Silencer, Ducted, Double Wall with Bullet,",
+        "Title2":  "Low Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166684000)\/",
+        "DateModified":  "\/Date(995166684000)\/"
+    },
+    {
+        "Parent":  "CD8D",
+        "Key":  "CD8-4",
+        "Order":  null,
+        "Label":  "With Bullet \u0026 Tail Cone, Low Pres Drop",
+        "Title1":  "Silencer, Ducted, Double Wall with Bullet and Tail Cone,",
+        "Title2":  "Low Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166709000)\/",
+        "DateModified":  "\/Date(995166709000)\/"
+    },
+    {
+        "Parent":  "CD8S",
+        "Key":  "CD8-5",
+        "Order":  null,
+        "Label":  "With Bullet, Std (High) Pres Drop",
+        "Title1":  "Silencer, Ducted, Single Wall with Bullet,",
+        "Title2":  "Standard (High) Pressure Drop",
+        "DateCreated":  "\/Date(995166749000)\/",
+        "DateModified":  "\/Date(995166749000)\/"
+    },
+    {
+        "Parent":  "CD8S",
+        "Key":  "CD8-6",
+        "Order":  null,
+        "Label":  "With Bullet \u0026 Tail Cone, Std (High) Pres Drop",
+        "Title1":  "Silencer, Ducted, Single Wall with Bullet and Tail Cone,",
+        "Title2":  "Standard (High) Pressure Drop",
+        "DateCreated":  "\/Date(995166827000)\/",
+        "DateModified":  "\/Date(995166827000)\/"
+    },
+    {
+        "Parent":  "CD8S",
+        "Key":  "CD8-7",
+        "Order":  null,
+        "Label":  "With Bullet, Low Pres Drop",
+        "Title1":  "Silencer, Ducted, Single Wall with Bullet,",
+        "Title2":  "Low Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166877000)\/",
+        "DateModified":  "\/Date(995166877000)\/"
+    },
+    {
+        "Parent":  "CD8S",
+        "Key":  "CD8-8",
+        "Order":  null,
+        "Label":  "With Bullet \u0026 Tail Cone, Low Pres Drop",
+        "Title1":  "Silencer, Ducted, Single Wall with Bullet and Tail Cone,",
+        "Title2":  "Low Pressure Drop (see Table below)",
+        "DateCreated":  "\/Date(995166990000)\/",
+        "DateModified":  "\/Date(995166990000)\/"
+    },
+    {
+        "Parent":  "CR8",
+        "Key":  "CR8S",
+        "Order":  null,
+        "Label":  "Silencer",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR8",
+        "Key":  "CR8C",
+        "Order":  null,
+        "Label":  "Coil",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR8",
+        "Key":  "CR8TC",
+        "Order":  null,
+        "Label":  "Terminal Unit (Box)",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CR8TC",
+        "Key":  "CR8-9",
+        "Order":  null,
+        "Label":  "Basic Assy \u0026 Attenuator",
+        "Title1":  "Terminal Control Unit, Basic Assembly and Attenuator",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171683000)\/",
+        "DateModified":  "\/Date(995171683000)\/"
+    },
+    {
+        "Parent":  "CR8TC",
+        "Key":  "CR8-10",
+        "Order":  null,
+        "Label":  "Basic Assy, One-Row Coil \u0026 Attenuator",
+        "Title1":  "Terminal Control Unit, Basic Assembly, One-Row Coil and Attenuator",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171588000)\/",
+        "DateModified":  "\/Date(995171588000)\/"
+    },
+    {
+        "Parent":  "CR8TC",
+        "Key":  "CR8-11",
+        "Order":  null,
+        "Label":  "Basic Assy, Two-Row Coil \u0026 Attenuator",
+        "Title1":  "Terminal Control Unit, Basic Assembly, Two-Row Coil and Attenuator",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171640000)\/",
+        "DateModified":  "\/Date(995171640000)\/"
+    },
+    {
+        "Parent":  "CR8C",
+        "Key":  "CR8-5",
+        "Order":  null,
+        "Label":  "Electric, Open Coil",
+        "Title1":  "Coil, Electric, Open Coil",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171163000)\/",
+        "DateModified":  "\/Date(995171163000)\/"
+    },
+    {
+        "Parent":  "CR8C",
+        "Key":  "CR8-6",
+        "Order":  null,
+        "Label":  "Electric, Finned Tubular",
+        "Title1":  "Coil, Electric, Finned Tubular",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171212000)\/",
+        "DateModified":  "\/Date(995171212000)\/"
+    },
+    {
+        "Parent":  "CR8C",
+        "Key":  "CR8-7",
+        "Order":  null,
+        "Label":  "Hot Water, One Row",
+        "Title1":  "Coil, Hot Water, One Row",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171249000)\/",
+        "DateModified":  "\/Date(995171249000)\/"
+    },
+    {
+        "Parent":  "CR8C",
+        "Key":  "CR8-8",
+        "Order":  null,
+        "Label":  "Hot Water, Two Row",
+        "Title1":  "Coil, Hot Water, Two Row",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171285000)\/",
+        "DateModified":  "\/Date(995171285000)\/"
+    },
+    {
+        "Parent":  "CR8S",
+        "Key":  "CR8-1",
+        "Order":  null,
+        "Label":  "Standard Pressure Drop",
+        "Title1":  "Silencer, Ducted, Standard Pressure Drop (see Table below)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171345000)\/",
+        "DateModified":  "\/Date(995171345000)\/"
+    },
+    {
+        "Parent":  "CR8S",
+        "Key":  "CR8-2",
+        "Order":  null,
+        "Label":  "Medium Pressure Drop",
+        "Title1":  "Silencer, Ducted, Medium Pressure Drop (see Table below)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171385000)\/",
+        "DateModified":  "\/Date(995171385000)\/"
+    },
+    {
+        "Parent":  "CR8S",
+        "Key":  "CR8-3",
+        "Order":  null,
+        "Label":  "Medium-Low Pressure Drop",
+        "Title1":  "Silencer, Ducted, Medium-Low Pressure Drop (see Table below)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171437000)\/",
+        "DateModified":  "\/Date(995171437000)\/"
+    },
+    {
+        "Parent":  "CR8S",
+        "Key":  "CR8-4",
+        "Order":  null,
+        "Label":  "Low Pressure Drop",
+        "Title1":  "Silencer, Ducted, Low Pressure Drop (see Table below)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171478000)\/",
+        "DateModified":  "\/Date(995171478000)\/"
+    },
+    {
+        "Parent":  "CD9",
+        "Key":  "CD9-1",
+        "Order":  null,
+        "Label":  "Damper, Butterfly",
+        "Title1":  "Damper, Butterfly",
+        "Title2":  "(Idelchik 1986, Diagram 9-16)",
+        "DateCreated":  "\/Date(995167029000)\/",
+        "DateModified":  "\/Date(995167029000)\/"
+    },
+    {
+        "Parent":  "CD9",
+        "Key":  "CD9-2",
+        "Order":  null,
+        "Label":  "Damper, Gate",
+        "Title1":  "Damper, Gate",
+        "Title2":  "(Idelchik 1986, Diagram 9-5)",
+        "DateCreated":  "\/Date(995167106000)\/",
+        "DateModified":  "\/Date(995167106000)\/"
+    },
+    {
+        "Parent":  "CD9",
+        "Key":  "CD9-3",
+        "Order":  null,
+        "Label":  "Fire Damper, Curtain Type, Style C (Vertical Installation)",
+        "Title1":  "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 hour rated; For use in dynamic \u0026\u0026 static systems)",
+        "DateCreated":  "\/Date(995167124000)\/",
+        "DateModified":  "\/Date(995167124000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-1",
+        "Order":  1,
+        "Label":  "Damper, Butterfly",
+        "Title1":  "Damper, Butterfly (Idelchik 1986, Diagram 9-17)",
+        "Title2":  "",
+        "DateCreated":  "\/Date(995171796000)\/",
+        "DateModified":  "\/Date(995171796000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-2",
+        "Order":  2,
+        "Label":  "Damper, Gate",
+        "Title1":  "Damper, Gate",
+        "Title2":  "(Idelchik 1986, Diagram 9-5)",
+        "DateCreated":  "\/Date(995171853000)\/",
+        "DateModified":  "\/Date(995171853000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-3",
+        "Order":  3,
+        "Label":  "Damper, Parallel \u0026 Opposed 3V Blades, Open",
+        "Title1":  "Damper, Parallel \u0026\u0026 Opposed 3V Blades, Open",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171901000)\/",
+        "DateModified":  "\/Date(995171901000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-4",
+        "Order":  4,
+        "Label":  "Damper, Parallel \u0026 Opposed Airfoil Blades, Open",
+        "Title1":  "Damper, Parallel \u0026\u0026 Opposed  Airfoil Blades, Open",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171942000)\/",
+        "DateModified":  "\/Date(995171942000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-5",
+        "Order":  5,
+        "Label":  "Fire Damper, Curtain Type, Style A, Vertical Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style A, Horizontal Duct (Vertical Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamic \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995171988000)\/",
+        "DateModified":  "\/Date(995171988000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-6",
+        "Order":  6,
+        "Label":  "Fire Damper, Curtain Type, Style B, Vertical Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style B, Horizontal Duct (Vertical Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamic \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995172025000)\/",
+        "DateModified":  "\/Date(995172025000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-7",
+        "Order":  7,
+        "Label":  "Fire Damper, Curtain Type, Style C, Vertical Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamic \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995172058000)\/",
+        "DateModified":  "\/Date(995172058000)\/"
+    },
+    {
+        "Parent":  "ED10",
+        "Key":  "ED10-1",
+        "Order":  null,
+        "Label":  "Hood, Conical, Round Duct",
+        "Title1":  "Hood, Conical, Round Duct",
+        "Title2":  "(Brandt 1946)",
+        "DateCreated":  "\/Date(995173501000)\/",
+        "DateModified":  "\/Date(995173501000)\/"
+    },
+    {
+        "Parent":  "ED10",
+        "Key":  "ED10-2",
+        "Order":  null,
+        "Label":  "Hood, Rectangular-Shaped, Tapered, Round Duct",
+        "Title1":  "Hood, Rectangular-Shaped, Tapered, Round Duct",
+        "Title2":  "(Brandt 1946)",
+        "DateCreated":  "\/Date(995173636000)\/",
+        "DateModified":  "\/Date(995173636000)\/"
+    },
+    {
+        "Parent":  "CD3",
+        "Key":  "CD3MG",
+        "Order":  null,
+        "Label":  "Gored",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-2",
+        "Order":  null,
+        "Label":  "Discharge from a Duct Flush with Wall",
+        "Title1":  "Discharge from Duct Flush with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 11-2)",
+        "DateCreated":  "\/Date(993047244000)\/",
+        "DateModified":  "\/Date(993047244000)\/"
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-3",
+        "Order":  null,
+        "Label":  "Plain Diffuser (Two Sides Parallel), Free Discharge",
+        "Title1":  "Plain Diffuser (Two Sides Parallel), Free Discharge",
+        "Title2":  "(Idelchik 1986, Diagram 11-6)",
+        "DateCreated":  "\/Date(993047960000)\/",
+        "DateModified":  "\/Date(993047960000)\/"
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-6",
+        "Order":  8,
+        "Label":  "Pyramidal Diffuser, with Wall",
+        "Title1":  "Pyramidal Diffuser, with Wall",
+        "Title2":  "(Idelchik 1986, Diagram 5-9)",
+        "DateCreated":  "\/Date(993048762000)\/",
+        "DateModified":  "\/Date(993048762000)\/"
+    },
+    {
+        "Parent":  "SR4",
+        "Key":  "SR4-1",
+        "Order":  null,
+        "Label":  "Rectangular, 2 Sides Parallel, Symmetrical",
+        "Title1":  "Transition, Rectangular, Two Sides Parallel, Symmetrical, Supply ",
+        "Title2":  "Air Systems (Idelchik 1986, Diagram 5-5)",
+        "DateCreated":  "\/Date(993049593000)\/",
+        "DateModified":  "\/Date(1414966903000)\/"
+    },
+    {
+        "Parent":  "SR4",
+        "Key":  "SR4-2",
+        "Order":  null,
+        "Label":  "Pyramidal",
+        "Title1":  "Transition, Pyramidal, Supply Air Systems",
+        "Title2":  "(Idelchik 1986, Diagram 5-4)",
+        "DateCreated":  "\/Date(993049954000)\/",
+        "DateModified":  "\/Date(1414967058000)\/"
+    },
+    {
+        "Parent":  "ER5W",
+        "Key":  "ER5-6",
+        "Order":  30,
+        "Label":  "Ab1+Ab2=Ac, 30 degree",
+        "Title1":  "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 30 Degree, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-30)",
+        "DateCreated":  "\/Date(993050621000)\/",
+        "DateModified":  "\/Date(993050621000)\/"
+    },
+    {
+        "Parent":  "ER5W",
+        "Key":  "ER5-7",
+        "Order":  40,
+        "Label":  "Ab1+Ab2=Ac, 60 degree",
+        "Title1":  "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 60 Degree, Converging",
+        "Title2":  "(Idelchik 1986, Diagram 7-30)",
+        "DateCreated":  "\/Date(993050621000)\/",
+        "DateModified":  "\/Date(993050621000)\/"
+    },
+    {
+        "Parent":  "SR5WU",
+        "Key":  "SR5-3",
+        "Order":  null,
+        "Label":  "As+Ab\u003eAc, As=Ac, 45 degree",
+        "Title1":  "Wye of the Type As + Ab \u003e Ac, As = Ac, 45 Degree, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-15 \u0026\u0026 7-17)",
+        "DateCreated":  "\/Date(995124761000)\/",
+        "DateModified":  "\/Date(995124761000)\/"
+    },
+    {
+        "Parent":  "SR5WU",
+        "Key":  "SR5-8",
+        "Order":  null,
+        "Label":  "As+Ab=Ac, 45 degree",
+        "Title1":  "Wye of the Type As + Ab = Ac, 45 Degree, Diverging",
+        "Title2":  "(Idelchik 1986, Diagrams 7-16 \u0026\u0026 7-17)",
+        "DateCreated":  "\/Date(995125763000)\/",
+        "DateModified":  "\/Date(995125763000)\/"
+    },
+    {
+        "Parent":  "SR7DPA",
+        "Key":  "SR7-15",
+        "Order":  null,
+        "Label":  "With Ductwork, Configuration 2",
+        "Title1":  "Plane Asymmetric Diffuser (Configuration 2) at Centrifugal",
+        "Title2":  "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-14)",
+        "DateCreated":  "\/Date(995161107000)\/",
+        "DateModified":  "\/Date(995161107000)\/"
+    },
+    {
+        "Parent":  "SR7DPA",
+        "Key":  "SR7-16",
+        "Order":  null,
+        "Label":  "With Ductwork, Configuration 3",
+        "Title1":  "Plane Asymmetric Diffuser (Configuration 3) at Centrifugal",
+        "Title2":  "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-15)",
+        "DateCreated":  "\/Date(995161195000)\/",
+        "DateModified":  "\/Date(995161195000)\/"
+    },
+    {
+        "Parent":  "SR7DPA",
+        "Key":  "SR7-2",
+        "Order":  null,
+        "Label":  "Free Discharge",
+        "Title1":  "Plane Asymmetric Diffuser at Centrifugal Fan Outlet,",
+        "Title2":  "Free Discharge (Idelchik 1986, Diagram 11-11)",
+        "DateCreated":  "\/Date(995161307000)\/",
+        "DateModified":  "\/Date(995161307000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-11",
+        "Order":  3,
+        "Label":  "DWDI, with Elbow, Position C",
+        "Title1":  "Fan Outlet, Centrifugal, DWDI, with Elbow (Position C)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162212000)\/",
+        "DateModified":  "\/Date(995162212000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-12",
+        "Order":  4,
+        "Label":  "DWDI, with Elbow, Position D",
+        "Title1":  "Fan Outlet, Centrifugal, DWDI, with Elbow (Position D)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162195000)\/",
+        "DateModified":  "\/Date(995162195000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-9",
+        "Order":  1,
+        "Label":  "DWDI, with Elbow, Position A",
+        "Title1":  "Fan Outlet, Centrifugal, DWDI, with Elbow (Position A)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162282000)\/",
+        "DateModified":  "\/Date(995162282000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-5",
+        "Order":  5,
+        "Label":  "SWSI, with Elbow, Position A",
+        "Title1":  "Fan Outlet, Centrifugal, SWSI, with Elbow (Position A)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162462000)\/",
+        "DateModified":  "\/Date(995162462000)\/"
+    },
+    {
+        "Parent":  "ST",
+        "Key":  "SF4-1",
+        "Order":  0,
+        "Label":  "Oval to Oval, Concentric \u0026 Eccentric",
+        "Title1":  "Transition, Flat Oval, Concentric \u0026\u0026 Eccentric, Supply Air Systems",
+        "Title2":  "(Zhang, Sun, Ford \u0026\u0026 Denny 2014)",
+        "DateCreated":  "\/Date(985498145000)\/",
+        "DateModified":  "\/Date(1414965597000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-12",
+        "Order":  12,
+        "Label":  "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Vertical Installation",
+        "Title1":  "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Vertical Installation",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171901000)\/",
+        "DateModified":  "\/Date(995171901000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-6",
+        "Order":  6,
+        "Label":  "SWSI, with Elbow, Position B",
+        "Title1":  "Fan Outlet, Centrifugal, SWSI, with Elbow (Position B)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162500000)\/",
+        "DateModified":  "\/Date(995162500000)\/"
+    },
+    {
+        "Parent":  "SR7O",
+        "Key":  "SR7-7",
+        "Order":  7,
+        "Label":  "SWSI, with Elbow, Position C",
+        "Title1":  "Fan Outlet, Centrifugal, SWSI, with Elbow (Position C)",
+        "Title2":  "(AMCA 1990, Fig. 8-5)",
+        "DateCreated":  "\/Date(995162535000)\/",
+        "DateModified":  "\/Date(995162535000)\/"
+    },
+    {
+        "Parent":  "CD3DS",
+        "Key":  "CD3-2",
+        "Order":  null,
+        "Label":  "90 deg., r/D = 1.0",
+        "Title1":  "Elbow, Die Stamped, 90 Degree, r/D = 1.0",
+        "Title2":  "(UMC 1985, Report SRF785)",
+        "DateCreated":  "\/Date(995163691000)\/",
+        "DateModified":  "\/Date(1339304453000)\/"
+    },
+    {
+        "Parent":  "CD3DS",
+        "Key":  "CD3-3",
+        "Order":  null,
+        "Label":  "45 deg., r/D = 1.5",
+        "Title1":  "Elbow, Die Stamped, 45 Degree, r/D = 1.5",
+        "Title2":  "[UMC 1985, Report SRF785; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995163777000)\/",
+        "DateModified":  "\/Date(1338877565000)\/"
+    },
+    {
+        "Parent":  "CD3DS",
+        "Key":  "CD3-4",
+        "Order":  null,
+        "Label":  "45 deg., r/D = 1.0",
+        "Title1":  "Elbow, Die Stamped, 45 Degree, r/D = 1.0",
+        "Title2":  "[UMC 1985, Report SRF785; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995163812000)\/",
+        "DateModified":  "\/Date(995163812000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-16",
+        "Order":  50,
+        "Label":  "60 deg.",
+        "Title1":  "Elbow, Mitered, 60 Degree",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1), Graph (a)]",
+        "DateCreated":  "\/Date(995164050000)\/",
+        "DateModified":  "\/Date(1329988468000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-17",
+        "Order":  60,
+        "Label":  "45 deg.",
+        "Title1":  "Elbow, Mitered, 45 Degree",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995164125000)\/",
+        "DateModified":  "\/Date(1329988473000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-18",
+        "Order":  10,
+        "Label":  "30 deg.",
+        "Title1":  "Elbow, Mitered, 30 Degree",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1 (Graph (a)]",
+        "DateCreated":  "\/Date(995164202000)\/",
+        "DateModified":  "\/Date(1329988441000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-19",
+        "Order":  20,
+        "Label":  "22.5 deg.",
+        "Title1":  "Elbow, Mitered, 22.5 Degree",
+        "Title2":  "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
+        "DateCreated":  "\/Date(995164270000)\/",
+        "DateModified":  "\/Date(1329988452000)\/"
+    },
+    {
+        "Parent":  "CD3M",
+        "Key":  "CD3-20",
+        "Order":  30,
+        "Label":  "With Vanes, 90 deg.",
+        "Title1":  "Elbow, Mitered with Vanes, 90 Degree",
+        "Title2":  "(UMC 1985, Report SRF1285)",
+        "DateCreated":  "\/Date(995164366000)\/",
+        "DateModified":  "\/Date(1329988459000)\/"
+    },
+    {
+        "Parent":  "SR2",
+        "Key":  "SR2-5",
+        "Order":  0,
+        "Label":  "Pyramidal Diffuser, Free Discharge",
+        "Title1":  "Pyramidal Diffuser, Free Discharge",
+        "Title2":  "(Idelchik 1986, Diagram 11-5)",
+        "DateCreated":  "\/Date(993048192000)\/",
+        "DateModified":  "\/Date(993048192000)\/"
+    },
+    {
+        "Parent":  "C",
+        "Key":  "CO",
+        "Order":  7,
+        "Label":  "Flat Oval",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "E",
+        "Key":  "EO",
+        "Order":  7,
+        "Label":  "Flat Oval",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5W",
+        "Key":  "SD5WC",
+        "Order":  10,
+        "Label":  "Conical Branch",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SD5W",
+        "Key":  "SD5WNC",
+        "Order":  11,
+        "Label":  "Non-Conical Branch",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SO",
+        "Key":  "ST",
+        "Order":  null,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "SO",
+        "Key":  "SJ",
+        "Order":  null,
+        "Label":  "Junctions, Diverging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CO",
+        "Key":  "CE",
+        "Order":  2,
+        "Label":  "Elbows",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "EO",
+        "Key":  "ET",
+        "Order":  90,
+        "Label":  "Transitions",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "EO",
+        "Key":  "EJ",
+        "Order":  100,
+        "Label":  "Junctions, Converging",
+        "Title1":  null,
+        "Title2":  null,
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CO",
+        "Key":  "CF11-1",
+        "Order":  null,
+        "Label":  "Straight Duct",
+        "Title1":  "Straight Duct, Flat Oval",
+        "Title2":  "(Heyt and Diaz 1975; Townsend et al. 1994)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414365683000)\/"
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-1",
+        "Order":  null,
+        "Label":  "5 Gore, Easy Bend, 90 deg.",
+        "Title1":  "Elbow, Flat Oval, 5 Gore, Easy Bend, 90 Degree",
+        "Title2":  "(Kulkarni, Khaire and Idem 2009)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414366184000)\/"
+    },
+    {
+        "Parent":  "SJ",
+        "Key":  "SF5-1",
+        "Order":  1,
+        "Label":  "Tee, Flat Oval, Straight Body Branch",
+        "Title1":  "Tee, Flat Oval, Straight Body Branch, Diverging",
+        "Title2":  "(Gibbs \u0026\u0026 Idem 2012)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414370103000)\/"
+    },
+    {
+        "Parent":  "SJ",
+        "Key":  "SF5-2",
+        "Order":  2,
+        "Label":  "Tee, Flat Oval, Conical Body Branch",
+        "Title1":  "Tee, Flat Oval, Conical Body Branch, Diverging",
+        "Title2":  "(Townsend et al. 1996; Idem \u0026\u0026 Khodabakhsh 1999)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414370348000)\/"
+    },
+    {
+        "Parent":  "SJ",
+        "Key":  "SF5-3",
+        "Order":  3,
+        "Label":  "Wye, Flat Oval, 45 Degree, Straight Body Branch",
+        "Title1":  "Wye, Flat Oval, 45 Degree, Straight Body Branch, Diverging",
+        "Title2":  "(Gibbs \u0026\u0026 Idem 2012)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414370780000)\/"
+    },
+    {
+        "Parent":  "SJ",
+        "Key":  "SF5-4",
+        "Order":  4,
+        "Label":  "Wye, Flat Oval, 45 Degree, Conical Body Branch",
+        "Title1":  "Wye, Flat Oval, 45 Degree, Conical Body Branch, Diverging",
+        "Title2":  "(Townsend et al. 1996; Idem \u0026\u0026 Khodabakhsh 1999)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414371231000)\/"
+    },
+    {
+        "Parent":  "ED7C",
+        "Key":  "ED7-4",
+        "Order":  null,
+        "Label":  "SWSI with Mitered Elbow",
+        "Title1":  "Fan Inlet, Centrifugal, SWSI, with Mitered Elbow",
+        "Title2":  "(AMCA 1990, Fig. 9-5)",
+        "DateCreated":  "\/Date(995178026000)\/",
+        "DateModified":  "\/Date(995178026000)\/"
+    },
+    {
+        "Parent":  "ET",
+        "Key":  "EF4-1",
+        "Order":  0,
+        "Label":  "Oval to Oval, Concentric \u0026 Eccentric",
+        "Title1":  "Transition, Flat Oval, Concentric \u0026\u0026 Eccentrix, Exhaust/Return Air Systems",
+        "Title2":  "(Zhang, Sun, Ford \u0026\u0026 Denny 2014)",
+        "DateCreated":  "\/Date(985498145000)\/",
+        "DateModified":  "\/Date(1414967461000)\/"
+    },
+    {
+        "Parent":  "EJ",
+        "Key":  "EF5-1",
+        "Order":  0,
+        "Label":  "Tee, Flat Oval, Straight Body Branch",
+        "Title1":  "Tee, Flat Oval, Straight Body Branch, Converging",
+        "Title2":  "(Kulkarni, Cui \u0026\u0026 Idem 2011)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414371816000)\/"
+    },
+    {
+        "Parent":  "EJ",
+        "Key":  "EF5-3",
+        "Order":  0,
+        "Label":  "Wye, Flat Oval, 45 Degree, Straight Body Branch",
+        "Title1":  "Wye, Flat Oval, 45 Degree, Straight Body Branch, Converging",
+        "Title2":  "(Kulkarni, Cui \u0026\u0026 Idem 2011)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414372258000)\/"
+    },
+    {
+        "Parent":  "ED1",
+        "Key":  "ED1-8",
+        "Order":  null,
+        "Label":  "Bellmouth, Short Radius",
+        "Title1":  "Bellmouth, Short Radius",
+        "Title2":  "(Idelchik 1986, Diagram 3-4)",
+        "DateCreated":  null,
+        "DateModified":  null
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-2",
+        "Order":  null,
+        "Label":  "5 Gore, Hard Bend, 90 deg.",
+        "Title1":  "Elbow, Flat Oval, 5 Gore, Hard Bend, 90 Degree",
+        "Title2":  "(Townsend et al. 1996 and Smith \u0026\u0026 Jones 1976)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414366577000)\/"
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-3",
+        "Order":  null,
+        "Label":  "Mitered, Easy Bend (No Vanes), 90 deg.",
+        "Title1":  "Elbow, Flat Oval, Mitered, Easy Bend (No Vanes), 90 Degree",
+        "Title2":  "(Kulkarni, Khaire and Idem 2009)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414367166000)\/"
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-4",
+        "Order":  null,
+        "Label":  "Mitered, Hard Bend (No Vanes), 90 deg.",
+        "Title1":  "Elbow, Flat Oval, Mitered, Hard Bend (No Vanes), 90 Degree",
+        "Title2":  "(Kulkarni, Khaire and Idem 2009)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414446253000)\/"
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-5",
+        "Order":  null,
+        "Label":  "Mitered, Easy Bend with Vanes, 90 deg.",
+        "Title1":  "Elbow, Flat Oval, Mitered, Easy Bend with Vanes, 90 Degree",
+        "Title2":  "(Kulkarni, Khaire and Idem 2009)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414367922000)\/"
+    },
+    {
+        "Parent":  "CE",
+        "Key":  "CF3-6",
+        "Order":  null,
+        "Label":  "Mitered, Hard Bend with Vanes, 90 Deg.",
+        "Title1":  "Elbow, Flat Oval, Mitered, Hard Bend with Vanes, 90 Degree",
+        "Title2":  "(Kulkarni, Khaire and Idem 2009)",
+        "DateCreated":  null,
+        "DateModified":  "\/Date(1414368261000)\/"
+    },
+    {
+        "Parent":  "CD9",
+        "Key":  "CD9-4",
+        "Order":  null,
+        "Label":  "Fire Damper, Curtain Type, Style C (Horizontal Installation)",
+        "Title1":  "Fire Damper, Curtain Type, Style C, Vertical Duct (Horizontal Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 hour rated; For use in dynamic \u0026\u0026 static systems)",
+        "DateCreated":  "\/Date(995167124000)\/",
+        "DateModified":  "\/Date(995167124000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-8",
+        "Order":  8,
+        "Label":  "Fire Damper, Curtain Type, Style A, Horizontal Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style A, Vertical Duct (Horizontal Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamic \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995171988000)\/",
+        "DateModified":  "\/Date(995171988000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-9",
+        "Order":  9,
+        "Label":  "Fire Damper, Curtain Type, Style B, Horizontal Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style B, Vertical Duct (Horizontal Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamic \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995172025000)\/",
+        "DateModified":  "\/Date(995172025000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-10",
+        "Order":  10,
+        "Label":  "Fire Damper, Curtain Type, Style C, Horizontal Installation",
+        "Title1":  "Fire Damper, Curtain Type, Style C, Vertical Duct (Horiontal Installation)",
+        "Title2":  "(1-1/2 \u0026\u0026 3 Hour; For Use in Dynamoc \u0026\u0026 Static Systems)",
+        "DateCreated":  "\/Date(995172058000)\/",
+        "DateModified":  "\/Date(995172058000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-11",
+        "Order":  11,
+        "Label":  "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Vertical Installation",
+        "Title1":  "Fire/Smoke Damper, 3 Hour,  Airfoil Blades, Vertical Installation",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171942000)\/",
+        "DateModified":  "\/Date(995171942000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-14",
+        "Order":  14,
+        "Label":  "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Horizontal Installation",
+        "Title1":  "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Horizontal Installation",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171901000)\/",
+        "DateModified":  "\/Date(995171901000)\/"
+    },
+    {
+        "Parent":  "CR9",
+        "Key":  "CR9-13",
+        "Order":  13,
+        "Label":  "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Horizontal Installation",
+        "Title1":  "Fire/Smoke Damper, 3 Hour,  Airfoil Blades, Horizontal Installation",
+        "Title2":  "(Van Becelaere \u0026\u0026 Sauer 2004)",
+        "DateCreated":  "\/Date(995171942000)\/",
+        "DateModified":  "\/Date(995171942000)\/"
+    }
+]
