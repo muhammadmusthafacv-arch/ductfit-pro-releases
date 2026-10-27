@@ -1,6 +1,6 @@
-# ASHRAE Duct Sizer & Duct Fitting Database v6.0 (Port 5052)
+# DuctFit Pro - ASHRAE Duct Sizer & Duct Fitting Database (Port 5052)
 
-A comprehensive HVAC aerodynamic engineering and duct sizing application running on local port `5052`. 
+A comprehensive HVAC aerodynamic engineering and duct sizing application running on local port `5052` and as an offline native desktop application. 
 Replicates the visual layout, exact numerical calculations, and technical drafting sheets of the **ASHRAE Duct Fitting Database (v5.0 & v6.0)** combined with the sizing equations of **2009 ASHRAE Handbook - Fundamentals, Chapter 21: Duct Design**.
 
 ---
@@ -8,7 +8,7 @@ Replicates the visual layout, exact numerical calculations, and technical drafti
 ## 🚀 Quick Access
 
 - **Web Browser URL**: **[http://localhost:5052](http://localhost:5052)**
-- **Batch Launcher**: Double-click `run_app.bat`
+- **Batch Launcher**: Double-click `run_app.bat` or run `release.bat`
 
 ---
 
@@ -20,7 +20,7 @@ Replicates the visual layout, exact numerical calculations, and technical drafti
   - **Common**: Straight Ducts (`CR11-1`, `CD11-1`, `CF11-1`, Flexible Ducts), Round & Rectangular Elbows, Dampers (Opposed, Parallel, Butterfly, Fire Damper).
   - **Exhaust / Return**: Round & Rectangular Entries, Transitions, Converging Junctions.
   - **Automated Duct Sizing Tools**: Equal Friction and Velocity Reduction sizing.
-- Instant search filter and expand/collapse all controls.
+- Instant search filter with inline clear button (`✕`) and "Fitting Not Found" alert.
 
 ### 2. Exact Numerical Match to ASHRAE Software
 - Benchmark Test Case:
@@ -55,7 +55,7 @@ Replicates the visual layout, exact numerical calculations, and technical drafti
   - Dimension lines and witness extensions ($L$, $H \times W$, $\varnothing D$)
   - Mechanical zig-zag break lines
   - Real-time toggle: "Display Values in Drawing"
-  - Technical footer with date (`10-19-2026`) and version `5.00.00` / `6.00.00`.
+  - Technical footer with date (`01-March-2026`) and version.
 
 ---
 
