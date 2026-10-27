@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ductfit Pro v{{ version|default('1.060') }} - ASHRAE Fundamentals (Ch. 21)</title>
+    <title>DuctFit Pro v{{ version|default('1.060') }} - ASHRAE Fundamentals (Ch. 21)</title>
+    <link rel="icon" type="image/x-icon" href="/static/icon.ico">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/katex/katex.min.css">
 </head>
@@ -15,10 +16,11 @@
             <div class="sidebar-header">
                 <div class="sidebar-title">
                     <span class="tree-icon-root">📁</span>
-                    <span>Ductfit Pro Fitting Catalog</span>
+                    <span>DuctFit Pro Fitting Catalog</span>
                 </div>
                 <div class="search-box">
                     <input type="text" id="treeSearchInput" placeholder="🔍 Search fitting code or name..." autocomplete="off">
+                    <button type="button" id="btnClearTreeSearch" class="tree-search-clear-btn hidden" title="Clear search text">&times;</button>
                 </div>
                 <div class="tree-action-bar">
                     <button type="button" id="btnExpandAll" class="tree-mini-btn" title="Expand all catalog categories">Expand All</button>
@@ -34,9 +36,14 @@
                 </div>
             </div>
 
+            <!-- Tree Not Found Notification -->
+            <div id="treeNotFound" class="tree-not-found hidden">
+                <span>⚠️ Fitting Not Found</span>
+            </div>
+
             <!-- Scrollable Hierarchical Tree Container -->
             <div class="tree-container" id="treeViewContainer">
-                <div class="tree-loading">Loading Ductfit Pro Fitting Tree...</div>
+                <div class="tree-loading">Loading DuctFit Pro Fitting Tree...</div>
             </div>
 
             <div class="sidebar-footer" style="display: flex; justify-content: space-between; align-items: center;">
@@ -48,25 +55,26 @@
         </aside>
 
         <!-- Resizable Splitter Handle for Dragging Catalog Width -->
-        <div class="sidebar-resizer" id="catalogResizer" title="Click and drag to enlarge or shrink Ductfit Pro Fitting Catalog area (Double-click to toggle wide view)"></div>
+        <div class="sidebar-resizer" id="catalogResizer" title="Click and drag to enlarge or shrink DuctFit Pro Fitting Catalog area (Double-click to toggle wide view)"></div>
 
         <!-- RIGHT COLUMN: Main Calculation & CAD Drafting Panel -->
         <main class="main-content-panel">
             <!-- Top Command & Settings Bar -->
             <div class="top-nav-bar">
                 <div class="nav-left">
-                    <span class="app-brand">Ductfit Pro</span>
+                    <img src="/static/icon.png" alt="DuctFit Pro Logo" class="app-brand-logo">
+                    <span class="app-brand">DuctFit Pro</span>
                     <span class="app-version-badge" id="appVersionBadge">v{{ version|default('1.060') }}</span>
                     <span class="app-badge" id="appHandbookBadge">ASHRAE Fundamentals (Ch. 21)</span>
                 </div>
 
                 <div class="nav-center">
                     <div class="mode-toggle-group">
-                        <button type="button" class="mode-btn active" id="btnModeDirect" title="Calculate friction loss and velocity for given duct dimensions">
-                            📏 Fitting Loss Analysis
-                        </button>
                         <button type="button" class="mode-btn" id="btnModeSizer" title="Auto-size duct cross-sections using ASHRAE Equal Friction or Velocity Constraint Methods (Project-Specific Target)">
-                            🎯 Auto Duct Sizer
+                            Auto Duct Sizer
+                        </button>
+                        <button type="button" class="mode-btn active" id="btnModeDirect" title="Calculate friction loss and velocity for given duct dimensions">
+                            Fitting Loss Analysis
                         </button>
                     </div>
                 </div>
@@ -84,11 +92,45 @@
                 <div class="prj-ribbon-left">
                     <span class="prj-icon">📁</span>
                     <span class="prj-label">Project:</span>
-                    <select id="selectActiveProject" class="prj-select" title="Switch active HVAC design project">
+
+                    <!-- Searchable Project Selector with Live Search & Click-to-Activate -->
+                    <div class="prj-search-combo" id="prjSearchCombo">
+                        <button type="button" class="prj-combo-trigger" id="prjComboTrigger" title="Click or type to search and select current project">
+                            <span class="prj-combo-icon">📁</span>
+                            <span class="prj-combo-selected" id="prjComboSelectedText">-- Loading Projects... --</span>
+                            <span class="prj-combo-arrow">▾</span>
+                        </button>
+                        
+                        <div class="prj-combo-dropdown hidden" id="prjComboDropdown">
+                            <div class="prj-combo-search-row">
+                                <span class="prj-combo-search-icon">🔍</span>
+                                <input type="text" id="prjComboSearchInput" class="prj-combo-input" placeholder="Search project code, name, client..." autocomplete="off">
+                                <button type="button" id="btnClearComboSearch" class="btn-clear-search hidden" title="Clear search">&times;</button>
+                            </div>
+                            <div class="prj-combo-list" id="prjComboList">
+                                <!-- Populated dynamically -->
+                            </div>
+                            <div class="prj-combo-footer">
+                                <button type="button" class="btn-combo-footer-action" id="btnComboNewProject">
+                                    <span>➕</span> Add New Project
+                                </button>
+                                <button type="button" class="btn-combo-footer-action" id="btnComboManageAll">
+                                    <span>🗂️</span> Manage All Projects
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden native select for fallback/compatibility -->
+                    <select id="selectActiveProject" class="prj-select" style="display: none;" title="Switch active HVAC design project">
                         <option value="">-- No Projects (Create One) --</option>
                     </select>
+
                     <button type="button" class="btn-prj-action btn-prj-new" id="btnAddNewProject" title="Create a new HVAC project">
                         <span class="btn-icon">➕</span> Add New Project
+                    </button>
+                    <button type="button" class="btn-prj-action btn-prj-all" id="btnManageAllProjects" title="View all projects, edit details or delete projects">
+                        <span class="btn-icon">🗂️</span> All Projects
                     </button>
                 </div>
                 <div class="prj-ribbon-right">
@@ -180,6 +222,7 @@
                     <!-- Right: Output Table -->
                     <div class="table-wrapper">
                         <div class="table-title">Output</div>
+                        <div id="ashrae-range-alert" class="ashrae-range-alert"></div>
                         <table class="ashrae-table" id="outputTable">
                             <tbody id="outputTableBody">
                                 <tr id="row-out-sized" class="hidden" style="background-color: #f0fdf4;">
@@ -232,7 +275,7 @@
                     <!-- Normal Window Header -->
                     <div class="formulas-header" id="formulasToggleHeader">
                         <div class="f-header-left">
-                            <span class="f-toggle-arrow" id="fToggleArrow">▼</span>
+                            <span class="f-toggle-arrow" id="fToggleArrow">▶</span>
                             <span class="f-header-title">📐 Step-by-Step Engineering Calculation Breakdown</span>
                             <span class="calc-header-hint">Press <kbd>C</kbd> or <kbd>Shift+F</kbd> for Full Screen</span>
                         </div>
@@ -261,7 +304,7 @@
                         </div>
                     </div>
 
-                    <div class="formulas-container" id="formulasContainer">
+                    <div class="formulas-container hidden" id="formulasContainer" style="display: none;">
                         <!-- Steps injected by app.js -->
                     </div>
                 </div>
@@ -295,7 +338,7 @@
                     <!-- Dedicated Fullscreen Header Bar (Visible when in Full Screen) -->
                     <div class="fullscreen-top-bar" id="fullscreenTopBar">
                         <div class="fs-info-group">
-                            <span class="fs-badge">Ductfit Pro CAD FULLSCREEN</span>
+                            <span class="fs-badge">DuctFit Pro CAD FULLSCREEN</span>
                             <span class="fs-fitting-name" id="fsFittingName">CR11-1 Straight Duct, Rectangular</span>
                         </div>
                         <div class="fs-controls-group">
@@ -354,7 +397,7 @@
                                 <span>Display Values in Drawing</span>
                             </label>
                         </div>
-                        <div class="footer-right" id="footerVersion">Ductfit Pro Version {{ version|default('1.060') }} &bull; ASHRAE Fundamentals (Ch. 21)</div>
+                        <div class="footer-right" id="footerVersion">DuctFit Pro Version {{ version|default('1.060') }} &bull; ASHRAE Fundamentals (Ch. 21)</div>
                     </div>
                 </div>
             </div>
@@ -557,6 +600,127 @@
     </div>
 
 
+    <!-- All Projects Management Modal (View, Search, Edit & Delete) -->
+    <div id="allProjectsModal" class="modal-overlay hidden" role="dialog" aria-labelledby="modalAllProjectsTitle" aria-modal="true">
+        <div class="modal-card modal-card-xl">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">🗂️</span>
+                    <div>
+                        <h2 id="modalAllProjectsTitle" class="modal-title">All HVAC Design Projects</h2>
+                        <p class="modal-subtitle">View, search, switch active project, edit metadata, or delete projects</p>
+                    </div>
+                </div>
+                <div class="modal-header-actions" style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="btn-prj-action btn-prj-new" id="btnAllProjectsCreateNew" title="Create a new HVAC project">
+                        <span class="btn-icon">➕</span> Add New Project
+                    </button>
+                    <button type="button" id="btnCloseAllProjectsModal" class="modal-close-btn" title="Close (Esc)">&times;</button>
+                </div>
+            </div>
+
+            <div class="modal-body all-projects-modal-body">
+                <!-- Search & Filter Controls -->
+                <div class="all-projects-filter-bar">
+                    <div class="all-projects-search-wrap">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="inputFilterAllProjects" class="prj-input all-projects-search-input" placeholder="Search by Project Code, Name, Client, Contractor..." autocomplete="off">
+                        <button type="button" id="btnClearFilterAllProjects" class="btn-clear-search hidden" title="Clear filter">&times;</button>
+                    </div>
+                    <div class="all-projects-stats-pill" id="allProjectsStatsPill">
+                        Total: <strong id="allProjectsCount">0</strong> Projects
+                    </div>
+                </div>
+
+                <!-- Projects Table Container -->
+                <div class="prj-table-container">
+                    <table class="prj-schedule-table all-projects-table" id="tableAllProjects">
+                        <thead>
+                            <tr>
+                                <th style="width: 36px;" class="text-center">#</th>
+                                <th style="width: 90px;" class="text-center">Status</th>
+                                <th style="width: 120px;">Project Code</th>
+                                <th>Project Name</th>
+                                <th style="width: 120px;">Client</th>
+                                <th style="width: 120px;">Contractor</th>
+                                <th style="width: 85px;" class="text-center">Sized Runs</th>
+                                <th style="width: 85px;" class="text-center">Fittings</th>
+                                <th style="width: 130px;">Last Modified</th>
+                                <th style="width: 170px;" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyAllProjects">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-footer-ref">HVAC Duct Project Registry &bull; DuctFit Pro</div>
+                <div>
+                    <button type="button" id="btnCloseAllProjectsBottom" class="modal-btn modal-btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Project Modal Dialog -->
+    <div id="editProjectModal" class="modal-overlay hidden" role="dialog" aria-labelledby="modalEditProjectTitle" aria-modal="true">
+        <div class="modal-card modal-card-md">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">✏️</span>
+                    <div>
+                        <h2 id="modalEditProjectTitle" class="modal-title">Edit Project Details</h2>
+                        <p class="modal-subtitle" id="editProjectHeaderSubtitle">Update project code, name, client, and contractor metadata</p>
+                    </div>
+                </div>
+                <button type="button" id="btnCloseEditProjectModal" class="modal-close-btn" title="Close (Esc)">&times;</button>
+            </div>
+
+            <div class="modal-body prj-modal-body">
+                <form id="formEditProject" onsubmit="return false;">
+                    <input type="hidden" id="editPrjId">
+                    <div class="prj-form-grid">
+                        <div class="prj-form-group">
+                            <label for="inputEditPrjCode" class="prj-label">Project Code <span class="req">*</span></label>
+                            <input type="text" id="inputEditPrjCode" class="prj-input" required>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputEditPrjName" class="prj-label">Project Name <span class="req">*</span></label>
+                            <input type="text" id="inputEditPrjName" class="prj-input" required>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputEditPrjClient" class="prj-label">Client</label>
+                            <input type="text" id="inputEditPrjClient" class="prj-input">
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputEditPrjContractor" class="prj-label">Contractor</label>
+                            <input type="text" id="inputEditPrjContractor" class="prj-input">
+                        </div>
+                        <div class="prj-form-group prj-col-span-2">
+                            <label for="inputEditPrjSubcontractor" class="prj-label">Sub Contractor</label>
+                            <input type="text" id="inputEditPrjSubcontractor" class="prj-input">
+                        </div>
+                        <div class="prj-form-group prj-col-span-2">
+                            <label for="inputEditPrjNotes" class="prj-label">System Description / Notes</label>
+                            <textarea id="inputEditPrjNotes" class="prj-textarea" rows="2"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-footer-ref">Project Database &bull; DuctFit Pro</div>
+                <div class="prj-modal-actions">
+                    <button type="button" id="btnCancelEditProject" class="modal-btn modal-btn-secondary">Cancel</button>
+                    <button type="button" id="btnSaveEditProject" class="modal-btn modal-btn-primary">💾 Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Add New Project Modal Dialog -->
     <div id="newProjectModal" class="modal-overlay hidden" role="dialog" aria-labelledby="modalNewProjectTitle" aria-modal="true">
         <div class="modal-card modal-card-md">
@@ -620,15 +784,15 @@
                     <span class="modal-icon">📊</span>
                     <div>
                         <h2 id="modalPrjSummaryTitle" class="modal-title">Project Summary Schedule</h2>
-                        <p class="modal-subtitle" id="summaryProjectHeaderSubtitle">Ductfit Pro &bull; ASHRAE Fundamentals, Ch. 21</p>
+                        <p class="modal-subtitle" id="summaryProjectHeaderSubtitle">DuctFit Pro &bull; ASHRAE Fundamentals, Ch. 21</p>
                     </div>
                 </div>
                 <div class="summary-tab-group" id="summaryTabGroup">
-                    <button type="button" class="summary-tab-btn active" id="tabSummaryFittings" title="View duct fittings schedule for ESP calculation">
-                        📏 Fitting Loss Analysis (ESP)
-                    </button>
                     <button type="button" class="summary-tab-btn" id="tabSummarySizer" title="View sized duct run segments schedule">
-                        🎯 Auto Duct Sizer Schedule
+                        Auto Duct Sizer Schedule
+                    </button>
+                    <button type="button" class="summary-tab-btn active" id="tabSummaryFittings" title="View duct fittings schedule for ESP calculation">
+                        Fitting Loss Analysis (ESP)
                     </button>
                 </div>
                 <button type="button" id="btnClosePrjSummaryModal" class="modal-close-btn" title="Close (Esc)">&times;</button>
@@ -665,6 +829,31 @@
                     </div>
                 </div>
 
+                <!-- Engineering Design Basis & Governing Criteria Sheet -->
+                <div class="prj-basis-card">
+                    <div class="prj-basis-col">
+                        <span class="prj-basis-icon">📐</span>
+                        <div>
+                            <div class="prj-basis-title">Design Formulation & Standard</div>
+                            <div class="prj-basis-desc">ANSI / ASHRAE Fundamentals Ch. 21 (Duct Design)</div>
+                        </div>
+                    </div>
+                    <div class="prj-basis-col">
+                        <span class="prj-basis-icon">💨</span>
+                        <div>
+                            <div class="prj-basis-title">Aerodynamic Fluid Properties</div>
+                            <div class="prj-basis-desc" id="summaryFluidBasis">Standard Dry Air (ρ = 1.204 kg/m³, μ = 1.817×10⁻⁵ Pa·s)</div>
+                        </div>
+                    </div>
+                    <div class="prj-basis-col">
+                        <span class="prj-basis-icon">🔬</span>
+                        <div>
+                            <div class="prj-basis-title">Loss Calculation Methodology</div>
+                            <div class="prj-basis-desc" id="summaryMethodBasis">Darcy-Colebrook &amp; Multilinear Table Interpolation</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- VIEW 1: Fitting Loss Schedule (ESP Calculation) -->
                 <div id="viewSummaryFittings" class="summary-schedule-view">
                     <!-- KPI Metric Tiles -->
@@ -675,11 +864,11 @@
                         </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiTotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Cumulative Dynamic Loss (∑ΔP)</span>
+                            <span class="kpi-label">Cumulative Pressure Loss (∑ΔP)</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiMaxLoss">0.0 Pa</span>
-                            <span class="kpi-label">Highest Fitting Loss</span>
+                            <span class="kpi-label">Highest Section Loss</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiTotalAirflow">-</span>
@@ -773,7 +962,7 @@
 
             <div class="modal-footer prj-summary-footer">
                 <div class="prj-summary-footer-left">
-                    <button type="button" class="btn-prj-footer btn-primary-report" id="btnDownloadFitductPdf" title="Download official Ductfit Pro PDF Report">
+                    <button type="button" class="btn-prj-footer btn-primary-report" id="btnDownloadFitductPdf" title="Download official DuctFit Pro PDF Report">
                         📄 Download Report (PDF)
                     </button>
                     <button type="button" class="btn-prj-footer" id="btnExportProjectCsv" title="Export schedule to CSV / Excel spreadsheet">

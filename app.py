@@ -1,11 +1,17 @@
 import os
+import sys
 import json
 import math
 from flask import Flask, render_template, request, jsonify, send_file
 from ashrae_engine import AshraeEngine
 from version_manager import get_current_version, get_version_data
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
+BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "static"),
+    template_folder=os.path.join(BASE_DIR, "templates")
+)
 
 def safe_float(val, default=0.0):
     if val is None:
@@ -17,7 +23,7 @@ def safe_float(val, default=0.0):
         return default
 
 # Load Catalog Tree Data into Memory
-TREE_FILE = os.path.join(os.path.dirname(__file__), "fittings_tree.json")
+TREE_FILE = os.path.join(BASE_DIR, "fittings_tree.json")
 FITTINGS_TREE = {}
 if os.path.exists(TREE_FILE):
     with open(TREE_FILE, "r", encoding="utf-8") as f:
@@ -285,6 +291,22 @@ def get_project_details_route(project_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+@app.route("/api/projects/<project_id>", methods=["PUT"])
+def update_project_route(project_id):
+    """Update project metadata"""
+    try:
+        data = request.get_json() or {}
+        code = data.get("code", "").strip()
+        name = data.get("name", "").strip()
+        if not code or not name:
+            return jsonify({"status": "error", "message": "Project Code and Project Name are required"}), 400
+        proj = project_manager.update_project(project_id, data)
+        if proj:
+            return jsonify({"status": "success", "data": proj})
+        return jsonify({"status": "error", "message": "Project not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 @app.route("/api/projects/<project_id>", methods=["DELETE"])
 def delete_project_route(project_id):
     """Delete a project"""
@@ -394,7 +416,7 @@ def clear_sizer_segments_route(project_id):
 
 @app.route("/api/projects/<project_id>/sizer-pdf", methods=["GET"])
 def download_sizer_project_pdf_route(project_id):
-    """Generate and download Ductfit Pro Duct Sizing Project Report (NO CAD, NO fitting losses)"""
+    """Generate and download DuctFit Pro Duct Sizing Project Report (NO CAD, NO fitting losses)"""
     try:
         import io
         import re
@@ -430,7 +452,7 @@ def download_project_pdf_route(project_id):
             return jsonify({"status": "error", "message": "Project not found"}), 404
         pdf_bytes = pdf_report_generator.generate_project_pdf(project_id)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', proj.get('code', 'PROJECT'))
-        filename = f"{code_sanitized}_Ductfit_Pro_Report.pdf"
+        filename = f"{code_sanitized}_DuctFit_Pro_Report.pdf"
         return send_file(
             io.BytesIO(pdf_bytes),
             mimetype="application/pdf",
@@ -473,7 +495,7 @@ def download_calculation_pdf_route():
         code = data.get("code", "CR11-1")
         pdf_bytes = pdf_report_generator.generate_calculation_pdf(data)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', code)
-        filename = f"{code_sanitized}_Ductfit_Pro_Calculation.pdf"
+        filename = f"{code_sanitized}_DuctFit_Pro_Calculation.pdf"
         return send_file(
             io.BytesIO(pdf_bytes),
             mimetype="application/pdf",
@@ -506,5 +528,15 @@ def download_master_catalog_pdf():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    print("Starting ASHRAE Duct Sizer Server on http://localhost:5052 ...")
-    app.run(host="0.0.0.0", port=5052, debug=False)
+    import argparse
+    parser = argparse.ArgumentParser(description="DuctFit Pro Engine Server")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("DUCTFIT_PORT", 5052)), help="Port to listen on")
+    parser.add_argument("--host", type=str, default=os.environ.get("DUCTFIT_HOST", "127.0.0.1"), help="Host to listen on")
+    parser.add_argument("--user-data-dir", type=str, default=os.environ.get("DUCTFIT_USER_DATA", ""), help="User data directory for projects.json")
+    args = parser.parse_args()
+
+    if args.user_data_dir:
+        os.environ["DUCTFIT_USER_DATA"] = args.user_data_dir
+
+    print(f"Starting DuctFit Pro Engine on http://{args.host}:{args.port} (User Data: {args.user_data_dir or 'local'}) ...")
+    app.run(host=args.host, port=args.port, debug=False)

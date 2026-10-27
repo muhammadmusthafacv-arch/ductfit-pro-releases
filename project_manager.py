@@ -3,7 +3,19 @@ import os
 import time
 from datetime import datetime
 
-PROJECTS_FILE = os.path.join(os.path.dirname(__file__), "projects.json")
+def get_projects_file():
+    user_data = os.environ.get("DUCTFIT_USER_DATA")
+    if user_data:
+        os.makedirs(user_data, exist_ok=True)
+        target = os.path.join(user_data, "projects.json")
+        if not os.path.exists(target):
+            try:
+                with open(target, "w", encoding="utf-8") as f:
+                    json.dump(get_default_project_data(), f, indent=2)
+            except Exception:
+                pass
+        return target
+    return os.path.join(os.path.dirname(__file__), "projects.json")
 
 def _get_timestamp():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -14,36 +26,60 @@ def get_default_project_data():
         "projects": []
     }
 
+def cleanup_sample_projects(data):
+    if not isinstance(data, dict) or "projects" not in data:
+        return False
+    sample_ids = {"PRFC-1021", "SDF"}
+    sample_names = {"EPSILON", "ddd"}
+    initial_count = len(data["projects"])
+    filtered = [
+        p for p in data["projects"]
+        if p.get("id") not in sample_ids
+        and p.get("code") not in sample_ids
+        and p.get("name") not in sample_names
+    ]
+    if len(filtered) != initial_count:
+        data["projects"] = filtered
+        valid_ids = {p.get("id") for p in filtered}
+        if data.get("active_project_id") not in valid_ids:
+            data["active_project_id"] = filtered[0]["id"] if filtered else None
+        return True
+    return False
+
 def get_projects_data():
-    if not os.path.exists(PROJECTS_FILE):
+    projects_file = get_projects_file()
+    if not os.path.exists(projects_file):
         data = get_default_project_data()
         save_projects_data(data)
         return data
     try:
-        with open(PROJECTS_FILE, "r", encoding="utf-8") as f:
+        with open(projects_file, "r", encoding="utf-8") as f:
             data = json.load(f)
             if not isinstance(data, dict) or "projects" not in data:
                 data = get_default_project_data()
                 save_projects_data(data)
+            elif cleanup_sample_projects(data):
+                save_projects_data(data)
             return data
     except Exception as e:
-        print(f"Error loading {PROJECTS_FILE}: {e}")
+        print(f"Error loading {projects_file}: {e}")
         data = get_default_project_data()
         save_projects_data(data)
         return data
 
 def save_projects_data(data):
+    projects_file = get_projects_file()
     try:
-        temp_file = PROJECTS_FILE + ".tmp"
+        temp_file = projects_file + ".tmp"
         with open(temp_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        if os.path.exists(PROJECTS_FILE):
-            os.replace(temp_file, PROJECTS_FILE)
+        if os.path.exists(projects_file):
+            os.replace(temp_file, projects_file)
         else:
-            os.rename(temp_file, PROJECTS_FILE)
+            os.rename(temp_file, projects_file)
         return True
     except Exception as e:
-        print(f"Error saving {PROJECTS_FILE}: {e}")
+        print(f"Error saving {projects_file}: {e}")
         return False
 
 def list_projects():
@@ -309,3 +345,17 @@ def delete_project(project_id):
         save_projects_data(data)
         return True
     return False
+
+def update_project(project_id, updates):
+    """Update project metadata (code, name, client, contractor, subcontractor, notes, unit_system)"""
+    data = get_projects_data()
+    for p in data.get("projects", []):
+        if p.get("id") == project_id:
+            for field in ["code", "name", "client", "contractor", "subcontractor", "notes", "unit_system"]:
+                if field in updates and updates[field] is not None:
+                    p[field] = str(updates[field]).strip()
+            p["updated_at"] = _get_timestamp()
+            save_projects_data(data)
+            return p
+    return None
+

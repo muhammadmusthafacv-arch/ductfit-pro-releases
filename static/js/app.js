@@ -101,6 +101,7 @@
     const state = {
         catalogTree: null,
         activeCode: "CR11-1",
+        lastDirectCode: "CR11-1",
         activeItem: null,
         mode: "direct",       // 'direct' (loss calculation) or 'sizer' (duct sizing)
         unit: "SI",           // 'SI' or 'IP'
@@ -115,6 +116,7 @@
         sizeTargetVal: 1.0,         // Pa/m (or in. wg/100ft)
         sizeFixedType: "H",         // 'H', 'W', or 'AR'
         sizeFixedDim: 300,          // mm (or in.)
+        userSizerValues: {},        // Preserved in-session inputs for Auto Duct Sizer (resets on refresh / restart)
 
         // Fullscreen & Workspace Zoom state
         isFullscreen: false,
@@ -140,6 +142,8 @@
     const elements = {
         // Tree Sidebar
         treeSearchInput: document.getElementById("treeSearchInput"),
+        btnClearTreeSearch: document.getElementById("btnClearTreeSearch"),
+        treeNotFound: document.getElementById("treeNotFound"),
         btnExpandAll: document.getElementById("btnExpandAll"),
         btnCollapseAll: document.getElementById("btnCollapseAll"),
         treeViewContainer: document.getElementById("treeViewContainer"),
@@ -295,11 +299,23 @@
         projectRibbonBar: document.getElementById("projectRibbonBar"),
         selectActiveProject: document.getElementById("selectActiveProject"),
         btnAddNewProject: document.getElementById("btnAddNewProject"),
+        btnManageAllProjects: document.getElementById("btnManageAllProjects"),
         btnProjectSummary: document.getElementById("btnProjectSummary"),
         badgeProjectFittingCount: document.getElementById("badgeProjectFittingCount"),
         snippetPrjCode: document.getElementById("snippetPrjCode"),
         snippetPrjClient: document.getElementById("snippetPrjClient"),
         btnAddToProject: document.getElementById("btnAddToProject"),
+
+        // Searchable Project Combo Selector
+        prjSearchCombo: document.getElementById("prjSearchCombo"),
+        prjComboTrigger: document.getElementById("prjComboTrigger"),
+        prjComboSelectedText: document.getElementById("prjComboSelectedText"),
+        prjComboDropdown: document.getElementById("prjComboDropdown"),
+        prjComboSearchInput: document.getElementById("prjComboSearchInput"),
+        btnClearComboSearch: document.getElementById("btnClearComboSearch"),
+        prjComboList: document.getElementById("prjComboList"),
+        btnComboNewProject: document.getElementById("btnComboNewProject"),
+        btnComboManageAll: document.getElementById("btnComboManageAll"),
 
         // Add New Project Modal
         newProjectModal: document.getElementById("newProjectModal"),
@@ -312,6 +328,29 @@
         inputPrjContractor: document.getElementById("inputPrjContractor"),
         inputPrjSubcontractor: document.getElementById("inputPrjSubcontractor"),
         inputPrjNotes: document.getElementById("inputPrjNotes"),
+
+        // All Projects Modal
+        allProjectsModal: document.getElementById("allProjectsModal"),
+        btnCloseAllProjectsModal: document.getElementById("btnCloseAllProjectsModal"),
+        btnCloseAllProjectsBottom: document.getElementById("btnCloseAllProjectsBottom"),
+        btnAllProjectsCreateNew: document.getElementById("btnAllProjectsCreateNew"),
+        inputFilterAllProjects: document.getElementById("inputFilterAllProjects"),
+        btnClearFilterAllProjects: document.getElementById("btnClearFilterAllProjects"),
+        allProjectsCount: document.getElementById("allProjectsCount"),
+        tbodyAllProjects: document.getElementById("tbodyAllProjects"),
+
+        // Edit Project Modal
+        editProjectModal: document.getElementById("editProjectModal"),
+        btnCloseEditProjectModal: document.getElementById("btnCloseEditProjectModal"),
+        btnCancelEditProject: document.getElementById("btnCancelEditProject"),
+        btnSaveEditProject: document.getElementById("btnSaveEditProject"),
+        editPrjId: document.getElementById("editPrjId"),
+        inputEditPrjCode: document.getElementById("inputEditPrjCode"),
+        inputEditPrjName: document.getElementById("inputEditPrjName"),
+        inputEditPrjClient: document.getElementById("inputEditPrjClient"),
+        inputEditPrjContractor: document.getElementById("inputEditPrjContractor"),
+        inputEditPrjSubcontractor: document.getElementById("inputEditPrjSubcontractor"),
+        inputEditPrjNotes: document.getElementById("inputEditPrjNotes"),
 
         // Sidebar & Resizer
         catalogSidebar: document.getElementById("catalogSidebar"),
@@ -552,20 +591,31 @@
     // --- Search & Filter Tree ---
     function filterTree(query) {
         const q = query.trim().toLowerCase();
-        const allItems = elements.treeViewContainer.querySelectorAll(".tree-leaf");
+        const allItems = elements.treeViewContainer ? elements.treeViewContainer.querySelectorAll(".tree-leaf") : [];
         
+        if (elements.btnClearTreeSearch) {
+            elements.btnClearTreeSearch.classList.toggle("hidden", !q);
+        }
+
         if (!q) {
             // Reset visibility
-            elements.treeViewContainer.querySelectorAll(".tree-node").forEach(n => n.classList.remove("hidden"));
+            if (elements.treeViewContainer) {
+                elements.treeViewContainer.querySelectorAll(".tree-node").forEach(n => n.classList.remove("hidden"));
+            }
+            if (elements.treeNotFound) {
+                elements.treeNotFound.classList.add("hidden");
+            }
             return;
         }
 
+        let matchCount = 0;
         allItems.forEach(leaf => {
             const text = leaf.textContent.toLowerCase();
             const match = text.includes(q);
             leaf.classList.toggle("hidden", !match);
 
             if (match) {
+                matchCount++;
                 // Ensure all ancestor branches are expanded and visible
                 let parent = leaf.parentElement;
                 while (parent && parent !== elements.treeViewContainer) {
@@ -585,6 +635,78 @@
                 }
             }
         });
+
+        if (elements.treeNotFound) {
+            if (matchCount === 0) {
+                elements.treeNotFound.classList.remove("hidden");
+                showPrjToast("Fitting Not Found");
+            } else {
+                elements.treeNotFound.classList.add("hidden");
+            }
+        }
+    }
+
+    function selectFittingFromSearch(query) {
+        if (!query) return false;
+        const rawQ = query.trim();
+        if (!rawQ) return false;
+        const q = rawQ.toLowerCase();
+        const normQ = q.replace(/[\s\-_]/g, "");
+
+        const allLeaves = elements.treeViewContainer ? elements.treeViewContainer.querySelectorAll(".tree-leaf") : [];
+        if (!allLeaves.length) return false;
+
+        let exactMatch = null;
+        let normMatch = null;
+        let prefixMatch = null;
+        let firstVisible = null;
+        let textMatch = null;
+
+        for (const leaf of allLeaves) {
+            const code = leaf.dataset.code || "";
+            const lowerCode = code.toLowerCase();
+            const normCode = lowerCode.replace(/[\s\-_]/g, "");
+            const text = leaf.textContent.toLowerCase();
+            const isVisible = !leaf.classList.contains("hidden");
+
+            if (lowerCode === q) {
+                exactMatch = code;
+                break;
+            }
+            if (!normMatch && normCode === normQ) {
+                normMatch = code;
+            }
+            if (!prefixMatch && (lowerCode.startsWith(q) || normCode.startsWith(normQ))) {
+                prefixMatch = code;
+            }
+            if (!firstVisible && isVisible) {
+                firstVisible = code;
+            }
+            if (!textMatch && text.includes(q)) {
+                textMatch = code;
+            }
+        }
+
+        const targetCode = exactMatch || normMatch || prefixMatch || firstVisible || textMatch;
+        if (targetCode) {
+            selectFitting(targetCode);
+            const item = findItemInTree(state.catalogTree, targetCode);
+            const itemName = item && item.name ? ` - ${item.name}` : "";
+            showPrjToast(`✓ Selected Fitting: ${targetCode}${itemName}`);
+            if (elements.treeNotFound) {
+                elements.treeNotFound.classList.add("hidden");
+            }
+            if (elements.treeSearchInput) {
+                elements.treeSearchInput.blur();
+            }
+            return true;
+        } else {
+            showPrjToast("Fitting Not Found");
+            if (elements.treeNotFound) {
+                elements.treeNotFound.classList.remove("hidden");
+            }
+        }
+        return false;
     }
 
     function toggleAllFolders(expand) {
@@ -600,7 +722,7 @@
         });
     }
 
-    // --- Ductfit Pro Fitting Catalog Area Enlarge & Resizer Logic ---
+    // --- DuctFit Pro Fitting Catalog Area Enlarge & Resizer Logic ---
     function initCatalogEnlargeControls() {
         const sidebar = document.getElementById("catalogSidebar");
         const resizer = document.getElementById("catalogResizer");
@@ -729,6 +851,9 @@
     // --- Select Fitting Model from Tree or Sizer ---
     function selectFitting(code) {
         state.activeCode = code;
+        if (!code.startsWith("SIZE-")) {
+            state.lastDirectCode = code;
+        }
         const item = findItemInTree(state.catalogTree, code);
         state.activeItem = item || getFallbackItem(code);
 
@@ -742,8 +867,39 @@
         // Check if this is an automated sizing tool
         if (code.startsWith("SIZE-") || (state.activeItem && state.activeItem.category === "Duct Sizing")) {
             setMode("sizer");
-        } else if (state.mode === "sizer") {
-            setMode("direct");
+        } else {
+            state.userRoughnessValue = null;
+            if (state.mode === "sizer") {
+                setMode("direct");
+            }
+        }
+
+        // Highlight selected node in tree & expand all ancestor folders
+        if (elements.treeViewContainer) {
+            document.querySelectorAll(".tree-row.selected").forEach(el => el.classList.remove("selected"));
+            const leaf = elements.treeViewContainer.querySelector(`[data-code="${code}"]`);
+            if (leaf) {
+                let parent = leaf.parentElement;
+                while (parent && parent !== elements.treeViewContainer) {
+                    if (parent.tagName === "UL") {
+                        parent.classList.remove("hidden");
+                        const prevRow = parent.previousElementSibling;
+                        if (prevRow && prevRow.querySelector(".tree-toggle-btn")) {
+                            prevRow.querySelector(".tree-toggle-btn").textContent = "−";
+                            const icon = prevRow.querySelector(".tree-icon");
+                            if (icon) icon.textContent = "📂";
+                        }
+                    }
+                    if (parent.tagName === "LI") {
+                        parent.classList.remove("hidden");
+                    }
+                    parent = parent.parentElement;
+                }
+                leaf.classList.remove("hidden");
+                const row = leaf.querySelector(".tree-row");
+                if (row) row.classList.add("selected");
+                leaf.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
         }
 
         updateHeaderAndInputs();
@@ -793,8 +949,7 @@
                     { id: "D", label_si: "Diameter (D, mm)", label_ip: "Diameter (D, in.)", default_si: 300, default_ip: 12, step: 5 },
                     { id: "e", label_si: "Absolute Roughness (e, mm)", label_ip: "Absolute Roughness (e, ft)", default_si: 0.090, default_ip: 0.0003, step: 0.005 },
                     { id: "L", label_si: "Length (L, m)", label_ip: "Length (L, ft)", default_si: 3, default_ip: 10, step: 0.5 },
-                    { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 2000, default_ip: 4238, step: 50 },
-                    { id: "rho", label_si: "Density (kg/m^3)", label_ip: "Density (lbm/ft^3)", default_si: 1.204, default_ip: 0.075, step: 0.001 }
+                    { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 2000, default_ip: 4238, step: 50 }
                 ],
                 drawing: "straight_round"
             };
@@ -809,8 +964,7 @@
                     { id: "A", label_si: "Major Axis (A, mm)", label_ip: "Major Axis (A, in.)", default_si: 400, default_ip: 16, step: 10 },
                     { id: "e", label_si: "Absolute Roughness (e, mm)", label_ip: "Absolute Roughness (e, ft)", default_si: 0.090, default_ip: 0.0003, step: 0.005 },
                     { id: "L", label_si: "Length (L, m)", label_ip: "Length (L, ft)", default_si: 3, default_ip: 10, step: 0.5 },
-                    { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 2000, default_ip: 4238, step: 50 },
-                    { id: "rho", label_si: "Density (kg/m^3)", label_ip: "Density (lbm/ft^3)", default_si: 1.204, default_ip: 0.075, step: 0.001 }
+                    { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 2000, default_ip: 4238, step: 50 }
                 ],
                 drawing: "straight_oval"
             };
@@ -826,8 +980,13 @@
                 { id: "W", label_si: "Width (W, mm)", label_ip: "Width (W, in.)", default_si: 300, default_ip: 12, step: 10 },
                 { id: "ei", label_si: "Absolute Roughness (e, mm)", label_ip: "Absolute Roughness (e, ft)", default_si: 0.090, default_ip: 0.0003, step: 0.001 },
                 { id: "L", label_si: "Length (L, m)", label_ip: "Length (L, ft)", default_si: 1, default_ip: 10, step: 0.5 },
-                { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 700, default_ip: 1500, step: 25 },
-                { id: "rho", label_si: "Density (rho, kg/m^3)", label_ip: "Density (rho, lbm/ft^3)", default_si: 1.204, default_ip: 0.075, step: 0.001 }
+                { id: "Q", label_si: "Flow Rate (Q, L/s)", label_ip: "Flow Rate (Q, cfm)", default_si: 700, default_ip: 1500, step: 25 }
+            ],
+            output_details: [
+                { variable: "V", prompt: "Velocity", si_unit: "(V, m/s)", ip_unit: "(V, fpm)", si_decimals: 1, ip_decimals: 0 },
+                { variable: "Pv", prompt: "Vel Pres at V", si_unit: "(Pv, Pa)", ip_unit: "(Pv, in. wg)", si_decimals: 0, ip_decimals: 2 },
+                { variable: "f", prompt: "Friction Factor", si_unit: "(f)", ip_unit: "(f)", si_decimals: 4, ip_decimals: 4 },
+                { variable: "Po", prompt: "Pressure Loss", si_unit: "(Pa)", ip_unit: "(in. wg)", si_decimals: 1, ip_decimals: 2 }
             ],
             drawing: "straight_rect"
         };
@@ -1024,6 +1183,65 @@
         updateSizerTargetCitation();
     }
 
+    // --- Clear All Fitting Outputs to Blank State ---
+    function clearFittingOutputs() {
+        const item = state.activeItem || getFallbackItem(state.activeCode);
+        const u = state.unit;
+
+        if (item && item.output_details && item.output_details.length > 0) {
+            elements.outputTableBody.innerHTML = "";
+            item.output_details.forEach(od => {
+                const prompt = od.prompt || od.variable;
+                const match = prompt.match(/^\{([^}]+)\}(.*)$/);
+                if (match) {
+                    const sectionTitle = match[1];
+                    const secTr = document.createElement("tr");
+                    secTr.className = "row-section-header";
+                    secTr.style.background = "#e2e8f0";
+                    secTr.style.borderTop = "1px solid #cbd5e1";
+                    secTr.style.borderBottom = "1px solid #cbd5e1";
+                    secTr.innerHTML = `<td colspan="2" style="text-align:center; color:#0f172a; font-weight:700; padding:6px 8px; font-size:12px; text-transform:uppercase; letter-spacing:0.75px;">${escapeHtml(sectionTitle)}</td>`;
+                    elements.outputTableBody.appendChild(secTr);
+                }
+
+                const cleanPrompt = match ? match[2].trim() : prompt.trim();
+                const unitStr = u === "SI" ? (od.si_unit || "") : (od.ip_unit || "");
+                const labelText = unitStr ? `${cleanPrompt} ${unitStr}` : cleanPrompt;
+
+                const tr = document.createElement("tr");
+                tr.id = `row-out-${od.variable}`;
+                const tdPrompt = document.createElement("td");
+                tdPrompt.className = "col-label";
+                tdPrompt.textContent = labelText;
+
+                const tdVal = document.createElement("td");
+                tdVal.className = "col-output";
+                tdVal.id = `out-${od.variable}`;
+                tdVal.textContent = "";
+
+                tr.appendChild(tdPrompt);
+                tr.appendChild(tdVal);
+                elements.outputTableBody.appendChild(tr);
+            });
+        } else {
+            restoreStandardOutputTable();
+            if (elements.outSized) elements.outSized.textContent = "";
+            if (elements.outV) elements.outV.textContent = "";
+            if (elements.outFr) elements.outFr.textContent = "";
+            if (elements.outPv) elements.outPv.textContent = "";
+            if (elements.outF) elements.outF.textContent = "";
+            if (elements.outDp) elements.outDp.textContent = "";
+            if (elements.outDe) elements.outDe.textContent = "";
+            if (elements.outAR) elements.outAR.textContent = "";
+            if (elements.outArea) elements.outArea.textContent = "";
+            if (elements.outRe) elements.outRe.textContent = "";
+        }
+
+        if (elements.formulasContainer) {
+            elements.formulasContainer.innerHTML = `<div class="tb-empty-note" style="padding:18px;text-align:center;color:#64748b;font-style:italic;">Enter fitting input parameters to view step-by-step engineering calculation breakdown.</div>`;
+        }
+    }
+
     // --- Update Air Condition UI (McQuay Parity) ---
     function updateAirConditionUI() {
         const condId = state.selectedAirConditionId || "comfort_return";
@@ -1104,6 +1322,8 @@
                 } else {
                     el.value = (Math.round(val * Math.pow(10, decimals)) / Math.pow(10, decimals)).toFixed(decimals).replace(/\.0+$/, '');
                 }
+                if (!state.userSizerValues) state.userSizerValues = {};
+                state.userSizerValues[id] = el.value;
             }
         };
 
@@ -1268,6 +1488,11 @@
             updateSizerTargetCitation();
             return;
         }
+
+        // In Fitting Loss Analysis mode, all input parameters (such as Wind Velocity V in SD2-2/SR2-2)
+        // are independent user-specified boundary conditions from the official ASHRAE database.
+        // Never overwrite user inputs in fitting loss mode.
+        return;
 
         const u = state.unit;
         const code = item.code || "";
@@ -1502,7 +1727,7 @@
         let inputs = [];
 
         if (isSizer) {
-            elements.displayFittingTitle.textContent = "🎯 Auto Duct Sizer (ASHRAE & McQuay Method)";
+            elements.displayFittingTitle.textContent = "Auto Duct Sizer (ASHRAE & McQuay Method)";
             elements.displayFittingSubtitle.textContent = "ASHRAE Fundamentals, Ch. 21: Duct Design";
             elements.displayFittingCitation.textContent = "Colebrook-Darcy Friction (Eq. 19) & Huebscher Equivalent Diameter (Eq. 25)";
             elements.sheetTitleText.textContent = "Auto Duct Sizer (ASHRAE & McQuay Method)";
@@ -1634,6 +1859,20 @@
             inputEl.dataset.fieldId = inp.id;
             inputEl.step = inp.step || "any";
 
+            const minLimit = u === "SI" ? inp.min_si : inp.min_ip;
+            const maxLimit = u === "SI" ? inp.max_si : inp.max_ip;
+            if (minLimit !== undefined && minLimit !== null) {
+                inputEl.dataset.min = minLimit;
+                inputEl.min = minLimit;
+            }
+            if (maxLimit !== undefined && maxLimit !== null) {
+                inputEl.dataset.max = maxLimit;
+                inputEl.max = maxLimit;
+            }
+            if (minLimit !== undefined && maxLimit !== undefined) {
+                inputEl.title = `Valid ASHRAE Range: ${minLimit} to ${maxLimit}`;
+            }
+
             const isRoughness = (inp.id === "e" || inp.id === "ei" || inp.id === "roughness");
 
             if (isRoughness) {
@@ -1664,13 +1903,20 @@
                 } else if (convertedValues && (inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"]) !== undefined && (inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"]) !== "") {
                     initialVal = inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"];
                     state.userRoughnessValue = initialVal;
+                } else if (isSizer && state.userSizerValues && state.userSizerValues[inp.id] !== undefined && state.userSizerValues[inp.id] !== null && state.userSizerValues[inp.id] !== "") {
+                    initialVal = state.userSizerValues[inp.id];
                 } else if (state.userRoughnessValue !== null && state.userRoughnessValue !== undefined && state.userRoughnessValue !== "") {
                     initialVal = state.userRoughnessValue;
+                } else if (isSizer) {
+                    initialVal = ""; // Nil / Blank on fresh load in Sizer mode
                 } else {
-                    initialVal = ""; // Nil / Blank on fresh load, reload, or reset!
+                    const defRoughness = u === "SI" ? (inp.default_si !== undefined ? Number(inp.default_si).toFixed(3) : "0.090") : (inp.default_ip !== undefined ? Number(inp.default_ip).toFixed(4) : "0.0003");
+                    initialVal = defRoughness;
                 }
 
                 inputEl.value = initialVal;
+                const defRoughness = u === "SI" ? (inp.default_si !== undefined ? Number(inp.default_si).toFixed(3) : "0.090") : (inp.default_ip !== undefined ? Number(inp.default_ip).toFixed(4) : "0.0003");
+                inputEl.placeholder = `e.g. ${defRoughness}`;
 
                 // Double-clicking input field also opens the ASHRAE material dialog
                 inputEl.title = "Double-click or click label to open ASHRAE Duct Material Roughness Picker";
@@ -1680,6 +1926,10 @@
 
                 inputEl.addEventListener("input", () => {
                     const raw = inputEl.value.trim();
+                    if (isSizer) {
+                        if (!state.userSizerValues) state.userSizerValues = {};
+                        state.userSizerValues[inp.id] = inputEl.value;
+                    }
                     if (raw !== "") {
                         state.userRoughnessValue = raw;
                         const typed = parseFloat(raw);
@@ -1697,6 +1947,10 @@
 
                 inputEl.addEventListener("change", () => {
                     const raw = inputEl.value.trim();
+                    if (isSizer) {
+                        if (!state.userSizerValues) state.userSizerValues = {};
+                        state.userSizerValues[inp.id] = inputEl.value;
+                    }
                     if (raw !== "") {
                         state.userRoughnessValue = raw;
                     } else {
@@ -1710,22 +1964,73 @@
                 tdLabel.textContent = u === "SI" ? (inp.label_si || inp.id) : (inp.label_ip || inp.id);
                 if (convertedValues && convertedValues[inp.id] !== undefined && convertedValues[inp.id] !== "") {
                     inputEl.value = convertedValues[inp.id];
-                } else if (isSizer && (inp.id === "Q" || inp.id === "target_hf" || inp.id === "H" || inp.id === "W" || inp.id === "D" || inp.id === "V" || inp.id === "De")) {
-                    inputEl.value = "";
-                    inputEl.placeholder = u === "SI" ? (inp.placeholder_si || inp.default_si || "") : (inp.placeholder_ip || inp.default_ip || "");
+                    if (isSizer) {
+                        if (!state.userSizerValues) state.userSizerValues = {};
+                        state.userSizerValues[inp.id] = inputEl.value;
+                    }
+                } else if (isSizer) {
+                    if (state.userSizerValues && state.userSizerValues[inp.id] !== undefined && state.userSizerValues[inp.id] !== null && state.userSizerValues[inp.id] !== "") {
+                        inputEl.value = state.userSizerValues[inp.id];
+                    } else if (inp.id === "Q" || inp.id === "target_hf" || inp.id === "H" || inp.id === "W" || inp.id === "D" || inp.id === "V" || inp.id === "De") {
+                        inputEl.value = "";
+                        inputEl.placeholder = u === "SI" ? (inp.placeholder_si || inp.default_si || "") : (inp.placeholder_ip || inp.default_ip || "");
+                    } else {
+                        inputEl.value = u === "SI" ? (inp.default_si !== undefined ? inp.default_si : 300) : (inp.default_ip !== undefined ? inp.default_ip : 12);
+                    }
                 } else {
-                    inputEl.value = u === "SI" ? (inp.default_si !== undefined ? inp.default_si : 300) : (inp.default_ip !== undefined ? inp.default_ip : 12);
+                    if (inp.id === "L" && inp.label_si && inp.label_si.includes("(L, m)")) {
+                        inputEl.value = u === "SI" ? (inp.default_si !== undefined ? Number(inp.default_si).toFixed(1) : "1.0") : (inp.default_ip !== undefined ? inp.default_ip : 100);
+                    } else {
+                        inputEl.value = u === "SI" ? (inp.default_si !== undefined ? inp.default_si : 300) : (inp.default_ip !== undefined ? inp.default_ip : 12);
+                    }
                 }
                 tdInput.appendChild(inputEl);
             }
+
+            // Real-time ASHRAE input range validation
+            const checkRange = (el) => {
+                const val = parseFloat(el.value);
+                const min = el.dataset.min !== undefined ? parseFloat(el.dataset.min) : null;
+                const max = el.dataset.max !== undefined ? parseFloat(el.dataset.max) : null;
+                if (!isNaN(val) && el.value.trim() !== "") {
+                    if ((min !== null && val < min) || (max !== null && val > max)) {
+                        el.classList.add("input-out-of-range");
+                        el.title = `Out of ASHRAE Range: ${min} to ${max}`;
+                        return false;
+                    }
+                }
+                el.classList.remove("input-out-of-range");
+                if (min !== null && max !== null) {
+                    el.title = `Valid ASHRAE Range: ${min} to ${max}`;
+                }
+                return true;
+            };
+
+            inputEl.addEventListener("input", () => {
+                checkRange(inputEl);
+            });
+            inputEl.addEventListener("change", () => {
+                checkRange(inputEl);
+            });
+            checkRange(inputEl);
 
             // Listeners for calculate and bi-directional multi-way continuity solving
             inputEl.addEventListener("keypress", (e) => {
                 if (e.key === "Enter") calculate();
             });
             inputEl.addEventListener("input", () => {
+                if (isSizer) {
+                    if (!state.userSizerValues) state.userSizerValues = {};
+                    state.userSizerValues[inp.id] = inputEl.value;
+                }
                 solveTwoValues(inp.id);
                 debounceCalculate();
+            });
+            inputEl.addEventListener("change", () => {
+                if (isSizer) {
+                    if (!state.userSizerValues) state.userSizerValues = {};
+                    state.userSizerValues[inp.id] = inputEl.value;
+                }
             });
 
             tr.appendChild(tdLabel);
@@ -1734,6 +2039,17 @@
         });
 
         updateFsHud();
+    }
+
+        function formatAppDate(dateInput) {
+        if (!dateInput) return "-";
+        const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+        if (isNaN(d.getTime())) return String(dateInput);
+        const day = String(d.getDate()).padStart(2, '0');
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const month = months[d.getMonth()];
+        const year = d.getFullYear();
+        return `${day}-${month}-${year}`;
     }
 
     // --- Mode & Unit Switches ---
@@ -1753,34 +2069,39 @@
             if (elements.drawingWorkspace) elements.drawingWorkspace.style.display = "none";
             document.querySelectorAll(".window-divider").forEach(el => el.style.display = "none");
 
-            // Expand Step-by-Step Engineering Calculation Breakdown
+            // Keep Step-by-Step Engineering Calculation Breakdown collapsed by default
             if (elements.formulasWrapper) {
                 elements.formulasWrapper.classList.remove("hidden");
                 elements.formulasWrapper.style.display = "";
             }
-            if (elements.formulasContainer) {
-                elements.formulasContainer.style.display = "block";
-            }
-            if (elements.fToggleArrow) elements.fToggleArrow.textContent = "▼";
         } else {
-            if (state.activeCode && state.activeCode.startsWith("SIZE-")) {
-                state.activeCode = "CR11-1";
-                state.activeItem = getFallbackItem("CR11-1");
-            }
-
             // Restore Fitting Catalog & CAD drafting workspace in Fitting Loss Analysis mode
             if (elements.catalogSidebar) elements.catalogSidebar.style.display = "";
             if (elements.catalogResizer) elements.catalogResizer.style.display = "";
             if (elements.drawingWorkspace) elements.drawingWorkspace.style.display = "";
             document.querySelectorAll(".window-divider").forEach(el => el.style.display = "");
+
+            updateProjectRibbonBadge();
+
+            // Seamlessly restore the exact active fitting with official catalog inputs and outputs
+            const targetCode = (state.lastDirectCode && !state.lastDirectCode.startsWith("SIZE-")) 
+                ? state.lastDirectCode 
+                : "CR11-1";
+            selectFitting(targetCode);
+            return;
         }
 
         updateProjectRibbonBadge();
         updateHeaderAndInputs();
         if (newMode === "sizer") {
-            clearSizerOutputs();
-        } else {
-            calculate();
+            const hasSizerInputs = state.userSizerValues && Object.entries(state.userSizerValues).some(([k, v]) => {
+                return (k === "Q" || k === "target_hf" || k === "V" || k === "H" || k === "W" || k === "D") && v !== "" && v !== null && v !== undefined && !isNaN(parseFloat(v));
+            });
+            if (hasSizerInputs) {
+                calculate();
+            } else {
+                clearSizerOutputs();
+            }
         }
     }
 
@@ -1916,6 +2237,18 @@
             });
         }
 
+        // Convert stored in-session Auto Duct Sizer inputs
+        if (state.userSizerValues) {
+            for (const [fId, valStr] of Object.entries(state.userSizerValues)) {
+                if (valStr !== "" && valStr !== null && valStr !== undefined) {
+                    const num = parseFloat(valStr);
+                    if (!isNaN(num)) {
+                        state.userSizerValues[fId] = convertInputValue(fId, num, oldUnit, newUnit);
+                    }
+                }
+            }
+        }
+
         // Convert Sizing controls if present
         if (elements.sizeTargetVal && elements.sizeTargetVal.value) {
             const rawTg = parseFloat(elements.sizeTargetVal.value);
@@ -1958,6 +2291,7 @@
     }
 
     function resetToScreenshotDefault() {
+        state.userSizerValues = {};
         state.activeCode = "CR11-1";
         state.mode = "direct";
         state.unit = "SI";
@@ -1987,7 +2321,6 @@
         setInputVal("e", "0.09000");
         setInputVal("L", 3);
         setInputVal("Q", 2000);
-        setInputVal("rho", 1.204);
 
         calculate();
     }
@@ -2030,7 +2363,7 @@
             if ("e" in inputs && !("ei" in inputs)) inputs.ei = inputs.e;
         }
 
-        showPrjToast("Generating Ductfit Pro calculation PDF report...");
+        showPrjToast("Generating DuctFit Pro calculation PDF report...");
 
         try {
             const payload = {
@@ -2056,7 +2389,7 @@
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = downloadUrl;
-            a.download = `${code}_Ductfit_Pro_Calculation.pdf`;
+            a.download = `${code}_DuctFit_Pro_Calculation.pdf`;
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -2095,6 +2428,13 @@
         const isSizer = state.mode === "sizer" || (state.activeCode && state.activeCode.startsWith("SIZE-"));
 
         if (isSizer) {
+            if (!state.userSizerValues) state.userSizerValues = {};
+            elements.inputTableBody.querySelectorAll("input").forEach(inp => {
+                const fid = inp.dataset.fieldId;
+                if (inp.value && inp.value.trim() !== "") {
+                    state.userSizerValues[fid] = inp.value.trim();
+                }
+            });
             const hasQ = ("Q" in inputs) && !isNaN(inputs.Q) && inputs.Q > 0;
             const hasConstraint = ("target_hf" in inputs && !isNaN(inputs.target_hf) && inputs.target_hf > 0) ||
                                   ("V" in inputs && !isNaN(inputs.V) && inputs.V > 0) ||
@@ -2109,9 +2449,15 @@
             }
         }
 
-        // Ensure default properties if missing
-        if (!("rho" in inputs)) inputs.rho = state.unit === "SI" ? cond.density_si : cond.density_ip;
-        if (!isSizer && !("Q" in inputs) && !("Qc" in inputs)) inputs.Q = state.unit === "SI" ? 2000.0 : 4238.0;
+        // In Fitting Loss Analysis, air density is strictly constant and non-editable (ASHRAE Database standard: 1.204 SI / 0.075 IP)
+        if (isSizer) {
+            if (!("rho" in inputs)) inputs.rho = state.unit === "SI" ? cond.density_si : cond.density_ip;
+        } else {
+            inputs.rho = state.unit === "SI" ? 1.204 : 0.075;
+            if (!("Q" in inputs) && !("Qc" in inputs) && !("Q1" in inputs) && !("Qo" in inputs)) {
+                inputs.Q = state.unit === "SI" ? 2000.0 : 4238.0;
+            }
+        }
 
         if (state.selectedRoughnessMaterial) {
             inputs.material_name = state.selectedRoughnessMaterial;
@@ -2187,6 +2533,18 @@
     // --- Render Output Table ---
     function renderOutputs(d) {
         const u = state.unit;
+
+        // ASHRAE Limit Alert Banner
+        const alertEl = document.getElementById("ashrae-range-alert");
+        if (alertEl) {
+            if (d && d.out_of_range_warnings && d.out_of_range_warnings.length > 0) {
+                alertEl.innerHTML = `<strong>⚠️ ASHRAE Limit Notice:</strong> ${escapeHtml(d.out_of_range_warnings.join(" "))}`;
+                alertEl.classList.add("visible");
+            } else {
+                alertEl.innerHTML = "";
+                alertEl.classList.remove("visible");
+            }
+        }
 
         if (state.mode === "sizer" || state.activeCode.startsWith("SIZE-")) {
             // Sizing Mode Outputs (ASHRAE Equal Friction & Velocity Methods)
@@ -2368,17 +2726,6 @@
                     tr.appendChild(tdVal);
                     elements.outputTableBody.appendChild(tr);
                 });
-
-                if (d.De_mm !== undefined && (state.activeCode.startsWith("CR") || state.activeCode.startsWith("CF")) && !item.output_details.some(o => o.variable === "De")) {
-                    const trDe = document.createElement("tr");
-                    trDe.innerHTML = `<td class="col-label">Equivalent Ø (De)</td><td class="col-output">${u === "SI" ? Math.round(d.De_mm) + " mm" : (d.De_mm / 25.4).toFixed(1) + '"'}</td>`;
-                    elements.outputTableBody.appendChild(trDe);
-                }
-                if (d.aspect_ratio !== undefined && !item.output_details.some(o => o.variable === "AR")) {
-                    const trAR = document.createElement("tr");
-                    trAR.innerHTML = `<td class="col-label">Aspect Ratio (W/H)</td><td class="col-output">${d.aspect_ratio.toFixed(2)} : 1</td>`;
-                    elements.outputTableBody.appendChild(trAR);
-                }
             } else {
                 if (!document.getElementById("out-dp") || !elements.outDp) {
                     restoreStandardOutputTable();
@@ -2480,19 +2827,85 @@
             // 3. Parameters / Given Values
             let paramsHtml = '';
             if (st.parameters && st.parameters.length > 0) {
-                const items = st.parameters.map(p => `
-                    <div class="tb-param-item">
-                        <span class="tb-param-sym">$${p.symbol}$</span>
-                        <span class="tb-param-name">${escapeHtml(p.name)}:</span>
-                        <span class="tb-param-val">${escapeHtml(p.value)}</span>
-                    </div>
-                `).join('');
-                paramsHtml = `
-                    <div class="tb-block tb-params-block">
-                        <div class="tb-block-label"><span class="tb-label-icon">📋</span> Known Parameters &amp; Boundary Conditions</div>
-                        <div class="tb-params-grid">${items}</div>
-                    </div>
-                `;
+                const IGNORED = new Set([
+                    'materialname', 'airconditionid', 'aircondition', 'unitsystem',
+                    'shape', 'code', 'targettype', 'targetval', 'fixedtype', 'fixeddim',
+                    'lfe', 'ei', 'mu', 'dc', 'evallog', 'steps', 'drawing', 'fittings',
+                    'rawenv', 'material', 'air'
+                ]);
+
+                const seenKeys = new Set();
+                const filteredParams = st.parameters.filter(p => {
+                    if (!p) return false;
+                    const sym = String(p.symbol || '').trim();
+                    const name = String(p.name || '').trim();
+                    const symNorm = sym.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const nameNorm = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (IGNORED.has(symNorm) || IGNORED.has(nameNorm)) return false;
+                    // Deduplicate aliases
+                    if (symNorm === 'do' && (seenKeys.has('d') || st.parameters.some(x => (x.symbol||'').toLowerCase() === 'd'))) return false;
+                    if (symNorm === 'lfe' && (seenKeys.has('lfe') || seenKeys.has('lfe') || st.parameters.some(x => (x.symbol||'').toLowerCase().includes('l_fe')))) return false;
+                    if (symNorm === 'rho' && seenKeys.has('rho')) return false;
+                    if (seenKeys.has(symNorm)) return false;
+                    seenKeys.add(symNorm);
+                    return true;
+                });
+
+                if (filteredParams.length > 0) {
+                    const items = filteredParams.map(p => {
+                        let sym = String(p.symbol || '').trim();
+                        // LaTeX math symbol normalization
+                        if (sym === 'Co' || sym === 'CO') sym = 'C_o';
+                        else if (sym === 'Pv' || sym === 'PV') sym = 'P_v';
+                        else if (sym === 'Pvo') sym = 'P_{vo}';
+                        else if (sym === 'VPC') sym = 'V_{PC}';
+                        else if (sym === 'Vo') sym = 'V_o';
+                        else if (sym === 'Do') sym = 'D_o';
+                        else if (sym === 'Di') sym = 'D_i';
+                        else if (sym === 'Wo') sym = 'W_o';
+                        else if (sym === 'Ho') sym = 'H_o';
+                        else if (sym === 'Qo') sym = 'Q_o';
+                        else if (sym === 'RHO' || sym === 'rho') sym = '\\rho';
+                        else if (sym === 'Theta' || sym === 'theta') sym = '\\theta';
+                        else if (sym.includes('_') && !sym.includes('{')) {
+                            sym = sym.replace(/_([a-zA-Z0-9]+)/g, '_{$1}');
+                        }
+
+                        let name = String(p.name || '').trim();
+                        name = name.replace(/^Input parameter\s+/i, '').trim();
+                        if (name.endsWith(':')) name = name.slice(0, -1).trim();
+
+                        const nameClean = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const symClean = String(p.symbol || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const isRedundantName = !name || nameClean === symClean || nameClean === ('inputparameter' + symClean);
+
+                        const valStr = escapeHtml(String(p.value !== undefined && p.value !== null ? p.value : ''));
+
+                        if (isRedundantName) {
+                            return `
+                                <div class="tb-param-item">
+                                    <span class="tb-param-sym">$${sym}$ =</span>
+                                    <span class="tb-param-val">${valStr}</span>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="tb-param-item">
+                                    <span class="tb-param-sym">$${sym}$</span>
+                                    <span class="tb-param-name">(${escapeHtml(name)}):</span>
+                                    <span class="tb-param-val">${valStr}</span>
+                                </div>
+                            `;
+                        }
+                    }).join('');
+
+                    paramsHtml = `
+                        <div class="tb-block tb-params-block">
+                            <div class="tb-block-label"><span class="tb-label-icon">📋</span> Known Parameters &amp; Boundary Conditions</div>
+                            <div class="tb-params-grid">${items}</div>
+                        </div>
+                    `;
+                }
             }
 
             // 4. Derivation & Algebraic Substitution
@@ -2529,21 +2942,23 @@
 
             // 6. Framed Final Result (College Textbook Double-Border Box)
             let answerHtml = '';
-            if (st.result_latex) {
+            const resLatex = st.result_latex || st.framed_result_latex;
+            const resPlain = st.result || st.framed_result;
+            if (resLatex) {
                 answerHtml = `
                     <div class="tb-answer-row">
                         <div class="tb-answer-box">
                             <span class="tb-answer-tag">Result:</span>
-                            <span class="tb-answer-math">$$${st.result_latex}$$</span>
+                            <span class="tb-answer-math">$$${resLatex}$$</span>
                         </div>
                     </div>
                 `;
-            } else if (st.result) {
+            } else if (resPlain) {
                 answerHtml = `
                     <div class="tb-answer-row">
                         <div class="tb-answer-box">
                             <span class="tb-answer-tag">Result:</span>
-                            <span class="tb-plain-val">${escapeHtml(st.result)}</span>
+                            <span class="tb-plain-val">${escapeHtml(resPlain)}</span>
                         </div>
                     </div>
                 `;
@@ -3712,30 +4127,24 @@
 
         if (elements.btnResetSizer) {
             elements.btnResetSizer.addEventListener("click", () => {
-                // Clear all inputs in table to blank / nil
-                elements.inputTableBody.querySelectorAll("input").forEach(inp => {
-                    const fid = inp.dataset.fieldId;
-                    if (fid === "rho") {
-                        if (state.mode === "sizer" || (state.activeCode && state.activeCode.startsWith("SIZE-"))) {
-                            const cond = AIR_CONDITIONS[state.selectedAirConditionId] || AIR_CONDITIONS["comfort_return"];
-                            inp.value = state.unit === "SI" ? cond.density_si.toFixed(3) : cond.density_ip.toFixed(4);
-                        } else {
-                            // Official ASHRAE Database Standard Air Density: 1.204 kg/m³ (SI) / 0.075 lbm/ft³ (IP)
-                            inp.value = state.unit === "SI" ? "1.204" : "0.075";
-                        }
-                    } else if (fid === "L") {
-                        inp.value = state.unit === "SI" ? "1" : "10";
-                    } else {
-                        // Height, Width, Absolute Roughness (e/ei), Flow Rate, Velocity -> nil / blank!
+                if (state.mode === "sizer") {
+                    state.userSizerValues = {};
+                    elements.inputTableBody.querySelectorAll("input").forEach(inp => {
                         inp.value = "";
-                    }
-                });
+                    });
+                    clearSizerOutputs();
+                } else {
+                    state.userRoughnessValue = null;
+                    elements.inputTableBody.querySelectorAll("input").forEach(inp => {
+                        inp.value = "";
+                    });
+                    clearFittingOutputs();
+                }
 
                 state.targetHf = null;
                 state.targetV = null;
                 state.lastConstraint = null;
                 state.lastChanged = null;
-                state.userRoughnessValue = null;
                 state.selectedRoughnessMaterial = null;
                 state.activeRoughnessIndex = -1;
 
@@ -3747,7 +4156,7 @@
                 if (elements.sizeTargetVal) elements.sizeTargetVal.value = "";
                 if (elements.sizeFixedDim) elements.sizeFixedDim.value = "";
 
-                clearSizerOutputs();
+                renderCadDrawing();
                 const qEl = document.getElementById("input-H") || document.getElementById("input-Q") || elements.inputTableBody.querySelector("input");
                 if (qEl) qEl.focus();
             });
@@ -3799,13 +4208,35 @@
         }
 
         // Tree Search
-        elements.treeSearchInput.addEventListener("input", (e) => filterTree(e.target.value));
+        if (elements.btnClearTreeSearch) {
+            elements.btnClearTreeSearch.addEventListener("click", () => {
+                if (elements.treeSearchInput) {
+                    elements.treeSearchInput.value = "";
+                    filterTree("");
+                    elements.treeSearchInput.focus();
+                }
+            });
+        }
+
+        if (elements.treeSearchInput) {
+            elements.treeSearchInput.addEventListener("input", (e) => filterTree(e.target.value));
+            elements.treeSearchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    selectFittingFromSearch(elements.treeSearchInput.value);
+                } else if (e.key === "Escape") {
+                    elements.treeSearchInput.value = "";
+                    filterTree("");
+                    elements.treeSearchInput.blur();
+                }
+            });
+        }
 
         // Expand / Collapse All
         elements.btnExpandAll.addEventListener("click", () => toggleAllFolders(true));
         elements.btnCollapseAll.addEventListener("click", () => toggleAllFolders(false));
 
-        // Ductfit Pro Fitting Catalog Area Enlarge & Resizer Logic
+        // DuctFit Pro Fitting Catalog Area Enlarge & Resizer Logic
         initCatalogEnlargeControls();
 
         // Sizing Controls (Safe checks if banner is present)
@@ -3898,13 +4329,21 @@
             renderCadDrawing();
         });
 
-        // Toggle Formulas Panel Visibility
+        // Toggle Formulas Panel Visibility (Collapsed by default)
         elements.formulasToggleHeader.addEventListener("click", (e) => {
             if (e.target.closest("#btnCalcFullscreen") || e.target.closest(".btn-calc-fullscreen")) {
                 return;
             }
-            const isHidden = elements.formulasContainer.classList.toggle("hidden");
-            elements.fToggleArrow.classList.toggle("collapsed", isHidden);
+            const isCurrentlyHidden = elements.formulasContainer.classList.contains("hidden") || elements.formulasContainer.style.display === "none";
+            if (isCurrentlyHidden) {
+                elements.formulasContainer.classList.remove("hidden");
+                elements.formulasContainer.style.display = "block";
+                if (elements.fToggleArrow) elements.fToggleArrow.textContent = "▼";
+            } else {
+                elements.formulasContainer.classList.add("hidden");
+                elements.formulasContainer.style.display = "none";
+                if (elements.fToggleArrow) elements.fToggleArrow.textContent = "▶";
+            }
         });
 
         // Calculation Breakdown Fullscreen Toolbar Buttons
@@ -4157,32 +4596,124 @@
     }
 
     function renderProjectDropdown() {
-        if (!elements.selectActiveProject) return;
-        elements.selectActiveProject.innerHTML = "";
+        if (elements.selectActiveProject) {
+            elements.selectActiveProject.innerHTML = "";
+        }
         if (!state.projects || state.projects.length === 0) {
-            const opt = document.createElement("option");
-            opt.value = "";
-            opt.textContent = "-- No Projects (Create One) --";
-            elements.selectActiveProject.appendChild(opt);
+            if (elements.selectActiveProject) {
+                const opt = document.createElement("option");
+                opt.value = "";
+                opt.textContent = "-- No Projects (Create One) --";
+                elements.selectActiveProject.appendChild(opt);
+            }
+            if (elements.prjComboSelectedText) {
+                elements.prjComboSelectedText.textContent = "-- No Projects (Create One) --";
+            }
             updateProjectRibbonSnippet(null);
+            renderPrjComboList("");
             return;
         }
 
         state.projects.forEach(p => {
-            const opt = document.createElement("option");
-            opt.value = p.id;
-            opt.textContent = `${p.code} - ${p.name}`;
-            if (p.id === state.activeProjectId) {
-                opt.selected = true;
+            if (elements.selectActiveProject) {
+                const opt = document.createElement("option");
+                opt.value = p.id;
+                opt.textContent = `${p.code} - ${p.name}`;
+                if (p.id === state.activeProjectId) {
+                    opt.selected = true;
+                }
+                elements.selectActiveProject.appendChild(opt);
             }
-            elements.selectActiveProject.appendChild(opt);
         });
 
         const cur = state.projects.find(p => p.id === state.activeProjectId) || state.projects[0];
         if (cur && cur.id !== state.activeProjectId) {
             state.activeProjectId = cur.id;
         }
+        if (cur && elements.prjComboSelectedText) {
+            elements.prjComboSelectedText.textContent = `${cur.code} - ${cur.name}`;
+        }
         updateProjectRibbonSnippet(cur);
+        renderPrjComboList(elements.prjComboSearchInput ? elements.prjComboSearchInput.value : "");
+    }
+
+    function renderPrjComboList(filterText = "") {
+        if (!elements.prjComboList) return;
+        elements.prjComboList.innerHTML = "";
+
+        const q = (filterText || "").trim().toLowerCase();
+        const filtered = (!q) ? state.projects : state.projects.filter(p => {
+            const code = (p.code || "").toLowerCase();
+            const name = (p.name || "").toLowerCase();
+            const client = (p.client || "").toLowerCase();
+            const contractor = (p.contractor || "").toLowerCase();
+            const notes = (p.notes || "").toLowerCase();
+            return code.includes(q) || name.includes(q) || client.includes(q) || contractor.includes(q) || notes.includes(q);
+        });
+
+        if (elements.btnClearComboSearch) {
+            elements.btnClearComboSearch.classList.toggle("hidden", !q);
+        }
+
+        if (filtered.length === 0) {
+            const emptyDiv = document.createElement("div");
+            emptyDiv.className = "prj-combo-empty";
+            emptyDiv.textContent = q ? `No projects matching "${filterText}"` : "No projects saved yet";
+            elements.prjComboList.appendChild(emptyDiv);
+            return;
+        }
+
+        filtered.forEach(p => {
+            const item = document.createElement("div");
+            item.className = "prj-combo-item" + (p.id === state.activeProjectId ? " active" : "");
+            item.setAttribute("data-project-id", p.id);
+            item.setAttribute("role", "option");
+            item.setAttribute("aria-selected", p.id === state.activeProjectId ? "true" : "false");
+
+            const fitCount = p.fittings_count !== undefined ? p.fittings_count : (p.fittings ? p.fittings.length : 0);
+            const segCount = p.duct_segments_count !== undefined ? p.duct_segments_count : (p.duct_segments ? p.duct_segments.length : 0);
+            const clientText = p.client ? `Client: ${escapeHtml(p.client)}` : (p.contractor ? `Contr: ${escapeHtml(p.contractor)}` : "Standard Project");
+
+            item.innerHTML = `
+                <div class="prj-item-top">
+                    <span class="prj-item-code">${escapeHtml(p.code)}</span>
+                    <span class="prj-item-name">${escapeHtml(p.name)}</span>
+                    ${p.id === state.activeProjectId ? '<span class="prj-active-badge">Active</span>' : ''}
+                </div>
+                <div class="prj-item-bottom">
+                    <span class="prj-item-client">${clientText}</span>
+                    <span class="prj-item-counts">${fitCount} fittings • ${segCount} sized runs</span>
+                </div>
+            `;
+
+            item.addEventListener("click", () => {
+                closePrjComboDropdown();
+                switchActiveProject(p.id);
+            });
+
+            elements.prjComboList.appendChild(item);
+        });
+    }
+
+    function togglePrjComboDropdown(forceOpen) {
+        if (!elements.prjComboDropdown) return;
+        const willOpen = (typeof forceOpen === "boolean") ? forceOpen : elements.prjComboDropdown.classList.contains("hidden");
+        if (willOpen) {
+            elements.prjComboDropdown.classList.remove("hidden");
+            if (elements.prjComboSearchInput) {
+                elements.prjComboSearchInput.value = "";
+                renderPrjComboList("");
+                setTimeout(() => elements.prjComboSearchInput.focus(), 50);
+            }
+        } else {
+            closePrjComboDropdown();
+        }
+    }
+
+    function closePrjComboDropdown() {
+        if (elements.prjComboDropdown) {
+            elements.prjComboDropdown.classList.add("hidden");
+        }
     }
 
     async function fetchActiveProjectDetails(projectId) {
@@ -4245,10 +4776,231 @@
             if (res.status === "success") {
                 state.activeProjectId = projectId;
                 await fetchActiveProjectDetails(projectId);
+                renderProjectDropdown();
+                if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
+                    renderAllProjectsTable(elements.inputFilterAllProjects ? elements.inputFilterAllProjects.value : "");
+                }
                 showPrjToast(`📁 Active Project switched to: ${state.activeProject ? state.activeProject.name : projectId}`);
             }
         } catch (err) {
             console.error("Failed to select project:", err);
+        }
+    }
+
+    // --- All Projects Management (View, Search, Edit, Delete) ---
+
+    function openAllProjectsModal() {
+        if (!elements.allProjectsModal) return;
+        if (elements.inputFilterAllProjects) {
+            elements.inputFilterAllProjects.value = "";
+        }
+        renderAllProjectsTable("");
+        elements.allProjectsModal.classList.remove("hidden");
+        if (elements.inputFilterAllProjects) {
+            setTimeout(() => elements.inputFilterAllProjects.focus(), 100);
+        }
+    }
+
+    function closeAllProjectsModal() {
+        if (elements.allProjectsModal) {
+            elements.allProjectsModal.classList.add("hidden");
+        }
+    }
+
+    function renderAllProjectsTable(filterText = "") {
+        if (!elements.tbodyAllProjects) return;
+        elements.tbodyAllProjects.innerHTML = "";
+
+        const q = (filterText || "").trim().toLowerCase();
+        const filtered = (!q) ? state.projects : state.projects.filter(p => {
+            const code = (p.code || "").toLowerCase();
+            const name = (p.name || "").toLowerCase();
+            const client = (p.client || "").toLowerCase();
+            const contractor = (p.contractor || "").toLowerCase();
+            const sub = (p.subcontractor || "").toLowerCase();
+            const notes = (p.notes || "").toLowerCase();
+            return code.includes(q) || name.includes(q) || client.includes(q) || contractor.includes(q) || sub.includes(q) || notes.includes(q);
+        });
+
+        if (elements.btnClearFilterAllProjects) {
+            elements.btnClearFilterAllProjects.classList.toggle("hidden", !q);
+        }
+        if (elements.allProjectsCount) {
+            elements.allProjectsCount.textContent = String(filtered.length);
+        }
+
+        if (filtered.length === 0) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td colspan="10" style="text-align: center; padding: 24px; color: #64748b; font-style: italic;">
+                    ${q ? `No projects matching "${escapeHtml(filterText)}"` : "No projects registered in the system yet. Click '+ Add New Project' to create one."}
+                </td>
+            `;
+            elements.tbodyAllProjects.appendChild(tr);
+            return;
+        }
+
+        filtered.forEach((p, idx) => {
+            const tr = document.createElement("tr");
+            const isActive = (p.id === state.activeProjectId);
+            if (isActive) {
+                tr.style.backgroundColor = "#f0fdf4";
+            }
+
+            const fitCount = p.fittings_count !== undefined ? p.fittings_count : (p.fittings ? p.fittings.length : 0);
+            const segCount = p.duct_segments_count !== undefined ? p.duct_segments_count : (p.duct_segments ? p.duct_segments.length : 0);
+            const modDate = p.updated_at ? formatAppDate(p.updated_at) : (p.created_at ? formatAppDate(p.created_at) : "-");
+
+            tr.innerHTML = `
+                <td class="text-center num-cell">${idx + 1}</td>
+                <td class="text-center">
+                    ${isActive
+                        ? '<span class="status-badge active" title="Currently selected project">✓ Active</span>'
+                        : `<button type="button" class="btn-set-active btn-make-active" data-prj-id="${p.id}" title="Make this the current active project">🎯 Select</button>`}
+                </td>
+                <td><span class="code-pill">${escapeHtml(p.code)}</span></td>
+                <td>
+                    <div style="font-weight: 700; color: #0f172a;">${escapeHtml(p.name)}</div>
+                    ${p.notes ? `<div style="font-size: 10.5px; color: #64748b;">${escapeHtml(p.notes)}</div>` : ''}
+                </td>
+                <td>${escapeHtml(p.client || "-")}</td>
+                <td>${escapeHtml(p.contractor || "-")}</td>
+                <td class="text-center num-cell">${segCount}</td>
+                <td class="text-center num-cell">${fitCount}</td>
+                <td style="font-size: 11px; color: #64748b;">${escapeHtml(modDate)}</td>
+                <td class="text-center">
+                    <div style="display: inline-flex; gap: 6px;">
+                        <button type="button" class="btn-table-action edit-prj btn-edit-prj" data-prj-id="${p.id}" title="Edit project specifications">✏️ Edit</button>
+                        <button type="button" class="btn-table-action delete btn-del-prj" data-prj-id="${p.id}" title="Permanently delete project">🗑️ Delete</button>
+                    </div>
+                </td>
+            `;
+
+            // Wire row buttons
+            const btnSelect = tr.querySelector(".btn-make-active");
+            if (btnSelect) {
+                btnSelect.addEventListener("click", () => {
+                    switchActiveProject(p.id);
+                });
+            }
+
+            const btnEdit = tr.querySelector(".btn-edit-prj");
+            if (btnEdit) {
+                btnEdit.addEventListener("click", () => openEditProjectModal(p.id));
+            }
+
+            const btnDel = tr.querySelector(".btn-del-prj");
+            if (btnDel) {
+                btnDel.addEventListener("click", () => confirmDeleteProject(p.id));
+            }
+
+            elements.tbodyAllProjects.appendChild(tr);
+        });
+    }
+
+    function openEditProjectModal(projectId) {
+        if (!elements.editProjectModal) return;
+        const proj = state.projects.find(p => p.id === projectId);
+        if (!proj) return;
+
+        if (elements.editPrjId) elements.editPrjId.value = proj.id;
+        if (elements.inputEditPrjCode) elements.inputEditPrjCode.value = proj.code || proj.id;
+        if (elements.inputEditPrjName) elements.inputEditPrjName.value = proj.name || "";
+        if (elements.inputEditPrjClient) elements.inputEditPrjClient.value = proj.client || "";
+        if (elements.inputEditPrjContractor) elements.inputEditPrjContractor.value = proj.contractor || "";
+        if (elements.inputEditPrjSubcontractor) elements.inputEditPrjSubcontractor.value = proj.subcontractor || "";
+        if (elements.inputEditPrjNotes) elements.inputEditPrjNotes.value = proj.notes || "";
+
+        elements.editProjectModal.classList.remove("hidden");
+        if (elements.inputEditPrjName) {
+            setTimeout(() => elements.inputEditPrjName.focus(), 100);
+        }
+    }
+
+    function closeEditProjectModal() {
+        if (elements.editProjectModal) {
+            elements.editProjectModal.classList.add("hidden");
+        }
+    }
+
+    async function saveEditProject() {
+        const pid = elements.editPrjId ? elements.editPrjId.value : "";
+        if (!pid) return;
+
+        const code = (elements.inputEditPrjCode ? elements.inputEditPrjCode.value.trim() : "");
+        const name = (elements.inputEditPrjName ? elements.inputEditPrjName.value.trim() : "");
+        const client = (elements.inputEditPrjClient ? elements.inputEditPrjClient.value.trim() : "");
+        const contractor = (elements.inputEditPrjContractor ? elements.inputEditPrjContractor.value.trim() : "");
+        const subcontractor = (elements.inputEditPrjSubcontractor ? elements.inputEditPrjSubcontractor.value.trim() : "");
+        const notes = (elements.inputEditPrjNotes ? elements.inputEditPrjNotes.value.trim() : "");
+
+        if (!code || !name) {
+            alert("Project Code and Project Name are required.");
+            if (!code && elements.inputEditPrjCode) elements.inputEditPrjCode.focus();
+            else if (!name && elements.inputEditPrjName) elements.inputEditPrjName.focus();
+            return;
+        }
+
+        try {
+            const resp = await fetch(`/api/projects/${encodeURIComponent(pid)}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    code: code,
+                    name: name,
+                    client: client,
+                    contractor: contractor,
+                    subcontractor: subcontractor,
+                    notes: notes
+                })
+            });
+            const res = await resp.json();
+            if (res.status === "success") {
+                closeEditProjectModal();
+                showPrjToast(`✓ Project "${code} - ${name}" updated successfully!`);
+                await initProjectManager();
+                if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
+                    renderAllProjectsTable(elements.inputFilterAllProjects ? elements.inputFilterAllProjects.value : "");
+                }
+            } else {
+                alert(`Error: ${res.message || "Failed to update project"}`);
+            }
+        } catch (err) {
+            console.error("Failed to update project:", err);
+            alert("Network error updating project.");
+        }
+    }
+
+    async function confirmDeleteProject(projectId) {
+        if (!projectId) return;
+        const proj = state.projects.find(p => p.id === projectId);
+        const nameStr = proj ? `"${proj.code} - ${proj.name}"` : `project [${projectId}]`;
+
+        const fits = proj && proj.fittings_count !== undefined ? proj.fittings_count : 0;
+        const segs = proj && proj.duct_segments_count !== undefined ? proj.duct_segments_count : 0;
+        const extraMsg = (fits > 0 || segs > 0) ? `\n\nWarning: This project contains ${fits} fitting(s) and ${segs} sized duct run(s) which will also be permanently deleted.` : "";
+
+        if (!confirm(`Are you sure you want to permanently delete ${nameStr}?${extraMsg}\n\nThis action cannot be undone.`)) {
+            return;
+        }
+
+        try {
+            const resp = await fetch(`/api/projects/${encodeURIComponent(projectId)}`, {
+                method: "DELETE"
+            });
+            const res = await resp.json();
+            if (res.status === "success") {
+                showPrjToast(`🗑️ Project ${nameStr} was deleted.`);
+                await initProjectManager();
+                if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
+                    renderAllProjectsTable(elements.inputFilterAllProjects ? elements.inputFilterAllProjects.value : "");
+                }
+            } else {
+                alert(`Error: ${res.message || "Failed to delete project"}`);
+            }
+        } catch (err) {
+            console.error("Failed to delete project:", err);
+            alert("Network error deleting project.");
         }
     }
 
@@ -4694,6 +5446,31 @@
         const flowUnit = isSI ? "L/s" : "cfm";
         const velUnit = isSI ? "m/s" : "fpm";
 
+        // Update thead with exact physical units in brackets
+        if (elements.tableProjectSchedule) {
+            const th = elements.tableProjectSchedule.querySelector("thead");
+            if (th) {
+                th.innerHTML = `
+                    <tr>
+                        <th style="width: 36px;" class="text-center">#</th>
+                        <th style="width: 95px;">Tag / Mark</th>
+                        <th style="width: 80px;" class="text-center">Code</th>
+                        <th>Fitting Description</th>
+                        <th style="width: 65px;" class="text-center">Shape</th>
+                        <th style="width: 135px;">Dimensions</th>
+                        <th style="width: 80px;" class="text-right">Q [${flowUnit}]</th>
+                        <th style="width: 80px;" class="text-right">V [${velUnit}]</th>
+                        <th style="width: 75px;" class="text-right">P<sub>v</sub> [${dpUnit}]</th>
+                        <th style="width: 75px;" class="text-right">Co / f</th>
+                        <th style="width: 80px;" class="text-right">ΔP [${dpUnit}]</th>
+                        <th style="width: 50px;" class="text-center">Qty</th>
+                        <th style="width: 90px;" class="text-right">Total ΔP [${dpUnit}]</th>
+                        <th style="width: 80px;" class="text-center">Actions</th>
+                    </tr>
+                `;
+            }
+        }
+
         let totalQty = 0;
         let cumulativeDp = 0;
         let maxSingleDp = 0;
@@ -4773,7 +5550,7 @@
         if (elements.tfootProjectSchedule) {
             elements.tfootProjectSchedule.innerHTML = `
                 <tr>
-                    <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px;">Cumulative Dynamic Head Loss (∑ΔP):</td>
+                    <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px;">Cumulative Project Pressure Loss (∑ΔP):</td>
                     <td class="text-center num-cell" style="font-size: 13px;">${totalQty}</td>
                     <td class="text-right num-cell total-loss-val" style="font-size: 13px;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
                     <td></td>
@@ -4798,6 +5575,31 @@
         const velUnit = isSI ? "m/s" : "fpm";
         const lenUnit = isSI ? "m" : "ft";
         const frUnit = isSI ? "Pa/m" : "in. wg/100ft";
+        const deUnit = isSI ? "mm" : "in.";
+
+        // Update thead with exact physical units in brackets
+        if (elements.tableSizerSchedule) {
+            const th = elements.tableSizerSchedule.querySelector("thead");
+            if (th) {
+                th.innerHTML = `
+                    <tr>
+                        <th style="width: 36px;" class="text-center">#</th>
+                        <th style="width: 95px;">Tag / Mark</th>
+                        <th>Duct Section / Description</th>
+                        <th style="width: 65px;" class="text-center">Shape</th>
+                        <th style="width: 140px;">Sized Dimensions</th>
+                        <th style="width: 80px;" class="text-right">Q [${flowUnit}]</th>
+                        <th style="width: 80px;" class="text-right">V [${velUnit}]</th>
+                        <th style="width: 80px;" class="text-right">Eq. D<sub>e</sub> [${deUnit}]</th>
+                        <th style="width: 65px;" class="text-right">AR [W/H]</th>
+                        <th style="width: 90px;" class="text-right">Rate [${frUnit}]</th>
+                        <th style="width: 75px;" class="text-right">Length [${lenUnit}]</th>
+                        <th style="width: 85px;" class="text-right">Loss (ΔP) [${dpUnit}]</th>
+                        <th style="width: 70px;" class="text-center">Actions</th>
+                    </tr>
+                `;
+            }
+        }
 
         let totalLength = 0;
         let cumulativeDp = 0;
@@ -4806,7 +5608,7 @@
             elements.tbodySizerSchedule.innerHTML = `
                 <tr>
                     <td colspan="13" style="text-align: center; padding: 30px; color: #64748b; font-style: italic;">
-                        No sized duct sections added to this project yet. Use "🎯 Auto Duct Sizer" to size any duct section and click "➕ Add to Project" to add it to the sizing schedule.
+                        No sized duct sections added to this project yet. Use "Auto Duct Sizer" to size any duct section and click "➕ Add to Project" to add it to the sizing schedule.
                     </td>
                 </tr>
             `;
@@ -5007,7 +5809,7 @@
             csv += `Project Name,${csvEscape(p.name)}\n`;
             csv += `Client,${csvEscape(p.client || 'N/A')}\n`;
             csv += `Contractor,${csvEscape(p.contractor || 'N/A')}\n`;
-            csv += `Date Generated,${new Date().toLocaleDateString()}\n\n`;
+            csv += `Date Generated,${formatAppDate(new Date())}\n\n`;
 
             csv += `#,Tag / Mark,Section / Description,Shape,Sized Dimensions,Flow Rate (${flowUnit}),Velocity (${velUnit}),Eq. De,Aspect Ratio,Friction Rate (${frUnit}),Run Length (${lenUnit}),Section Loss (${dpUnit})\n`;
 
@@ -5061,7 +5863,7 @@
             csv += `Client,${csvEscape(p.client || 'N/A')}\n`;
             csv += `Contractor,${csvEscape(p.contractor || 'N/A')}\n`;
             csv += `Sub Contractor,${csvEscape(p.subcontractor || 'N/A')}\n`;
-            csv += `Date Generated,${new Date().toLocaleDateString()}\n\n`;
+            csv += `Date Generated,${formatAppDate(new Date())}\n\n`;
 
             csv += `#,Item Tag,Fitting Code,Fitting Description,Shape,Dimensions,Flow Rate (${flowUnit}),Velocity (${velUnit}),Pv (${dpUnit}),Co/f,Unit Loss (${dpUnit}),Quantity,Total Loss (${dpUnit}),Notes\n`;
 
@@ -5120,10 +5922,10 @@
         }
 
         if (state.summaryTab === "sizer") {
-            showPrjToast("Generating official Ductfit Pro Duct Sizing Report (PDF)...");
+            showPrjToast("Generating official DuctFit Pro Duct Sizing Report (PDF)...");
             window.location.href = `/api/projects/${encodeURIComponent(prjId)}/sizer-pdf`;
         } else {
-            showPrjToast("Generating official Ductfit Pro Duct Fitting Report (PDF)...");
+            showPrjToast("Generating official DuctFit Pro Duct Fitting Report (PDF)...");
             window.location.href = `/api/projects/${encodeURIComponent(prjId)}/pdf`;
         }
     }
@@ -5148,6 +5950,113 @@
             elements.selectActiveProject.addEventListener("change", (e) => {
                 switchActiveProject(e.target.value);
             });
+        }
+
+        // Searchable Project Combo Dropdown
+        if (elements.prjComboTrigger) {
+            elements.prjComboTrigger.addEventListener("click", (e) => {
+                e.stopPropagation();
+                togglePrjComboDropdown();
+            });
+        }
+
+        if (elements.prjComboSearchInput) {
+            elements.prjComboSearchInput.addEventListener("input", (e) => {
+                renderPrjComboList(e.target.value);
+            });
+            elements.prjComboSearchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    const firstItem = elements.prjComboList ? elements.prjComboList.querySelector(".prj-combo-item") : null;
+                    if (firstItem) {
+                        const pid = firstItem.getAttribute("data-project-id");
+                        if (pid) {
+                            closePrjComboDropdown();
+                            switchActiveProject(pid);
+                        }
+                    }
+                }
+            });
+            elements.prjComboSearchInput.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        if (elements.btnClearComboSearch) {
+            elements.btnClearComboSearch.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (elements.prjComboSearchInput) {
+                    elements.prjComboSearchInput.value = "";
+                    renderPrjComboList("");
+                    elements.prjComboSearchInput.focus();
+                }
+            });
+        }
+
+        if (elements.btnComboNewProject) {
+            elements.btnComboNewProject.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closePrjComboDropdown();
+                openNewProjectModal();
+            });
+        }
+
+        if (elements.btnComboManageAll) {
+            elements.btnComboManageAll.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closePrjComboDropdown();
+                openAllProjectsModal();
+            });
+        }
+
+        // Manage All Projects
+        if (elements.btnManageAllProjects) {
+            elements.btnManageAllProjects.addEventListener("click", openAllProjectsModal);
+        }
+        if (elements.btnCloseAllProjectsModal) {
+            elements.btnCloseAllProjectsModal.addEventListener("click", closeAllProjectsModal);
+        }
+        if (elements.btnCloseAllProjectsBottom) {
+            elements.btnCloseAllProjectsBottom.addEventListener("click", closeAllProjectsModal);
+        }
+        if (elements.btnAllProjectsCreateNew) {
+            elements.btnAllProjectsCreateNew.addEventListener("click", () => {
+                openNewProjectModal();
+            });
+        }
+        if (elements.inputFilterAllProjects) {
+            elements.inputFilterAllProjects.addEventListener("input", (e) => {
+                renderAllProjectsTable(e.target.value);
+            });
+            elements.inputFilterAllProjects.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    const firstBtn = elements.tbodyAllProjects ? elements.tbodyAllProjects.querySelector(".btn-set-active") : null;
+                    if (firstBtn) {
+                        firstBtn.click();
+                    }
+                }
+            });
+        }
+        if (elements.btnClearFilterAllProjects) {
+            elements.btnClearFilterAllProjects.addEventListener("click", () => {
+                if (elements.inputFilterAllProjects) {
+                    elements.inputFilterAllProjects.value = "";
+                    renderAllProjectsTable("");
+                    elements.inputFilterAllProjects.focus();
+                }
+            });
+        }
+
+        // Edit Project Modal
+        if (elements.btnCloseEditProjectModal) {
+            elements.btnCloseEditProjectModal.addEventListener("click", closeEditProjectModal);
+        }
+        if (elements.btnCancelEditProject) {
+            elements.btnCancelEditProject.addEventListener("click", closeEditProjectModal);
+        }
+        if (elements.btnSaveEditProject) {
+            elements.btnSaveEditProject.addEventListener("click", saveEditProject);
         }
 
         if (elements.btnAddNewProject) {
@@ -5206,8 +6115,22 @@
             elements.btnClearProjectFittings.addEventListener("click", clearProjectFittings);
         }
 
+        // Global click to close combo dropdown
+        document.addEventListener("click", (e) => {
+            if (elements.prjSearchCombo && !elements.prjSearchCombo.contains(e.target)) {
+                closePrjComboDropdown();
+            }
+        });
+
         window.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
+                closePrjComboDropdown();
+                if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
+                    closeAllProjectsModal();
+                }
+                if (elements.editProjectModal && !elements.editProjectModal.classList.contains("hidden")) {
+                    closeEditProjectModal();
+                }
                 if (elements.newProjectModal && !elements.newProjectModal.classList.contains("hidden")) {
                     closeNewProjectModal();
                 }
@@ -5220,7 +6143,7 @@
             }
         });
 
-        [elements.newProjectModal, elements.addFittingDialog, elements.projectSummaryModal].forEach(m => {
+        [elements.newProjectModal, elements.addFittingDialog, elements.projectSummaryModal, elements.allProjectsModal, elements.editProjectModal].forEach(m => {
             if (m) {
                 m.addEventListener("click", (e) => {
                     if (e.target === m) {
@@ -5235,6 +6158,8 @@
     // Expose selectFitting and setMode for deep-linking & testing
     window.selectFitting = selectFitting;
     window.setMode = setMode;
+    window.calculate = calculate;
+    window.clearFittingOutputs = clearFittingOutputs;
     window.appState = state;
 
     // Startup

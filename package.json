@@ -1,0 +1,83 @@
+{
+  "name": "ductfit-pro",
+  "productName": "DuctFit Pro",
+  "version": "1.0.1",
+  "description": "Professional ASHRAE Duct Fitting Loss Analysis & Auto Duct Sizer",
+  "main": "electron/main.js",
+  "author": {
+    "name": "DuctFit Pro Engg Solution"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muhammadmusthafacv-arch/ductfit-pro-releases.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build:server": "python -m PyInstaller ductfit-server.spec --clean -y",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "electron-log": "^5.3.0",
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.ductfitpro.app",
+    "productName": "DuctFit Pro",
+    "copyright": "Copyright \u00c2\u00a9 2026 DuctFit Pro Engg Solution",
+    "directories": {
+      "output": "dist/installer",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/ductfit-server",
+        "to": "ductfit-server",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "certificateFile": "signing/private/DuctfitPro-Signing.pfx",
+      "publisherName": "DuctFit Pro Engg Solution",
+      "artifactName": "DuctfitPro-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "DuctFit Pro",
+      "deleteAppDataOnUninstall": false,
+      "uninstallDisplayName": "DuctFit Pro ${version}",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "muhammadmusthafacv-arch",
+      "repo": "ductfit-pro-releases"
+    }
+  }
+}

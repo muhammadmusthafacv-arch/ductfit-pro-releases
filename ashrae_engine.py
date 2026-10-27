@@ -613,15 +613,11 @@ class AshraeEngine:
         air_cond = cls.AIR_CONDITIONS.get(air_condition_id, cls.AIR_CONDITIONS["comfort_return"])
         mu_si = air_cond["viscosity_pas"]
 
-        if "rho" in inputs and inputs["rho"] is not None and float(inputs["rho"]) > 0:
-            rho = float(inputs["rho"])
-        else:
-            rho = air_cond["density_si"] if unit_system == "SI" else air_cond["density_ip"]
-
-        if unit_system == "IP":
-            rho_si = rho * 16.018463
-        else:
-            rho_si = rho
+        # In official ASHRAE Fitting Database, density is strictly constant and non-editable:
+        # Standard Air at 20°C, 101.325 kPa: rho = 1.204 kg/m³ (SI) / 0.075 lb/ft³ (IP)
+        rho = 1.204 if unit_system == "SI" else 0.075
+        rho_si = 1.204
+        mu_si = 1.818e-5
 
         # Direct straight ducts
         if code == "CR11-1":
@@ -702,14 +698,18 @@ class AshraeEngine:
             if official_engine.has_fitting_equations(code):
                 return official_engine.calculate(code, inputs, unit_system)
         except Exception as e:
-            pass
+            print(f"[ASHRAE Engine Warning] Official runner failed for {code}: {e}")
 
         # Generic Fitting Calculation (Fallback for experimental/custom codes)
-        Q = safe_float(inputs.get("Q"), inputs.get("Qc", 2000))
+        Q = safe_float(inputs.get("Q"), inputs.get("Qc", inputs.get("Q1", inputs.get("Qo", 2000))))
         if unit_system == "IP":
             Q_m3s = (Q / 2.11888) / 1000.0
+            Q_Lps = Q / 2.11888
+            Q_cfm = Q
         else:
             Q_m3s = Q / 1000.0
+            Q_Lps = Q
+            Q_cfm = Q * 2.11888
 
         # Determine reference area
         if "D" in inputs or "Dc" in inputs or "D1" in inputs:
@@ -743,6 +743,9 @@ class AshraeEngine:
             "shape": shape,
             "rho": rho_si,
             "area_m2": area_m2,
+            "Q_m3s": Q_m3s,
+            "Q_Lps": Q_Lps,
+            "Q_cfm": Q_cfm,
             "velocity_ms": round(V_ms, 1),
             "velocity_fpm": round(V_ms * 196.85, 1),
             "velocity_exact_ms": V_ms,
@@ -1564,6 +1567,10 @@ class AshraeEngine:
             pv_ex = res.get("pv_exact_pa", 60.0)
             dp_ex = Co * pv_ex
 
+            q_val = safe_float(inputs.get("Q"), inputs.get("Qc", inputs.get("Q1", inputs.get("Qo", 2000))))
+            q_m3s = res.get("Q_m3s", (q_val / 1000.0) if u == "SI" else ((q_val / 2.11888) / 1000.0))
+            q_lps = res.get("Q_Lps", q_val if u == "SI" else (q_val / 2.11888))
+
             if u == "SI":
                 # Step 1: Reference Velocity
                 steps.append({
@@ -1574,10 +1581,10 @@ class AshraeEngine:
                     "governing_latex": r"A_o = \text{Area}_{\text{ref}} \quad ; \quad V_o = \frac{Q}{1000 A_o} \tag{21.10}",
                     "parameters": [
                         {"symbol": "A_o", "name": "Reference Flow Area", "value": f"{res.get('area_m2', 0.07):.4f} m²"},
-                        {"symbol": "Q", "name": "Airflow Volume", "value": f"{res.get('Q_Lps', inputs.get('Q', 2000)):.0f} L/s = {res.get('Q_m3s', 2.0):.3f} m³/s"}
+                        {"symbol": "Q", "name": "Airflow Volume", "value": f"{q_lps:.0f} L/s = {q_m3s:.3f} m³/s"}
                     ],
                     "derivation_latex": [
-                        rf"V_o = \frac{{{res.get('Q_m3s', 2.0):.3f}\text{{ m}}^3/\text{{s}}}}{{{res.get('area_m2', 0.07):.4f}\text{{ m}}^2}} = {v_ex:.2f}\text{{ m/s}}"
+                        rf"V_o = \frac{{{q_m3s:.3f}\text{{ m}}^3/\text{{s}}}}{{{res.get('area_m2', 0.07):.4f}\text{{ m}}^2}} = {v_ex:.2f}\text{{ m/s}}"
                     ],
                     "result_latex": rf"\mathbf{{V_o = {res.get('velocity_ms', 0):.1f}\text{{ m/s}}}} \quad \left(A_o = {res.get('area_m2', 0.07):.4f}\text{{ m}}^2\right)",
                     "result": f"{res.get('velocity_ms', 0):.1f} m/s",
@@ -1632,11 +1639,11 @@ class AshraeEngine:
                     "explanation": "ASHRAE experimental local loss coefficient."
                 })
 
-                # Step 4: Total Fitting Pressure Loss
+                # Step 4: Total Pressure Loss
                 steps.append({
                     "step_num": 4,
                     "step_label": "STEP 4",
-                    "title": "Total Dynamic Pressure Loss (ΔP)",
+                    "title": "Total Pressure Loss (ΔP)",
                     "citation": "ASHRAE Fundamentals Ch. 21, Eq. (30)",
                     "governing_latex": r"\Delta P = C_o \cdot P_v \tag{21.30}",
                     "parameters": [
@@ -1648,7 +1655,7 @@ class AshraeEngine:
                     ],
                     "result_latex": rf"\mathbf{{\Delta P = {res.get('pressure_loss_pa', 0):.1f}\text{{ Pa}}}}",
                     "result": f"ΔP = {res.get('pressure_loss_pa', 0):.1f} Pa",
-                    "notes": "Total aerodynamic head loss across fitting section.",
+                    "notes": "Total pressure loss across duct/fitting section.",
                     "formula": "ΔP = Co × Pv",
                     "substitution": f"ΔP = {Co:.4f} × {pv_ex:.2f} Pa = {dp_ex:.1f} Pa (displays as {res.get('pressure_loss_pa', 0):.1f} Pa)",
                     "explanation": "Total pressure loss across fitting."

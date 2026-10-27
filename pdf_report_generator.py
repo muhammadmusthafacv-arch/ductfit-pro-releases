@@ -12,6 +12,8 @@ def clean_pdf_text(text):
     text = text.replace(r'\quad', '  ').replace(r'\qquad', '    ')
 
     # Convert LaTeX Greek & Math to ReportLab HTML entities
+    text = text.replace(r'\pi', '&pi;').replace(r'\Pi', '&Pi;')
+    text = text.replace(r'\approx', ' &asymp; ').replace(r'\implies', ' &rarr; ')
     text = text.replace(r'\Delta', '&Delta;').replace(r'\delta', '&delta;')
     text = text.replace(r'\rho', '&rho;').replace(r'\varepsilon', '&epsilon;').replace(r'\epsilon', '&epsilon;')
     text = text.replace(r'\mu', '&mu;').replace(r'\nu', '&nu;').replace(r'\theta', '&theta;')
@@ -119,6 +121,13 @@ def clean_pdf_text(text):
     text = re.sub(r'\bDe\b', r'D<sub>e</sub>', text)
     text = re.sub(r'\bV\^2\b', r'V<sup>2</sup>', text)
 
+    # Subscript normalization for textbook presentation
+    text = re.sub(r'\b(V|A|D|Q|p|P|C)_(o|i|1|2|c|b|s|h|e|t|f)\b', r'\1<sub>\2</sub>', text)
+    text = re.sub(r'\b(Vo|Ao|Do|Qo|Pv|Pvo|Co|Dh|De)\b', lambda m: {'Vo':'V<sub>o</sub>', 'Ao':'A<sub>o</sub>', 'Do':'D<sub>o</sub>', 'Qo':'Q<sub>o</sub>', 'Pv':'P<sub>v</sub>', 'Pvo':'P<sub>vo</sub>', 'Co':'C<sub>o</sub>', 'Dh':'D<sub>h</sub>', 'De':'D<sub>e</sub>'}.get(m.group(0), m.group(0)), text)
+    text = text.replace('&Delta; p_f', '&Delta;p<sub>f</sub>').replace('&Delta; p_t', '&Delta;p<sub>t</sub>')
+    text = text.replace('&Delta;p_f', '&Delta;p<sub>f</sub>').replace('&Delta;p_t', '&Delta;p<sub>t</sub>')
+    text = re.sub(r'(?<!&)\b[Pp][Ii]\b', '&pi;', text)
+    text = text.replace('^2', '&sup2;').replace('^3', '&sup3;')
     text = re.sub(r' +', ' ', text)
     return text.strip()
 
@@ -141,7 +150,8 @@ import project_manager
 from ashrae_engine import AshraeEngine
 import version_manager
 
-BLUEPRINTS_DIR = os.path.join(os.path.dirname(__file__), "static", "blueprints")
+BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+BLUEPRINTS_DIR = os.path.join(BASE_DIR, "static", "blueprints")
 
 class DuctfitNumberedCanvas(canvas.Canvas):
     """
@@ -174,12 +184,24 @@ class DuctfitNumberedCanvas(canvas.Canvas):
         self.setLineWidth(0.75)
         self.line(margin, h - 36, w - margin, h - 36)
 
-        # Center Title
+        # Center Title & Project Meta
         cur_ver = version_manager.get_current_version()
         rep_title = getattr(self, "report_title", "DUCTFIT PRO — DUCT FITTING REPORT")
         self.setFont("Helvetica-Bold", 10)
         self.setFillColor(colors.HexColor("#0f172a"))
-        self.drawCentredString(w / 2.0, h - 50, rep_title)
+        self.drawCentredString(w / 2.0, h - 48, rep_title)
+
+        proj_info = getattr(self, "project_info", None)
+        if proj_info:
+            p_code = proj_info.get("code", "")
+            p_name = proj_info.get("name", "")
+            p_client = proj_info.get("client", "")
+            name_part = f" - {p_name}" if p_name else ""
+            client_part = f" • Client: {p_client}" if p_client else ""
+            p_meta = f"Project: {p_code}{name_part}{client_part}"
+            self.setFont("Helvetica-Bold", 7.5)
+            self.setFillColor(colors.HexColor("#0284c7"))
+            self.drawCentredString(w / 2.0, h - 59, p_meta)
 
 
 
@@ -189,7 +211,7 @@ class DuctfitNumberedCanvas(canvas.Canvas):
         self.line(margin, 42, w - margin, 42)
 
         # Footer Text
-        date_short = datetime.now().strftime("%m-%d-%Y")
+        date_short = datetime.now().strftime("%d-%B-%Y")
         self.setFont("Helvetica-Bold", 8)
         self.setFillColor(colors.HexColor("#475569"))
         self.drawString(margin, 30, date_short)
@@ -197,7 +219,7 @@ class DuctfitNumberedCanvas(canvas.Canvas):
         self.setFont("Helvetica", 8)
         self.drawCentredString(w / 2.0, 30, f"Page {self._pageNumber} of {total_pages}")
 
-        self.drawRightString(w - margin, 30, f"Ductfit Pro v{cur_ver}")
+        self.drawRightString(w - margin, 30, f"DuctFit Pro v{cur_ver}")
 
         self.restoreState()
 
@@ -208,6 +230,12 @@ class DuctfitFittingCanvas(DuctfitNumberedCanvas):
 
 class DuctfitSizerCanvas(DuctfitNumberedCanvas):
     report_title = "DUCTFIT PRO — DUCT SIZING REPORT"
+
+
+def make_project_canvas(base_canvas_cls, project):
+    class BoundProjectCanvas(base_canvas_cls):
+        project_info = project
+    return BoundProjectCanvas
 
 
 def get_styles():
@@ -297,9 +325,30 @@ def get_styles():
         "StepCalcText",
         parent=base["Normal"],
         fontName="Helvetica",
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7,
+        leading=8.5,
         textColor=colors.HexColor("#334155")
+    )
+
+    hdr_cell = ParagraphStyle(
+        "TableHeaderCell",
+        parent=base["Normal"],
+        fontName="Helvetica-Bold",
+        fontSize=7.2,
+        leading=9.0,
+        textColor=colors.white
+    )
+
+    hdr_cell_right = ParagraphStyle(
+        "TableHeaderCellRight",
+        parent=hdr_cell,
+        alignment=2 # Right
+    )
+
+    hdr_cell_center = ParagraphStyle(
+        "TableHeaderCellCenter",
+        parent=hdr_cell,
+        alignment=1 # Center
     )
 
     return {
@@ -310,6 +359,9 @@ def get_styles():
         "cell": cell_style,
         "cell_bold": cell_bold,
         "cell_right": cell_right,
+        "hdr_cell": hdr_cell,
+        "hdr_cell_right": hdr_cell_right,
+        "hdr_cell_center": hdr_cell_center,
         "step_title": step_title_style,
         "formula": formula_style,
         "calc": calc_text_style
@@ -368,8 +420,8 @@ def format_inputs_outputs_table(fit, data_calc, styles, unit_system="SI"):
     q_val = safe_num(fit.get("Q") or inputs.get("Q"), 700)
     in_rows.append(("Flow Rate (Q, L/s)" if is_si else "Flow Rate (Q, cfm)", f"{q_val:.0f}"))
 
-    rho_val = safe_num(inputs.get("rho"), 1.204 if is_si else 0.075)
-    in_rows.append(("Air Density (&rho;, kg/m&sup3;)" if is_si else "Air Density (&rho;, lbm/ft&sup3;)", f"{rho_val:.3f}"))
+    # In official ASHRAE database, density is a constant:
+    in_rows.append(("Air Density (&rho;, Constant)", "1.204 kg/m&sup3;" if is_si else "0.075 lbm/ft&sup3;"))
 
     # Compile output rows
     out_rows = []
@@ -590,59 +642,145 @@ def format_sizer_inputs_outputs_table(seg, data_calc, styles, unit_system="SI"):
 
 def build_calculation_steps_table(steps, styles):
     """
-    Renders the 4-step engineering breakdown into a clean ReportLab table.
+    Renders textbook-style engineering breakdown cards with:
+    - Step number, title, and standard reference
+    - Clean labeled governing formulation
+    - Known boundary conditions & parameter listings with units
+    - Explicit step-by-step substitutions
+    - Framed textbook final result callout with distinct border
+    - Engineering commentary notes
     """
     if not steps:
         return Paragraph("<i>No engineering calculation steps available.</i>", styles["cell"])
 
     story = []
     for s in steps:
-        step_lbl = s.get("step_label", f"STEP {s.get('step_num', 1)}")
-        step_title = s.get("title", "")
+        step_lbl = clean_pdf_text(s.get("step_label", f"STEP {s.get('step_num', 1)}"))
+        step_title = clean_pdf_text(s.get("title", ""))
         raw_cit = s.get("citation", "")
-        citation = clean_pdf_text(raw_cit)
-        citation = citation.replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals")
-        citation = citation.replace("2021 ASHRAE Handbook-Fundamentals", "ASHRAE Fundamentals")
-        citation = citation.replace("2021 ASHRAE", "ASHRAE")
-        citation = citation.replace("2021 ", "")
-        
-        raw_formula = s.get("formula") or s.get("governing_latex") or ""
-        formula = clean_pdf_text(raw_formula)
+        cit = clean_pdf_text(raw_cit)
+        cit = cit.replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals")
+        cit = cit.replace("2021 ASHRAE Handbook-Fundamentals", "ASHRAE Fundamentals")
+        cit = cit.replace("2021 ASHRAE", "ASHRAE")
+        cit = cit.replace("2021 ", "")
 
-        raw_subst = s.get("substitution")
-        if not raw_subst:
-            deriv = s.get("derivation_latex")
-            if isinstance(deriv, list):
-                raw_subst = " &bull; ".join(deriv)
-            elif deriv:
-                raw_subst = str(deriv)
-            else:
-                raw_subst = ""
-        subst = clean_pdf_text(raw_subst)
+        # 1. Header with step badge and citation
+        hdr_html = f"<b><font color='#1e3a8a'>{step_lbl}:</font> &nbsp;{step_title}</b>"
+        if cit:
+            hdr_html += f" &nbsp;&nbsp;<font size=6 color='#64748b'><i>({cit})</i></font>"
+        hdr_p = Paragraph(hdr_html, styles["step_title"])
 
+        # 2. Governing Formulation
+        raw_form = s.get("formula") or s.get("governing_latex") or ""
+        gov_p = Paragraph(f"<font color='#0369a1'><b>GOVERNING FORMULATION:</b></font> &nbsp;&nbsp;<b>{clean_pdf_text(raw_form)}</b>", styles["formula"])
+
+        # 3. Known Parameters / Given
+        params = s.get("parameters", [])
+        param_cells = []
+        if isinstance(params, list):
+            for p in params:
+                if isinstance(p, dict):
+                    sym = clean_pdf_text(p.get("symbol", ""))
+                    name = clean_pdf_text(p.get("name", ""))
+                    val = clean_pdf_text(p.get("value", ""))
+                    param_cells.append(f"&bull; <b>{sym}</b> ({name}): <b>{val}</b>")
+        param_text = " &nbsp;&bull;&nbsp; ".join(param_cells) if param_cells else ""
+        param_p = Paragraph(f"<font color='#475569'><b>GIVEN / BOUNDARY CONDITIONS:</b></font><br/>{param_text}", styles["calc"]) if param_text else None
+
+        # 4. Derivation / Step-by-Step Substitution
+        derivs = s.get("derivation_latex") or []
+        if isinstance(derivs, str):
+            derivs = [derivs]
+        deriv_lines = []
+        if isinstance(derivs, list):
+            for d in derivs:
+                if d:
+                    deriv_lines.append(clean_pdf_text(d))
+        if not deriv_lines and s.get("substitution"):
+            for line in str(s.get("substitution")).split("\n"):
+                if line.strip():
+                    deriv_lines.append(clean_pdf_text(line))
+        deriv_text = "<br/>".join([f"&bull; {dl}" for dl in deriv_lines])
+        deriv_p = Paragraph(f"<font color='#0f172a'><b>STEP-BY-STEP SUBSTITUTION:</b></font><br/>{deriv_text}", styles["calc"]) if deriv_lines else None
+
+        # 5. Boxed Final Result Callout (Authentic textbook boxed answer)
         raw_res = s.get("result") or s.get("framed_result_latex") or s.get("result_latex") or ""
         res = clean_pdf_text(raw_res)
+        res_p = Paragraph(f"<b>FINAL RESULT: &nbsp;&nbsp; <font size=9.5 color='#14532d'>{res}</font></b>", styles["formula"])
+        t_res = Table([[res_p]], colWidths=[510])
+        t_res.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
+            ('BOX', (0, 0), (-1, -1), 1.2, colors.HexColor("#16a34a")),
+            ('TOPPADDING', (0, 0), (-1, -1), 1.5),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 1.5),
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ]))
 
-        header_p = Paragraph(f"<b>{clean_pdf_text(step_lbl)}: {clean_pdf_text(step_title)}</b> &nbsp;&nbsp;<font size=6 color='#64748b'>({clean_pdf_text(citation)})</font>", styles["step_title"])
-        formula_p = Paragraph(f"<b>Formulation:</b> {formula}", styles["formula"])
-        subst_p = Paragraph(f"<b>Substitution:</b> {subst.replace(chr(10), ' &bull; ')}", styles["calc"])
-        res_p = Paragraph(f"<b>Result:</b> <font color='#166534'><b>{res}</b></font>", styles["formula"])
+        # 6. Commentary Notes
+        notes = clean_pdf_text(s.get("notes") or "")
+        notes_p = Paragraph(f"<i><b>Commentary:</b> {notes}</i>", styles["calc"]) if notes else None
 
-        step_table = Table([[header_p], [formula_p], [subst_p], [res_p]], colWidths=[520])
-        step_table.setStyle(TableStyle([
+        card_rows = [[hdr_p], [gov_p]]
+        if param_p:
+            card_rows.append([param_p])
+        if deriv_p:
+            card_rows.append([deriv_p])
+        card_rows.append([t_res])
+        if notes_p:
+            card_rows.append([notes_p])
+
+        t_card = Table(card_rows, colWidths=[524])
+        t_card.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#fdfdfb")),
-            ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-            ('LINELEFT', (0, 0), (0, -1), 2.5, colors.HexColor("#1e3a8a")),
-            ('TOPPADDING', (0, 0), (-1, -1), 2),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
+            ('BOX', (0, 0), (-1, -1), 0.75, colors.HexColor("#cbd5e1")),
+            ('LINELEFT', (0, 0), (0, -1), 3.5, colors.HexColor("#1e3a8a")),
+            ('LINEBELOW', (0, 0), (0, 0), 0.5, colors.HexColor("#e2e8f0")),
+            ('TOPPADDING', (0, 0), (-1, -1), 1.5),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 1.5),
             ('LEFTPADDING', (0, 0), (-1, -1), 6),
             ('RIGHTPADDING', (0, 0), (-1, -1), 6),
         ]))
 
-        story.append(step_table)
-        story.append(Spacer(1, 4))
+        story.append(KeepTogether(t_card))
+        story.append(Spacer(1, 3))
 
     return story
+
+
+def create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0):
+    """
+    Loads and scales the technical CAD blueprint diagram to be prominently enlarged,
+    preserving exact aspect ratio to match the official ASHRAE fitting report style.
+    """
+    img_path = os.path.join(BLUEPRINTS_DIR, f"{code}.png")
+    if not os.path.exists(img_path) and code == "SIZE-AUTO":
+        img_path = os.path.join(BLUEPRINTS_DIR, "CR11-1.png")
+
+    if not os.path.exists(img_path):
+        return None
+
+    try:
+        from PIL import Image as PILImage
+        with PILImage.open(img_path) as pimg:
+            orig_w, orig_h = pimg.size
+
+        if orig_h <= 0 or orig_w <= 0:
+            return None
+
+        aspect = orig_w / float(orig_h)
+        target_w = max_w
+        target_h = target_w / aspect
+        if target_h > max_h:
+            target_h = max_h
+            target_w = target_h * aspect
+
+        img = Image(img_path, width=target_w, height=target_h)
+        img.hAlign = 'CENTER'
+        return img
+    except Exception as e:
+        print(f"Error scaling blueprint image for {code}: {e}")
+        return None
 
 
 def generate_project_pdf(project_id, output_path=None):
@@ -663,7 +801,7 @@ def generate_project_pdf(project_id, output_path=None):
         leftMargin=36,
         rightMargin=36,
         topMargin=64, # Space for running header
-        bottomMargin=50 # Space for running footer
+        bottomMargin=42 # Space for running footer
     )
 
     styles = get_styles()
@@ -707,7 +845,7 @@ def generate_project_pdf(project_id, output_path=None):
             Paragraph("<b>Standard Edition:</b>", styles["cell_bold"]),
             Paragraph("ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
             Paragraph("<b>Date Generated:</b>", styles["cell_bold"]),
-            Paragraph(datetime.now().strftime("%d %B %Y"), styles["cell"])
+            Paragraph(datetime.now().strftime("%d-%B-%Y"), styles["cell"])
         ]
     ]
 
@@ -723,7 +861,28 @@ def generate_project_pdf(project_id, output_path=None):
         ('RIGHTPADDING', (0, 0), (-1, -1), 5),
     ]))
     story.append(t_spec)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
+
+    # Engineering Design Basis & Boundary Conditions Sheet
+    basis_data = [
+        [
+            Paragraph("<b>Working Fluid:</b> Standard Dry Air (&rho; = 1.204 kg/m&sup3;)" if is_si else "<b>Working Fluid:</b> Standard Dry Air (&rho; = 0.075 lbm/ft&sup3;)", styles["cell"]),
+            Paragraph("<b>Design Standard:</b> ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
+            Paragraph("<b>Loss Formulation:</b> &Delta;p<sub>t</sub> = C<sub>o</sub> &bull; p<sub>v</sub>", styles["cell"])
+        ]
+    ]
+    t_basis = Table(basis_data, colWidths=[175, 195, 150])
+    t_basis.setStyle(TableStyle([
+        ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0369a1")),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+    ]))
+    story.append(t_basis)
+    story.append(Spacer(1, 6))
 
     # Calculate Totals
     total_qty = sum(int(f.get("qty", 1)) for f in fittings)
@@ -734,7 +893,7 @@ def generate_project_pdf(project_id, output_path=None):
     kpi_data = [
         [
             Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
-            Paragraph(f"<b>CUMULATIVE DYNAMIC LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
+            Paragraph(f"<b>CUMULATIVE TOTAL LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
             Paragraph(f"<b>MAX SINGLE LOSS:</b> {max_dp:.1f} {dp_unit}", styles["cell_bold"])
         ]
     ]
@@ -753,18 +912,18 @@ def generate_project_pdf(project_id, output_path=None):
     story.append(Paragraph("<b>MASTER DUCT FITTING SCHEDULE (ASHRAE FITTING DATABASE MODEL)</b>", styles["h2"]))
 
     sched_headers = [
-        Paragraph("<b>#</b>", styles["cell_bold"]),
-        Paragraph("<b>Tag / Mark</b>", styles["cell_bold"]),
-        Paragraph("<b>Code</b>", styles["cell_bold"]),
-        Paragraph("<b>Description</b>", styles["cell_bold"]),
-        Paragraph("<b>Shape</b>", styles["cell_bold"]),
-        Paragraph("<b>Dimensions</b>", styles["cell_bold"]),
-        Paragraph(f"<b>Q ({flow_unit})</b>", styles["cell_bold"]),
-        Paragraph(f"<b>V ({vel_unit})</b>", styles["cell_bold"]),
-        Paragraph("<b>Co / f</b>", styles["cell_bold"]),
-        Paragraph(f"<b>&Delta;P ({dp_unit})</b>", styles["cell_bold"]),
-        Paragraph("<b>Qty</b>", styles["cell_bold"]),
-        Paragraph(f"<b>Total &Delta;P ({dp_unit})</b>", styles["cell_bold"])
+        Paragraph("<b>#</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Tag / Mark</b>", styles["hdr_cell"]),
+        Paragraph("<b>Code</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Fitting Description</b>", styles["hdr_cell"]),
+        Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Dimensions</b>", styles["hdr_cell"]),
+        Paragraph(f"<b>Q [{flow_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>V [{vel_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph("<b>Co / f</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>&Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph("<b>Qty</b>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>Total &Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"])
     ]
     sched_rows = [sched_headers]
 
@@ -793,7 +952,7 @@ def generate_project_pdf(project_id, output_path=None):
 
     # Summary Row
     sched_rows.append([
-        "", "", "", Paragraph("<b>CUMULATIVE PROJECT DYNAMIC LOSS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
+        "", "", "", Paragraph("<b>CUMULATIVE PROJECT PRESSURE LOSS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
         "", "", "", "", "", "",
         Paragraph(f"<b>{total_qty}</b>", styles["cell_right"]),
         Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
@@ -802,13 +961,15 @@ def generate_project_pdf(project_id, output_path=None):
     sched_widths = [22, 60, 48, 120, 36, 68, 36, 32, 36, 32, 24, 46] # 520pt total
     t_sched = Table(sched_rows, colWidths=sched_widths, repeatRows=1)
     t_sched.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#e2e8f0")),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor("#0f172a")),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#1e3a8a")),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-        ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#94a3b8")),
-        ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#94a3b8")),
+        ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#1e3a8a")),
+        ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
         ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
-        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#e2e8f0")),
+        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
+        ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
+        ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
         ('SPAN', (0, -1), (2, -1)),
         ('SPAN', (3, -1), (9, -1)),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
@@ -850,38 +1011,36 @@ def generate_project_pdf(project_id, output_path=None):
         except Exception as e:
             print(f"Error calculating steps for {code}: {e}")
 
-        # Fitting Header
+        # Fitting Header (Page 1)
         story.append(Paragraph(f"({code})  {name}", styles["title"]))
         raw_cit = calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
         citation = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "")
         story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
-        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
+        prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
+        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
         story.append(Paragraph(subhead_text, styles["meta"]))
         story.append(Spacer(1, 6))
 
         # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
         t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
         story.append(t_io)
-        story.append(Spacer(1, 8))
+        story.append(Spacer(1, 10))
 
-        # Blueprint Image (Centered, exact visual match to AFA.pdf CAD section)
-        img_path = os.path.join(BLUEPRINTS_DIR, f"{code}.png")
-        if not os.path.exists(img_path) and code == "SIZE-AUTO":
-            img_path = os.path.join(BLUEPRINTS_DIR, "CR11-1.png")
+        # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
+        bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)
+        if bp_img:
+            story.append(bp_img)
 
-        if os.path.exists(img_path):
-            try:
-                # Target max height ~110pt so everything fits on a single sheet
-                img = Image(img_path, width=280, height=110)
-                img.hAlign = 'CENTER'
-                story.append(img)
-                story.append(Spacer(1, 6))
-            except Exception as e:
-                print(f"Error loading image {img_path}: {e}")
+        # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page
+        story.append(PageBreak())
 
-        # Step-by-Step Engineering Calculation Breakdown
+        story.append(Paragraph(f"({code})  {name}", styles["title"]))
         story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
+        subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+        story.append(Paragraph(subhead_calc_text, styles["meta"]))
+        story.append(Spacer(1, 4))
+
         steps_table_story = build_calculation_steps_table(steps, styles)
         if isinstance(steps_table_story, list):
             story.extend(steps_table_story)
@@ -889,7 +1048,7 @@ def generate_project_pdf(project_id, output_path=None):
             story.append(steps_table_story)
 
     # Build the document
-    doc.build(story, canvasmaker=DuctfitFittingCanvas)
+    doc.build(story, canvasmaker=make_project_canvas(DuctfitFittingCanvas, project))
 
     if output_path:
         return output_path
@@ -901,7 +1060,7 @@ def generate_project_pdf(project_id, output_path=None):
 
 def generate_sizer_project_pdf(project_id, output_path=None):
     """
-    Generates an official Ductfit Pro Duct Sizing Project Report:
+    Generates an official DuctFit Pro Duct Sizing Project Report:
     - Running header: DUCTFIT PRO — DUCT SIZING REPORT
     - Master Project Specification & Sized Duct Schedule Table
     - Step-by-Step Engineering Methodology & Governing Formulations
@@ -918,7 +1077,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         leftMargin=36,
         rightMargin=36,
         topMargin=64,
-        bottomMargin=50
+        bottomMargin=42
     )
 
     styles = get_styles()
@@ -962,7 +1121,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
             Paragraph("<b>Design Standard:</b>", styles["cell_bold"]),
             Paragraph("ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
             Paragraph("<b>Date Generated:</b>", styles["cell_bold"]),
-            Paragraph(datetime.now().strftime("%d %B %Y"), styles["cell"])
+            Paragraph(datetime.now().strftime("%d-%B-%Y"), styles["cell"])
         ]
     ]
 
@@ -978,7 +1137,28 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         ('RIGHTPADDING', (0, 0), (-1, -1), 5),
     ]))
     story.append(t_spec)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
+
+    # Engineering Design Basis & Sizing Criteria Sheet
+    basis_data = [
+        [
+            Paragraph("<b>Sizing Methodology:</b> Equal Friction &amp; Velocity Limitation", styles["cell"]),
+            Paragraph("<b>Equivalent Circular:</b> Huebscher Formulation (Eq. 21.25)", styles["cell"]),
+            Paragraph("<b>Friction Loss Model:</b> Darcy-Weisbach &amp; Colebrook (Eq. 21.19)", styles["cell"])
+        ]
+    ]
+    t_basis = Table(basis_data, colWidths=[175, 195, 150])
+    t_basis.setStyle(TableStyle([
+        ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0284c7")),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0f9ff")),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+    ]))
+    story.append(t_basis)
+    story.append(Spacer(1, 6))
 
     # Calculate Totals
     total_segments = len(segments)
@@ -1009,19 +1189,20 @@ def generate_sizer_project_pdf(project_id, output_path=None):
     # Master Duct Sizing Schedule Table
     story.append(Paragraph("<b>MASTER SIZED DUCT SCHEDULE (EQUAL FRICTION / VELOCITY METHODS)</b>", styles["h2"]))
 
+    de_unit = "mm" if is_si else "in."
     sched_headers = [
-        Paragraph("<b>#</b>", styles["cell_bold"]),
-        Paragraph("<b>Tag / Ref</b>", styles["cell_bold"]),
-        Paragraph("<b>Section / Room</b>", styles["cell_bold"]),
-        Paragraph("<b>Shape</b>", styles["cell_bold"]),
-        Paragraph("<b>Dimensions</b>", styles["cell_bold"]),
-        Paragraph(f"<b>Q ({flow_unit})</b>", styles["cell_bold"]),
-        Paragraph(f"<b>V ({vel_unit})</b>", styles["cell_bold"]),
-        Paragraph(f"<b>Eq. D<sub>e</sub></b>", styles["cell_bold"]),
-        Paragraph("<b>AR</b>", styles["cell_bold"]),
-        Paragraph(f"<b>Rate (&Delta;P<sub>f</sub>/L)</b>", styles["cell_bold"]),
-        Paragraph(f"<b>L ({len_unit})</b>", styles["cell_bold"]),
-        Paragraph(f"<b>&Delta;P ({dp_unit})</b>", styles["cell_bold"])
+        Paragraph("<b>#</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Tag / Ref</b>", styles["hdr_cell"]),
+        Paragraph("<b>Section / Room</b>", styles["hdr_cell"]),
+        Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Sized Dimensions</b>", styles["hdr_cell"]),
+        Paragraph(f"<b>Q [{flow_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>V [{vel_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>Eq. D<sub>e</sub> [{de_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph("<b>AR</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>Rate [{fr_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>L [{len_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>&Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"])
     ]
     sched_rows = [sched_headers]
 
@@ -1066,13 +1247,15 @@ def generate_sizer_project_pdf(project_id, output_path=None):
     sched_widths = [20, 50, 95, 34, 75, 40, 35, 40, 30, 43, 30, 48] # 520pt total
     t_sched = Table(sched_rows, colWidths=sched_widths, repeatRows=1)
     t_sched.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#e2e8f0")),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor("#0f172a")),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#0284c7")),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-        ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#94a3b8")),
-        ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#94a3b8")),
+        ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0284c7")),
+        ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
         ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
-        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#e2e8f0")),
+        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
+        ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
+        ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
         ('SPAN', (0, -1), (2, -1)),
         ('SPAN', (3, -1), (9, -1)),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
@@ -1157,7 +1340,8 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         story.append(Paragraph(f"Section #{idx+1}: {tag} — {sec_name}", styles["title"]))
         story.append(Paragraph("ASHRAE Fundamentals, Ch. 21: Equal Friction / Velocity Sizing", styles["subtitle"]))
 
-        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark: <b>{tag}</b> &bull; Dimensions: <b>{seg.get('dimensions', '-')}</b> &bull; Flow: <b>{seg.get('Q')} {flow_unit}</b> &bull; Friction Rate: <b>{seg.get('friction_rate')} {fr_unit}</b> &bull; Run Length: <b>{seg.get('length')} {len_unit}</b>"
+        prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
+        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Dimensions: <b>{seg.get('dimensions', '-')}</b> &bull; Flow: <b>{seg.get('Q')} {flow_unit}</b> &bull; Friction Rate: <b>{seg.get('friction_rate')} {fr_unit}</b> &bull; Run Length: <b>{seg.get('length')} {len_unit}</b>"
         story.append(Paragraph(subhead_text, styles["meta"]))
         story.append(Spacer(1, 6))
 
@@ -1175,7 +1359,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
             story.append(steps_table_story)
 
     # Build document
-    doc.build(story, canvasmaker=DuctfitSizerCanvas)
+    doc.build(story, canvasmaker=make_project_canvas(DuctfitSizerCanvas, project))
 
     if output_path:
         return output_path
@@ -1188,7 +1372,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
 def generate_calculation_pdf(calc_data, output_path=None):
     """
     Generates a dedicated single-fitting or duct-sizing calculation PDF report:
-    - Running headers with Ductfit Pro branding, date, version
+    - Running headers with DuctFit Pro branding, date, version
     - Authentic 4-column side-by-side INPUTS | OUTPUTS table
     - Centered technical CAD blueprint diagram
     - Step-by-Step Engineering Calculation Breakdown with governing equations, parameter substitutions, and boxed results
@@ -1201,7 +1385,7 @@ def generate_calculation_pdf(calc_data, output_path=None):
         leftMargin=36,
         rightMargin=36,
         topMargin=64,
-        bottomMargin=50
+        bottomMargin=42
     )
 
     styles = get_styles()
@@ -1218,6 +1402,11 @@ def generate_calculation_pdf(calc_data, output_path=None):
     if project_id:
         try:
             project = project_manager.get_project(project_id)
+        except Exception:
+            project = None
+    if not project:
+        try:
+            project = project_manager.get_active_project()
         except Exception:
             project = None
 
@@ -1253,7 +1442,7 @@ def generate_calculation_pdf(calc_data, output_path=None):
     if project:
         subhead_text = f"Project: <b>{project.get('code')} - {project.get('name')}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
     else:
-        subhead_text = f"<b>Ductfit Pro Engineering Calculation Sheet</b> &bull; Standard: <b>ASHRAE Fundamentals, Ch. 21 ({unit_system})</b> &bull; Fluid: Standard Dry Air"
+        subhead_text = f"<b>DuctFit Pro Engineering Calculation Sheet</b> &bull; Standard: <b>ASHRAE Fundamentals, Ch. 21 ({unit_system})</b> &bull; Fluid: Standard Dry Air"
     story.append(Paragraph(subhead_text, styles["meta"]))
     story.append(Spacer(1, 6))
 
@@ -1272,24 +1461,26 @@ def generate_calculation_pdf(calc_data, output_path=None):
     # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
     t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
     story.append(t_io)
+    story.append(Spacer(1, 10))
+
+    # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
+    bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)
+    if bp_img:
+        story.append(bp_img)
+
+    # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page
+    story.append(PageBreak())
+
+    story.append(Paragraph(f"({code})  {name}", styles["title"]))
+    story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
+    if project:
+        prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
+        subhead_calc_text = f"Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+    else:
+        subhead_calc_text = f"Standard: <b>ASHRAE Fundamentals, Ch. 21 ({unit_system})</b> &bull; Engineering Formulation &amp; Substitution"
+    story.append(Paragraph(subhead_calc_text, styles["meta"]))
     story.append(Spacer(1, 8))
 
-    # Blueprint Image (Centered, exact visual match to AFA.pdf CAD section)
-    img_path = os.path.join(BLUEPRINTS_DIR, f"{code}.png")
-    if not os.path.exists(img_path) and code == "SIZE-AUTO":
-        img_path = os.path.join(BLUEPRINTS_DIR, "CR11-1.png")
-
-    if os.path.exists(img_path):
-        try:
-            img = Image(img_path, width=280, height=110)
-            img.hAlign = 'CENTER'
-            story.append(img)
-            story.append(Spacer(1, 6))
-        except Exception as e:
-            print(f"Error loading image {img_path}: {e}")
-
-    # Step-by-Step Engineering Calculation Breakdown
-    story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
     steps_table_story = build_calculation_steps_table(steps, styles)
     if isinstance(steps_table_story, list):
         story.extend(steps_table_story)
@@ -1297,7 +1488,7 @@ def generate_calculation_pdf(calc_data, output_path=None):
         story.append(steps_table_story)
 
     # Build document
-    doc.build(story, canvasmaker=DuctfitNumberedCanvas)
+    doc.build(story, canvasmaker=make_project_canvas(DuctfitNumberedCanvas, project) if project else DuctfitNumberedCanvas)
 
     if output_path:
         return output_path

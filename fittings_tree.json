@@ -74,8 +74,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -233,8 +233,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -368,8 +368,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -476,8 +476,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -584,8 +584,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -689,8 +689,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -803,8 +803,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -887,8 +887,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -992,8 +992,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -1115,8 +1115,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -1271,8 +1271,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -1450,8 +1450,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -1624,8 +1624,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -1798,8 +1798,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -1972,8 +1972,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -2152,8 +2152,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -2326,8 +2326,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -2500,8 +2500,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -2674,8 +2674,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -2848,8 +2848,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3022,8 +3022,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3208,8 +3208,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3382,8 +3382,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3556,8 +3556,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3730,8 +3730,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -3910,8 +3910,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4084,8 +4084,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4258,8 +4258,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4432,8 +4432,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4606,8 +4606,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4786,8 +4786,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -4960,8 +4960,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -5142,8 +5142,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -5340,8 +5340,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -5574,8 +5574,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -5808,8 +5808,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -6046,8 +6046,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6256,8 +6256,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6412,8 +6412,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6508,8 +6508,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6604,8 +6604,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6700,8 +6700,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6796,8 +6796,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -6952,8 +6952,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7108,8 +7108,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7216,8 +7216,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7363,8 +7363,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7483,8 +7483,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7621,8 +7621,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7747,8 +7747,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -7888,8 +7888,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -8032,8 +8032,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -8197,8 +8197,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -8365,8 +8365,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -8532,8 +8532,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -8712,8 +8712,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -8898,8 +8898,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -9088,8 +9088,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -9268,8 +9268,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -9454,8 +9454,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -9652,8 +9652,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -9850,8 +9850,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -10060,8 +10060,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -10246,8 +10246,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -10448,8 +10448,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -10682,8 +10682,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -10894,8 +10894,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -11038,8 +11038,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -11182,8 +11182,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -11314,8 +11314,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -11492,8 +11492,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -11633,8 +11633,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -11804,8 +11804,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -11966,8 +11966,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12095,8 +12095,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12224,8 +12224,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12353,8 +12353,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12482,8 +12482,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12611,8 +12611,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12740,8 +12740,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12869,8 +12869,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -12990,8 +12990,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -13134,8 +13134,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -13293,8 +13293,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -13458,8 +13458,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -13644,8 +13644,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -13830,8 +13830,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -14016,8 +14016,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -14176,8 +14176,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14260,8 +14260,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14344,8 +14344,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14428,8 +14428,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14512,8 +14512,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14596,8 +14596,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14686,8 +14686,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14770,8 +14770,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14854,8 +14854,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -14938,8 +14938,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15028,8 +15028,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15112,8 +15112,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15202,8 +15202,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15286,8 +15286,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15382,8 +15382,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15466,8 +15466,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15550,8 +15550,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15634,8 +15634,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -15722,8 +15722,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -15836,8 +15836,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -15974,8 +15974,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -16100,8 +16100,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -16203,8 +16203,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16287,8 +16287,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16371,8 +16371,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16455,8 +16455,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16545,8 +16545,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16629,8 +16629,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16713,8 +16713,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16797,8 +16797,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -16901,8 +16901,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -16997,8 +16997,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -17081,8 +17081,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -17165,8 +17165,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -17277,8 +17277,8 @@
                 },
                 {
                   "id": "rho",
-                  "label_si": "Density (rho, kg/m^3)",
-                  "label_ip": "Density (rho, lbm/ft^3)",
+                  "label_si": "Density (kg/m^3)",
+                  "label_ip": "Density (lb/ft^3)",
                   "default_si": 1.204,
                   "default_ip": 0.075,
                   "step": 0.001
@@ -17385,8 +17385,8 @@
                 },
                 {
                   "id": "rho",
-                  "label_si": "Density (rho, kg/m^3)",
-                  "label_ip": "Density (rho, lbm/ft^3)",
+                  "label_si": "Density (kg/m^3)",
+                  "label_ip": "Density (lb/ft^3)",
                   "default_si": 1.204,
                   "default_ip": 0.075,
                   "step": 0.001
@@ -17528,8 +17528,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -17648,8 +17648,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -17786,8 +17786,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -17933,8 +17933,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -18075,8 +18075,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -18171,8 +18171,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -18291,8 +18291,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -18405,8 +18405,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -18519,8 +18519,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -18649,8 +18649,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -18751,8 +18751,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -18859,8 +18859,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -18967,8 +18967,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -19075,8 +19075,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -19215,8 +19215,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -19365,8 +19365,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -19515,8 +19515,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -19644,8 +19644,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -19771,8 +19771,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -19879,8 +19879,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -19987,8 +19987,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20095,8 +20095,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20197,8 +20197,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20293,8 +20293,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20389,8 +20389,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20485,8 +20485,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20575,8 +20575,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20659,8 +20659,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20743,8 +20743,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -20859,8 +20859,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -20967,8 +20967,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21063,8 +21063,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21159,8 +21159,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21255,8 +21255,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21351,8 +21351,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21447,8 +21447,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21543,8 +21543,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21639,8 +21639,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21735,8 +21735,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21831,8 +21831,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -21927,8 +21927,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22023,8 +22023,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22119,8 +22119,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22243,8 +22243,8 @@
                 },
                 {
                   "id": "rho",
-                  "label_si": "Density (rho, kg/m^3)",
-                  "label_ip": "Density (rho, lbm/ft^3)",
+                  "label_si": "Density (kg/m^3)",
+                  "label_ip": "Density (lb/ft^3)",
                   "default_si": 1.204,
                   "default_ip": 0.075,
                   "step": 0.001
@@ -22349,8 +22349,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22454,8 +22454,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22559,8 +22559,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22655,8 +22655,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22751,8 +22751,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22847,8 +22847,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -22971,8 +22971,8 @@
                 },
                 {
                   "id": "rho",
-                  "label_si": "Density (rho, kg/m^3)",
-                  "label_ip": "Density (rho, lbm/ft^3)",
+                  "label_si": "Density (kg/m^3)",
+                  "label_ip": "Density (lb/ft^3)",
                   "default_si": 1.204,
                   "default_ip": 0.075,
                   "step": 0.001
@@ -23095,8 +23095,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23230,8 +23230,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23326,8 +23326,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23443,8 +23443,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23527,8 +23527,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23620,8 +23620,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23737,8 +23737,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23848,8 +23848,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -23983,8 +23983,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -24133,8 +24133,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -24289,8 +24289,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -24464,8 +24464,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -24638,8 +24638,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -24788,8 +24788,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -24926,8 +24926,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -25110,8 +25110,8 @@
                             },
                             {
                               "id": "rho",
-                              "label_si": "Density (rho, kg/m^3)",
-                              "label_ip": "Density (rho, lbm/ft^3)",
+                              "label_si": "Density (kg/m^3)",
+                              "label_ip": "Density (lb/ft^3)",
                               "default_si": 1.204,
                               "default_ip": 0.075,
                               "step": 0.001
@@ -25288,8 +25288,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -25438,8 +25438,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -25580,8 +25580,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -25790,8 +25790,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -26000,8 +26000,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -26172,8 +26172,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26280,8 +26280,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26376,8 +26376,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26478,8 +26478,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26574,8 +26574,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26670,8 +26670,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26772,8 +26772,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26868,8 +26868,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -26968,8 +26968,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27070,8 +27070,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27166,8 +27166,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27298,8 +27298,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27418,8 +27418,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27574,8 +27574,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27724,8 +27724,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -27892,8 +27892,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28057,8 +28057,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28216,8 +28216,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28357,8 +28357,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28501,8 +28501,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28669,8 +28669,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -28834,8 +28834,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -29021,8 +29021,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -29183,8 +29183,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -29357,8 +29357,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -29531,8 +29531,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -29705,8 +29705,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -29885,8 +29885,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -30071,8 +30071,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -30257,8 +30257,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -30447,8 +30447,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -30669,8 +30669,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -30877,8 +30877,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -30985,8 +30985,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -31093,8 +31093,8 @@
                         },
                         {
                           "id": "rho",
-                          "label_si": "Density (rho, kg/m^3)",
-                          "label_ip": "Density (rho, lbm/ft^3)",
+                          "label_si": "Density (kg/m^3)",
+                          "label_ip": "Density (lb/ft^3)",
                           "default_si": 1.204,
                           "default_ip": 0.075,
                           "step": 0.001
@@ -31227,8 +31227,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -31392,8 +31392,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001
@@ -31578,8 +31578,8 @@
                     },
                     {
                       "id": "rho",
-                      "label_si": "Density (rho, kg/m^3)",
-                      "label_ip": "Density (rho, lbm/ft^3)",
+                      "label_si": "Density (kg/m^3)",
+                      "label_ip": "Density (lb/ft^3)",
                       "default_si": 1.204,
                       "default_ip": 0.075,
                       "step": 0.001

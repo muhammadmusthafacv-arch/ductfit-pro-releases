@@ -1,5 +1,5 @@
 """
-Ductfit Pro - Official ASHRAE Duct Fitting Database Master Catalog Generator
+DuctFit Pro - Official ASHRAE Duct Fitting Database Master Catalog Generator
 Produces a comprehensive, publication-grade engineering PDF manual documenting:
 1. Complete System Architecture & Process Flow (Supply, Common, Exhaust -> Round, Rectangular, Flat Oval -> Subcategories -> All 234 Items)
 2. Master Fitting Cross-Reference Index
@@ -42,7 +42,7 @@ BLUEPRINTS_DIR = os.path.join(BASE_DIR, "static", "blueprints")
 class DuctfitMasterCatalogCanvas(canvas.Canvas):
     """
     Two-pass canvas for the master catalog that computes total page count (Page X of Y),
-    adds running headers and footers with Ductfit Pro branding, ASHRAE citation,
+    adds running headers and footers with DuctFit Pro branding, ASHRAE citation,
     and STRICTLY NO telephone or fax numbers.
     """
     def __init__(self, *args, **kwargs):
@@ -79,7 +79,7 @@ class DuctfitMasterCatalogCanvas(canvas.Canvas):
             self.setFont("Helvetica", 7.5)
             self.setFillColor(colors.HexColor("#475569"))
             cur_ver = version_manager.get_current_version()
-            self.drawRightString(w - margin, h - 25, f"Ductfit Pro v{cur_ver} • ASHRAE Fundamentals (Ch. 21)")
+            self.drawRightString(w - margin, h - 25, f"DuctFit Pro v{cur_ver} • ASHRAE Fundamentals (Ch. 21)")
 
         # Footer on all pages (NO telephone, NO fax)
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
@@ -92,7 +92,7 @@ class DuctfitMasterCatalogCanvas(canvas.Canvas):
 
         self.setFont("Helvetica", 7)
         self.setFillColor(colors.HexColor("#64748b"))
-        self.drawString(margin + 235, 20, "•  Ductfit Pro Engineering Suite  •  SI & IP Dual Unit Systems")
+        self.drawString(margin + 235, 20, "•  DuctFit Pro Engineering Suite  •  SI & IP Dual Unit Systems")
 
         self.setFont("Helvetica-Bold", 8)
         self.setFillColor(colors.HexColor("#0f172a"))
@@ -399,7 +399,7 @@ def generate_master_catalog_pdf(output_path=None):
         "<b>Document Overview & Purpose:</b> This comprehensive reference document represents the fully expanded hierarchical "
         "catalog of the official ASHRAE Duct Fitting Database (ASHRAE Fundamentals, Chapter 21: Duct Design). "
         "It provides the complete process flow and technical data for all <b>234 official duct fittings</b> exactly as revealed "
-        "upon triggering <b>'Expand All'</b> within the Ductfit Pro engineering analysis suite. "
+        "upon triggering <b>'Expand All'</b> within the DuctFit Pro engineering analysis suite. "
         "Each fitting is fully characterized with its formal classification, complete hierarchy breadcrumb, authoritative "
         "peer-reviewed research citation, high-resolution CAD blueprint diagram, comprehensive input parameter definitions "
         "(in dual SI and IP unit systems with validated physical limits), output aerodynamics (including velocity, velocity pressure, "
@@ -471,11 +471,11 @@ def generate_master_catalog_pdf(output_path=None):
     meta_box = [
         [
             Paragraph("<b>Authoritative Standard:</b> ASHRAE Fundamentals, Chapter 21 (Duct Design)", styles["CellText"]),
-            Paragraph(f"<b>Software Build:</b> Ductfit Pro Version v{version_manager.get_current_version()}", styles["CellText"]),
+            Paragraph(f"<b>Software Build:</b> DuctFit Pro Version v{version_manager.get_current_version()}", styles["CellText"]),
         ],
         [
             Paragraph("<b>Database Engine:</b> Official 2014 ASHRAE Duct Fitting Database (Jet OLEDB 2014 Synchronization)", styles["CellText"]),
-            Paragraph(f"<b>Publication Date:</b> {datetime.now().strftime('%B %d, %Y')}", styles["CellText"]),
+            Paragraph(f"<b>Publication Date:</b> {datetime.now().strftime('%d-%B-%Y')}", styles["CellText"]),
         ],
         [
             Paragraph("<b>Verification Status:</b> 234 of 234 fittings verified with 0 calculation exceptions (SI & IP)", styles["CellTextBold"]),

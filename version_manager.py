@@ -1,8 +1,10 @@
 import os
+import sys
 import json
 import datetime
 
-VERSION_FILE = os.path.join(os.path.dirname(__file__), "version.json")
+BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+VERSION_FILE = os.path.join(BASE_DIR, "version.json")
 
 def format_version(major: int, minor: int, patch: int) -> str:
     """Formats version according to Ductfit Pro standard: X.ZZZ (e.g. 1.035)"""

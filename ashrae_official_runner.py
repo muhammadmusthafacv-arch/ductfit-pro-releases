@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import json
 import math
@@ -356,7 +357,7 @@ class OfficialAshraeEngine:
         return cls._instance
 
     def __init__(self):
-        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.base_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
         self.data_dir = os.path.join(self.base_dir, 'ashrae_data')
         self.tbl_dir = os.path.join(self.base_dir, 'ashrae_extracted')
         self.eqs_by_key = {}
@@ -379,6 +380,15 @@ class OfficialAshraeEngine:
         if os.path.exists(const_file):
             with open(const_file, 'r', encoding='utf-8-sig') as f:
                 self.constants_list = json.load(f)
+
+        input_file = os.path.join(self.data_dir, 'ashrae_table_Input.json')
+        self.inputs_by_key = defaultdict(list)
+        if os.path.exists(input_file):
+            with open(input_file, 'r', encoding='utf-8-sig') as f:
+                inputs_data = json.load(f)
+            for inp in inputs_data:
+                if inp.get('Key'):
+                    self.inputs_by_key[inp['Key'].strip().upper()].append(inp)
 
     def has_fitting_equations(self, key):
         return key.strip().upper() in self.eqs_by_key
@@ -442,8 +452,9 @@ class OfficialAshraeEngine:
                 norm_inputs['ei'] = v
                 norm_inputs['e'] = v
             elif k_lower in ('rho', 'density'):
-                norm_inputs['rho'] = v
-                norm_inputs['RHO'] = v
+                # In official ASHRAE fitting database, air density RHO is strictly a constant (1.204 SI / 0.075 IP)
+                # and non-editable. User inputs cannot override official aerodynamic constants.
+                pass
             elif k_lower in ('mu', 'viscosity'):
                 norm_inputs['mu'] = v
                 norm_inputs['MU'] = v
@@ -474,6 +485,26 @@ class OfficialAshraeEngine:
         if 'V' in user_inputs:
             norm_inputs['V'] = user_inputs['V']
 
+        # Smart ratio derivations if components are provided
+        if 'RR' not in norm_inputs:
+            try:
+                w_val = float(norm_inputs.get('W', 0))
+                r_val = float(norm_inputs.get('R', norm_inputs.get('r', 0)))
+                if w_val > 0 and r_val > 0:
+                    norm_inputs['RR'] = r_val / w_val
+            except Exception:
+                pass
+
+        if 'RD' not in norm_inputs and 'RDR' not in norm_inputs:
+            try:
+                dia_val = float(norm_inputs.get('D', norm_inputs.get('Do', 0)))
+                rad_val = float(norm_inputs.get('r', norm_inputs.get('R', 0)))
+                if dia_val > 0 and rad_val > 0:
+                    norm_inputs['RD'] = rad_val / dia_val
+                    norm_inputs['RDR'] = rad_val / dia_val
+            except Exception:
+                pass
+
         if key == 'CF11-1':
             if 'A' in user_inputs and 'W' not in norm_inputs:
                 norm_inputs['W'] = user_inputs['A']
@@ -487,21 +518,93 @@ class OfficialAshraeEngine:
 
         env.update(norm_inputs)
         is_ip = (unit_system == "IP")
+        # Enforce official ASHRAE constant density and viscosity (Standard Dry Air)
+        env['RHO'] = 1.204 if not is_ip else 0.075
+        env['rho'] = 1.204 if not is_ip else 0.075
+        env['MU'] = 1.818e-05 if not is_ip else 0.0007335
+        if 'ei' not in env and 'e' not in env:
+            env['ei'] = 0.090 if not is_ip else 0.0003
+            env['e'] = 0.090 if not is_ip else 0.0003
         
         tables = self.get_tables_for_fitting(key)
+        out_of_range_warnings = []
+        input_out_of_range = False
+
+        # Validate user inputs against official ASHRAE limits
+        if hasattr(self, 'inputs_by_key'):
+            import re as re_validator
+            specs = self.inputs_by_key.get(key.strip().upper(), [])
+            for spec in specs:
+                var = spec.get('Variable', '').strip()
+                if not var: continue
+                val = None
+                for candidate in [var, var.lower(), var.upper()]:
+                    if candidate in norm_inputs:
+                        try:
+                            val = float(norm_inputs[candidate])
+                            break
+                        except (ValueError, TypeError):
+                            pass
+                if val is None:
+                    continue
+
+                min_val = spec.get('IPMinimum') if is_ip else spec.get('SIMinimum')
+                max_val = spec.get('IPMaximum') if is_ip else spec.get('SIMaximum')
+                raw_u = spec.get('IPUnitID') if is_ip else spec.get('SIUnitID')
+                m_u = re_validator.search(r',\s*([^)]+)\)', raw_u or '')
+                u_str = m_u.group(1).strip() if m_u else (raw_u.strip('()') if raw_u else '')
+                prompt = spec.get('Prompt', var)
+                tol = 1e-4
+
+                if min_val is not None and val < float(min_val) - tol:
+                    input_out_of_range = True
+                    out_of_range_warnings.append(
+                        f"Input {prompt} ({var}) = {val} {u_str} is below official ASHRAE minimum limit of {min_val} {u_str}."
+                    )
+                elif max_val is not None and val > float(max_val) + tol:
+                    input_out_of_range = True
+                    out_of_range_warnings.append(
+                        f"Input {prompt} ({var}) = {val} {u_str} exceeds official ASHRAE maximum limit of {max_val} {u_str}."
+                    )
         
         def fcn_eval(*args):
+            if input_out_of_range:
+                return 0.0
             table_idx = int(args[-1])
             tbl = tables.get(table_idx)
             if not tbl:
                 return 0.0
             dim = tbl['dim']
+            tol = 1e-4
             if dim == 1:
-                return interpolate_1d(args[0], tbl['x'], tbl['values'])
+                x_val = float(args[0])
+                x_arr = tbl['x']
+                if x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol:
+                    out_of_range_warnings.append(
+                        f"Ratio {x_val:.3f} is outside the ASHRAE experimental data table range [{x_arr[0]:.2f}, {x_arr[-1]:.2f}]. Co is set to 0.00 as per official ASHRAE specification."
+                    )
+                    return 0.0
+                return interpolate_1d(x_val, tbl['x'], tbl['values'])
             elif dim == 2:
-                return interpolate_2d(args[0], args[1], tbl['x'], tbl['y'], tbl['values'])
+                x_val, y_val = float(args[0]), float(args[1])
+                x_arr, y_arr = tbl['x'], tbl['y']
+                if x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol or y_val < y_arr[0] - tol or y_val > y_arr[-1] + tol:
+                    out_of_range_warnings.append(
+                        f"Input values ({x_val:.3f}, {y_val:.3f}) are outside the ASHRAE experimental table range. Co is set to 0.00 as per official ASHRAE specification."
+                    )
+                    return 0.0
+                return interpolate_2d(x_val, y_val, tbl['x'], tbl['y'], tbl['values'])
             elif dim == 3:
-                return interpolate_3d(args[0], args[2], args[1], tbl['x'], tbl['y1'], tbl['y2'], tbl['values'])
+                x_val, y1_val, y2_val = float(args[0]), float(args[2]), float(args[1])
+                x_arr, y1_arr, y2_arr = tbl['x'], tbl['y1'], tbl['y2']
+                if (x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol or 
+                    y1_val < y1_arr[0] - tol or y1_val > y1_arr[-1] + tol or 
+                    y2_val < y2_arr[0] - tol or y2_val > y2_arr[-1] + tol):
+                    out_of_range_warnings.append(
+                        f"Input values are outside the ASHRAE 3D experimental table range. Co is set to 0.00 as per official ASHRAE specification."
+                    )
+                    return 0.0
+                return interpolate_3d(x_val, y1_val, y2_val, tbl['x'], tbl['y1'], tbl['y2'], tbl['values'])
             return 0.0
 
         def colebrook_friction(e, D, Re):
@@ -588,10 +691,20 @@ class OfficialAshraeEngine:
             pending = [item[0] for item in next_pending]
                 
         # Primary loss coefficient and friction factor
-        Co = env.get('Co', env.get('Cb', env.get('Cb1', env.get('Cs', env.get('Cp', 0.0)))))
-        if isinstance(Co, str): Co = 0.0
-        f_val = env.get('f', Co)
-        if isinstance(f_val, str): f_val = 0.0
+        if input_out_of_range:
+            Co = 0.0
+            Po = 0.0
+            env['Co'] = 0.0
+            env['Po'] = 0.0
+            for k_sub in ('Cb', 'Cs', 'Cp', 'K', 'Pob', 'Pos', 'Pob1', 'Pob2', 'Cb1', 'Cb2'):
+                if k_sub in env:
+                    env[k_sub] = 0.0
+            f_val = 0.0
+        else:
+            Co = env.get('Co', env.get('Cb', env.get('Cb1', env.get('Cs', env.get('Cp', 0.0)))))
+            if isinstance(Co, str): Co = 0.0
+            f_val = env.get('f', Co)
+            if isinstance(f_val, str): f_val = 0.0
         
         # Velocity and velocity pressure
         Vo = env.get('Vo', env.get('V', env.get('Vc', env.get('Vb', env.get('Vb1', 0.0)))))
@@ -665,110 +778,358 @@ class OfficialAshraeEngine:
             res['Pvs_pa'] = float(val if not is_ip else val * 249.0889)
             res['Pvs_in_wg'] = float(val if is_ip else val / 249.0889)
             
-        res["steps"] = self.generate_steps(key, norm_inputs, res, unit_system)
+        res["steps"] = self.generate_steps(key, norm_inputs, res, unit_system, out_of_range_warnings)
+        if out_of_range_warnings:
+            res["out_of_range_warnings"] = out_of_range_warnings
         return res
 
-    def generate_steps(self, key, inputs, res, unit_system="SI"):
+    def generate_steps(self, key, inputs, res, unit_system="SI", out_of_range_warnings=None):
         u = unit_system
+        is_si = (u == "SI")
         steps = []
         eval_log = res.get("eval_log", [])
+        env = res.get("raw_env", {})
         
-        def fmt(n):
+        def fmt(n, decimals=2):
             if isinstance(n, (int, float)):
-                if abs(n) >= 1000: return f"{n:,.1f}"
-                if abs(n) >= 10: return f"{n:.2f}"
-                if abs(n) >= 1: return f"{n:.3f}"
-                return f"{n:.4f}"
+                if abs(n) >= 1000:
+                    return f"{n:,.1f}" if decimals <= 1 else f"{n:,.{decimals}f}"
+                if abs(n) >= 10:
+                    return f"{n:.{min(decimals, 2)}f}"
+                if abs(n) >= 1:
+                    return f"{n:.{min(decimals+1, 3)}f}"
+                return f"{n:.{decimals+2}f}"
             return str(n)
             
         step_idx = 1
         
-        # Step 1: Geometry & Velocity
-        geom_lines = []
-        for lhs, rhs, val in eval_log:
-            if lhs in ['A', 'Ao', 'Ac', 'Ab', 'As', 'A1', 'Vo', 'V', 'Vc', 'Vb', 'Vs', 'V1']:
-                geom_lines.append(rf"{lhs} = {rhs} = {fmt(val)}")
-        if geom_lines:
-            steps.append({
-                "step_num": step_idx,
-                "step_label": f"STEP {step_idx}",
-                "title": "Cross-Sectional Duct Area & Aerodynamic Velocity",
-                "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (10)",
-                "governing_latex": r"A = f(D, W, H) \quad ; \quad V = \frac{Q}{1000 A} \tag{21.10}",
-                "parameters": [
-                    {"symbol": k, "name": f"Input parameter {k}", "value": f"{inputs.get(k)}"}
-                    for k in inputs if k != 'rho'
-                ],
-                "derivation_latex": geom_lines,
-                "framed_result_latex": rf"\mathbf{{V = {res.get('velocity_ms' if u=='SI' else 'velocity_fpm')} \text{{ {'m/s' if u=='SI' else 'fpm'}}}}}",
-                "notes": f"Governing continuity flow field evaluated using standard air properties ({'1.204 kg/m³' if u=='SI' else '0.075 lbm/ft³'})."
+        # -----------------------------------------------------------------
+        # STEP 1: Cross-Sectional Duct Area & Aerodynamic Velocity
+        # -----------------------------------------------------------------
+        has_D = any(k in env for k in ['D', 'Do', 'D1', 'Dc', 'Db', 'Ds'])
+        has_rect = any(k in env for k in ['W', 'Wo', 'W1', 'H', 'Ho', 'H1'])
+        is_tee = any(k in env for k in ['Qc', 'Qb', 'Qs', 'Dc', 'Db', 'Ds', 'Ac', 'Ab', 'As'])
+        
+        q_val = float(env.get('Q', env.get('Qo', env.get('Qc', env.get('Q1', 0)))))
+        v_val = float(res.get('velocity_ms' if is_si else 'velocity_fpm', 0))
+        a_val = float(env.get('Ao', env.get('A', env.get('Ac', env.get('A1', 0)))))
+        d_val = float(env.get('Do', env.get('D', env.get('D1', 0))))
+        w_val = float(env.get('Wo', env.get('W', env.get('W1', 0))))
+        h_val = float(env.get('Ho', env.get('H', env.get('H1', 0))))
+        
+        clean_params = []
+        seen_keys = set()
+        
+        # Flow rate parameter
+        if q_val > 0:
+            clean_params.append({
+                "symbol": "Q_o" if 'Qo' in env else "Q",
+                "name": "Design Airflow Rate",
+                "value": f"{q_val:,.0f} L/s = {q_val/1000:.3f} m³/s" if is_si else f"{q_val:,.0f} cfm"
             })
-            step_idx += 1
-
-        # Step 2: Velocity Pressure
-        pv_lines = []
-        for lhs, rhs, val in eval_log:
-            if lhs in ['Pv', 'Pvo', 'Pvc', 'Pvb', 'Pvs', 'Pv1']:
-                pv_lines.append(rf"{lhs} = {rhs} = {fmt(val)}")
-        if pv_lines:
-            steps.append({
-                "step_num": step_idx,
-                "step_label": f"STEP {step_idx}",
-                "title": "Mean Velocity Pressure Evaluation",
-                "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (8)",
-                "governing_latex": r"p_v = \frac{\rho V^2}{2} = \left(\frac{V}{V_{PC}}\right)^2 \tag{21.8}",
-                "parameters": [
-                    {"symbol": "V", "name": "Mean Velocity", "value": f"{res.get('velocity_ms' if u=='SI' else 'velocity_fpm')} {'m/s' if u=='SI' else 'fpm'}"},
-                    {"symbol": "VPC", "name": "ASHRAE Velocity Pressure Constant", "value": "1.2888" if u == "SI" else "4008.7"}
-                ],
-                "derivation_latex": pv_lines,
-                "framed_result_latex": rf"\mathbf{{P_v = {res.get('pv_pa' if u=='SI' else 'pv_in_wg')} \text{{ {'Pa' if u=='SI' else 'in. wg'}}}}}",
-                "notes": "Velocity pressure computed in accordance with official ASHRAE aerodynamic constant formulation."
+            seen_keys.update(['q', 'qo', 'q1'])
+            
+        if has_D and d_val > 0:
+            clean_params.append({
+                "symbol": "D_o" if 'Do' in env else "D",
+                "name": "Duct Diameter",
+                "value": f"{d_val:,.0f} mm = {d_val/1000:.3f} m" if is_si else f"{d_val:,.1f} in."
             })
-            step_idx += 1
+            seen_keys.update(['d', 'do', 'd1'])
+            
+        if has_rect and w_val > 0 and h_val > 0:
+            clean_params.append({
+                "symbol": "W_o" if 'Wo' in env else "W",
+                "name": "Duct Width",
+                "value": f"{w_val:,.0f} mm = {w_val/1000:.3f} m" if is_si else f"{w_val:,.1f} in."
+            })
+            clean_params.append({
+                "symbol": "H_o" if 'Ho' in env else "H",
+                "name": "Duct Height",
+                "value": f"{h_val:,.0f} mm = {h_val/1000:.3f} m" if is_si else f"{h_val:,.1f} in."
+            })
+            seen_keys.update(['w', 'wo', 'w1', 'h', 'ho', 'h1'])
+            
+        param_meta = {
+            'L': {'symbol': 'L', 'name': 'Length', 'unit': 'mm' if is_si else 'in.'},
+            'Theta': {'symbol': r'\theta', 'name': 'Transition Angle', 'unit': '°'},
+            'r': {'symbol': 'r', 'name': 'Bend Radius', 'unit': 'mm' if is_si else 'in.'},
+            'R': {'symbol': 'R', 'name': 'Bend Radius', 'unit': 'mm' if is_si else 'in.'},
+            'V': {'symbol': 'V', 'name': 'Ambient / Duct Velocity', 'unit': 'm/s' if is_si else 'fpm'},
+            't': {'symbol': 't', 'name': 'Wall Thickness', 'unit': 'mm' if is_si else 'in.'},
+        }
+        for k, v in inputs.items():
+            if k.lower() not in seen_keys and isinstance(v, (int, float)):
+                meta = param_meta.get(k, {'symbol': k, 'name': k, 'unit': ''})
+                u_str = meta.get('unit', '')
+                val_disp = f"{v} {u_str}".strip()
+                clean_params.append({
+                    "symbol": meta['symbol'],
+                    "name": meta['name'],
+                    "value": val_disp
+                })
+                seen_keys.add(k.lower())
 
-        # Step 3: Loss Coefficient via Multilinear Interpolation
-        coeff_lines = []
-        for lhs, rhs, val in eval_log:
-            if lhs in ['Co', 'Cb', 'Cs', 'Cp', 'K', 'C1', 'Ccs', 'Ccb']:
-                coeff_lines.append(rf"{lhs} = {rhs} = {fmt(val)}")
-        if coeff_lines:
+        deriv_lines = []
+        subst_lines = []
+        
+        if is_tee:
+            qc = float(env.get('Qc', 0))
+            qb = float(env.get('Qb', 0))
+            qs = float(env.get('Qs', 0))
+            ac = float(env.get('Ac', 1))
+            ab = float(env.get('Ab', 1))
+            as_val = float(env.get('As', 1))
+            vc = float(env.get('Vc', 0))
+            vb = float(env.get('Vb', 0))
+            vs = float(env.get('Vs', 0))
+            
+            gov_latex = r"Q_c = Q_b + Q_s \quad ; \quad V = \frac{Q}{A} \tag{21.10}"
+            gov_formula = "Qc = Qb + Qs  ;  V = Q / A"
+            if is_si:
+                deriv_lines.append(rf"Q_c = Q_b + Q_s = {qb/1000:.3f} + {qs/1000:.3f} = {qc/1000:.3f}\text{{ m}}^3/\text{{s}}")
+                deriv_lines.append(rf"V_c = \frac{{Q_c}}{{A_c}} = \frac{{{qc/1000:.3f}\text{{ m}}^3/\text{{s}}}}{{{ac:.4f}\text{{ m}}^2}} = {vc:.2f}\text{{ m/s}}")
+                deriv_lines.append(rf"V_b = \frac{{Q_b}}{{A_b}} = \frac{{{qb/1000:.3f}\text{{ m}}^3/\text{{s}}}}{{{ab:.4f}\text{{ m}}^2}} = {vb:.2f}\text{{ m/s}}")
+                deriv_lines.append(rf"V_s = \frac{{Q_s}}{{A_s}} = \frac{{{qs/1000:.3f}\text{{ m}}^3/\text{{s}}}}{{{as_val:.4f}\text{{ m}}^2}} = {vs:.2f}\text{{ m/s}}")
+                subst_lines.append(f"Qc = {qc/1000:.3f} m³/s, Vc = {vc:.2f} m/s, Vb = {vb:.2f} m/s, Vs = {vs:.2f} m/s")
+            else:
+                deriv_lines.append(rf"Q_c = Q_b + Q_s = {qb:,.0f} + {qs:,.0f} = {qc:,.0f}\text{{ cfm}}")
+                deriv_lines.append(rf"V_c = \frac{{{qc:,.0f}\text{{ cfm}}}}{{{ac:.4f}\text{{ ft}}^2}} = {vc:,.0f}\text{{ fpm}} \quad ; \quad V_b = {vb:,.0f}\text{{ fpm}} \quad ; \quad V_s = {vs:,.0f}\text{{ fpm}}")
+                subst_lines.append(f"Qc = {qc:,.0f} cfm, Vc = {vc:,.0f} fpm, Vb = {vb:,.0f} fpm, Vs = {vs:,.0f} fpm")
+        elif has_D and d_val > 0:
+            gov_latex = r"A_o = \frac{\pi}{4} D_o^2 \quad ; \quad V_o = \frac{Q_o}{A_o} \tag{21.10}"
+            gov_formula = "Ao = (π/4) × Do²  ;  Vo = Qo / Ao"
+            if is_si:
+                d_m = d_val / 1000.0
+                q_m3s = q_val / 1000.0
+                deriv_lines.append(rf"A_o = \frac{{\pi}}{{4}} D_o^2 = \frac{{\pi}}{{4}} ({d_m:.3f}\text{{ m}})^2 = {a_val:.4f}\text{{ m}}^2")
+                deriv_lines.append(rf"V_o = \frac{{Q_o}}{{A_o}} = \frac{{{q_m3s:.3f}\text{{ m}}^3/\text{{s}}}}{{{a_val:.4f}\text{{ m}}^2}} = {v_val:.2f}\text{{ m/s}}")
+                subst_lines.append(f"Ao = (π/4) × ({d_m:.3f} m)² = {a_val:.4f} m²")
+                subst_lines.append(f"Vo = {q_m3s:.3f} m³/s / {a_val:.4f} m² = {v_val:.2f} m/s")
+            else:
+                deriv_lines.append(rf"A_o = \frac{{\pi}}{{4}} \left(\frac{{D_o}}{{12}}\right)^2 = \frac{{\pi}}{{4}} \left(\frac{{{d_val:.1f}\text{{ in.}}}}{{12}}\right)^2 = {a_val:.4f}\text{{ ft}}^2")
+                deriv_lines.append(rf"V_o = \frac{{Q_o}}{{A_o}} = \frac{{{q_val:,.0f}\text{{ cfm}}}}{{{a_val:.4f}\text{{ ft}}^2}} = {v_val:,.0f}\text{{ fpm}}")
+                subst_lines.append(f"Ao = (π/4) × ({d_val:.1f}/12 ft)² = {a_val:.4f} ft²")
+                subst_lines.append(f"Vo = {q_val:,.0f} cfm / {a_val:.4f} ft² = {v_val:,.0f} fpm")
+        elif has_rect and w_val > 0 and h_val > 0:
+            gov_latex = r"A_o = W_o \cdot H_o \quad ; \quad V_o = \frac{Q_o}{A_o} \tag{21.10}"
+            gov_formula = "Ao = Wo × Ho  ;  Vo = Qo / Ao"
+            if is_si:
+                w_m = w_val / 1000.0
+                h_m = h_val / 1000.0
+                q_m3s = q_val / 1000.0
+                deriv_lines.append(rf"A_o = W_o \times H_o = ({w_m:.3f}\text{{ m}}) \times ({h_m:.3f}\text{{ m}}) = {a_val:.4f}\text{{ m}}^2")
+                deriv_lines.append(rf"V_o = \frac{{Q_o}}{{A_o}} = \frac{{{q_m3s:.3f}\text{{ m}}^3/\text{{s}}}}{{{a_val:.4f}\text{{ m}}^2}} = {v_val:.2f}\text{{ m/s}}")
+                subst_lines.append(f"Ao = ({w_m:.3f} m) × ({h_m:.3f} m) = {a_val:.4f} m²")
+                subst_lines.append(f"Vo = {q_m3s:.3f} m³/s / {a_val:.4f} m² = {v_val:.2f} m/s")
+            else:
+                deriv_lines.append(rf"A_o = \frac{{W_o \times H_o}}{{144}} = \frac{{{w_val:.1f}\text{{ in.}} \times {h_val:.1f}\text{{ in.}}}}{{144}} = {a_val:.4f}\text{{ ft}}^2")
+                deriv_lines.append(rf"V_o = \frac{{Q_o}}{{A_o}} = \frac{{{q_val:,.0f}\text{{ cfm}}}}{{{a_val:.4f}\text{{ ft}}^2}} = {v_val:,.0f}\text{{ fpm}}")
+                subst_lines.append(f"Ao = ({w_val:.1f} × {h_val:.1f})/144 = {a_val:.4f} ft²")
+                subst_lines.append(f"Vo = {q_val:,.0f} cfm / {a_val:.4f} ft² = {v_val:,.0f} fpm")
+        else:
+            gov_latex = r"A = f(\text{Dimensions}) \quad ; \quad V = \frac{Q}{A} \tag{21.10}"
+            gov_formula = "A = f(Dimensions)  ;  V = Q / A"
+            for lhs, rhs, val in eval_log:
+                if lhs in ['A', 'Ao', 'Vo', 'V', 'Ac', 'Vc', 'Ab', 'Vb']:
+                    deriv_lines.append(rf"{lhs} = {rhs} = {fmt(val)}")
+                    subst_lines.append(f"{lhs} = {rhs} = {fmt(val)}")
+
+        vel_unit = r"\text{ m/s}" if is_si else r"\text{ fpm}"
+        area_unit = r"\text{ m}^2" if is_si else r"\text{ ft}^2"
+        v_disp = f"{v_val:.1f} {vel_unit}" if is_si else f"{v_val:,.0f} {vel_unit}"
+        a_disp = f"{a_val:.4f} {area_unit}"
+        
+        steps.append({
+            "step_num": step_idx,
+            "step_label": f"STEP {step_idx}",
+            "title": "Cross-Sectional Duct Area & Aerodynamic Velocity",
+            "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (10)",
+            "governing_latex": gov_latex,
+            "formula": gov_formula,
+            "parameters": clean_params,
+            "derivation_latex": deriv_lines,
+            "substitution": "\n".join(subst_lines),
+            "framed_result_latex": rf"\mathbf{{V_o = {v_disp}}} \quad \left(A = {a_disp}\right)",
+            "result_latex": rf"\mathbf{{V_o = {v_disp}}} \quad \left(A = {a_disp}\right)",
+            "result": f"Vo = {v_disp}  (A = {a_disp})",
+            "notes": f"Governing continuity flow field evaluated using standard dry air properties ({'1.204 kg/m³' if is_si else '0.075 lbm/ft³'})."
+        })
+        step_idx += 1
+        
+        # -----------------------------------------------------------------
+        # STEP 2: Velocity Pressure (Pv)
+        # -----------------------------------------------------------------
+        pv_val = float(res.get('pv_pa' if is_si else 'pv_in_wg', 0))
+        rho_val = 1.204 if is_si else 0.075
+        pv_params = [
+            {"symbol": "V_o", "name": "Mean Velocity", "value": v_disp},
+            {"symbol": r"\rho", "name": "Standard Air Density", "value": "1.204 kg/m³" if is_si else "0.075 lbm/ft³"},
+            {"symbol": "V_{PC}", "name": "ASHRAE Dynamic Pressure Constant", "value": "1.2888" if is_si else "4008.7"}
+        ]
+        if is_si:
+            pv_deriv = [
+                rf"p_v = \frac{{\rho V_o^2}}{{2}} = \frac{{{rho_val}\text{{ kg/m}}^3 \times ({v_val:.2f}\text{{ m/s}})^2}}{{2}} = {pv_val:.1f}\text{{ Pa}}"
+            ]
+            pv_subst = f"Pv = (ρ × Vo²) / 2 = ({rho_val} kg/m³ × ({v_val:.2f} m/s)²) / 2 = {pv_val:.1f} Pa"
+            pv_gov = r"p_v = \frac{\rho V_o^2}{2} = \left(\frac{V_o}{1.2888}\right)^2 \tag{21.8}"
+            pv_formula = "Pv = (ρ × Vo²) / 2 = (Vo / 1.2888)²"
+            pv_disp = rf"{pv_val:.0f}\text{{ Pa}}"
+        else:
+            pv_deriv = [
+                rf"p_v = \left(\frac{{V_o}}{{4008.7}}\right)^2 = \left(\frac{{{v_val:,.0f}\text{{ fpm}}}}{{4008.7}}\right)^2 = {pv_val:.3f}\text{{ in. wg}}"
+            ]
+            pv_subst = f"Pv = (Vo / 4008.7)² = ({v_val:,.0f} fpm / 4008.7)² = {pv_val:.3f} in. wg"
+            pv_gov = r"p_v = \left(\frac{V_o}{4008.7}\right)^2 \tag{21.8}"
+            pv_formula = "Pv = (Vo / 4008.7)²"
+            pv_disp = rf"{pv_val:.3f}\text{{ in. wg}}"
+            
+        steps.append({
+            "step_num": step_idx,
+            "step_label": f"STEP {step_idx}",
+            "title": "Mean Velocity Pressure Evaluation",
+            "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (8)",
+            "governing_latex": pv_gov,
+            "formula": pv_formula,
+            "parameters": pv_params,
+            "derivation_latex": pv_deriv,
+            "substitution": pv_subst,
+            "framed_result_latex": rf"\mathbf{{P_v = {pv_disp}}}",
+            "result_latex": rf"\mathbf{{P_v = {pv_disp}}}",
+            "result": f"Pv = {pv_disp}",
+            "notes": "Velocity pressure computed in accordance with official ASHRAE aerodynamic constant formulation."
+        })
+        step_idx += 1
+        
+        # -----------------------------------------------------------------
+        # STEP 3: Loss Coefficient (Co) or Darcy Friction Factor (f)
+        # -----------------------------------------------------------------
+        is_straight = key in ['CR11-1', 'CD11-1', 'CF11-1', 'CD11-2']
+        if is_straight:
+            dh_val = float(env.get('Dh', d_val))
+            de_val = float(env.get('De', d_val))
+            re_val = float(env.get('Re', 0))
+            f_val = float(res.get('f', 0))
+            e_val = float(env.get('ei', env.get('e', 0.09 if is_si else 0.0003)))
+            
+            f_params = [
+                {"symbol": r"\varepsilon", "name": "Material Absolute Roughness", "value": f"{e_val:.3f} mm" if is_si else f"{e_val:.5f} ft"},
+                {"symbol": "D_h", "name": "Hydraulic Diameter", "value": f"{dh_val:.1f} mm = {dh_val/1000:.4f} m" if is_si else f"{dh_val:.2f} in."},
+                {"symbol": "D_e", "name": "Circular Equivalent Diameter", "value": f"{de_val:.1f} mm = {de_val/1000:.4f} m" if is_si else f"{de_val:.2f} in."},
+                {"symbol": r"\text{Re}", "name": "Reynolds Number", "value": f"{int(round(re_val)):,}"}
+            ]
+            f_deriv = [
+                rf"D_h = \frac{{4 A}}{{P}} = \frac{{4({w_val:.0f})({h_val:.0f})}}{{2({w_val:.0f} + {h_val:.0f})}} = {dh_val:.1f}\text{{ mm}} = {dh_val/1000:.4f}\text{{ m}}" if (has_rect and w_val > 0) else rf"D_h = D = {dh_val:.1f}\text{{ mm}}",
+                rf"D_e = 1.30 \frac{{(W \cdot H)^{{0.625}}}}{{(W + H)^{{0.25}}}} = {de_val:.1f}\text{{ mm}} = {de_val/1000:.4f}\text{{ m}}" if (has_rect and w_val > 0) else rf"D_e = D = {de_val:.1f}\text{{ mm}}",
+                rf"\text{{Re}} = \frac{{\rho V D_h}}{{\mu}} = \frac{{{rho_val} \times {v_val:.2f} \times {dh_val/1000:.4f}}}{{1.817 \times 10^{{-5}}}} = {int(round(re_val)):,}",
+                rf"\frac{{1}}{{\sqrt{{f}}}} = -2 \log_{{10}}\left( \frac{{\varepsilon}}{{3.7 D_h}} + \frac{{2.51}}{{\text{{Re}}\sqrt{{f}}}} \right) \implies f = {f_val:.4f}"
+            ]
             steps.append({
                 "step_num": step_idx,
                 "step_label": f"STEP {step_idx}",
-                "title": f"Loss Coefficient ({key}) via Multilinear Interpolation",
+                "title": "Darcy Friction Factor (f) - Colebrook Implicit Formulation",
+                "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (19)",
+                "governing_latex": r"\frac{1}{\sqrt{f}} = -2 \log_{10} \left( \frac{\varepsilon}{3.7 D_h} + \frac{2.51}{\text{Re}\sqrt{f}} \right) \tag{21.19}",
+                "formula": "1/√f = -2 log10 [ ε/(3.7 Dh) + 2.51/(Re √f) ]",
+                "parameters": f_params,
+                "derivation_latex": f_deriv,
+                "substitution": f"Dh = {dh_val:.1f} mm\nDe = {de_val:.1f} mm\nRe = {int(round(re_val)):,}\nColebrook implicit root solution: f = {f_val:.4f}",
+                "framed_result_latex": rf"\mathbf{{f = {f_val:.4f}}}",
+                "result_latex": rf"\mathbf{{f = {f_val:.4f}}}",
+                "result": f"f = {f_val:.4f}",
+                "notes": "Colebrook friction factor computed via iterative numerical solver across fully turbulent flow regime."
+            })
+        else:
+            co_val = float(res.get('loss_coeff_Co', 0))
+            coord_lines = []
+            coord_params = [
+                {"symbol": "Catalog Model", "name": "ASHRAE Fitting Code", "value": key}
+            ]
+            
+            # Extract meaningful coordinates
+            for lhs, rhs, val in eval_log:
+                if lhs in ['x', 'RR', 'RD', 'RDR', 'Theta', 'Ao/A1', 'L/D', 't/D', 'r/W', 'r/D', 'V/Vo', 'Qb/Qc', 'Qs/Qc']:
+                    coord_lines.append(rf"{lhs} = {rhs} = {fmt(val, 3)}")
+                    coord_params.append({"symbol": lhs, "name": f"Coordinate {lhs}", "value": fmt(val, 3)})
+                elif 'fcn' in rhs:
+                    coord_lines.append(rf"C_o = \text{{Table Lookup }}[{key}.TBL] \implies {co_val:.4f}")
+            if not coord_lines:
+                coord_lines.append(rf"C_o = \text{{fcn}}(Coordinates) = {co_val:.4f}")
+                
+            co_note = f"Loss coefficient resolved via official multidimensional interpolation table {key}.TBL from ASHRAE laboratory tests."
+            if out_of_range_warnings:
+                co_note = " ".join(out_of_range_warnings)
+                
+            steps.append({
+                "step_num": step_idx,
+                "step_label": f"STEP {step_idx}",
+                "title": f"Fitting Loss Coefficient ({key}) via Multilinear Interpolation",
                 "citation": f"Official ASHRAE Database Table {key}.TBL",
                 "governing_latex": r"C_o = \frac{\Delta p_t}{p_v} = \text{fcn}(Coordinates) \tag{21.29}",
-                "parameters": [
-                    {"symbol": "Fitting", "name": "Catalog Code", "value": key},
-                    {"symbol": "Co", "name": "Interpolated Coefficient", "value": f"{res.get('loss_coeff_Co'):.4f}"}
-                ],
-                "derivation_latex": coeff_lines,
-                "framed_result_latex": rf"\mathbf{{C_o = {res.get('loss_coeff_Co'):.4f}}}",
-                "notes": f"Loss coefficient resolved via official multidimensional interpolation table {key}.TBL from ASHRAE laboratory tests."
+                "formula": "Co = Δpt / pv = fcn(Coordinates)",
+                "parameters": coord_params,
+                "derivation_latex": coord_lines,
+                "substitution": "\n".join(coord_lines),
+                "framed_result_latex": rf"\mathbf{{C_o = {co_val:.4f}}}",
+                "result_latex": rf"\mathbf{{C_o = {co_val:.4f}}}",
+                "result": f"Co = {co_val:.4f}",
+                "notes": co_note
             })
-            step_idx += 1
-
-        # Step 4: Total Pressure Loss
-        loss_lines = []
-        for lhs, rhs, val in eval_log:
-            if lhs in ['Po', 'Pob', 'Pos', 'dp']:
-                loss_lines.append(rf"{lhs} = {rhs} = {fmt(val)}")
-        if not loss_lines:
-            loss_lines.append(rf"\Delta p = C_o \times P_v = {res.get('loss_coeff_Co'):.4f} \times {res.get('pv_pa' if u=='SI' else 'pv_in_wg')} = {res.get('pressure_loss_pa' if u=='SI' else 'pressure_loss_in_wg')}")
+        step_idx += 1
+        
+        # -----------------------------------------------------------------
+        # STEP 4: Total Pressure Loss Determination
+        # -----------------------------------------------------------------
+        dp_val = float(res.get('pressure_loss_pa' if is_si else 'pressure_loss_in_wg', 0))
+        dp_unit = "Pa" if is_si else "in. wg"
+        dp_disp = rf"{dp_val:.1f}\text{{ {dp_unit}}}" if is_si else rf"{dp_val:.3f}\text{{ {dp_unit}}}"
+        
+        if is_straight:
+            l_val = float(env.get('L', 1.0))
+            dh_val = float(env.get('Dh', d_val))
+            f_val = float(res.get('f', 0))
+            if is_si:
+                loss_deriv = [
+                    rf"\Delta p_f = \left(f \cdot \frac{{L}}{{D_h}}\right) p_v = \left({f_val:.4f} \times \frac{{{l_val:.2f}\text{{ m}}}}{{{dh_val/1000:.4f}\text{{ m}}}}\right) \times {pv_val:.1f}\text{{ Pa}} = {dp_val:.1f}\text{{ Pa}}"
+                ]
+                loss_subst = f"Δpf = [ f × (L / Dh) ] × pv = [ {f_val:.4f} × ({l_val:.2f} m / {dh_val/1000:.4f} m) ] × {pv_val:.1f} Pa = {dp_val:.1f} Pa"
+            else:
+                loss_deriv = [
+                    rf"\Delta p_f = \left(f \cdot \frac{{L}}{{D_h}}\right) p_v = \left({f_val:.4f} \times \frac{{{l_val:.2f}\text{{ ft}}}}{{{dh_val/12:.4f}\text{{ ft}}}}\right) \times {pv_val:.3f}\text{{ in. wg}} = {dp_val:.3f}\text{{ in. wg}}"
+                ]
+                loss_subst = f"Δpf = [ f × (L / Dh) ] × pv = [ {f_val:.4f} × ({l_val:.2f} ft / {dh_val/12:.4f} ft) ] × {pv_val:.3f} in. wg = {dp_val:.3f} in. wg"
+            loss_gov = r"\Delta p_f = \left(f \cdot \frac{L}{D_h}\right) p_v \tag{21.19}"
+            loss_formula = "Δpf = [ f × (L / Dh) ] × pv"
+            loss_cit = "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (19)"
+            loss_note = "Total frictional static pressure loss for straight duct computed using Colebrook-Darcy formulation."
+        else:
+            co_val = float(res.get('loss_coeff_Co', 0))
+            loss_deriv = [
+                rf"\Delta p_t = C_o \cdot p_v = {co_val:.4f} \times {pv_val:.1f}\text{{ {dp_unit}}} = {dp_val:.1f}\text{{ {dp_unit}}}"
+            ]
+            loss_subst = f"Δpt = Co × pv = {co_val:.4f} × {pv_val:.1f} {dp_unit} = {dp_val:.1f} {dp_unit}"
+            loss_gov = r"\Delta p_t = C_o \cdot p_v \tag{21.30}"
+            loss_formula = "Δpt = Co × pv"
+            loss_cit = "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (30)"
+            loss_note = "Total dynamic pressure loss for fitting computed to standard atmospheric temperature and pressure."
+            
         steps.append({
             "step_num": step_idx,
             "step_label": f"STEP {step_idx}",
             "title": "Total Pressure Loss Determination",
-            "citation": "2021 ASHRAE Handbook—Fundamentals Ch. 21, Eq. (30)",
-            "governing_latex": r"\Delta p_t = C_o \cdot p_v \tag{21.30}",
+            "citation": loss_cit,
+            "governing_latex": loss_gov,
+            "formula": loss_formula,
             "parameters": [
-                {"symbol": "Co", "name": "Loss Coefficient", "value": f"{res.get('loss_coeff_Co'):.4f}"},
-                {"symbol": "Pv", "name": "Velocity Pressure", "value": f"{res.get('pv_pa' if u=='SI' else 'pv_in_wg')} {'Pa' if u=='SI' else 'in. wg'}"}
+                {"symbol": "f" if is_straight else "C_o", "name": "Friction Factor" if is_straight else "Loss Coefficient", "value": f"{f_val:.4f}" if is_straight else f"{co_val:.4f}"},
+                {"symbol": "P_v", "name": "Velocity Pressure", "value": f"{pv_val:.1f} {dp_unit}" if is_si else f"{pv_val:.3f} {dp_unit}"}
             ],
-            "derivation_latex": loss_lines,
-            "framed_result_latex": rf"\mathbf{{\Delta p = {res.get('pressure_loss_pa' if u=='SI' else 'pressure_loss_in_wg')} \text{{ {'Pa' if u=='SI' else 'in. wg'}}}}}",
-            "notes": "Total local dynamic head loss for fitting computed to standard temperature and pressure."
+            "derivation_latex": loss_deriv,
+            "substitution": loss_subst,
+            "framed_result_latex": rf"\mathbf{{\Delta p = {dp_disp}}}",
+            "result_latex": rf"\mathbf{{\Delta p = {dp_disp}}}",
+            "result": f"Δp = {dp_disp}",
+            "notes": loss_note
         })
-
+        
         return steps

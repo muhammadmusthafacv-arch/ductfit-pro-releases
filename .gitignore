@@ -1,8 +1,24 @@
+# Python
 __pycache__/
 *.pyc
-scratch/
+*.pyo
+*.pyd
 *.log
+scratch/
 .locked_stage_backup/
+
+# Node & Electron
+node_modules/
+dist/
+build/
+!build/icon.ico
+!build/icon.png
+
+# Private Signing Credentials & Passwords (Rule 8)
+signing/private/
+*.pfx
+cert-password.txt
+.env
 
 # Large binaries and raw archive folders
 ASHRAE Duct Fitting Database v5.0.10(1)/
@@ -14,7 +30,9 @@ ashrae_db_dump/
 ashrae_extracted/
 extracted_wmf/
 
-# Large reference PDFs
+# Large reference PDFs & test files
 *.pdf
+*.zip
+Release-Pack/
 test_*.png
 test_*.wmf
