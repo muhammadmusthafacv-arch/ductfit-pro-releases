@@ -4383,6 +4383,12 @@ input.input-out-of-range {
 .ashrae-range-alert.visible {
     display: block !important;
 }
+.ashrae-range-alert.engineering-advisory-alert {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid #2563eb;
+    color: #1e40af;
+}
 
 
 /* Engineering Design Basis Sheet Card */

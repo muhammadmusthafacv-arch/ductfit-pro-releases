@@ -426,7 +426,27 @@ def format_inputs_outputs_table(fit, data_calc, styles, unit_system="SI"):
     w_in = inputs.get("W")
     d_in = inputs.get("D")
 
-    if h_in is not None and w_in is not None and safe_num(h_in) > 0 and safe_num(w_in) > 0:
+    dc_in = inputs.get("Dc")
+    ds_in = inputs.get("Ds")
+    db1_in = inputs.get("Db1")
+    db2_in = inputs.get("Db2")
+    if dc_in is not None and ds_in is not None:
+        in_rows.append(("Diameter (Dc, mm)" if is_si else "Diameter (Dc, in.)", f"{safe_num(dc_in):.0f}"))
+        in_rows.append(("Diameter (Ds, mm)" if is_si else "Diameter (Ds, in.)", f"{safe_num(ds_in):.0f}"))
+        if db1_in is not None:
+            in_rows.append(("Diameter (Db1, mm)" if is_si else "Diameter (Db1, in.)", f"{safe_num(db1_in):.0f}"))
+        if db2_in is not None:
+            in_rows.append(("Diameter (Db2, mm)" if is_si else "Diameter (Db2, in.)", f"{safe_num(db2_in):.0f}"))
+        qc_in = inputs.get("Qc")
+        qb1_in = inputs.get("Qb1")
+        qb2_in = inputs.get("Qb2")
+        if qc_in is not None:
+            in_rows.append(("Flow Rate (Qc, L/s)" if is_si else "Flow Rate (Qc, cfm)", f"{safe_num(qc_in):.0f}"))
+        if qb1_in is not None:
+            in_rows.append(("Flow Rate (Qb1, L/s)" if is_si else "Flow Rate (Qb1, cfm)", f"{safe_num(qb1_in):.0f}"))
+        if qb2_in is not None:
+            in_rows.append(("Flow Rate (Qb2, L/s)" if is_si else "Flow Rate (Qb2, cfm)", f"{safe_num(qb2_in):.0f}"))
+    elif h_in is not None and w_in is not None and safe_num(h_in) > 0 and safe_num(w_in) > 0:
         in_rows.append(("Height (H, mm)" if is_si else "Height (H, in.)", f"{safe_num(h_in):.1f}"))
         in_rows.append(("Width (W, mm)" if is_si else "Width (W, in.)", f"{safe_num(w_in):.1f}"))
     elif d_in is not None and safe_num(d_in) > 0:
@@ -459,7 +479,41 @@ def format_inputs_outputs_table(fit, data_calc, styles, unit_system="SI"):
     # Compile output rows
     out_rows = []
     raw_env = data_calc.get("raw_env", {})
-    if "Cb" in raw_env and ("Cs" in raw_env or "Pos" in raw_env):
+    if "Cb1" in raw_env and "Cb2" in raw_env:
+        out_rows.append(("--- BRANCH 1 ---", ""))
+        vb1 = safe_num(raw_env.get("Vb1", data_calc.get("Vb1_ms" if is_si else "Vb1_fpm")))
+        out_rows.append(("Velocity (Vb1, m/s)" if is_si else "Velocity (Vb1, fpm)", f"{vb1:.1f}"))
+        pvb1 = safe_num(raw_env.get("Pvb1", data_calc.get("Pvb1_pa" if is_si else "Pvb1_in_wg")))
+        out_rows.append(("Vel Pres at Vb1 (P<sub>vb1</sub>, Pa)" if is_si else "Vel Pres at Vb1 (P<sub>vb1</sub>, in. wg)", f"{pvb1:.0f}" if is_si else f"{pvb1:.4f}"))
+        cb1 = safe_num(raw_env.get("Cb1", data_calc.get("Cb1")))
+        out_rows.append(("Loss Coeff (C<sub>b1</sub>)", f"{cb1:.2f}"))
+        pob1 = safe_num(raw_env.get("Pob1", data_calc.get("Pob1_pa" if is_si else "Pob1_in_wg")))
+        out_rows.append(("Branch 1 Loss (&Delta;P<sub>b1</sub>, Pa)" if is_si else "Branch 1 Loss (&Delta;P<sub>b1</sub>, in. wg)", f"{pob1:.0f}" if is_si else f"{pob1:.3f}"))
+
+        out_rows.append(("--- BRANCH 2 ---", ""))
+        vb2 = safe_num(raw_env.get("Vb2", data_calc.get("Vb2_ms" if is_si else "Vb2_fpm")))
+        out_rows.append(("Velocity (Vb2, m/s)" if is_si else "Velocity (Vb2, fpm)", f"{vb2:.1f}"))
+        pvb2 = safe_num(raw_env.get("Pvb2", data_calc.get("Pvb2_pa" if is_si else "Pvb2_in_wg")))
+        out_rows.append(("Vel Pres at Vb2 (P<sub>vb2</sub>, Pa)" if is_si else "Vel Pres at Vb2 (P<sub>vb2</sub>, in. wg)", f"{pvb2:.0f}" if is_si else f"{pvb2:.4f}"))
+        cb2 = safe_num(raw_env.get("Cb2", data_calc.get("Cb2")))
+        out_rows.append(("Loss Coeff (C<sub>b2</sub>)", f"{cb2:.2f}"))
+        pob2 = safe_num(raw_env.get("Pob2", data_calc.get("Pob2_pa" if is_si else "Pob2_in_wg")))
+        out_rows.append(("Branch 2 Loss (&Delta;P<sub>b2</sub>, Pa)" if is_si else "Branch 2 Loss (&Delta;P<sub>b2</sub>, in. wg)", f"{pob2:.0f}" if is_si else f"{pob2:.3f}"))
+
+        out_rows.append(("--- MAIN ---", ""))
+        vs = safe_num(raw_env.get("Vs", data_calc.get("Vs_ms")))
+        out_rows.append(("Velocity (Vs, m/s)" if is_si else "Velocity (Vs, fpm)", f"{vs:.1f}"))
+        vc = safe_num(raw_env.get("Vc", data_calc.get("Vc_ms")))
+        if vc:
+            out_rows.append(("Velocity (Vc, m/s)" if is_si else "Velocity (Vc, fpm)", f"{vc:.1f}"))
+        pvc = safe_num(raw_env.get("Pvc", data_calc.get("Pvc_pa" if is_si else "Pvc_in_wg")))
+        if pvc:
+            out_rows.append(("Vel Pres at Vc (P<sub>vc</sub>, Pa)" if is_si else "Vel Pres at Vc (P<sub>vc</sub>, in. wg)", f"{pvc:.0f}" if is_si else f"{pvc:.4f}"))
+        cs = safe_num(raw_env.get("Cs", data_calc.get("Cs")))
+        out_rows.append(("Loss Coeff (C<sub>s</sub>)", f"{cs:.2f}"))
+        pos = safe_num(raw_env.get("Pos", data_calc.get("Pos_pa" if is_si else "Pos_in_wg")))
+        out_rows.append(("Main Loss (&Delta;P<sub>s</sub>, Pa)" if is_si else "Main Loss (&Delta;P<sub>s</sub>, in. wg)", f"{pos:.0f}" if is_si else f"{pos:.3f}"))
+    elif "Cb" in raw_env and ("Cs" in raw_env or "Pos" in raw_env):
         out_rows.append(("--- BRANCH ---", ""))
         vb = safe_num(raw_env.get("Vb", data_calc.get("Vb_ms" if is_si else "velocity_fpm")))
         out_rows.append(("Velocity (Vb, m/s)" if is_si else "Velocity (Vb, fpm)", f"{vb:.1f}"))
@@ -1484,7 +1538,22 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
         t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
         story.append(t_io)
-        story.append(Spacer(1, 10))
+        story.append(Spacer(1, 6))
+
+        advisory_msg = calc_res.get("engineering_advisory")
+        if advisory_msg:
+            adv_p = Paragraph(f"<font color='#1e40af'><b>ENGINEERING ADVISORY NOTICE:</b></font><br/>{clean_pdf_text(advisory_msg)}", styles["calc"])
+            t_adv = Table([[adv_p]], colWidths=[540])
+            t_adv.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#eff6ff")),
+                ('BOX', (0, 0), (-1, -1), 1.0, colors.HexColor("#3b82f6")),
+                ('TOPPADDING', (0, 0), (-1, -1), 4),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                ('LEFTPADDING', (0, 0), (-1, -1), 8),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ]))
+            story.append(t_adv)
+            story.append(Spacer(1, 6))
 
         # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
         bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)
@@ -2015,7 +2084,22 @@ def generate_calculation_pdf(calc_data, output_path=None):
     # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
     t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
     story.append(t_io)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 6))
+
+    advisory_msg = calc_res.get("engineering_advisory")
+    if advisory_msg:
+        adv_p = Paragraph(f"<font color='#1e40af'><b>ENGINEERING ADVISORY NOTICE:</b></font><br/>{clean_pdf_text(advisory_msg)}", styles["calc"])
+        t_adv = Table([[adv_p]], colWidths=[540])
+        t_adv.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#eff6ff")),
+            ('BOX', (0, 0), (-1, -1), 1.0, colors.HexColor("#3b82f6")),
+            ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ]))
+        story.append(t_adv)
+        story.append(Spacer(1, 6))
 
     # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
     bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)

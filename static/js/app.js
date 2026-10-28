@@ -2608,15 +2608,18 @@
     function renderOutputs(d) {
         const u = state.unit;
 
-        // ASHRAE Limit Alert Banner
+        // ASHRAE Limit / Engineering Advisory Alert Banner
         const alertEl = document.getElementById("ashrae-range-alert");
         if (alertEl) {
-            if (d && d.out_of_range_warnings && d.out_of_range_warnings.length > 0) {
+            if (d && d.engineering_advisory) {
+                alertEl.innerHTML = `<strong>ℹ️ Engineering Advisory:</strong> ${escapeHtml(d.engineering_advisory)}`;
+                alertEl.className = "ashrae-range-alert visible engineering-advisory-alert";
+            } else if (d && d.out_of_range_warnings && d.out_of_range_warnings.length > 0) {
                 alertEl.innerHTML = `<strong>⚠️ ASHRAE Limit Notice:</strong> ${escapeHtml(d.out_of_range_warnings.join(" "))}`;
-                alertEl.classList.add("visible");
+                alertEl.className = "ashrae-range-alert visible";
             } else {
                 alertEl.innerHTML = "";
-                alertEl.classList.remove("visible");
+                alertEl.className = "ashrae-range-alert";
             }
         }
 
