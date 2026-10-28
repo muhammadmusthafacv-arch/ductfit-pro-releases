@@ -7,8 +7,8 @@ BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 VERSION_FILE = os.path.join(BASE_DIR, "version.json")
 
 def format_version(major: int, minor: int, patch: int) -> str:
-    """Formats version according to Ductfit Pro standard: X.ZZZ (e.g. 1.035)"""
-    return f"{major}.{patch:03d}"
+    """Formats version according to Ductfit Pro standard: X.Y.Z (e.g. 1.0.5)"""
+    return f"{major}.{minor}.{patch}"
 
 def get_version_data() -> dict:
     if os.path.exists(VERSION_FILE):
@@ -18,16 +18,32 @@ def get_version_data() -> dict:
         except Exception:
             pass
     return {
-        "version": "1.038",
+        "version": "1.0.5",
         "major": 1,
         "minor": 0,
-        "patch": 38,
-        "total_updates": 38,
-        "total_user_requests": 59
+        "patch": 5,
+        "total_updates": 5,
+        "total_user_requests": 85
     }
 
 def get_current_version() -> str:
-    return get_version_data().get("version", "1.038")
+    search_dirs = [
+        BASE_DIR,
+        os.path.dirname(BASE_DIR),
+        os.path.abspath('.'),
+        os.path.join(os.path.dirname(BASE_DIR), '..'),
+    ]
+    for d in search_dirs:
+        pkg_file = os.path.join(d, "package.json")
+        if os.path.exists(pkg_file):
+            try:
+                with open(pkg_file, "r", encoding="utf-8") as f:
+                    v = json.load(f).get("version")
+                    if v:
+                        return v
+            except Exception:
+                pass
+    return get_version_data().get("version", "1.0.5")
 
 def bump_version(description: str = "Incremental application update", user_request_num: int = None) -> str:
     """

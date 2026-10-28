@@ -50,10 +50,12 @@ if ($isAlreadyPublished) {
     $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
     [System.IO.File]::WriteAllText($pkgPath, ($pkg | ConvertTo-Json -Depth 10), $utf8NoBom)
     python -c "import json; p='package.json'; d=json.load(open(p, 'r', encoding='utf-8-sig')); open(p, 'w', encoding='utf-8').write(json.dumps(d, indent=2))"
+    python -c "import json; p='version.json'; d=json.load(open(p, 'r', encoding='utf-8-sig')); d['version']='$newVersion'; parts='$newVersion'.split('.'); d['major']=int(parts[0]); d['minor']=int(parts[1]); d['patch']=int(parts[2]); open(p, 'w', encoding='utf-8').write(json.dumps(d, indent=2))"
     Write-Host "[1/4] Bumped version: $currentVersion -> $newVersion" -ForegroundColor Green
 } else {
     $newVersion = $currentVersion
     python -c "import json; p='package.json'; d=json.load(open(p, 'r', encoding='utf-8-sig')); open(p, 'w', encoding='utf-8').write(json.dumps(d, indent=2))"
+    python -c "import json; p='version.json'; d=json.load(open(p, 'r', encoding='utf-8-sig')); d['version']='$newVersion'; parts='$newVersion'.split('.'); d['major']=int(parts[0]); d['minor']=int(parts[1]); d['patch']=int(parts[2]); open(p, 'w', encoding='utf-8').write(json.dumps(d, indent=2))"
     Write-Host "[1/4] Publishing version: $newVersion" -ForegroundColor Green
 }
 

@@ -1,8 +1,8 @@
 {
-  "version": "1.060",
+  "version": "1.0.5",
   "major": 1,
   "minor": 0,
-  "patch": 60,
+  "patch": 5,
   "total_updates": 60,
   "total_user_requests": 81,
   "baseline_version": "1.000",
