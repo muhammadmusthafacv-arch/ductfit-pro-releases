@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import math
+import time
 from flask import Flask, render_template, request, jsonify, send_file
 from ashrae_engine import AshraeEngine
 from version_manager import get_current_version, get_version_data
@@ -307,6 +308,19 @@ def update_project_route(project_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+@app.route("/api/projects/<project_id>/margin", methods=["POST", "PUT"])
+def update_project_margin_route(project_id):
+    """Update project design safety margin percentage"""
+    try:
+        data = request.get_json() or {}
+        margin_val = data.get("margin", data.get("design_margin", 10.0))
+        proj = project_manager.update_project_margin(project_id, margin_val)
+        if proj:
+            return jsonify({"status": "success", "data": proj})
+        return jsonify({"status": "error", "message": "Project not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 @app.route("/api/projects/<project_id>", methods=["DELETE"])
 def delete_project_route(project_id):
     """Delete a project"""
@@ -343,16 +357,388 @@ def delete_fitting_route(project_id, fitting_id):
 
 @app.route("/api/projects/<project_id>/fittings/<fitting_id>", methods=["PUT"])
 def update_fitting_route(project_id, fitting_id):
-    """Update fitting quantity in project"""
+    """Update fitting quantity or full calculation properties in project"""
     try:
         data = request.get_json() or {}
-        qty = data.get("qty", 1)
-        fit = project_manager.update_fitting_qty(project_id, fitting_id, qty)
+        if "inputs" in data or "dimensions" in data or "dp" in data:
+            fit = project_manager.update_fitting_in_project(project_id, fitting_id, data)
+        else:
+            qty = data.get("qty", 1)
+            fit = project_manager.update_fitting_qty(project_id, fitting_id, qty)
         if fit:
             return jsonify({"status": "success", "data": fit})
         return jsonify({"status": "error", "message": "Fitting not found"}), 404
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/projects/<project_id>/fittings/reorder", methods=["POST"])
+def reorder_fittings_route(project_id):
+    """Reorder fittings in project schedule (Move Up/Down or Drag & Drop)"""
+    try:
+        data = request.get_json() or {}
+        src = data.get("source_index")
+        tgt = data.get("target_index")
+        if src is None or tgt is None:
+            return jsonify({"status": "error", "message": "source_index and target_index required"}), 400
+        ok = project_manager.reorder_fittings_in_project(project_id, int(src), int(tgt))
+        if ok:
+            p = project_manager.get_project(project_id)
+            return jsonify({"status": "success", "data": p})
+        return jsonify({"status": "error", "message": "Reorder indices out of range"}), 400
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+TEMPLATES_FILE = os.path.join(BASE_DIR, "custom_templates.json")
+
+DEFAULT_CUSTOM_TEMPLATES = [
+    # Air Terminals
+    {
+        "id": "tpl_diff_4way",
+        "name": "4-Way Diffuser (600×600 mm)",
+        "code": "DIFF-1",
+        "shape": "RECT",
+        "dimensions": "600 × 600 mm",
+        "dp": 20.0,
+        "Q": 250.0,
+        "velocity": 2.5,
+        "mfr": "Trox",
+        "model": "ADQ / TMS",
+        "remarks": "Standard 4-way modular ceiling diffuser"
+    },
+    {
+        "id": "tpl_slot_diff",
+        "name": "Linear Slot Diffuser (2-Slot, L=1200mm)",
+        "code": "SLOT-1",
+        "shape": "RECT",
+        "dimensions": "1200 × 150 mm",
+        "dp": 25.0,
+        "Q": 150.0,
+        "velocity": 2.8,
+        "mfr": "Price",
+        "model": "PureLine 2-Slot",
+        "remarks": "Architectural linear slot diffuser with plenum"
+    },
+    {
+        "id": "tpl_swirl_diff",
+        "name": "Swirl Diffuser",
+        "code": "SWR-1",
+        "shape": "ROUND",
+        "dimensions": "Ø 400 mm",
+        "dp": 30.0,
+        "Q": 300.0,
+        "velocity": 3.0,
+        "mfr": "Trox",
+        "model": "FD-Swirl",
+        "remarks": "High induction circular ceiling swirl diffuser"
+    },
+    {
+        "id": "tpl_jet_diff",
+        "name": "Jet Nozzle Diffuser",
+        "code": "JET-1",
+        "shape": "ROUND",
+        "dimensions": "Ø 250 mm",
+        "dp": 40.0,
+        "Q": 350.0,
+        "velocity": 6.0,
+        "mfr": "Systemair",
+        "model": "AJ-250",
+        "remarks": "Adjustable direction long-throw jet nozzle diffuser"
+    },
+    {
+        "id": "tpl_grille",
+        "name": "Grille (600×600 mm)",
+        "code": "GRL-1",
+        "shape": "RECT",
+        "dimensions": "600 × 600 mm",
+        "dp": 15.0,
+        "Q": 350.0,
+        "velocity": 2.0,
+        "mfr": "Krueger",
+        "model": "500-Series",
+        "remarks": "Standard ventilation grille"
+    },
+    {
+        "id": "tpl_grille_dd",
+        "name": "Double Deflection Grille",
+        "code": "DDG-1",
+        "shape": "RECT",
+        "dimensions": "400 × 200 mm",
+        "dp": 18.0,
+        "Q": 250.0,
+        "velocity": 2.2,
+        "mfr": "Titus",
+        "model": "300RL",
+        "remarks": "Double deflection adjustable blade grille"
+    },
+    {
+        "id": "tpl_grille_bar",
+        "name": "Linear Bar Grille",
+        "code": "LBG-1",
+        "shape": "RECT",
+        "dimensions": "1000 × 150 mm",
+        "dp": 20.0,
+        "Q": 250.0,
+        "velocity": 2.2,
+        "mfr": "Price",
+        "model": "LBG-15",
+        "remarks": "Architectural continuous linear bar grille"
+    },
+    {
+        "id": "tpl_grille_egg",
+        "name": "Eggcrate Grille",
+        "code": "EGC-1",
+        "shape": "RECT",
+        "dimensions": "600 × 600 mm",
+        "dp": 15.0,
+        "Q": 350.0,
+        "velocity": 2.0,
+        "mfr": "Krueger",
+        "model": "EGC-5",
+        "remarks": "Aluminium eggcrate core ceiling grille"
+    },
+    {
+        "id": "tpl_register",
+        "name": "Register with OBD",
+        "code": "REG-1",
+        "shape": "RECT",
+        "dimensions": "400 × 200 mm",
+        "dp": 20.0,
+        "Q": 200.0,
+        "velocity": 2.5,
+        "mfr": "Titus",
+        "model": "300R-OBD",
+        "remarks": "Ventilation register with opposed blade damper"
+    },
+
+    # Airflow Control Units (VAV & CAV)
+    {
+        "id": "tpl_vav",
+        "name": "VAV Terminal Unit (Pressure Independent)",
+        "code": "VAV-1",
+        "shape": "RECT",
+        "dimensions": "600 × 400 mm",
+        "dp": 100.0,
+        "Q": 500.0,
+        "velocity": 2.08,
+        "mfr": "Trox",
+        "model": "TVR-Easy",
+        "remarks": "Standard pressure independent VAV unit with acoustic casing"
+    },
+    {
+        "id": "tpl_cav",
+        "name": "CAV Constant Air Volume Controller",
+        "code": "CAV-1",
+        "shape": "ROUND",
+        "dimensions": "Ø 250 mm",
+        "dp": 80.0,
+        "Q": 300.0,
+        "velocity": 4.5,
+        "mfr": "Trox",
+        "model": "RN-Ex Mechanical",
+        "remarks": "Self-powered mechanical constant air volume regulator"
+    },
+
+    # Louvers & Weather Protection
+    {
+        "id": "tpl_sand_trap",
+        "name": "Sand Trap Louver (Desert Grade Dual Stage)",
+        "code": "STL-1",
+        "shape": "RECT",
+        "dimensions": "1200 × 1200 mm",
+        "dp": 65.0,
+        "Q": 1800.0,
+        "velocity": 1.8,
+        "mfr": "Ruskin",
+        "model": "STL-75 Heavy Duty",
+        "remarks": "Dual-stage high-efficiency desert sand removal exterior louver"
+    },
+    {
+        "id": "tpl_weather_louver",
+        "name": "Weather Defense Intake / Exhaust Louver",
+        "code": "LVR-1",
+        "shape": "RECT",
+        "dimensions": "1000 × 1000 mm",
+        "dp": 40.0,
+        "Q": 1500.0,
+        "velocity": 2.0,
+        "mfr": "Greenheck",
+        "model": "ESD-635 Drainable",
+        "remarks": "Extruded aluminium drainable blade weather defense louver"
+    },
+    {
+        "id": "tpl_acoustic_louver",
+        "name": "Acoustic Weather Louver (300mm Depth)",
+        "code": "ACL-1",
+        "shape": "RECT",
+        "dimensions": "1200 × 1000 mm",
+        "dp": 55.0,
+        "Q": 1400.0,
+        "velocity": 1.6,
+        "mfr": "IAC Acoustics",
+        "model": "Noishield NL-300",
+        "remarks": "Sound attenuating exterior acoustic weather louver"
+    },
+
+    # Dampers & Safety Devices
+    {
+        "id": "tpl_blast_damper",
+        "name": "Heavy Duty Blast Protection Damper",
+        "code": "BLST-1",
+        "shape": "RECT",
+        "dimensions": "800 × 800 mm",
+        "dp": 90.0,
+        "Q": 1600.0,
+        "velocity": 3.5,
+        "mfr": "Temet",
+        "model": "BDA / BLD-1",
+        "remarks": "High-overpressure impulse blast isolation damper"
+    },
+    {
+        "id": "tpl_damper",
+        "name": "Motorized Fire & Smoke Damper",
+        "code": "FSD-1",
+        "shape": "RECT",
+        "dimensions": "500 × 300 mm",
+        "dp": 25.0,
+        "Q": 450.0,
+        "velocity": 3.0,
+        "mfr": "Ruskin",
+        "model": "FSD-60",
+        "remarks": "Class 1 leakage motorized fire/smoke damper"
+    },
+    {
+        "id": "tpl_backdraft",
+        "name": "Gravity Non-Return / Backdraft Damper",
+        "code": "NRD-1",
+        "shape": "RECT",
+        "dimensions": "500 × 400 mm",
+        "dp": 35.0,
+        "Q": 500.0,
+        "velocity": 2.5,
+        "mfr": "Greenheck",
+        "model": "BD-40",
+        "remarks": "Gravity backdraft check damper preventing reverse air flow"
+    },
+
+    # Duct Heating
+    {
+        "id": "tpl_duct_heater",
+        "name": "Electric In-Duct Heating Coil (Finned Elements)",
+        "code": "EDH-1",
+        "shape": "RECT",
+        "dimensions": "600 × 400 mm",
+        "dp": 35.0,
+        "Q": 600.0,
+        "velocity": 2.5,
+        "mfr": "Vulcanic",
+        "model": "DH-Series Finned",
+        "remarks": "Electric open-coil or finned tubular element in-duct heater"
+    },
+
+    # Air Filtration & Silencers
+    {
+        "id": "tpl_filter",
+        "name": "HEPA Filter Housing Unit",
+        "code": "FLT-1",
+        "shape": "RECT",
+        "dimensions": "610 × 610 mm",
+        "dp": 180.0,
+        "Q": 750.0,
+        "velocity": 2.02,
+        "mfr": "Camfil",
+        "model": "Absolute H14",
+        "remarks": "Terminal HEPA filter casing"
+    },
+    {
+        "id": "tpl_bag_filter",
+        "name": "Secondary Bag / Pocket Air Filter Bank",
+        "code": "BAG-1",
+        "shape": "RECT",
+        "dimensions": "600 × 600 mm",
+        "dp": 95.0,
+        "Q": 900.0,
+        "velocity": 2.5,
+        "mfr": "AAF Flanders",
+        "model": "DriPak ePM1 80%",
+        "remarks": "Synthetic pocket filter bank for medium/fine AHU filtration"
+    },
+    {
+        "id": "tpl_attenuator",
+        "name": "Sound Attenuator / Silencer (L=900mm)",
+        "code": "ATT-1",
+        "shape": "RECT",
+        "dimensions": "600 × 400 mm",
+        "dp": 50.0,
+        "Q": 500.0,
+        "velocity": 2.08,
+        "mfr": "Krueger",
+        "model": "MS-900",
+        "remarks": "Acoustic silencer with perforated splitters"
+    },
+    {
+        "id": "tpl_fan",
+        "name": "Inline Mixed-Flow Duct Fan",
+        "code": "FAN-1",
+        "shape": "ROUND",
+        "dimensions": "Ø 315 mm",
+        "dp": 150.0,
+        "Q": 600.0,
+        "velocity": 7.7,
+        "mfr": "Systemair",
+        "model": "PrioAir 315",
+        "remarks": "Inline booster / exhaust fan"
+    }
+]
+
+def _get_custom_templates():
+    builtin_ids = {t["id"] for t in DEFAULT_CUSTOM_TEMPLATES}
+    deprecated_ids = {"tpl_vav", "tpl_fan", "tpl_attenuator", "tpl_filter", "tpl_damper", "tpl_coil", "tpl_grille_ret", "tpl_register_sup"}
+    user_saved = []
+    if os.path.exists(TEMPLATES_FILE):
+        try:
+            with open(TEMPLATES_FILE, "r", encoding="utf-8") as f:
+                saved = json.load(f)
+                if isinstance(saved, list):
+                    for item in saved:
+                        if isinstance(item, dict):
+                            item_id = item.get("id", "")
+                            if item_id and item_id not in builtin_ids and item_id not in deprecated_ids:
+                                user_saved.append(item)
+        except Exception:
+            pass
+    return list(DEFAULT_CUSTOM_TEMPLATES) + user_saved
+
+@app.route("/api/custom-fitting-templates", methods=["GET"])
+def get_custom_templates_route():
+    """Retrieve preset and user-saved custom equipment templates"""
+    return jsonify({"status": "success", "data": _get_custom_templates()})
+
+@app.route("/api/custom-fitting-templates", methods=["POST"])
+def save_custom_template_route():
+    """Save a user-defined custom fitting template for future reuse"""
+    try:
+        data = request.get_json() or {}
+        templates = _get_custom_templates()
+        tpl_id = f"tpl_{int(time.time()*1000)}"
+        new_tpl = {
+            "id": tpl_id,
+            "name": str(data.get("name") or data.get("code") or "Custom Equipment").strip(),
+            "code": str(data.get("code") or "CUST-1").strip(),
+            "shape": str(data.get("shape") or "RECT").strip(),
+            "dimensions": str(data.get("dimensions") or "").strip(),
+            "dp": float(data.get("dp", 0) or 0),
+            "Q": float(data.get("Q", 0) or 0),
+            "velocity": float(data.get("velocity", 0) or 0),
+            "mfr": str(data.get("mfr") or "").strip(),
+            "model": str(data.get("model") or "").strip(),
+            "remarks": str(data.get("remarks") or "").strip()
+        }
+        templates.append(new_tpl)
+        with open(TEMPLATES_FILE, "w", encoding="utf-8") as f:
+            json.dump(templates, f, indent=2)
+        return jsonify({"status": "success", "data": new_tpl})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/api/projects/<project_id>/clear", methods=["POST"])
 def clear_fittings_route(project_id):
@@ -425,7 +811,11 @@ def download_sizer_project_pdf_route(project_id):
         proj = project_manager.get_project(project_id)
         if not proj:
             return jsonify({"status": "error", "message": "Project not found"}), 404
-        pdf_bytes = pdf_report_generator.generate_sizer_project_pdf(project_id)
+        include_calc_param = request.args.get("calc", "1")
+        include_calculations = include_calc_param not in ("0", "false", "no", "False")
+        margin_param = request.args.get("margin")
+        margin_val = float(margin_param) if margin_param is not None and margin_param != "" else None
+        pdf_bytes = pdf_report_generator.generate_sizer_project_pdf(project_id, include_calculations=include_calculations, design_margin=margin_val)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', proj.get('code', 'PROJECT'))
         filename = f"{code_sanitized}_Duct_Sizing_Report.pdf"
         return send_file(
@@ -450,7 +840,11 @@ def download_project_pdf_route(project_id):
         proj = project_manager.get_project(project_id)
         if not proj:
             return jsonify({"status": "error", "message": "Project not found"}), 404
-        pdf_bytes = pdf_report_generator.generate_project_pdf(project_id)
+        include_calc_param = request.args.get("calc", "1")
+        include_calculations = include_calc_param not in ("0", "false", "no", "False")
+        margin_param = request.args.get("margin")
+        margin_val = float(margin_param) if margin_param is not None and margin_param != "" else None
+        pdf_bytes = pdf_report_generator.generate_project_pdf(project_id, include_calculations=include_calculations, design_margin=margin_val)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', proj.get('code', 'PROJECT'))
         filename = f"{code_sanitized}_DuctFit_Pro_Report.pdf"
         return send_file(

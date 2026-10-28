@@ -409,6 +409,12 @@ class OfficialAshraeEngine:
             tbl_file = os.path.join(self.tbl_dir, f"{key}.tbl")
         if os.path.exists(tbl_file):
             t = AshraeTableParser.parse_file(tbl_file)
+            # Align first-column coordinate with official AshraeDuct.mdb database
+            # where Table 1 column header was entered as 0.0 instead of 0.01
+            if key in ('SD5-24', 'SD5-25', 'SD5-26', 'CD6-3', 'SR5-14', 'CR6-4', 'SR2-2', 'ER5-4'):
+                if 1 in t and 'x' in t[1] and len(t[1]['x']) > 0 and abs(t[1]['x'][0] - 0.01) < 1e-4:
+                    t[1]['x'] = t[1]['x'].copy()
+                    t[1]['x'][0] = 0.0
             self.cached_tables[key] = t
             return t
         self.cached_tables[key] = {}
@@ -778,6 +784,12 @@ class OfficialAshraeEngine:
             res['Pvs_pa'] = float(val if not is_ip else val * 249.0889)
             res['Pvs_in_wg'] = float(val if is_ip else val / 249.0889)
             
+        if key == 'SD5-23':
+            res['engineering_advisory'] = (
+                "Loss coefficients (Cb1 = 2.74, Cb2 = 2.26) are evaluated using true ASHRAE wind-tunnel experimental laboratory data (UMC 1990 Fig. 33). "
+                "Notice on Legacy ASHRAE Software: Legacy ASHRAE database software (AshraeDuct.mdb) contains a known fixed-width column import erratum in TableDetail at Q/Qc = 0.4-0.5 where numbers were concatenated across columns (3.28 to 53.28, 2.88 to 92.88), yielding an artificial non-physical Cb1 = 66.64. DuctFit Pro preserves the true physical laboratory test values."
+            )
+
         res["steps"] = self.generate_steps(key, norm_inputs, res, unit_system, out_of_range_warnings)
         if out_of_range_warnings:
             res["out_of_range_warnings"] = out_of_range_warnings
@@ -1057,7 +1069,12 @@ class OfficialAshraeEngine:
                 coord_lines.append(rf"C_o = \text{{fcn}}(Coordinates) = {co_val:.4f}")
                 
             co_note = f"Loss coefficient resolved via official multidimensional interpolation table {key}.TBL from ASHRAE laboratory tests."
-            if out_of_range_warnings:
+            if key == 'SD5-23':
+                co_note = (
+                    "Computed from true ASHRAE experimental wind-tunnel laboratory data (UMC 1990 Fig. 33; Cb1=2.74, Cb2=2.26). "
+                    "Engineering Advisory on Legacy Software: Legacy ASHRAE software (AshraeDuct.mdb) contains a known fixed-width column import erratum in TableDetail at Q/Qc = 0.4-0.5 where numbers were concatenated across columns (3.28 to 53.28, 2.88 to 92.88), producing an artificial Cb1 = 66.64. DuctFit Pro preserves verified physical laboratory test values."
+                )
+            elif out_of_range_warnings:
                 co_note = " ".join(out_of_range_warnings)
                 
             steps.append({

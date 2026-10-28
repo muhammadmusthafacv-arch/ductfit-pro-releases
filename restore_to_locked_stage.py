@@ -1,12 +1,10 @@
 """
-Restore Script for Ductfit Pro - Locked Default Stage (v1.060)
+Restore Script for Ductfit Pro - Locked Default Stage
+Restores all core application code, templates, styling, engines,
+and configurations back to the user's locked default baseline.
 
 Usage:
     python restore_to_locked_stage.py
-
-Description:
-    Restores all core application code, templates, styling, engines,
-    and configurations back to the user's locked default baseline.
 """
 
 import os
@@ -29,7 +27,8 @@ FILES_TO_RESTORE = [
     "USER_DIRECTIVES.md",
     "README.md",
     "requirements.txt",
-    "run_app.bat"
+    "run_app.bat",
+    "package.json"
 ]
 
 DIRS_TO_RESTORE = [
@@ -43,7 +42,7 @@ def restore():
         print(f"Error: Locked backup directory '{BACKUP_DIR}' not found!")
         sys.exit(1)
 
-    print("Restoring Ductfit Pro to Locked Default Stage (v1.060)...")
+    print("Restoring Ductfit Pro to Locked Default Stage (Baseline 28-Oct-2026)...")
 
     for f in FILES_TO_RESTORE:
         src = os.path.join(BACKUP_DIR, f)
@@ -57,7 +56,7 @@ def restore():
             shutil.copytree(src, d, dirs_exist_ok=True)
             print(f"  [OK] Restored directory {d}/")
 
-    print("\nSuccessfully restored application to Locked Default Stage (v1.060)!")
+    print("\nSuccessfully restored application to Locked Default Stage!")
 
 if __name__ == "__main__":
     restore()

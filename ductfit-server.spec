@@ -10,7 +10,8 @@ datas = [
     ('ashrae_extracted', 'ashrae_extracted'),
     ('ashrae_data', 'ashrae_data'),
     ('version.json', '.'),
-    ('projects.json', '.')
+    ('projects.json', '.'),
+    ('custom_templates.json', '.')
 ]
 
 hiddenimports = [

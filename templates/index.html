@@ -854,6 +854,32 @@
                     </div>
                 </div>
 
+                <!-- Engineering Design Safety Margin Sheet Card -->
+                <div class="prj-margin-card">
+                    <div class="prj-margin-left">
+                        <span class="prj-margin-icon">🛡️</span>
+                        <div class="prj-margin-text">
+                            <div class="prj-margin-title">Design Safety Margin (Fan Static Pressure Rating)</div>
+                            <div class="prj-margin-desc">Safety factor added to calculated subtotal loss for fan selection, field leakage &amp; duct uncertainties</div>
+                        </div>
+                    </div>
+                    <div class="prj-margin-right">
+                        <div class="margin-chip-group" id="marginPresetChips">
+                            <button type="button" class="btn-margin-chip" data-margin="0">0%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="5">5%</button>
+                            <button type="button" class="btn-margin-chip active" data-margin="10">10%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="15">15%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="20">20%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="25">25%</button>
+                        </div>
+                        <div class="margin-input-wrap">
+                            <label for="inputProjectDesignMargin" class="margin-input-label">Margin:</label>
+                            <input type="number" id="inputProjectDesignMargin" class="input-margin-box" min="0" max="100" step="0.5" value="10" placeholder="10">
+                            <span class="margin-unit-suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- VIEW 1: Fitting Loss Schedule (ESP Calculation) -->
                 <div id="viewSummaryFittings" class="summary-schedule-view">
                     <!-- KPI Metric Tiles -->
@@ -862,9 +888,14 @@
                             <span class="kpi-num" id="kpiTotalFittings">0</span>
                             <span class="kpi-label">Fittings in Schedule</span>
                         </div>
+                        <div class="prj-kpi-card">
+                            <span class="kpi-num" id="kpiSubtotalDp">0.0 Pa</span>
+                            <span class="kpi-label">Subtotal Loss (∑ΔP<sub>calc</sub>)</span>
+                        </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiTotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Cumulative Pressure Loss (∑ΔP)</span>
+                            <span class="kpi-label" id="kpiTotalDpLabel">Total Design Loss / Fan ESP</span>
+                            <span class="kpi-sub-badge" id="kpiTotalDpSub">incl. +10% Margin</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiMaxLoss">0.0 Pa</span>
@@ -873,6 +904,19 @@
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiTotalAirflow">-</span>
                             <span class="kpi-label">Design Flow Reference</span>
+                        </div>
+                    </div>
+
+                    <!-- Fitting Schedule Actions Toolbar -->
+                    <div class="schedule-actions-bar">
+                        <div class="schedule-actions-bar-left">
+                            <span class="schedule-bar-title">Fitting &amp; Equipment Loss Schedule</span>
+                            <span class="schedule-bar-hint">ASHRAE fittings + Manufacturer-certified equipment</span>
+                        </div>
+                        <div class="schedule-actions-bar-right">
+                            <button type="button" class="btn-schedule-action" id="btnAddCustomFitting" title="Add custom / manufacturer equipment (VAV box, inline fan, attenuator, etc.) to the schedule">
+                                <span class="btn-icon">➕</span> Add Custom Fitting
+                            </button>
                         </div>
                     </div>
 
@@ -892,9 +936,9 @@
                                     <th style="width: 75px;" class="text-right">P<sub>v</sub> (Pa)</th>
                                     <th style="width: 75px;" class="text-right">Co / f</th>
                                     <th style="width: 80px;" class="text-right">ΔP (ea)</th>
-                                    <th style="width: 55px;" class="text-center">Qty</th>
+                                    <th style="width: 65px;" class="text-center">Qty</th>
                                     <th style="width: 90px;" class="text-right">Total ΔP</th>
-                                    <th style="width: 95px;" class="text-center">Actions</th>
+                                    <th style="width: 75px;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyProjectSchedule">
@@ -919,9 +963,14 @@
                             <span class="kpi-num" id="kpiSizerLength">0.0 m</span>
                             <span class="kpi-label">Total Duct Length</span>
                         </div>
+                        <div class="prj-kpi-card">
+                            <span class="kpi-num" id="kpiSizerSubtotalDp">0.0 Pa</span>
+                            <span class="kpi-label">Subtotal Friction Loss</span>
+                        </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiSizerTotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Straight Duct Friction Loss (∑ΔP)</span>
+                            <span class="kpi-label" id="kpiSizerTotalDpLabel">Total Sizing Design Loss</span>
+                            <span class="kpi-sub-badge" id="kpiSizerTotalDpSub">incl. +10% Margin</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiSizerAvgRate">0.80 Pa/m</span>
@@ -946,7 +995,7 @@
                                     <th style="width: 85px;" class="text-right">Friction Rate (&Delta;P<sub>f</sub>/L)</th>
                                     <th style="width: 75px;" class="text-right">Length (L)</th>
                                     <th style="width: 85px;" class="text-right">Loss (ΔP)</th>
-                                    <th style="width: 75px;" class="text-center">Actions</th>
+                                    <th style="width: 65px;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodySizerSchedule">
@@ -964,6 +1013,13 @@
                 <div class="prj-summary-footer-left">
                     <button type="button" class="btn-prj-footer btn-primary-report" id="btnDownloadFitductPdf" title="Download official DuctFit Pro PDF Report">
                         📄 Download Report (PDF)
+                    </button>
+                    <label class="prj-report-opt" for="chkIncludeCalculations" title="Check to include step-by-step engineering calculation breakdown in the PDF report; uncheck to exclude it">
+                        <input type="checkbox" id="chkIncludeCalculations" checked>
+                        <span>Include Calculations</span>
+                    </label>
+                    <button type="button" class="btn-prj-footer" id="btnAddCustomFittingFooter" title="Add custom / manufacturer equipment (VAV box, inline fan, attenuator, etc.)">
+                        ➕ Add Custom Fitting
                     </button>
                     <button type="button" class="btn-prj-footer" id="btnExportProjectCsv" title="Export schedule to CSV / Excel spreadsheet">
                         📥 Export to CSV / Excel
@@ -1022,6 +1078,148 @@
             <div class="modal-footer">
                 <button type="button" id="btnCancelAddFitting" class="modal-btn modal-btn-secondary">Cancel</button>
                 <button type="button" id="btnConfirmAddFitting" class="modal-btn modal-btn-primary">➕ Confirm Add to Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Custom / Manufacturer Fitting Modal -->
+    <div id="modalCustomFitting" class="modal-overlay hidden" role="dialog" aria-labelledby="modalCustomFittingTitle" aria-modal="true">
+        <div class="modal-card modal-card-md">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">⚙️</span>
+                    <div>
+                        <h2 id="modalCustomFittingTitle" class="modal-title">Add Custom / Manufacturer Fitting</h2>
+                        <p class="modal-subtitle" id="modalCustomFittingSubtitle">Specify equipment pressure loss from manufacturer catalog data</p>
+                    </div>
+                </div>
+                <button type="button" id="btnCloseCustomFittingModal" class="modal-close-btn" title="Close (Esc)">&times;</button>
+            </div>
+
+            <div class="modal-body prj-modal-body">
+                <!-- Template Preset Dropdown Bar -->
+                <div class="custom-template-bar">
+                    <div class="template-select-wrap">
+                        <label for="selectCustomTemplate" class="template-label">Preset / Template:</label>
+                        <select id="selectCustomTemplate" class="template-select">
+                            <option value="">-- Blank Custom Fitting --</option>
+                            <optgroup label="Air Terminals">
+                                <option value="tpl_diff_4way">4-Way Diffuser (20 Pa)</option>
+                                <option value="tpl_slot_diff">Linear Slot Diffuser (25 Pa)</option>
+                                <option value="tpl_swirl_diff">Swirl Diffuser (30 Pa)</option>
+                                <option value="tpl_jet_diff">Jet Nozzle Diffuser (40 Pa)</option>
+                                <option value="tpl_grille">Grille (15 Pa)</option>
+                                <option value="tpl_grille_dd">Double Deflection Grille (18 Pa)</option>
+                                <option value="tpl_grille_bar">Linear Bar Grille (20 Pa)</option>
+                                <option value="tpl_grille_egg">Eggcrate Grille (15 Pa)</option>
+                                <option value="tpl_register">Register with OBD (20 Pa)</option>
+                            </optgroup>
+                            <optgroup label="Airflow Control Units (VAV &amp; CAV)">
+                                <option value="tpl_vav">VAV Terminal Unit (100 Pa)</option>
+                                <option value="tpl_cav">CAV Mechanical Volume Controller (80 Pa)</option>
+                            </optgroup>
+                            <optgroup label="Louvers &amp; Weather Protection">
+                                <option value="tpl_sand_trap">Sand Trap Louver - Desert Grade (65 Pa)</option>
+                                <option value="tpl_weather_louver">Weather Defense Louver (40 Pa)</option>
+                                <option value="tpl_acoustic_louver">Acoustic Weather Louver (55 Pa)</option>
+                            </optgroup>
+                            <optgroup label="Dampers &amp; Safety Devices">
+                                <option value="tpl_blast_damper">Heavy Duty Blast Protection Damper (90 Pa)</option>
+                                <option value="tpl_damper">Motorized Fire &amp; Smoke Damper (25 Pa)</option>
+                                <option value="tpl_backdraft">Gravity Non-Return / Backdraft Damper (35 Pa)</option>
+                            </optgroup>
+                            <optgroup label="Duct Heating">
+                                <option value="tpl_duct_heater">Electric In-Duct Heating Coil (35 Pa)</option>
+                            </optgroup>
+                            <optgroup label="Air Filtration &amp; Silencers">
+                                <option value="tpl_filter">HEPA Filter Housing Unit (180 Pa)</option>
+                                <option value="tpl_bag_filter">Secondary Bag / Pocket Filter Bank (95 Pa)</option>
+                                <option value="tpl_attenuator">Sound Attenuator / Silencer (50 Pa)</option>
+                                <option value="tpl_fan">Inline Mixed-Flow Duct Fan (150 Pa)</option>
+                            </optgroup>
+                            <optgroup label="User Saved Templates" id="optgroupUserSavedTemplates">
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button type="button" id="btnApplyCustomTemplate" class="btn-apply-template">Load Preset</button>
+                </div>
+
+                <form id="formCustomFitting" onsubmit="return false;">
+                    <div id="customFittingError" class="custom-error-banner hidden"></div>
+                    <div class="prj-form-grid">
+                        <div class="prj-form-group">
+                            <label for="inputCustomCode" class="prj-label">Fitting / Equipment Code <span class="req">*</span></label>
+                            <input type="text" id="inputCustomCode" class="prj-input" placeholder="e.g. CUST-1, VAV-1, FAN-1" required>
+                        </div>
+                        <div class="prj-form-group" id="groupCustomInsertPos">
+                            <label for="selectCustomInsertPos" class="prj-label">Insert Position <span class="req">*</span></label>
+                            <select id="selectCustomInsertPos" class="prj-input">
+                                <option value="start">At the beginning (Row #1)</option>
+                                <option value="end" selected>At the end</option>
+                            </select>
+                        </div>
+                        <div class="prj-form-group prj-col-span-2">
+                            <label for="inputCustomName" class="prj-label">Fitting / Equipment Description <span class="req">*</span></label>
+                            <input type="text" id="inputCustomName" class="prj-input" placeholder="e.g. VAV Box - Model XYZ, Sound Attenuator 900mm" required>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomDp" class="prj-label">Pressure Loss &Delta;P (<span id="lblCustomDpUnit">Pa</span>) <span class="req">*</span></label>
+                            <input type="number" step="0.1" min="0" id="inputCustomDp" class="prj-input" placeholder="e.g. 100.0" required>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomQty" class="prj-label">Quantity (Qty) <span class="req">*</span></label>
+                            <input type="number" min="1" step="1" value="1" id="inputCustomQty" class="prj-input" required>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="selectCustomShape" class="prj-label">Duct Shape <span class="opt-hint">(Optional)</span></label>
+                            <select id="selectCustomShape" class="prj-input">
+                                <option value="RECT" selected>RECT</option>
+                                <option value="ROUND">ROUND</option>
+                                <option value="FLAT OVAL">FLAT OVAL</option>
+                                <option value="Other">Other</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomDims" class="prj-label">Dimensions <span class="opt-hint">(Optional)</span></label>
+                            <input type="text" id="inputCustomDims" class="prj-input" placeholder="e.g. 600×400 mm, Ø350 mm">
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomQ" class="prj-label">Design Airflow Q (<span id="lblCustomFlowUnit">L/s</span>) <span class="opt-hint">(Optional)</span></label>
+                            <input type="number" step="any" min="0" id="inputCustomQ" class="prj-input" placeholder="e.g. 500">
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomV" class="prj-label">Duct Velocity V (<span id="lblCustomVelUnit">m/s</span>) <span class="opt-hint">(Optional)</span></label>
+                            <input type="number" step="any" min="0" id="inputCustomV" class="prj-input" placeholder="e.g. 2.5">
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomMfr" class="prj-label">Manufacturer <span class="opt-hint">(Optional)</span></label>
+                            <input type="text" id="inputCustomMfr" class="prj-input" placeholder="e.g. Trox, Systemair, Aldes">
+                        </div>
+                        <div class="prj-form-group">
+                            <label for="inputCustomModel" class="prj-label">Model / Part No. <span class="opt-hint">(Optional)</span></label>
+                            <input type="text" id="inputCustomModel" class="prj-input" placeholder="e.g. TVR-Easy, MP-100">
+                        </div>
+                        <div class="prj-form-group prj-col-span-2">
+                            <label for="inputCustomRemarks" class="prj-label">Remarks / Specifications <span class="opt-hint">(Optional)</span></label>
+                            <textarea id="inputCustomRemarks" class="prj-textarea" rows="2" placeholder="e.g. Laboratory test report ref: TR-2026-B; acoustic casing included"></textarea>
+                        </div>
+                        <div class="prj-form-group prj-col-span-2">
+                            <label class="custom-template-save-chk" for="chkSaveCustomTemplate">
+                                <input type="checkbox" id="chkSaveCustomTemplate">
+                                <span>Save this equipment as a reusable template for future projects</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-footer-ref">Loss Source: Certified Manufacturer Data (Non-ASHRAE)</div>
+                <div class="prj-modal-actions">
+                    <button type="button" id="btnCancelCustomFitting" class="modal-btn modal-btn-secondary">Cancel</button>
+                    <button type="button" id="btnSaveCustomFitting" class="modal-btn modal-btn-primary">➕ Add to Schedule</button>
+                </div>
             </div>
         </div>
     </div>
