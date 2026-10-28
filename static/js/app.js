@@ -135,7 +135,9 @@
         // Project Management State (ASHRAE Duct Schedule Model)
         projects: [],
         activeProjectId: null,
-        activeProject: null
+        activeProject: null,
+        editingCustomFitting: null,
+        customTemplates: []
     };
 
     // DOM Elements
@@ -414,6 +416,38 @@
         lblSizerLength: document.getElementById("lblSizerLength"),
         lblFittingNotes: document.getElementById("lblFittingNotes"),
         inputFittingNotes: document.getElementById("inputFittingNotes"),
+
+        // Custom / Manufacturer Fitting Modal & Toolbar
+        btnAddCustomFitting: document.getElementById("btnAddCustomFitting"),
+        btnAddCustomFittingFooter: document.getElementById("btnAddCustomFittingFooter"),
+        scheduleBarCount: document.getElementById("scheduleBarCount"),
+        modalCustomFitting: document.getElementById("modalCustomFitting"),
+        btnCloseCustomFittingModal: document.getElementById("btnCloseCustomFittingModal"),
+        btnCancelCustomFitting: document.getElementById("btnCancelCustomFitting"),
+        btnSaveCustomFitting: document.getElementById("btnSaveCustomFitting"),
+        modalCustomFittingTitle: document.getElementById("modalCustomFittingTitle"),
+        modalCustomFittingSubtitle: document.getElementById("modalCustomFittingSubtitle"),
+        customFittingError: document.getElementById("customFittingError"),
+        selectCustomTemplate: document.getElementById("selectCustomTemplate"),
+        btnApplyCustomTemplate: document.getElementById("btnApplyCustomTemplate"),
+        optgroupUserSavedTemplates: document.getElementById("optgroupUserSavedTemplates"),
+        inputCustomCode: document.getElementById("inputCustomCode"),
+        groupCustomInsertPos: document.getElementById("groupCustomInsertPos"),
+        selectCustomInsertPos: document.getElementById("selectCustomInsertPos"),
+        inputCustomName: document.getElementById("inputCustomName"),
+        inputCustomDp: document.getElementById("inputCustomDp"),
+        lblCustomDpUnit: document.getElementById("lblCustomDpUnit"),
+        inputCustomQty: document.getElementById("inputCustomQty"),
+        selectCustomShape: document.getElementById("selectCustomShape"),
+        inputCustomDims: document.getElementById("inputCustomDims"),
+        inputCustomQ: document.getElementById("inputCustomQ"),
+        lblCustomFlowUnit: document.getElementById("lblCustomFlowUnit"),
+        inputCustomV: document.getElementById("inputCustomV"),
+        lblCustomVelUnit: document.getElementById("lblCustomVelUnit"),
+        inputCustomMfr: document.getElementById("inputCustomMfr"),
+        inputCustomModel: document.getElementById("inputCustomModel"),
+        inputCustomRemarks: document.getElementById("inputCustomRemarks"),
+        chkSaveCustomTemplate: document.getElementById("chkSaveCustomTemplate"),
 
         // Toast
         prjToastNotification: document.getElementById("prjToastNotification")
@@ -5448,6 +5482,9 @@
             elements.btnDownloadFitductPdf.textContent = tabName === "sizer" ? "📄 Download Duct Sizing Report (PDF)" : "📄 Download Duct Fitting Report (PDF)";
             elements.btnDownloadFitductPdf.title = tabName === "sizer" ? "Download Duct Sizing Report (table and step calculations only, no CAD)" : "Download Fitting Loss Report (ESP calculation with CAD blueprints)";
         }
+        if (elements.btnAddCustomFittingFooter) {
+            elements.btnAddCustomFittingFooter.classList.toggle("hidden", tabName !== "fittings");
+        }
         if (elements.btnClearProjectFittings) {
             elements.btnClearProjectFittings.textContent = tabName === "sizer" ? "🗑️ Clear Sized Runs" : "🗑️ Clear Fittings";
         }
@@ -5502,6 +5539,632 @@
         }
     }
 
+    // --- Custom / Manufacturer Fitting Management ---
+    const BUILTIN_CUSTOM_PRESETS = {
+        // Air Terminals
+        tpl_diff_4way: {
+            code: "DIFF-1",
+            name: "4-Way Diffuser (600×600 mm)",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 20.0,
+            Q: 250.0,
+            velocity: 2.5,
+            mfr: "Trox",
+            model: "ADQ / TMS",
+            remarks: "Standard 4-way modular ceiling diffuser"
+        },
+        tpl_slot_diff: {
+            code: "SLOT-1",
+            name: "Linear Slot Diffuser (2-Slot, L=1200mm)",
+            shape: "RECT",
+            dimensions: "1200 × 150 mm",
+            dp: 25.0,
+            Q: 150.0,
+            velocity: 2.8,
+            mfr: "Price",
+            model: "PureLine 2-Slot",
+            remarks: "Architectural linear slot diffuser with plenum"
+        },
+        tpl_swirl_diff: {
+            code: "SWR-1",
+            name: "Swirl Diffuser",
+            shape: "ROUND",
+            dimensions: "Ø 400 mm",
+            dp: 30.0,
+            Q: 300.0,
+            velocity: 3.0,
+            mfr: "Trox",
+            model: "FD-Swirl",
+            remarks: "High induction circular ceiling swirl diffuser"
+        },
+        tpl_jet_diff: {
+            code: "JET-1",
+            name: "Jet Nozzle Diffuser",
+            shape: "ROUND",
+            dimensions: "Ø 250 mm",
+            dp: 40.0,
+            Q: 350.0,
+            velocity: 6.0,
+            mfr: "Systemair",
+            model: "AJ-250",
+            remarks: "Adjustable direction long-throw jet nozzle diffuser"
+        },
+        tpl_grille: {
+            code: "GRL-1",
+            name: "Grille (600×600 mm)",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 15.0,
+            Q: 350.0,
+            velocity: 2.0,
+            mfr: "Krueger",
+            model: "500-Series",
+            remarks: "Standard ventilation grille"
+        },
+        tpl_grille_dd: {
+            code: "DDG-1",
+            name: "Double Deflection Grille",
+            shape: "RECT",
+            dimensions: "400 × 200 mm",
+            dp: 18.0,
+            Q: 250.0,
+            velocity: 2.2,
+            mfr: "Titus",
+            model: "300RL",
+            remarks: "Double deflection adjustable blade grille"
+        },
+        tpl_grille_bar: {
+            code: "LBG-1",
+            name: "Linear Bar Grille",
+            shape: "RECT",
+            dimensions: "1000 × 150 mm",
+            dp: 20.0,
+            Q: 250.0,
+            velocity: 2.2,
+            mfr: "Price",
+            model: "LBG-15",
+            remarks: "Architectural continuous linear bar grille"
+        },
+        tpl_grille_egg: {
+            code: "EGC-1",
+            name: "Eggcrate Grille",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 15.0,
+            Q: 350.0,
+            velocity: 2.0,
+            mfr: "Krueger",
+            model: "EGC-5",
+            remarks: "Aluminium eggcrate core ceiling grille"
+        },
+        tpl_register: {
+            code: "REG-1",
+            name: "Register with OBD",
+            shape: "RECT",
+            dimensions: "400 × 200 mm",
+            dp: 20.0,
+            Q: 200.0,
+            velocity: 2.5,
+            mfr: "Titus",
+            model: "300R-OBD",
+            remarks: "Ventilation register with opposed blade damper"
+        },
+        // Backward-compatible aliases
+        tpl_grille_ret: {
+            code: "EGC-1",
+            name: "Eggcrate Grille",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 15.0,
+            Q: 350.0,
+            velocity: 2.0,
+            mfr: "Krueger",
+            model: "EGC-5",
+            remarks: "Aluminium eggcrate core ceiling grille"
+        },
+        tpl_register_sup: {
+            code: "REG-1",
+            name: "Register with OBD",
+            shape: "RECT",
+            dimensions: "400 × 200 mm",
+            dp: 20.0,
+            Q: 200.0,
+            velocity: 2.5,
+            mfr: "Titus",
+            model: "300R-OBD",
+            remarks: "Ventilation register with opposed blade damper"
+        },
+
+        // Airflow Control Units (VAV & CAV)
+        tpl_vav: {
+            code: "VAV-1",
+            name: "VAV Terminal Unit (Pressure Independent)",
+            shape: "RECT",
+            dimensions: "600 × 400 mm",
+            dp: 100.0,
+            Q: 500.0,
+            velocity: 2.08,
+            mfr: "Trox",
+            model: "TVR-Easy",
+            remarks: "Pressure independent VAV unit with acoustic casing"
+        },
+        tpl_cav: {
+            code: "CAV-1",
+            name: "CAV Constant Air Volume Controller",
+            shape: "ROUND",
+            dimensions: "Ø 250 mm",
+            dp: 80.0,
+            Q: 300.0,
+            velocity: 4.5,
+            mfr: "Trox",
+            model: "RN-Ex Mechanical",
+            remarks: "Self-powered mechanical constant air volume regulator"
+        },
+
+        // Louvers & Weather Protection
+        tpl_sand_trap: {
+            code: "STL-1",
+            name: "Sand Trap Louver (Desert Grade Dual Stage)",
+            shape: "RECT",
+            dimensions: "1200 × 1200 mm",
+            dp: 65.0,
+            Q: 1800.0,
+            velocity: 1.8,
+            mfr: "Ruskin",
+            model: "STL-75 Heavy Duty",
+            remarks: "Dual-stage high-efficiency desert sand removal exterior louver"
+        },
+        tpl_weather_louver: {
+            code: "LVR-1",
+            name: "Weather Defense Intake / Exhaust Louver",
+            shape: "RECT",
+            dimensions: "1000 × 1000 mm",
+            dp: 40.0,
+            Q: 1500.0,
+            velocity: 2.0,
+            mfr: "Greenheck",
+            model: "ESD-635 Drainable",
+            remarks: "Extruded aluminium drainable blade weather defense louver"
+        },
+        tpl_acoustic_louver: {
+            code: "ACL-1",
+            name: "Acoustic Weather Louver (300mm Depth)",
+            shape: "RECT",
+            dimensions: "1200 × 1000 mm",
+            dp: 55.0,
+            Q: 1400.0,
+            velocity: 1.6,
+            mfr: "IAC Acoustics",
+            model: "Noishield NL-300",
+            remarks: "Sound attenuating exterior acoustic weather louver"
+        },
+
+        // Dampers & Safety Devices
+        tpl_blast_damper: {
+            code: "BLST-1",
+            name: "Heavy Duty Blast Protection Damper",
+            shape: "RECT",
+            dimensions: "800 × 800 mm",
+            dp: 90.0,
+            Q: 1600.0,
+            velocity: 3.5,
+            mfr: "Temet",
+            model: "BDA / BLD-1",
+            remarks: "High-overpressure impulse blast isolation damper"
+        },
+        tpl_damper: {
+            code: "FSD-1",
+            name: "Motorized Fire & Smoke Damper",
+            shape: "RECT",
+            dimensions: "500 × 300 mm",
+            dp: 25.0,
+            Q: 450.0,
+            velocity: 3.0,
+            mfr: "Ruskin",
+            model: "FSD-60",
+            remarks: "UL 555S Class 1 leakage rated motorized fire/smoke damper"
+        },
+        tpl_backdraft: {
+            code: "NRD-1",
+            name: "Gravity Non-Return / Backdraft Damper",
+            shape: "RECT",
+            dimensions: "500 × 400 mm",
+            dp: 35.0,
+            Q: 500.0,
+            velocity: 2.5,
+            mfr: "Greenheck",
+            model: "BD-40",
+            remarks: "Gravity backdraft check damper preventing reverse air flow"
+        },
+
+        // Duct Heating
+        tpl_duct_heater: {
+            code: "EDH-1",
+            name: "Electric In-Duct Heating Coil (Finned Elements)",
+            shape: "RECT",
+            dimensions: "600 × 400 mm",
+            dp: 35.0,
+            Q: 600.0,
+            velocity: 2.5,
+            mfr: "Vulcanic",
+            model: "DH-Series Finned",
+            remarks: "Electric open-coil or finned tubular element in-duct heater"
+        },
+
+        // Air Filtration & Silencers
+        tpl_filter: {
+            code: "FLT-1",
+            name: "HEPA Filter Housing Unit",
+            shape: "RECT",
+            dimensions: "610 × 610 mm",
+            dp: 180.0,
+            Q: 750.0,
+            velocity: 2.02,
+            mfr: "Camfil",
+            model: "Absolute H14",
+            remarks: "Terminal cleanroom HEPA filter assembly"
+        },
+        tpl_bag_filter: {
+            code: "BAG-1",
+            name: "Secondary Bag / Pocket Air Filter Bank",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 95.0,
+            Q: 900.0,
+            velocity: 2.5,
+            mfr: "AAF Flanders",
+            model: "DriPak ePM1 80%",
+            remarks: "Synthetic pocket filter bank for medium/fine AHU filtration"
+        },
+        tpl_attenuator: {
+            code: "ATT-1",
+            name: "Sound Attenuator / Silencer (L=900mm)",
+            shape: "RECT",
+            dimensions: "600 × 400 mm",
+            dp: 50.0,
+            Q: 500.0,
+            velocity: 2.08,
+            mfr: "Krueger",
+            model: "MS-900",
+            remarks: "Modular dissipative sound attenuator splitter bank"
+        },
+        tpl_fan: {
+            code: "FAN-1",
+            name: "Inline Mixed-Flow Duct Fan",
+            shape: "ROUND",
+            dimensions: "Ø 315 mm",
+            dp: 150.0,
+            Q: 600.0,
+            velocity: 7.7,
+            mfr: "Systemair",
+            model: "PrioAir 315",
+            remarks: "Inline circular exhaust / booster fan unit"
+        }
+    };
+
+    async function loadCustomTemplates() {
+        try {
+            const resp = await fetch("/api/custom-fitting-templates");
+            const res = await resp.json();
+            if (res.status === "success" && Array.isArray(res.data)) {
+                state.customTemplates = res.data;
+                renderCustomTemplatesDropdown();
+            }
+        } catch (err) {
+            console.error("Failed to load custom templates:", err);
+        }
+    }
+
+    function renderCustomTemplatesDropdown() {
+        if (!elements.optgroupUserSavedTemplates) return;
+        elements.optgroupUserSavedTemplates.innerHTML = "";
+        const userTpls = (state.customTemplates || []).filter(t => !BUILTIN_CUSTOM_PRESETS[t.id]);
+        userTpls.forEach(t => {
+            const opt = document.createElement("option");
+            opt.value = t.id;
+            opt.textContent = `${t.name || t.code} (${t.dp} Pa)`;
+            elements.optgroupUserSavedTemplates.appendChild(opt);
+        });
+    }
+
+    function applySelectedTemplate() {
+        if (!elements.selectCustomTemplate) return;
+        const val = elements.selectCustomTemplate.value;
+        if (!val) return;
+
+        let tpl = BUILTIN_CUSTOM_PRESETS[val];
+        if (!tpl && state.customTemplates) {
+            tpl = state.customTemplates.find(t => t.id === val);
+        }
+        if (!tpl) return;
+
+        if (elements.inputCustomCode && !state.editingCustomFitting) {
+            elements.inputCustomCode.value = tpl.code || "";
+        }
+        if (elements.inputCustomName) {
+            elements.inputCustomName.value = tpl.name || "";
+        }
+        if (elements.inputCustomDp) {
+            elements.inputCustomDp.value = tpl.dp !== undefined ? tpl.dp : 0;
+        }
+        if (elements.selectCustomShape) {
+            elements.selectCustomShape.value = (tpl.shape || "RECT").toUpperCase();
+        }
+        if (elements.inputCustomDims) {
+            elements.inputCustomDims.value = tpl.dimensions || "";
+        }
+        if (elements.inputCustomQ) {
+            elements.inputCustomQ.value = tpl.Q > 0 ? tpl.Q : "";
+        }
+        if (elements.inputCustomV) {
+            elements.inputCustomV.value = tpl.velocity > 0 ? tpl.velocity : "";
+        }
+        if (elements.inputCustomMfr) {
+            elements.inputCustomMfr.value = tpl.mfr || "";
+        }
+        if (elements.inputCustomModel) {
+            elements.inputCustomModel.value = tpl.model || "";
+        }
+        if (elements.inputCustomRemarks) {
+            elements.inputCustomRemarks.value = tpl.remarks || "";
+        }
+    }
+
+    function openCustomFittingModal(fittingToEdit = null) {
+        if (!state.activeProjectId) {
+            showPrjToast("Please select or create an active project first.");
+            return;
+        }
+
+        const p = state.activeProject;
+        const isSI = (p?.unit_system || state.unit) === "SI";
+        const dpUnit = isSI ? "Pa" : "in. wg";
+        const flowUnit = isSI ? "L/s" : "cfm";
+        const velUnit = isSI ? "m/s" : "fpm";
+
+        if (elements.lblCustomDpUnit) elements.lblCustomDpUnit.textContent = dpUnit;
+        if (elements.lblCustomFlowUnit) elements.lblCustomFlowUnit.textContent = flowUnit;
+        if (elements.lblCustomVelUnit) elements.lblCustomVelUnit.textContent = velUnit;
+
+        if (elements.customFittingError) {
+            elements.customFittingError.textContent = "";
+            elements.customFittingError.classList.add("hidden");
+        }
+
+        // Populate Insert Position dropdown
+        if (elements.selectCustomInsertPos) {
+            elements.selectCustomInsertPos.innerHTML = "";
+            const optStart = document.createElement("option");
+            optStart.value = "start";
+            optStart.textContent = "At the beginning (Row #1)";
+            elements.selectCustomInsertPos.appendChild(optStart);
+
+            const fittings = p?.fittings || [];
+            fittings.forEach((f, idx) => {
+                const opt = document.createElement("option");
+                opt.value = String(idx);
+                opt.textContent = `After #${idx + 1} - ${f.tag || `${f.code}-F${String(idx+1).padStart(2,'0')}`} (${f.name || f.code})`;
+                elements.selectCustomInsertPos.appendChild(opt);
+            });
+
+            const optEnd = document.createElement("option");
+            optEnd.value = "end";
+            optEnd.textContent = `At the end (Row #${fittings.length + 1})`;
+            optEnd.selected = true;
+            elements.selectCustomInsertPos.appendChild(optEnd);
+        }
+
+        if (fittingToEdit) {
+            state.editingCustomFitting = fittingToEdit;
+            if (elements.modalCustomFittingTitle) elements.modalCustomFittingTitle.textContent = `Edit Custom Fitting [${fittingToEdit.tag}]`;
+            if (elements.modalCustomFittingSubtitle) elements.modalCustomFittingSubtitle.textContent = "Modify equipment specifications and manufacturer pressure loss";
+            if (elements.btnSaveCustomFitting) elements.btnSaveCustomFitting.textContent = "💾 Update Custom Fitting";
+            if (elements.groupCustomInsertPos) elements.groupCustomInsertPos.classList.add("hidden");
+
+            if (elements.inputCustomCode) elements.inputCustomCode.value = fittingToEdit.code || "";
+            if (elements.inputCustomName) elements.inputCustomName.value = fittingToEdit.name || "";
+            if (elements.inputCustomDp) elements.inputCustomDp.value = fittingToEdit.dp !== undefined ? fittingToEdit.dp : "";
+            if (elements.inputCustomQty) elements.inputCustomQty.value = fittingToEdit.qty || 1;
+            if (elements.selectCustomShape) elements.selectCustomShape.value = (fittingToEdit.shape || "RECT").toUpperCase();
+            if (elements.inputCustomDims) elements.inputCustomDims.value = fittingToEdit.dimensions || "";
+            if (elements.inputCustomQ) elements.inputCustomQ.value = fittingToEdit.Q > 0 ? fittingToEdit.Q : "";
+            if (elements.inputCustomV) elements.inputCustomV.value = fittingToEdit.velocity > 0 ? fittingToEdit.velocity : "";
+            if (elements.inputCustomMfr) elements.inputCustomMfr.value = fittingToEdit.mfr || "";
+            if (elements.inputCustomModel) elements.inputCustomModel.value = fittingToEdit.model || "";
+            if (elements.inputCustomRemarks) elements.inputCustomRemarks.value = fittingToEdit.remarks || fittingToEdit.notes || "";
+            if (elements.chkSaveCustomTemplate) elements.chkSaveCustomTemplate.checked = false;
+        } else {
+            state.editingCustomFitting = null;
+            if (elements.modalCustomFittingTitle) elements.modalCustomFittingTitle.textContent = "Add Custom / Manufacturer Fitting";
+            if (elements.modalCustomFittingSubtitle) elements.modalCustomFittingSubtitle.textContent = "Specify equipment pressure loss from manufacturer catalog data";
+            if (elements.btnSaveCustomFitting) elements.btnSaveCustomFitting.textContent = "➕ Add to Schedule";
+            if (elements.groupCustomInsertPos) elements.groupCustomInsertPos.classList.remove("hidden");
+
+            // Suggest next code
+            const customCount = (p?.fittings || []).filter(f => f.is_custom).length;
+            if (elements.inputCustomCode) elements.inputCustomCode.value = `CUST-${customCount + 1}`;
+            if (elements.inputCustomName) elements.inputCustomName.value = "";
+            if (elements.inputCustomDp) elements.inputCustomDp.value = "";
+            if (elements.inputCustomQty) elements.inputCustomQty.value = "1";
+            if (elements.selectCustomShape) elements.selectCustomShape.value = "RECT";
+            if (elements.inputCustomDims) elements.inputCustomDims.value = "";
+            if (elements.inputCustomQ) elements.inputCustomQ.value = "";
+            if (elements.inputCustomV) elements.inputCustomV.value = "";
+            if (elements.inputCustomMfr) elements.inputCustomMfr.value = "";
+            if (elements.inputCustomModel) elements.inputCustomModel.value = "";
+            if (elements.inputCustomRemarks) elements.inputCustomRemarks.value = "";
+            if (elements.chkSaveCustomTemplate) elements.chkSaveCustomTemplate.checked = false;
+            if (elements.selectCustomTemplate) elements.selectCustomTemplate.value = "";
+        }
+
+        loadCustomTemplates();
+        if (elements.modalCustomFitting) {
+            elements.modalCustomFitting.classList.remove("hidden");
+        }
+        if (elements.inputCustomCode) {
+            setTimeout(() => elements.inputCustomCode.focus(), 100);
+        }
+    }
+
+    function closeCustomFittingModal() {
+        if (elements.modalCustomFitting) {
+            elements.modalCustomFitting.classList.add("hidden");
+        }
+        state.editingCustomFitting = null;
+    }
+
+    async function saveCustomFitting() {
+        if (!state.activeProjectId) return;
+
+        const code = (elements.inputCustomCode ? elements.inputCustomCode.value : "").trim();
+        const name = (elements.inputCustomName ? elements.inputCustomName.value : "").trim();
+        const dpStr = elements.inputCustomDp ? elements.inputCustomDp.value.trim() : "";
+        const qtyStr = elements.inputCustomQty ? elements.inputCustomQty.value.trim() : "1";
+
+        const errBox = elements.customFittingError;
+        const showError = (msg) => {
+            if (errBox) {
+                errBox.textContent = `⚠️ ${msg}`;
+                errBox.classList.remove("hidden");
+            } else {
+                alert(msg);
+            }
+        };
+
+        if (!code) {
+            showError("Equipment / Fitting Code is required (e.g. CUST-1, VAV-1, FAN-1).");
+            elements.inputCustomCode?.focus();
+            return;
+        }
+
+        if (!name) {
+            showError("Equipment Description is required (e.g. VAV Box - Model XYZ).");
+            elements.inputCustomName?.focus();
+            return;
+        }
+
+        const dpVal = parseFloat(dpStr);
+        if (isNaN(dpVal) || dpVal < 0) {
+            showError("Pressure Loss ΔP must be a valid number greater than or equal to 0.");
+            elements.inputCustomDp?.focus();
+            return;
+        }
+
+        const qtyVal = parseInt(qtyStr, 10);
+        if (isNaN(qtyVal) || qtyVal < 1) {
+            showError("Quantity must be an integer of at least 1.");
+            elements.inputCustomQty?.focus();
+            return;
+        }
+
+        if (errBox) errBox.classList.add("hidden");
+
+        const isEditing = Boolean(state.editingCustomFitting);
+        const shapeVal = elements.selectCustomShape ? elements.selectCustomShape.value : "RECT";
+        const dimsVal = (elements.inputCustomDims ? elements.inputCustomDims.value : "").trim();
+        const qVal = parseFloat(elements.inputCustomQ?.value) || 0;
+        const vVal = parseFloat(elements.inputCustomV?.value) || 0;
+        const mfrVal = (elements.inputCustomMfr ? elements.inputCustomMfr.value : "").trim();
+        const modelVal = (elements.inputCustomModel ? elements.inputCustomModel.value : "").trim();
+        const remarksVal = (elements.inputCustomRemarks ? elements.inputCustomRemarks.value : "").trim();
+        const notesVal = remarksVal || [mfrVal, modelVal].filter(Boolean).join(" ");
+
+        const payload = {
+            code: code,
+            name: name,
+            is_custom: true,
+            source: "custom",
+            shape: shapeVal,
+            dimensions: dimsVal,
+            Q: qVal,
+            velocity: vVal,
+            mfr: mfrVal,
+            model: modelVal,
+            remarks: remarksVal,
+            notes: notesVal,
+            dp: dpVal,
+            qty: qtyVal,
+            insert_pos: isEditing ? undefined : (elements.selectCustomInsertPos ? elements.selectCustomInsertPos.value : "end")
+        };
+
+        try {
+            const url = isEditing
+                ? `/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings/${encodeURIComponent(state.editingCustomFitting.id)}`
+                : `/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings`;
+            const method = isEditing ? "PUT" : "POST";
+
+            const resp = await fetch(url, {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const res = await resp.json();
+
+            if (res.status === "success") {
+                // Optionally save as template
+                if (elements.chkSaveCustomTemplate && elements.chkSaveCustomTemplate.checked) {
+                    try {
+                        await fetch("/api/custom-fitting-templates", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                name: name,
+                                code: code,
+                                shape: shapeVal,
+                                dimensions: dimsVal,
+                                dp: dpVal,
+                                Q: qVal,
+                                velocity: vVal,
+                                mfr: mfrVal,
+                                model: modelVal,
+                                remarks: remarksVal
+                            })
+                        });
+                    } catch (tErr) {
+                        console.warn("Failed to save template:", tErr);
+                    }
+                }
+
+                closeCustomFittingModal();
+                await fetchActiveProjectDetails(state.activeProjectId);
+                renderProjectScheduleTable(state.activeProject);
+                updateProjectRibbonBadge();
+                showPrjToast(isEditing
+                    ? `✓ Updated custom fitting [${code}] in schedule!`
+                    : `✓ Added custom fitting [${code}] to schedule!`
+                );
+            } else {
+                showError(res.message || "Failed to save custom fitting.");
+            }
+        } catch (err) {
+            console.error("Network error saving custom fitting:", err);
+            showError("Network error connecting to DuctFit Pro server.");
+        }
+    }
+
+    async function reorderScheduleRows(sourceIdx, targetIdx) {
+        if (!state.activeProjectId) return;
+        try {
+            const resp = await fetch(`/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings/reorder`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ source_index: sourceIdx, target_index: targetIdx })
+            });
+            const res = await resp.json();
+            if (res.status === "success") {
+                await fetchActiveProjectDetails(state.activeProjectId);
+                renderProjectScheduleTable(state.activeProject);
+                updateProjectRibbonBadge();
+                showPrjToast("↕️ Schedule rows reordered and renumbered");
+            } else {
+                alert(`Reorder failed: ${res.message || "Out of bounds"}`);
+            }
+        } catch (err) {
+            console.error("Network error reordering rows:", err);
+        }
+    }
+
     function renderProjectScheduleTable(p) {
         if (!elements.tbodyProjectSchedule) return;
         elements.tbodyProjectSchedule.innerHTML = "";
@@ -5512,18 +6175,22 @@
         const flowUnit = isSI ? "L/s" : "cfm";
         const velUnit = isSI ? "m/s" : "fpm";
 
+        if (elements.scheduleBarCount) {
+            elements.scheduleBarCount.textContent = `${fittings.length} item${fittings.length === 1 ? '' : 's'}`;
+        }
+
         // Update thead with exact physical units in brackets
         if (elements.tableProjectSchedule) {
             const th = elements.tableProjectSchedule.querySelector("thead");
             if (th) {
                 th.innerHTML = `
                     <tr>
-                        <th style="width: 36px;" class="text-center">#</th>
-                        <th style="width: 95px;">Tag / Mark</th>
+                        <th style="width: 44px;" class="text-center">#</th>
+                        <th style="width: 105px;">Tag / Mark</th>
                         <th style="width: 80px;" class="text-center">Code</th>
                         <th>Fitting Description</th>
                         <th style="width: 65px;" class="text-center">Shape</th>
-                        <th style="width: 135px;">Dimensions</th>
+                        <th style="width: 130px;">Dimensions</th>
                         <th style="width: 80px;" class="text-right">Q [${flowUnit}]</th>
                         <th style="width: 80px;" class="text-right">V [${velUnit}]</th>
                         <th style="width: 75px;" class="text-right">P<sub>v</sub> [${dpUnit}]</th>
@@ -5531,7 +6198,7 @@
                         <th style="width: 80px;" class="text-right">ΔP [${dpUnit}]</th>
                         <th style="width: 65px;" class="text-center">Qty</th>
                         <th style="width: 90px;" class="text-right">Total ΔP [${dpUnit}]</th>
-                        <th style="width: 80px;" class="text-center">Actions</th>
+                        <th style="width: 125px;" class="text-center">Actions</th>
                     </tr>
                 `;
             }
@@ -5546,7 +6213,7 @@
             elements.tbodyProjectSchedule.innerHTML = `
                 <tr>
                     <td colspan="14" style="text-align: center; padding: 30px; color: #64748b; font-style: italic;">
-                        No fittings added to this project yet. Calculate any duct fitting and click "➕ Add to Project" to build the ESP schedule.
+                        No fittings added to this project yet. Calculate any duct fitting or click "➕ Add Custom Fitting" to build the schedule.
                     </td>
                 </tr>
             `;
@@ -5560,8 +6227,19 @@
             return;
         }
 
+        let draggedRowIdx = null;
+
         fittings.forEach((fit, idx) => {
             const tr = document.createElement("tr");
+            tr.setAttribute("draggable", "true");
+            tr.dataset.rowIdx = String(idx);
+
+            const isCustom = Boolean(fit.is_custom || fit.source === "custom");
+            const rawCode = (fit.code || (isCustom ? "CUST-1" : "CR11-1")).trim();
+            const cleanCode = rawCode.replace(/-F\d+$/i, "");
+            const tagStr = `${cleanCode}-F${String(idx + 1).padStart(2, '0')}`;
+            fit.tag = tagStr;
+            fit.item_no = idx + 1;
 
             const qVal = Number(fit.Q || 0);
             const vVal = Number(fit.velocity || 0);
@@ -5574,43 +6252,137 @@
             totalQty += qtyVal;
             cumulativeDp += totDpVal;
             if (dpVal > maxSingleDp) maxSingleDp = dpVal;
-            if (idx === 0) primaryFlow = `${qVal.toFixed(0)} ${flowUnit}`;
+            if (idx === 0 && qVal > 0) primaryFlow = `${qVal.toFixed(0)} ${flowUnit}`;
 
             const shapeClass = (fit.shape || "rect").toLowerCase();
 
-            tr.innerHTML = `
-                <td style="color: #64748b; font-weight: 600;">${idx + 1}</td>
-                <td><span class="tag-badge">${escapeHtml(fit.tag || `FIT-${idx+1}`)}</span></td>
-                <td><span class="code-pill">${escapeHtml(fit.code)}</span></td>
-                <td>
-                    <div style="font-weight: 600; color: #0f172a;">${escapeHtml(fit.name || fit.code)}</div>
+            // Construct Description and Sub-details
+            let descHtml = "";
+            if (isCustom) {
+                const subDetails = [
+                    fit.mfr ? `Mfr: ${escapeHtml(fit.mfr)}` : "",
+                    fit.model ? `Model: ${escapeHtml(fit.model)}` : "",
+                    (fit.remarks || fit.notes) ? escapeHtml(fit.remarks || fit.notes) : ""
+                ].filter(Boolean).join(" &bull; ");
+
+                descHtml = `
+                    <div class="fit-name-row">
+                        <span style="font-weight: 600; color: #0f172a;">${escapeHtml(fit.name || cleanCode)}</span>
+                        <span class="badge-mfr-data" title="Manufacturer laboratory certified pressure loss (Non-ASHRAE)">MFR DATA</span>
+                    </div>
+                    ${subDetails ? `<div class="cell-sub-detail">${subDetails}</div>` : ''}
+                `;
+            } else {
+                descHtml = `
+                    <div style="font-weight: 600; color: #0f172a;">${escapeHtml(fit.name || cleanCode)}</div>
                     ${fit.notes ? `<div style="font-size: 10.5px; color: #64748b;">${escapeHtml(fit.notes)}</div>` : ''}
+                `;
+            }
+
+            // Construct Cells
+            const qCell = qVal > 0 ? qVal.toFixed(0) : (isCustom ? '<span class="na-cell">N/A</span>' : '-');
+            const vCell = vVal > 0 ? vVal.toFixed(2) : (isCustom ? '<span class="na-cell">N/A</span>' : '-');
+            const pvCell = isCustom ? '<span class="na-cell" title="Not calculated by app (Manufacturer Data)">N/A</span>' : (pvVal > 0 ? pvVal.toFixed(1) : '-');
+            const coeffCell = isCustom ? '<span class="na-cell" title="Not calculated by app (Manufacturer Data)">N/A</span>' : coeffVal.toFixed(4);
+            const dimsCell = fit.dimensions ? escapeHtml(fit.dimensions) : (isCustom ? '<span class="na-cell">N/A</span>' : '-');
+            const shapeCell = fit.shape && fit.shape.toUpperCase() !== "N/A"
+                ? `<span class="shape-badge ${shapeClass}">${shapeClass.toUpperCase()}</span>`
+                : `<span class="na-cell">N/A</span>`;
+
+            tr.innerHTML = `
+                <td style="color: #64748b; font-weight: 600; white-space: nowrap;">
+                    <span class="drag-handle" title="Drag row to reorder">⋮⋮</span>${idx + 1}
                 </td>
-                <td><span class="shape-badge ${shapeClass}">${shapeClass.toUpperCase()}</span></td>
-                <td class="num-cell">${escapeHtml(fit.dimensions || '-')}</td>
-                <td class="num-cell text-right">${qVal > 0 ? qVal.toFixed(0) : '-'}</td>
-                <td class="num-cell text-right">${vVal > 0 ? vVal.toFixed(2) : '-'}</td>
-                <td class="num-cell text-right">${pvVal > 0 ? pvVal.toFixed(1) : '-'}</td>
-                <td class="num-cell text-right" title="${fit.coeff_type || 'Co'}">${coeffVal.toFixed(4)}</td>
+                <td><span class="tag-badge">${escapeHtml(tagStr)}</span></td>
+                <td><span class="code-pill ${isCustom ? 'code-pill-custom' : ''}">${escapeHtml(cleanCode)}</span></td>
+                <td>${descHtml}</td>
+                <td class="text-center">${shapeCell}</td>
+                <td class="num-cell">${dimsCell}</td>
+                <td class="num-cell text-right">${qCell}</td>
+                <td class="num-cell text-right">${vCell}</td>
+                <td class="num-cell text-right">${pvCell}</td>
+                <td class="num-cell text-right" title="${isCustom ? 'Manufacturer Data' : (fit.coeff_type || 'Co')}">${coeffCell}</td>
                 <td class="num-cell text-right loss-val">${dpVal.toFixed(1)}</td>
                 <td class="num-cell text-center" style="font-weight: bold;">${qtyVal}</td>
                 <td class="num-cell text-right total-loss-val">${totDpVal.toFixed(1)}</td>
                 <td class="text-center">
-                    <div style="display: inline-flex; gap: 4px; justify-content: center;">
-                        <button type="button" class="btn-table-action edit-fit btn-load-fit" title="Edit this Fitting" data-fit-id="${fit.id}">✏️</button>
+                    <div style="display: inline-flex; gap: 3px; align-items: center; justify-content: center;">
+                        <button type="button" class="btn-table-action btn-row-up" title="Move row up" ${idx === 0 ? 'disabled' : ''} data-row-idx="${idx}">▲</button>
+                        <button type="button" class="btn-table-action btn-row-down" title="Move row down" ${idx === fittings.length - 1 ? 'disabled' : ''} data-row-idx="${idx}">▼</button>
+                        <button type="button" class="btn-table-action edit-fit ${isCustom ? 'btn-edit-custom-fit' : 'btn-load-fit'}" title="${isCustom ? 'Edit this Custom Fitting' : 'Edit this Fitting in Calculator'}" data-fit-id="${fit.id}">✏️</button>
                         <button type="button" class="btn-table-action delete btn-del-fit" title="Delete from schedule" data-fit-id="${fit.id}">🗑️</button>
                     </div>
                 </td>
             `;
 
+            // Action button handlers
+            const btnUp = tr.querySelector(".btn-row-up");
+            if (btnUp && idx > 0) {
+                btnUp.addEventListener("click", () => reorderScheduleRows(idx, idx - 1));
+            }
+            const btnDown = tr.querySelector(".btn-row-down");
+            if (btnDown && idx < fittings.length - 1) {
+                btnDown.addEventListener("click", () => reorderScheduleRows(idx, idx + 1));
+            }
+
+            const btnEditCustom = tr.querySelector(".btn-edit-custom-fit");
+            if (btnEditCustom) {
+                btnEditCustom.addEventListener("click", () => openCustomFittingModal(fit));
+            }
+
             const btnLoad = tr.querySelector(".btn-load-fit");
             if (btnLoad) {
                 btnLoad.addEventListener("click", () => loadFittingFromSchedule(fit));
             }
+
             const btnDel = tr.querySelector(".btn-del-fit");
             if (btnDel) {
                 btnDel.addEventListener("click", () => deleteFittingFromSchedule(fit.id));
             }
+
+            // Drag and drop listeners
+            tr.addEventListener("dragstart", (e) => {
+                draggedRowIdx = idx;
+                tr.classList.add("row-dragging");
+                e.dataTransfer.effectAllowed = "move";
+                e.dataTransfer.setData("text/plain", String(idx));
+            });
+
+            tr.addEventListener("dragend", () => {
+                tr.classList.remove("row-dragging");
+                elements.tbodyProjectSchedule.querySelectorAll("tr").forEach(r => {
+                    r.classList.remove("drop-target-above", "drop-target-below");
+                });
+            });
+
+            tr.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "move";
+                const rect = tr.getBoundingClientRect();
+                const relY = e.clientY - rect.top;
+                if (relY < rect.height / 2) {
+                    tr.classList.add("drop-target-above");
+                    tr.classList.remove("drop-target-below");
+                } else {
+                    tr.classList.add("drop-target-below");
+                    tr.classList.remove("drop-target-above");
+                }
+            });
+
+            tr.addEventListener("dragleave", () => {
+                tr.classList.remove("drop-target-above", "drop-target-below");
+            });
+
+            tr.addEventListener("drop", async (e) => {
+                e.preventDefault();
+                tr.classList.remove("drop-target-above", "drop-target-below");
+                if (draggedRowIdx === null || draggedRowIdx === idx) return;
+                const rect = tr.getBoundingClientRect();
+                const relY = e.clientY - rect.top;
+                let targetIdx = relY < rect.height / 2 ? idx : idx + 1;
+                if (draggedRowIdx < targetIdx) targetIdx--;
+                await reorderScheduleRows(draggedRowIdx, targetIdx);
+            });
 
             elements.tbodyProjectSchedule.appendChild(tr);
         });
@@ -5630,7 +6402,7 @@
                         <td></td>
                     </tr>
                     <tr style="background: #f0f9ff; border-top: 1px dashed #93c5fd; font-size: 12px; color: #0369a1;">
-                        <td colspan="11" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin (+${marginStr}):</td>
+                        <td colspan="11" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin:</td>
                         <td class="text-center num-cell" style="font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginStr}</td>
                         <td class="text-right num-cell" style="font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginDp.toFixed(1)} ${dpUnit}</td>
                         <td></td>
@@ -5785,7 +6557,7 @@
                         <td></td>
                     </tr>
                     <tr style="background: #f0f9ff; border-top: 1px dashed #93c5fd; font-size: 12px; color: #0369a1;">
-                        <td colspan="10" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin (+${marginStr}):</td>
+                        <td colspan="10" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin:</td>
                         <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginStr}</td>
                         <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginDp.toFixed(1)} ${dpUnit}</td>
                         <td></td>
@@ -5844,6 +6616,10 @@
     }
 
     function loadFittingFromSchedule(fit) {
+        if (fit.is_custom || fit.source === "custom") {
+            openCustomFittingModal(fit);
+            return;
+        }
         state.editingFitting = fit;
         closeProjectSummaryModal();
         if (fit.unit_system && fit.unit_system !== state.unit) {
@@ -5985,7 +6761,7 @@
 
             csv += `,,,,,,,,,SUBTOTAL (Calculated Friction Loss),${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
             if (marginPct > 0) {
-                csv += `,,,,,,,,,DESIGN SAFETY MARGIN (+${marginStr}),,+${marginDp.toFixed(1)}\n`;
+                csv += `,,,,,,,,,DESIGN SAFETY MARGIN,+${marginStr},+${marginDp.toFixed(1)}\n`;
                 csv += `,,,,,,,,,TOTAL SIZING DESIGN LOSS,,${designDp.toFixed(1)}\n`;
             } else {
                 csv += `,,,,,,,,,TOTALS,${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
@@ -6030,20 +6806,35 @@
                 cumDp += totDp;
                 totQty += qty;
 
+                const isCustom = Boolean(fit.is_custom || fit.source === "custom");
+                const tagVal = fit.tag || `${fit.code}-F${String(i + 1).padStart(2, '0')}`;
+                const shapeVal = fit.shape ? fit.shape.toUpperCase() : (isCustom ? "N/A" : "");
+                const dimsVal = fit.dimensions || (isCustom ? "N/A" : "");
+                const qVal = fit.Q > 0 ? fit.Q : (isCustom ? "N/A" : "");
+                const vVal = fit.velocity > 0 ? fit.velocity : (isCustom ? "N/A" : "");
+                const pvVal = isCustom ? "N/A" : (fit.pv || "");
+                const coeffVal = isCustom ? "N/A" : (fit.f_or_Co || "");
+                const notePieces = [
+                    fit.mfr ? `Mfr: ${fit.mfr}` : '',
+                    fit.model ? `Model: ${fit.model}` : '',
+                    fit.remarks || fit.notes || ''
+                ].filter(Boolean);
+                const noteVal = notePieces.length > 0 ? notePieces.join(" | ") : (isCustom ? "Manufacturer Data" : "");
+
                 csv += `${i + 1},`;
-                csv += `${csvEscape(fit.tag || '')},`;
+                csv += `${csvEscape(tagVal)},`;
                 csv += `${csvEscape(fit.code)},`;
                 csv += `${csvEscape(fit.name || '')},`;
-                csv += `${csvEscape(fit.shape || '')},`;
-                csv += `${csvEscape(fit.dimensions || '')},`;
-                csv += `${fit.Q || ''},`;
-                csv += `${fit.velocity || ''},`;
-                csv += `${fit.pv || ''},`;
-                csv += `${fit.f_or_Co || ''},`;
+                csv += `${csvEscape(shapeVal)},`;
+                csv += `${csvEscape(dimsVal)},`;
+                csv += `${qVal},`;
+                csv += `${vVal},`;
+                csv += `${pvVal},`;
+                csv += `${coeffVal},`;
                 csv += `${dp.toFixed(2)},`;
                 csv += `${qty},`;
                 csv += `${totDp.toFixed(2)},`;
-                csv += `${csvEscape(fit.notes || '')}\n`;
+                csv += `${csvEscape(noteVal)}\n`;
             });
 
             const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
@@ -6053,7 +6844,7 @@
 
             csv += `,,,,,,,,,,SUBTOTAL (Calculated Loss),${totQty},${cumDp.toFixed(2)},\n`;
             if (marginPct > 0) {
-                csv += `,,,,,,,,,,DESIGN SAFETY MARGIN (+${marginStr}),,+${marginDp.toFixed(2)},\n`;
+                csv += `,,,,,,,,,,DESIGN SAFETY MARGIN,+${marginStr},+${marginDp.toFixed(2)},\n`;
                 csv += `,,,,,,,,,,TOTAL DESIGN FAN ESP,,${designDp.toFixed(2)},\n`;
             } else {
                 csv += `,,,,,,,,,,TOTALS,${totQty},${cumDp.toFixed(2)},\n`;
@@ -6282,6 +7073,32 @@
         if (elements.btnPrintProjectReport) {
             elements.btnPrintProjectReport.addEventListener("click", printProjectReport);
         }
+        if (elements.btnAddCustomFitting) {
+            elements.btnAddCustomFitting.addEventListener("click", () => openCustomFittingModal());
+        }
+        if (elements.btnAddCustomFittingFooter) {
+            elements.btnAddCustomFittingFooter.addEventListener("click", () => openCustomFittingModal());
+        }
+        if (elements.btnCloseCustomFittingModal) {
+            elements.btnCloseCustomFittingModal.addEventListener("click", closeCustomFittingModal);
+        }
+        if (elements.btnCancelCustomFitting) {
+            elements.btnCancelCustomFitting.addEventListener("click", closeCustomFittingModal);
+        }
+        if (elements.btnSaveCustomFitting) {
+            elements.btnSaveCustomFitting.addEventListener("click", saveCustomFitting);
+        }
+        if (elements.btnApplyCustomTemplate) {
+            elements.btnApplyCustomTemplate.addEventListener("click", applySelectedTemplate);
+        }
+        if (elements.selectCustomTemplate) {
+            elements.selectCustomTemplate.addEventListener("change", applySelectedTemplate);
+        }
+        if (elements.modalCustomFitting) {
+            elements.modalCustomFitting.addEventListener("click", (e) => {
+                if (e.target === elements.modalCustomFitting) closeCustomFittingModal();
+            });
+        }
         if (elements.btnClearProjectFittings) {
             elements.btnClearProjectFittings.addEventListener("click", clearProjectFittings);
         }
@@ -6362,13 +7179,16 @@
                 if (elements.addFittingDialog && !elements.addFittingDialog.classList.contains("hidden")) {
                     closeAddFittingDialog();
                 }
+                if (elements.modalCustomFitting && !elements.modalCustomFitting.classList.contains("hidden")) {
+                    closeCustomFittingModal();
+                }
                 if (elements.projectSummaryModal && !elements.projectSummaryModal.classList.contains("hidden")) {
                     closeProjectSummaryModal();
                 }
             }
         });
 
-        [elements.newProjectModal, elements.addFittingDialog, elements.projectSummaryModal, elements.allProjectsModal, elements.editProjectModal].forEach(m => {
+        [elements.newProjectModal, elements.addFittingDialog, elements.projectSummaryModal, elements.allProjectsModal, elements.editProjectModal, elements.modalCustomFitting].forEach(m => {
             if (m) {
                 m.addEventListener("click", (e) => {
                     if (e.target === m) {

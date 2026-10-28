@@ -1182,29 +1182,47 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     sched_rows = [sched_headers]
 
     for idx, fit in enumerate(fittings):
+        is_custom = bool(fit.get("is_custom") or fit.get("source") == "custom")
         q = float(fit.get("Q", 0) or 0)
         v = float(fit.get("velocity", 0) or 0)
-        coeff = float(fit.get("f_or_Co", 0) or 0)
         dp = float(fit.get("dp", 0) or 0)
         qty = int(fit.get("qty", 1) or 1)
         tot_dp = float(fit.get("total_dp", dp * qty) or 0)
 
         code_val = fit.get("code", "-")
-        off_name, _ = get_official_ashrae_meta(code_val)
-        display_name = off_name or fit.get("name", "-")
-        if code_val and display_name.upper().startswith(code_val.upper()):
-            display_name = re.sub(r"^" + re.escape(code_val) + r"[\s:\-]+", "", display_name, flags=re.IGNORECASE).strip()
+        tag_val = fit.get("tag", f"FIT-{idx+1}")
+
+        if is_custom:
+            display_name = fit.get("name", "Custom Equipment")
+            shape_str = str(fit.get("shape", "N/A")).upper()
+            dim_str = str(fit.get("dimensions") or "N/A")
+            q_str = f"{q:.0f}" if q > 0 else "N/A"
+            v_str = f"{v:.1f}" if v > 0 else "N/A"
+            coeff_str = "N/A"
+            name_cell = Paragraph(f"{display_name} <font size=6 color='#7c3aed'><b>[MFR]</b></font>", styles["cell"])
+        else:
+            off_name, _ = get_official_ashrae_meta(code_val)
+            display_name = off_name or fit.get("name", "-")
+            if code_val and display_name.upper().startswith(code_val.upper()):
+                display_name = re.sub(r"^" + re.escape(code_val) + r"[\s:\-]+", "", display_name, flags=re.IGNORECASE).strip()
+            shape_str = fit.get("shape", "rect").upper()
+            dim_str = fit.get("dimensions", "-")
+            q_str = f"{q:.0f}"
+            v_str = f"{v:.1f}"
+            coeff = float(fit.get("f_or_Co", 0) or 0)
+            coeff_str = f"{coeff:.4f}"
+            name_cell = Paragraph(display_name, styles["cell"])
 
         sched_rows.append([
             Paragraph(str(idx + 1), styles["cell"]),
-            Paragraph(f"<b>{fit.get('tag', f'FIT-{idx+1}')}</b>", styles["cell"]),
+            Paragraph(f"<b>{tag_val}</b>", styles["cell"]),
             Paragraph(code_val, styles["cell_bold"]),
-            Paragraph(display_name, styles["cell"]),
-            Paragraph(fit.get("shape", "rect").upper(), styles["cell"]),
-            Paragraph(fit.get("dimensions", "-"), styles["cell"]),
-            Paragraph(f"{q:.0f}", styles["cell_right"]),
-            Paragraph(f"{v:.1f}", styles["cell_right"]),
-            Paragraph(f"{coeff:.4f}", styles["cell_right"]),
+            name_cell,
+            Paragraph(shape_str, styles["cell"]),
+            Paragraph(dim_str, styles["cell"]),
+            Paragraph(q_str, styles["cell_right"]),
+            Paragraph(v_str, styles["cell_right"]),
+            Paragraph(coeff_str, styles["cell_right"]),
             Paragraph(f"{dp:.1f}", styles["cell_right"]),
             Paragraph(str(qty), styles["cell_right"]),
             Paragraph(f"<b>{tot_dp:.1f}</b>", styles["cell_right"])
@@ -1220,7 +1238,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
             Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
         ])
         sched_rows.append([
-            "", "", "", Paragraph(f"<b>DESIGN SAFETY MARGIN ({margin_label}):</b>", styles["cell"]),
+            "", "", "", Paragraph("<b>DESIGN SAFETY MARGIN:</b>", styles["cell"]),
             "", "", "", "", "", "",
             Paragraph(f"<b>{margin_label}</b>", styles["cell_right"]),
             Paragraph(f"<b>+{margin_dp:.1f} {dp_unit}</b>", styles["cell_right"])
@@ -1285,6 +1303,11 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     all_fit_cards = []
     fit_calc_data = []
     for idx, fit in enumerate(fittings):
+        is_custom = bool(fit.get("is_custom") or fit.get("source") == "custom")
+        if is_custom:
+            fit_calc_data.append(({}, []))
+            continue
+
         f_code = fit.get("code", "CR11-1")
         f_inputs = fit.get("inputs", {})
         c_res = {}
@@ -1329,11 +1352,118 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         story.append(PageBreak())
 
         code = fit.get("code", "CR11-1")
+        tag = fit.get("tag", f"FIT-{idx+1}")
+        is_custom = bool(fit.get("is_custom") or fit.get("source") == "custom")
+        prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
+
+        if is_custom:
+            # Custom / Manufacturer Equipment Page
+            name = fit.get("name", "Custom Equipment")
+            header_title = f"{code}  {name}"
+            story.append(Paragraph(header_title, styles["title"]))
+            story.append(Paragraph("<i>(Equipment / Component Pressure Loss &mdash; Certified Manufacturer Data)</i>", styles["subtitle"]))
+
+            subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>Manufacturer Laboratory Rating</b>"
+            story.append(Paragraph(subhead_text, styles["meta"]))
+            story.append(Spacer(1, 10))
+
+            # Banner Notice
+            banner_data = [[
+                Paragraph("<b>EQUIPMENT SPECIFICATION &amp; PERFORMANCE NOTICE</b><br/>"
+                          "<b>Pressure loss as per manufacturer data:</b> Aerodynamic pressure loss for this "
+                          "component is certified by manufacturer catalog data or laboratory test reports and entered "
+                          "directly into the schedule. It is not calculated from ASHRAE Fundamentals Chapter 21 "
+                          "fitting loss tables; no empirical loss coefficient (C<sub>o</sub> or f) or dynamic calculation steps apply.", styles["cell"])
+            ]]
+            t_banner = Table(banner_data, colWidths=[540])
+            t_banner.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f5f3ff")),
+                ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#7c3aed")),
+                ('TOPPADDING', (0, 0), (-1, -1), 8),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                ('LEFTPADDING', (0, 0), (-1, -1), 10),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+            ]))
+            story.append(t_banner)
+            story.append(Spacer(1, 12))
+
+            # Compact Input Data Box (strictly user-entered inputs, NO output/result calculation column)
+            dp_val = float(fit.get("dp", 0) or 0)
+            qty_val = int(fit.get("qty", 1) or 1)
+            tot_dp_val = float(fit.get("total_dp", dp_val * qty_val) or 0)
+            q_val = float(fit.get("Q", 0) or 0)
+            v_val = float(fit.get("velocity", 0) or 0)
+            mfr_val = fit.get("mfr") or "-"
+            model_val = fit.get("model") or "-"
+            shape_val = (fit.get("shape") or "N/A").upper()
+            dim_val = fit.get("dimensions") or "N/A"
+            remarks_val = fit.get("remarks") or fit.get("notes") or "(None specified)"
+
+            mfr_table_data = [
+                [
+                    Paragraph("<b>Equipment Code / Tag:</b>", styles["cell_bold"]),
+                    Paragraph(f"{code} / {tag}", styles["cell"]),
+                    Paragraph("<b>Manufacturer:</b>", styles["cell_bold"]),
+                    Paragraph(mfr_val, styles["cell"])
+                ],
+                [
+                    Paragraph("<b>Equipment Description:</b>", styles["cell_bold"]),
+                    Paragraph(name, styles["cell"]),
+                    Paragraph("<b>Model / Part No.:</b>", styles["cell_bold"]),
+                    Paragraph(model_val, styles["cell"])
+                ],
+                [
+                    Paragraph("<b>Duct Shape:</b>", styles["cell_bold"]),
+                    Paragraph(shape_val, styles["cell"]),
+                    Paragraph("<b>Duct Dimensions:</b>", styles["cell_bold"]),
+                    Paragraph(dim_val, styles["cell"])
+                ],
+                [
+                    Paragraph("<b>Design Airflow (Q):</b>", styles["cell_bold"]),
+                    Paragraph(f"{q_val:.0f} {flow_unit}" if q_val > 0 else "N/A", styles["cell"]),
+                    Paragraph("<b>Air Velocity (V):</b>", styles["cell_bold"]),
+                    Paragraph(f"{v_val:.2f} {vel_unit}" if v_val > 0 else "N/A", styles["cell"])
+                ],
+                [
+                    Paragraph("<b>Unit Loss (&Delta;P):</b>", styles["cell_bold"]),
+                    Paragraph(f"<b>{dp_val:.2f} {dp_unit}</b> (per unit)", styles["cell_bold"]),
+                    Paragraph("<b>Quantity (Qty):</b>", styles["cell_bold"]),
+                    Paragraph(f"<b>{qty_val}</b>", styles["cell_bold"])
+                ],
+                [
+                    Paragraph("<b>Total Section Loss:</b>", styles["cell_bold"]),
+                    Paragraph(f"<font color='#166534'><b>{tot_dp_val:.2f} {dp_unit}</b></font>", styles["cell_bold"]),
+                    Paragraph("<b>Loss Source:</b>", styles["cell_bold"]),
+                    Paragraph("Manufacturer Catalog / Test Certificate", styles["cell"])
+                ],
+                [
+                    Paragraph("<b>Engineering Remarks:</b>", styles["cell_bold"]),
+                    Paragraph(remarks_val, styles["cell"]),
+                    Paragraph("<b>Loss Coefficient:</b>", styles["cell_bold"]),
+                    Paragraph("N/A (Manufacturer Rated)", styles["cell"])
+                ]
+            ]
+
+            t_mfr = Table(mfr_table_data, colWidths=[130, 140, 130, 140])
+            t_mfr.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
+                ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0369a1")),
+                ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                ('TOPPADDING', (0, 0), (-1, -1), 6),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                ('LEFTPADDING', (0, 0), (-1, -1), 8),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ]))
+            story.append(t_mfr)
+            # Strictly NO CAD blueprint image, strictly NO calculation steps!
+            continue
+
+        # Standard ASHRAE Fitting Page
         off_name, off_cit = get_official_ashrae_meta(code)
         name = off_name or fit.get("name", "Duct Section")
         if code and name.upper().startswith(code.upper()):
             name = re.sub(r"^" + re.escape(code) + r"[\s:\-]+", "", name, flags=re.IGNORECASE).strip()
-        tag = fit.get("tag", f"FIT-{idx+1}")
         inputs = fit.get("inputs", {})
 
         # Use pre-calculated steps
@@ -1347,7 +1477,6 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
         story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
-        prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
         subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
         story.append(Paragraph(subhead_text, styles["meta"]))
         story.append(Spacer(1, 6))
@@ -1600,7 +1729,7 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
             Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
         ])
         sched_rows.append([
-            "", "", "", Paragraph(f"<b>DESIGN SAFETY MARGIN ({margin_label}):</b>", styles["cell"]),
+            "", "", "", Paragraph("<b>DESIGN SAFETY MARGIN:</b>", styles["cell"]),
             "", "", "", "", "", "",
             Paragraph(f"<b>{margin_label}</b>", styles["cell_right"]),
             Paragraph(f"<b>+{margin_dp:.1f} {dp_unit}</b>", styles["cell_right"])

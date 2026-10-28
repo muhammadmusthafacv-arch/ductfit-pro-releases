@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 from datetime import datetime
 
@@ -111,10 +112,33 @@ def list_projects():
         "projects": projects_summary
     }
 
+def renumber_fittings(fittings_list):
+    """
+    Standardizes every fitting's sequential numbering and tag:
+    - item_no: 1-based sequential integer (1, 2, 3...)
+    - tag: <Code>-F<two-digit row position> (e.g. CR11-1-F01, CUST-1-F04)
+    Guarantees no gaps, no duplicates.
+    """
+    if not isinstance(fittings_list, list):
+        return []
+    for i, f in enumerate(fittings_list):
+        pos = i + 1
+        raw_code = str(f.get("code") or "FIT").strip()
+        # Clean off any trailing -Fxx suffix to prevent recursive tags
+        clean_code = re.sub(r"-F\d+$", "", raw_code, flags=re.IGNORECASE).strip()
+        if not clean_code:
+            clean_code = "CUST-1" if f.get("is_custom") else "FIT"
+        f["code"] = clean_code
+        f["item_no"] = pos
+        f["tag"] = f"{clean_code}-F{pos:02d}"
+    return fittings_list
+
 def get_project(project_id):
     data = get_projects_data()
     for p in data.get("projects", []):
         if p.get("id") == project_id:
+            if p.get("fittings"):
+                renumber_fittings(p["fittings"])
             return p
     return None
 
@@ -179,39 +203,70 @@ def add_fitting_to_project(project_id, fitting_data):
             return None
 
     fittings = target_project.setdefault("fittings", [])
-    fit_idx = len(fittings) + 1
+
+    is_custom = bool(fitting_data.get("is_custom") or fitting_data.get("source") == "custom")
+    raw_code = str(fitting_data.get("code") or ("CUST-1" if is_custom else "CR11-1")).strip()
+    clean_code = re.sub(r"-F\d+$", "", raw_code, flags=re.IGNORECASE).strip()
+    if not clean_code:
+        clean_code = "CUST-1" if is_custom else "CR11-1"
+
+    name = str(fitting_data.get("name") or ("Custom Equipment" if is_custom else "Straight Duct")).strip()
 
     dp_val = float(fitting_data.get("dp", 0) or 0)
-    qty_val = int(fitting_data.get("qty", 1) or 1)
+    qty_val = max(1, int(fitting_data.get("qty", 1) or 1))
     total_dp_val = round(dp_val * qty_val, 2)
 
-    tag = fitting_data.get("tag") or f"FIT-{fit_idx:02d}"
+    fit_record_id = f"fit_{int(time.time()*1000)}_{len(fittings) + 1}"
 
     fitting_record = {
-        "id": f"fit_{int(time.time()*1000)}_{fit_idx}",
-        "item_no": fit_idx,
-        "tag": tag,
-        "code": fitting_data.get("code", "CR11-1"),
-        "name": fitting_data.get("name", "Straight Duct"),
-        "shape": fitting_data.get("shape", "rect"),
-        "category": fitting_data.get("category", "General"),
-        "dimensions": fitting_data.get("dimensions", ""),
+        "id": fit_record_id,
+        "item_no": len(fittings) + 1,
+        "tag": "",  # dynamically set by renumber_fittings
+        "code": clean_code,
+        "name": name,
+        "is_custom": is_custom,
+        "source": "custom" if is_custom else "ashrae",
+        "shape": str(fitting_data.get("shape", "rect" if not is_custom else "N/A")).lower(),
+        "category": fitting_data.get("category", "Custom / Equipment" if is_custom else "General"),
+        "dimensions": str(fitting_data.get("dimensions", "")).strip(),
         "inputs": fitting_data.get("inputs", {}),
         "unit_system": fitting_data.get("unit_system", target_project.get("unit_system", "SI")),
-        "Q": fitting_data.get("Q", 0),
-        "velocity": fitting_data.get("velocity", 0),
-        "pv": fitting_data.get("pv", 0),
-        "f_or_Co": fitting_data.get("f_or_Co", 0),
-        "coeff_type": fitting_data.get("coeff_type", "Co"),
+        "mfr": str(fitting_data.get("mfr", "")).strip(),
+        "model": str(fitting_data.get("model", "")).strip(),
+        "remarks": str(fitting_data.get("remarks", "")).strip(),
+        "Q": float(fitting_data.get("Q", 0) or 0),
+        "velocity": float(fitting_data.get("velocity", 0) or 0),
+        "pv": None if is_custom else float(fitting_data.get("pv", 0) or 0),
+        "f_or_Co": None if is_custom else float(fitting_data.get("f_or_Co", 0) or 0),
+        "coeff_type": "N/A" if is_custom else fitting_data.get("coeff_type", "Co"),
         "dp": dp_val,
         "qty": qty_val,
         "total_dp": total_dp_val,
         "De": fitting_data.get("De", ""),
-        "notes": fitting_data.get("notes", ""),
+        "notes": str(fitting_data.get("notes") or fitting_data.get("remarks") or "").strip(),
         "added_at": _get_timestamp()
     }
 
-    fittings.append(fitting_record)
+    # Insert position handling:
+    # "start" / 0: at the beginning
+    # "end": at the end
+    # integer i: after fitting index i
+    insert_pos = fitting_data.get("insert_pos", "end")
+    if insert_pos == "start" or insert_pos == 0 or insert_pos == "0":
+        fittings.insert(0, fitting_record)
+    elif str(insert_pos).lower() == "end":
+        fittings.append(fitting_record)
+    else:
+        try:
+            target_idx = int(insert_pos)
+            if 0 <= target_idx < len(fittings):
+                fittings.insert(target_idx + 1, fitting_record)
+            else:
+                fittings.append(fitting_record)
+        except (ValueError, TypeError):
+            fittings.append(fitting_record)
+
+    renumber_fittings(fittings)
     target_project["updated_at"] = _get_timestamp()
     save_projects_data(data)
     return fitting_record
@@ -224,9 +279,7 @@ def delete_fitting_from_project(project_id, fitting_id):
             initial_len = len(fittings)
             p["fittings"] = [f for f in fittings if f.get("id") != fitting_id]
             if len(p["fittings"]) < initial_len:
-                # Re-index remaining fittings
-                for i, f in enumerate(p["fittings"]):
-                    f["item_no"] = i + 1
+                renumber_fittings(p["fittings"])
                 p["updated_at"] = _get_timestamp()
                 save_projects_data(data)
                 return True
@@ -257,32 +310,81 @@ def update_fitting_in_project(project_id, fitting_id, fitting_data):
                 if f.get("id") == fitting_id:
                     try:
                         dp_val = float(fitting_data.get("dp", f.get("dp", 0)))
-                        qty_val = int(fitting_data.get("qty", f.get("qty", 1)))
+                        qty_val = max(1, int(fitting_data.get("qty", f.get("qty", 1))))
                         total_dp_val = round(dp_val * qty_val, 2)
-                        
-                        if "tag" in fitting_data: f["tag"] = fitting_data["tag"]
-                        if "name" in fitting_data: f["name"] = fitting_data["name"]
-                        if "shape" in fitting_data: f["shape"] = fitting_data["shape"]
-                        if "dimensions" in fitting_data: f["dimensions"] = fitting_data["dimensions"]
-                        if "inputs" in fitting_data: f["inputs"] = fitting_data["inputs"]
-                        if "unit_system" in fitting_data: f["unit_system"] = fitting_data["unit_system"]
-                        if "Q" in fitting_data: f["Q"] = fitting_data["Q"]
-                        if "velocity" in fitting_data: f["velocity"] = fitting_data["velocity"]
-                        if "pv" in fitting_data: f["pv"] = fitting_data["pv"]
-                        if "f_or_Co" in fitting_data: f["f_or_Co"] = fitting_data["f_or_Co"]
-                        if "coeff_type" in fitting_data: f["coeff_type"] = fitting_data["coeff_type"]
+
+                        if "code" in fitting_data:
+                            clean_c = re.sub(r"-F\d+$", "", str(fitting_data["code"]).strip(), flags=re.IGNORECASE)
+                            f["code"] = clean_c or f.get("code", "FIT")
+                        if "name" in fitting_data:
+                            f["name"] = str(fitting_data["name"]).strip()
+                        if "is_custom" in fitting_data:
+                            f["is_custom"] = bool(fitting_data["is_custom"])
+                        if "shape" in fitting_data:
+                            f["shape"] = str(fitting_data["shape"]).lower()
+                        if "dimensions" in fitting_data:
+                            f["dimensions"] = str(fitting_data["dimensions"]).strip()
+                        if "inputs" in fitting_data:
+                            f["inputs"] = fitting_data["inputs"]
+                        if "unit_system" in fitting_data:
+                            f["unit_system"] = fitting_data["unit_system"]
+                        if "mfr" in fitting_data:
+                            f["mfr"] = str(fitting_data["mfr"]).strip()
+                        if "model" in fitting_data:
+                            f["model"] = str(fitting_data["model"]).strip()
+                        if "remarks" in fitting_data:
+                            f["remarks"] = str(fitting_data["remarks"]).strip()
+                        if "Q" in fitting_data:
+                            f["Q"] = float(fitting_data.get("Q", 0) or 0)
+                        if "velocity" in fitting_data:
+                            f["velocity"] = float(fitting_data.get("velocity", 0) or 0)
+                        if not f.get("is_custom"):
+                            if "pv" in fitting_data: f["pv"] = fitting_data["pv"]
+                            if "f_or_Co" in fitting_data: f["f_or_Co"] = fitting_data["f_or_Co"]
+                            if "coeff_type" in fitting_data: f["coeff_type"] = fitting_data["coeff_type"]
+                        else:
+                            f["pv"] = None
+                            f["f_or_Co"] = None
+                            f["coeff_type"] = "N/A"
+
                         f["dp"] = dp_val
                         f["qty"] = qty_val
                         f["total_dp"] = total_dp_val
                         if "De" in fitting_data: f["De"] = fitting_data["De"]
-                        if "notes" in fitting_data: f["notes"] = fitting_data["notes"]
+                        if "notes" in fitting_data:
+                            f["notes"] = str(fitting_data["notes"]).strip()
+                        elif "remarks" in fitting_data:
+                            f["notes"] = str(fitting_data["remarks"]).strip()
+
+                        renumber_fittings(p["fittings"])
                         f["updated_at"] = _get_timestamp()
                         p["updated_at"] = _get_timestamp()
                         save_projects_data(data)
                         return f
-                    except Exception:
+                    except Exception as ex:
+                        print("Error updating fitting:", ex)
                         return None
     return None
+
+def reorder_fittings_in_project(project_id, source_index, target_index):
+    """
+    Moves a fitting from source_index to target_index and renumbers all tags.
+    """
+    data = get_projects_data()
+    for p in data.get("projects", []):
+        if p.get("id") == project_id:
+            fittings = p.get("fittings", [])
+            n = len(fittings)
+            if 0 <= source_index < n and 0 <= target_index < n:
+                if source_index != target_index:
+                    item = fittings.pop(source_index)
+                    fittings.insert(target_index, item)
+                renumber_fittings(fittings)
+                p["updated_at"] = _get_timestamp()
+                save_projects_data(data)
+                return True
+            return False
+    return False
 
 def clear_project_fittings(project_id):
     data = get_projects_data()
