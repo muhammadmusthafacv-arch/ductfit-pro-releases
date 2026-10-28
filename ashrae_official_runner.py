@@ -409,6 +409,12 @@ class OfficialAshraeEngine:
             tbl_file = os.path.join(self.tbl_dir, f"{key}.tbl")
         if os.path.exists(tbl_file):
             t = AshraeTableParser.parse_file(tbl_file)
+            # Align first-column coordinate with official AshraeDuct.mdb database
+            # where Table 1 column header was entered as 0.0 instead of 0.01
+            if key in ('SD5-24', 'SD5-25', 'SD5-26', 'CD6-3', 'SR5-14', 'CR6-4', 'SR2-2', 'ER5-4'):
+                if 1 in t and 'x' in t[1] and len(t[1]['x']) > 0 and abs(t[1]['x'][0] - 0.01) < 1e-4:
+                    t[1]['x'] = t[1]['x'].copy()
+                    t[1]['x'][0] = 0.0
             self.cached_tables[key] = t
             return t
         self.cached_tables[key] = {}
