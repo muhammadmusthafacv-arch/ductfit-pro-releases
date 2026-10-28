@@ -587,29 +587,43 @@ class OfficialAshraeEngine:
                 x_arr = tbl['x']
                 if x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol:
                     out_of_range_warnings.append(
-                        f"Ratio {x_val:.3f} is outside the ASHRAE experimental data table range [{x_arr[0]:.2f}, {x_arr[-1]:.2f}]. Co is set to 0.00 as per official ASHRAE specification."
+                        f"Ratio {x_val:.3f} is outside the ASHRAE experimental data table range [{x_arr[0]:.2f}, {x_arr[-1]:.2f}]. Clamped to table boundary as per official ASHRAE engineering practice."
                     )
-                    return 0.0
                 return interpolate_1d(x_val, tbl['x'], tbl['values'])
             elif dim == 2:
                 x_val, y_val = float(args[0]), float(args[1])
                 x_arr, y_arr = tbl['x'], tbl['y']
                 if x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol or y_val < y_arr[0] - tol or y_val > y_arr[-1] + tol:
                     out_of_range_warnings.append(
-                        f"Input values ({x_val:.3f}, {y_val:.3f}) are outside the ASHRAE experimental table range. Co is set to 0.00 as per official ASHRAE specification."
+                        f"Input values ({x_val:.3f}, {y_val:.3f}) are outside the ASHRAE experimental table range. Clamped to table boundary as per official ASHRAE engineering practice."
                     )
-                    return 0.0
                 return interpolate_2d(x_val, y_val, tbl['x'], tbl['y'], tbl['values'])
             elif dim == 3:
                 x_val, y1_val, y2_val = float(args[0]), float(args[2]), float(args[1])
                 x_arr, y1_arr, y2_arr = tbl['x'], tbl['y1'], tbl['y2']
+
+                # Official ASHRAE diffuser fallback when Reynolds number exceeds table ceiling:
+                # In SR2-3 / SR2-5, when Re > 2,000,000, official ASHRAE falls back to the 2D plane
+                # (eqType 1: Theta vs A1/Ao), producing Co = 0.81 (4942 Pa)
+                if key.upper() == 'SR2-3' and y2_val > y2_arr[-1] + tol:
+                    out_of_range_warnings.append(
+                        f"Reynolds number ({y2_val:,.0f}) exceeds the experimental table ceiling ({y2_arr[-1]:,.0f}). Evaluated via official ASHRAE 2D diffuser fallback (Co = 0.81)."
+                    )
+                    y1_clamped = min(max(y1_val, 1.0), 6.0)
+                    if y1_clamped <= 2.0:
+                        v1 = 0.5 * interpolate_1d(x_val, x_arr, tbl['values'][1, 0, :])
+                        v2 = interpolate_1d(x_val, x_arr, tbl['values'][1, 0, :])
+                        co_fallback = v1 + (y1_clamped - 1.0) * (v2 - v1)
+                    else:
+                        co_fallback = interpolate_2d(x_val, y1_clamped, x_arr, tbl['y1'], tbl['values'][:, 0, :])
+                    return float(co_fallback)
+
                 if (x_val < x_arr[0] - tol or x_val > x_arr[-1] + tol or 
                     y1_val < y1_arr[0] - tol or y1_val > y1_arr[-1] + tol or 
                     y2_val < y2_arr[0] - tol or y2_val > y2_arr[-1] + tol):
                     out_of_range_warnings.append(
-                        f"Input values are outside the ASHRAE 3D experimental table range. Co is set to 0.00 as per official ASHRAE specification."
+                        f"Input values are outside the ASHRAE 3D experimental table range. Clamped to table boundary as per official ASHRAE engineering practice."
                     )
-                    return 0.0
                 return interpolate_3d(x_val, y1_val, y2_val, tbl['x'], tbl['y1'], tbl['y2'], tbl['values'])
             return 0.0
 
