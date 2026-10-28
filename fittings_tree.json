@@ -16,7 +16,7 @@
               "items": [
                 {
                   "code": "SD1-1",
-                  "name": "Bellmouth (Standard Radius), Plenum to Round",
+                  "name": "Bellmouth (Standard Radius), Plenum to Round, Supply Air Systems",
                   "title": "Bellmouth (Standard Radius), Plenum to Round, Supply Air Systems",
                   "citation": "Idelchik 1986, Diagram 4-9 and 3-4",
                   "category": "Plenums",
@@ -147,13 +147,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Bellmouth (Standard Radius), Plenum to Round"
                 },
                 {
                   "code": "SD1-2",
                   "name": "Conical Bellmouth/Sudden Contraction, Plenum to Round",
-                  "title": "Conical Bellmouth/Sudden Contraction, Plenum to Round,",
-                  "citation": "Supply Air Systems (Idelchik 1986, Diagram 4-9)",
+                  "title": "Conical Bellmouth/Sudden Contraction, Plenum to Round",
+                  "citation": "Supply Air Systems (Idelchik 1986, Diagram 4-9",
                   "category": "Plenums",
                   "shape": "round",
                   "type": "entry",
@@ -324,7 +325,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction, Plenum to Round"
                 }
               ]
             },
@@ -414,7 +416,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Abrupt Exit"
                 },
                 {
                   "code": "SD2-2",
@@ -522,7 +525,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Discharge from a Duct Flush with Wall"
                 },
                 {
                   "code": "SD2-3",
@@ -639,7 +643,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Diffuser, Free Discharge"
                 },
                 {
                   "code": "SD2-4",
@@ -753,7 +758,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Diffuser, with Wall"
                 },
                 {
                   "code": "SD2-5",
@@ -849,7 +855,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Exhaust Hood"
                 },
                 {
                   "code": "SD2-6",
@@ -942,7 +949,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Stackhead (Dexit/D=1)"
                 },
                 {
                   "code": "SD2-7",
@@ -1047,7 +1055,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Stackhead (Dexit/D<1)"
                 }
               ]
             },
@@ -1057,9 +1066,9 @@
               "items": [
                 {
                   "code": "SD4-1",
-                  "name": "Round to Round",
+                  "name": "Transition, Round to Round, Supply Air Systems",
                   "title": "Transition, Round to Round, Supply Air Systems",
-                  "citation": "Idelchik 1986, Diagram 5-2 & 5-22",
+                  "citation": "Idelchik 1986, Diagram 5-2 && 5-22",
                   "category": "Transitions",
                   "shape": "round",
                   "type": "transition",
@@ -1197,11 +1206,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Round to Round"
                 },
                 {
                   "code": "SD4-2",
-                  "name": "Rectangular to Round",
+                  "name": "Transition, Rectangular to Round, Supply Air Systems",
                   "title": "Transition, Rectangular to Round, Supply Air Systems",
                   "citation": "Idelchik 1986, Diagram 5-27",
                   "category": "Transitions",
@@ -1362,7 +1372,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Rectangular to Round"
                 }
               ]
             },
@@ -1380,7 +1391,7 @@
                       "items": [
                         {
                           "code": "SD5-2",
-                          "name": "Conical Branch Tapered into Body, 45 degree",
+                          "name": "Wye, 45 Degree, Conical Branch Tapered into Body, Diverging",
                           "title": "Wye, 45 Degree, Conical Branch Tapered into Body, Diverging",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Conical Branch",
@@ -1550,13 +1561,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Conical Branch Tapered into Body, 45 degree"
                         },
                         {
                           "code": "SD5-5",
-                          "name": "Con Br with 60 deg. Elbow, Br 90 deg. to Main",
+                          "name": "Wye, 45 Deg., Conical Br.with 60 Deg. Elbow, Br. 90 Deg. to",
                           "title": "Wye, 45 Deg., Conical Br.with 60 Deg. Elbow, Br. 90 Deg. to",
-                          "citation": "Main, Diverging (Jones 1969, Fig. 20; UMC 1986, Report SRF386)",
+                          "citation": "Main, Diverging (Jones 1969, Fig. 20; UMC 1986, Report SRF386",
                           "category": "Conical Branch",
                           "shape": "round",
                           "type": "junction",
@@ -1724,13 +1736,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Con Br with 60 deg. Elbow, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-8",
-                          "name": "45 deg. Con Br with 30 deg. Elbow, Br 45 deg. to Main",
+                          "name": "Wye, 45 Deg., Conical Br. with 30 Deg. Elbow, Br. 45 Deg. to",
                           "title": "Wye, 45 Deg., Conical Br. with 30 Deg. Elbow, Br. 45 Deg. to",
-                          "citation": "Main, Diverging (Jones 1969, Fig. 24; UMC 1986, Report SRF386)",
+                          "citation": "Main, Diverging (Jones 1969, Fig. 24; UMC 1986, Report SRF386",
                           "category": "Conical Branch",
                           "shape": "round",
                           "type": "junction",
@@ -1898,11 +1911,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. Con Br with 30 deg. Elbow, Br 45 deg. to Main"
                         },
                         {
                           "code": "SD5-27",
-                          "name": "90 deg. Staight Body Branches w/Transitions",
+                          "name": "Symetrical Wye, 90 Degrees, Diverging",
                           "title": "Symetrical Wye, 90 Degrees, Diverging",
                           "citation": "Sepsy 1969",
                           "category": "Conical Branch",
@@ -2072,7 +2086,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "90 deg. Staight Body Branches w/Transitions"
                         }
                       ]
                     },
@@ -2082,7 +2097,7 @@
                       "items": [
                         {
                           "code": "SD5-1",
-                          "name": "45 degree",
+                          "name": "Wye, 45 Degree, Diverging",
                           "title": "Wye, 45 Degree, Diverging",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -2252,11 +2267,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 degree"
                         },
                         {
                           "code": "SD5-3",
-                          "name": "45 deg. Straight Body Branch with Transition",
+                          "name": "Wye, 45 Degree, Straight Body Branch with Reducing Transition, Diverging",
                           "title": "Wye, 45 Degree, Straight Body Branch with Reducing Transition, Diverging",
                           "citation": "Jones 1969, Fig. 14: UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -2426,11 +2442,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. Straight Body Branch with Transition"
                         },
                         {
                           "code": "SD5-4",
-                          "name": "45 deg. with 45 deg. Elbow, Br 90 deg. to Main",
+                          "name": "Wye, 45 Degree, Branch with 45 Degree Elbow, Branch 90 Degrees to Main",
                           "title": "Wye, 45 Degree, Branch with 45 Degree Elbow, Branch 90 Degrees to Main",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -2600,13 +2617,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. with 45 deg. Elbow, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-6",
-                          "name": "45 deg. with 60 deg. Elbow, Br 90 deg. to Main",
+                          "name": "Wye, 45 Degree, Branch with 60 Degree Elbow, Branch 90 Degrees",
                           "title": "Wye, 45 Degree, Branch with 60 Degree Elbow, Branch 90 Degrees",
-                          "citation": "to Main, Diverging (Jones 1963, Fig. 3; UMC 1986, Report SRF386)",
+                          "citation": "to Main, Diverging (Jones 1963, Fig. 3; UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
                           "shape": "round",
                           "type": "junction",
@@ -2774,13 +2792,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. with 60 deg. Elbow, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-7",
-                          "name": "45 deg. with 30 deg. Elbow, Br 45 deg. to Main",
+                          "name": "Wye, 45 Degree, Branch with 30 Deg. Elbow, Branch 45 Deg. to",
                           "title": "Wye, 45 Degree, Branch with 30 Deg. Elbow, Branch 45 Deg. to",
-                          "citation": "Main, Diverging (Jones 1963, Fig. 2; UMC 1986, Report SRF386)",
+                          "citation": "Main, Diverging (Jones 1963, Fig. 2; UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
                           "shape": "round",
                           "type": "junction",
@@ -2948,13 +2967,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. with 30 deg. Elbow, Br 45 deg. to Main"
                         },
                         {
                           "code": "SD5-22",
-                          "name": "Symmetrical Wye, 90 deg. with 45 deg. Elbows",
-                          "title": "Symmetrical Wye, w/45 Deg. Elbows,",
-                          "citation": "Branches 90 Degrees to Main, Diverging  (Sepsy 1969)",
+                          "name": "Symmetrical Wye, w/45 Deg. Elbows",
+                          "title": "Symmetrical Wye, w/45 Deg. Elbows",
+                          "citation": "Branches 90 Degrees to Main, Diverging  (Sepsy 1969",
                           "category": "Non-Conical Branch",
                           "shape": "round",
                           "type": "junction",
@@ -3122,7 +3142,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Symmetrical Wye, 90 deg. with 45 deg. Elbows"
                         }
                       ]
                     }
@@ -3138,7 +3159,7 @@
                       "items": [
                         {
                           "code": "SD5-10",
-                          "name": "Conical Branch Tapered into Body",
+                          "name": "Tee, Conical Branch Tapered into Body, Diverging",
                           "title": "Tee, Conical Branch Tapered into Body, Diverging",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Conical Branch",
@@ -3308,11 +3329,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Conical Branch Tapered into Body"
                         },
                         {
                           "code": "SD5-11",
-                          "name": "Conical Branch",
+                          "name": "Tee, Conical Branch, Diverging",
                           "title": "Tee, Conical Branch, Diverging",
                           "citation": "Jones 1969, Fig. 12; UMC 1986, Report SRF386",
                           "category": "Conical Branch",
@@ -3482,12 +3504,13 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Conical Branch"
                         },
                         {
                           "code": "SD5-14",
-                          "name": "With 45 deg. Elbow, Br 90 deg. to Main",
-                          "title": "Tee, Conical Branch with 45 Deg. Elbow,  Branch 90 Deg. to Main, Diverging",
+                          "name": "Tee, Conical Branch with 45 Deg. Elbow, Branch 90 Deg. to Main, Diverging",
+                          "title": "Tee, Conical Branch with 45 Deg. Elbow, Branch 90 Deg. to Main, Diverging",
                           "citation": "Jones 1969, Fig. 19; UMC 1986, Report SRF386",
                           "category": "Conical Branch",
                           "shape": "round",
@@ -3656,11 +3679,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With 45 deg. Elbow, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-17",
-                          "name": "With 60 deg. Elbow, Br 45 deg. to Main",
+                          "name": "Tee, Conical Branch with 60 Deg. Elbow, Branch 45 Deg. to Main, Diverging",
                           "title": "Tee, Conical Branch with 60 Deg. Elbow, Branch 45 Deg. to Main, Diverging",
                           "citation": "Jones 1969, Fig. 23; UMC 1986, Report SRF386",
                           "category": "Conical Branch",
@@ -3830,7 +3854,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With 60 deg. Elbow, Br 45 deg. to Main"
                         }
                       ]
                     },
@@ -3840,7 +3865,7 @@
                       "items": [
                         {
                           "code": "SD5-9",
-                          "name": "90 degree",
+                          "name": "Tee, Diverging",
                           "title": "Tee, Diverging",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -4010,11 +4035,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "90 degree"
                         },
                         {
                           "code": "SD5-12",
-                          "name": "45 deg. Entry Branch",
+                          "name": "Tee, 45 Degree Entry Branch, Diverging",
                           "title": "Tee, 45 Degree Entry Branch, Diverging",
                           "citation": "UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -4184,11 +4210,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "45 deg. Entry Branch"
                         },
                         {
                           "code": "SD5-13",
-                          "name": "With 45 deg. Elbows, Br 90 deg. to Main",
+                          "name": "Tee, Branch with 45 Degree Elbow, Branch 90 Degrees to Main, Diverging",
                           "title": "Tee, Branch with 45 Degree Elbow, Branch 90 Degrees to Main, Diverging",
                           "citation": "Jones 1969, Fig. 18; UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -4358,11 +4385,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With 45 deg. Elbows, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-15",
-                          "name": "With 90 deg. Elbow, Br 90 deg. to Main",
+                          "name": "Tee, Branch with 90 Degree Elbow, Branch 90 Degrees to Main, Diverging",
                           "title": "Tee, Branch with 90 Degree Elbow, Branch 90 Degrees to Main, Diverging",
                           "citation": "Jones 1969, Fig. 17; UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -4532,11 +4560,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With 90 deg. Elbow, Br 90 deg. to Main"
                         },
                         {
                           "code": "SD5-16",
-                          "name": "With 60 deg. Elbow, Br 45 deg. to Main",
+                          "name": "Tee, Branch with 60 Degree Elbow, Branch 45 Degrees to Main, Diverging",
                           "title": "Tee, Branch with 60 Degree Elbow, Branch 45 Degrees to Main, Diverging",
                           "citation": "Jones 1969, Fig. 22; UMC 1986, Report SRF386",
                           "category": "Non-Conical Branch",
@@ -4706,7 +4735,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With 60 deg. Elbow, Br 45 deg. to Main"
                         }
                       ]
                     },
@@ -4716,7 +4746,7 @@
                       "items": [
                         {
                           "code": "SD5-18",
-                          "name": "Without Vanes",
+                          "name": "Bullhead Tee without Vanes, Diverging",
                           "title": "Bullhead Tee without Vanes, Diverging",
                           "citation": "Sepsy 1969",
                           "category": "Bullhead",
@@ -4886,11 +4916,12 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Without Vanes"
                         },
                         {
                           "code": "SD5-19",
-                          "name": "With Vanes",
+                          "name": "Bullhead Tee with Vanes, Diverging",
                           "title": "Bullhead Tee with Vanes, Diverging",
                           "citation": "Sepsy 1969",
                           "category": "Bullhead",
@@ -5060,7 +5091,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With Vanes"
                         }
                       ]
                     }
@@ -5072,7 +5104,7 @@
                   "items": [
                     {
                       "code": "SD5-20",
-                      "name": "90 degree, Capped",
+                      "name": "Capped Cross, 90 Degree, Diverging",
                       "title": "Capped Cross, 90 Degree, Diverging",
                       "citation": "Sepsy 1969",
                       "category": "Cross",
@@ -5242,11 +5274,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 degree, Capped"
                     },
                     {
                       "code": "SD5-24",
-                      "name": "90 degree",
+                      "name": "Cross, Diverging",
                       "title": "Cross, Diverging",
                       "citation": "UMC 1990, Fig. 33; UMC 1986,  Report SRF386",
                       "category": "Cross",
@@ -5476,12 +5509,13 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 degree"
                     },
                     {
                       "code": "SD5-25",
-                      "name": "Conical Branches, Tapered into Body",
-                      "title": "Cross, Conical  Branches Tapered into Body, Diverging",
+                      "name": "Cross, Conical Branches Tapered into Body, Diverging",
+                      "title": "Cross, Conical Branches Tapered into Body, Diverging",
                       "citation": "UMC 1990, Fig. 33; UMC 1986, Report SRF386",
                       "category": "Cross",
                       "shape": "round",
@@ -5710,11 +5744,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Conical Branches, Tapered into Body"
                     },
                     {
                       "code": "SD5-26",
-                      "name": "45 degree Entry Branches",
+                      "name": "Cross, 45 Degree Entry Branches, Diverging",
                       "title": "Cross, 45 Degree Entry Branches, Diverging",
                       "citation": "UMC 1990, Fig. 33; UMC 1986, Report SRF386",
                       "category": "Cross",
@@ -5944,7 +5979,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 degree Entry Branches"
                     }
                   ]
                 }
@@ -5952,7 +5988,7 @@
               "items": [
                 {
                   "code": "SD5-23",
-                  "name": "Double Wye",
+                  "name": "Double Wye, 45 Degree, Diverging",
                   "title": "Double Wye, 45 Degree, Diverging",
                   "citation": "UMC 1990, Fig. 33; UMC 1986, Report SRF386",
                   "category": "Junctions, Diverging",
@@ -6182,11 +6218,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Double Wye"
                 },
                 {
                   "code": "SD5-21",
-                  "name": "Heel-Tapped Elbow",
+                  "name": "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Diverging",
                   "title": "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Diverging",
                   "citation": "UMC 1990",
                   "category": "Junctions, Diverging",
@@ -6356,7 +6393,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Heel-Tapped Elbow"
                 }
               ]
             },
@@ -6366,8 +6404,8 @@
               "items": [
                 {
                   "code": "SD7-1",
-                  "name": "Fan, Vaneaxial, Discharging into a Plenum",
-                  "title": "Fan, Vaneaxial, Discharging into  Plenum",
+                  "name": "Fan, Vaneaxial, Discharging into Plenum",
+                  "title": "Fan, Vaneaxial, Discharging into Plenum",
                   "citation": "AMCA 1990, Fig. 8-2",
                   "category": "Fan & System Interactions",
                   "shape": "round",
@@ -6458,7 +6496,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan, Vaneaxial, Discharging into a Plenum"
                 },
                 {
                   "code": "SD7-2",
@@ -6554,7 +6593,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan Outlet, Tubeaxial, with 4-Gore Elbow"
                 },
                 {
                   "code": "SD7-3",
@@ -6650,7 +6690,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan Outlet, Tubeaxial, with Mitered Elbow"
                 },
                 {
                   "code": "SD7-4",
@@ -6746,7 +6787,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan Outlet, Vaneaxial, with 4-Gore Elbow"
                 },
                 {
                   "code": "SD7-5",
@@ -6842,7 +6884,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan Outlet, Vaneaxial, with Mitered Elbow"
                 }
               ]
             }
@@ -6858,9 +6901,9 @@
               "items": [
                 {
                   "code": "SR1-1",
-                  "name": "Conical Bellmouth/Sudden Contraction, Plenum to Rectangular",
+                  "name": "Conical Bellmouth/Sudden Contraction, Plenum to",
                   "title": "Conical Bellmouth/Sudden Contraction, Plenum to",
-                  "citation": "Rectangular, Supply Air Systems (Idelchik 1986, Diagram 4-9 and 3-7)",
+                  "citation": "Rectangular, Supply Air Systems (Idelchik 1986, Diagram 4-9 and 3-7",
                   "category": "Plenums",
                   "shape": "rect",
                   "type": "entry",
@@ -7052,7 +7095,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction, Plenum to Rectangular"
                 }
               ]
             },
@@ -7154,7 +7198,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Abrupt Exit"
                 },
                 {
                   "code": "SR2-4",
@@ -7289,11 +7334,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Plain Diffuser (Two Sides Parallel), with Wall"
                 },
                 {
                   "code": "SR2-2",
-                  "name": "Discharge from a Duct Flush with Wall",
+                  "name": "Discharge from Duct Flush with Wall",
                   "title": "Discharge from Duct Flush with Wall",
                   "citation": "Idelchik 1986, Diagram 11-2",
                   "category": "Exits",
@@ -7409,7 +7455,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Discharge from a Duct Flush with Wall"
                 },
                 {
                   "code": "SR2-3",
@@ -7547,7 +7594,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Plain Diffuser (Two Sides Parallel), Free Discharge"
                 },
                 {
                   "code": "SR2-5",
@@ -7685,7 +7733,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Pyramidal Diffuser, Free Discharge"
                 },
                 {
                   "code": "SR2-6",
@@ -7820,7 +7869,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Pyramidal Diffuser, with Wall"
                 }
               ]
             },
@@ -7830,7 +7880,7 @@
               "items": [
                 {
                   "code": "SR3-1",
-                  "name": "Variable Inlet/Outlet Areas",
+                  "name": "Elbow, 90 Degree, Variable Inlet/Outlet Areas, Supply Air Systems",
                   "title": "Elbow, 90 Degree, Variable Inlet/Outlet Areas, Supply Air Systems",
                   "citation": "Idelchik 1986, Diagram 6-4",
                   "category": "Elbows",
@@ -7952,7 +8002,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Variable Inlet/Outlet Areas"
                 }
               ]
             },
@@ -7962,7 +8013,7 @@
               "items": [
                 {
                   "code": "SR4-3",
-                  "name": "Round to Rectangular",
+                  "name": "Transition, Round to Rectangular, Supply Air Systems",
                   "title": "Transition, Round to Rectangular, Supply Air Systems",
                   "citation": "Idelchik 1986, Diagram 5-27",
                   "category": "Transitions",
@@ -8123,13 +8174,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Round to Rectangular"
                 },
                 {
                   "code": "SR4-1",
-                  "name": "Rectangular, 2 Sides Parallel, Symmetrical",
+                  "name": "Transition, Rectangular, Two Sides Parallel, Symmetrical, Supply",
                   "title": "Transition, Rectangular, Two Sides Parallel, Symmetrical, Supply",
-                  "citation": "Air Systems (Idelchik 1986, Diagram 5-5)",
+                  "citation": "Air Systems (Idelchik 1986, Diagram 5-5",
                   "category": "Transitions",
                   "shape": "rect",
                   "type": "transition",
@@ -8279,11 +8331,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Rectangular, 2 Sides Parallel, Symmetrical"
                 },
                 {
                   "code": "SR4-2",
-                  "name": "Pyramidal",
+                  "name": "Transition, Pyramidal, Supply Air Systems",
                   "title": "Transition, Pyramidal, Supply Air Systems",
                   "citation": "Idelchik 1986, Diagram 5-4",
                   "category": "Transitions",
@@ -8456,7 +8509,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Pyramidal"
                 }
               ]
             },
@@ -8474,7 +8528,7 @@
                       "items": [
                         {
                           "code": "SR5-14",
-                          "name": "Dovetail",
+                          "name": "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Diverging",
                           "title": "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Diverging",
                           "citation": "Idelchik 1986, Diagram 7-24",
                           "category": "Symmetrical",
@@ -8632,7 +8686,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Dovetail"
                         }
                       ]
                     },
@@ -8642,9 +8697,9 @@
                       "items": [
                         {
                           "code": "SR5-3",
-                          "name": "As+Ab>Ac, As=Ac, 45 degree",
+                          "name": "Wye of the Type As + Ab > Ac, As = Ac, 45 Degree, Diverging",
                           "title": "Wye of the Type As + Ab > Ac, As = Ac, 45 Degree, Diverging",
-                          "citation": "Idelchik 1986, Diagrams 7-15 & 7-17",
+                          "citation": "Idelchik 1986, Diagrams 7-15 && 7-17",
                           "category": "Unsymmetrical",
                           "shape": "rect",
                           "type": "junction",
@@ -8812,13 +8867,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "As+Ab>Ac, As=Ac, 45 degree"
                         },
                         {
                           "code": "SR5-8",
-                          "name": "As+Ab=Ac, 45 degree",
+                          "name": "Wye of the Type As + Ab = Ac, 45 Degree, Diverging",
                           "title": "Wye of the Type As + Ab = Ac, 45 Degree, Diverging",
-                          "citation": "Idelchik 1986, Diagrams 7-16 & 7-17",
+                          "citation": "Idelchik 1986, Diagrams 7-16 && 7-17",
                           "category": "Unsymmetrical",
                           "shape": "rect",
                           "type": "junction",
@@ -8998,7 +9054,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "As+Ab=Ac, 45 degree"
                         }
                       ]
                     }
@@ -9006,9 +9063,9 @@
                   "items": [
                     {
                       "code": "SR5-1",
-                      "name": "Smooth Radius",
+                      "name": "Smooth Radius Wye of the Type As + Ab > or = Ac, Branch",
                       "title": "Smooth Radius Wye of the Type As + Ab > or = Ac, Branch",
-                      "citation": "90 Degrees to Main, Diverging (Idelchik 1986, Diagram 7-21)",
+                      "citation": "90 Degrees to Main, Diverging (Idelchik 1986, Diagram 7-21",
                       "category": "Wye",
                       "shape": "rect",
                       "type": "junction",
@@ -9188,7 +9245,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Smooth Radius"
                     }
                   ]
                 },
@@ -9198,9 +9256,9 @@
                   "items": [
                     {
                       "code": "SR5-5",
-                      "name": "As+Ab>Ac, As=Ac",
-                      "title": "Tee of the Type As + Ab > Ac,  As = Ac, Diverging",
-                      "citation": "Idelchik 1986, Diagrams 7-15 & 7-17",
+                      "name": "Tee of the Type As + Ab > Ac, As = Ac, Diverging",
+                      "title": "Tee of the Type As + Ab > Ac, As = Ac, Diverging",
+                      "citation": "Idelchik 1986, Diagrams 7-15 && 7-17",
                       "category": "Tee",
                       "shape": "rect",
                       "type": "junction",
@@ -9368,13 +9426,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "As+Ab>Ac, As=Ac"
                     },
                     {
                       "code": "SR5-10",
-                      "name": "As+Ab=Ac",
+                      "name": "Tee of the Type As + Ab = Ac, Diverging",
                       "title": "Tee of the Type As + Ab = Ac, Diverging",
-                      "citation": "Idelchik 1986, Diagrams 7-16 & 7-17",
+                      "citation": "Idelchik 1986, Diagrams 7-16 && 7-17",
                       "category": "Tee",
                       "shape": "rect",
                       "type": "junction",
@@ -9554,11 +9613,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "As+Ab=Ac"
                     },
                     {
                       "code": "SR5-11",
-                      "name": "Rectangular Main to Round Tap",
+                      "name": "Tee, Rectangular Main to Round Tap, Diverging (Brooks 1993)",
                       "title": "Tee, Rectangular Main to Round Tap, Diverging (Brooks 1993)",
                       "citation": "",
                       "category": "Tee",
@@ -9752,11 +9812,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Rectangular Main to Round Tap"
                     },
                     {
                       "code": "SR5-12",
-                      "name": "Rectangular Main to Round Conical Tap",
+                      "name": "Tee, Rectangular Main to Round Conical Tap, Diverging",
                       "title": "Tee, Rectangular Main to Round Conical Tap, Diverging",
                       "citation": "Inoue 1980; Korst 1950; Brooks 1993",
                       "category": "Tee",
@@ -9950,11 +10011,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Rectangular Main to Round Conical Tap"
                     },
                     {
                       "code": "SR5-13",
-                      "name": "45 degree Entry Branch",
+                      "name": "Tee, 45 Degree Entry Branch, Diverging (Brooks 1993)",
                       "title": "Tee, 45 Degree Entry Branch, Diverging (Brooks 1993)",
                       "citation": "",
                       "category": "Tee",
@@ -10160,13 +10222,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 degree Entry Branch"
                     },
                     {
                       "code": "SR5-15",
-                      "name": "Bullhead, without Vanes",
+                      "name": "Bullhead Tee without Vanes, Diverging",
                       "title": "Bullhead Tee without Vanes, Diverging",
-                      "citation": "Idelchik 1986, Diagrams 7-16 & 7-30",
+                      "citation": "Idelchik 1986, Diagrams 7-16 && 7-30",
                       "category": "Tee",
                       "shape": "rect",
                       "type": "junction",
@@ -10346,7 +10409,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Bullhead, without Vanes"
                     }
                   ]
                 }
@@ -10354,9 +10418,9 @@
               "items": [
                 {
                   "code": "SR5-20",
-                  "name": "Double Wye",
+                  "name": "Double Wye of the Type As = Ac, 45 Degree, Diverging",
                   "title": "Double Wye of the Type As = Ac, 45 Degree, Diverging",
-                  "citation": "Idelchik 1986, Diagrams 7-15, 7-17 & 7-27",
+                  "citation": "Idelchik 1986, Diagrams 7-15, 7-17 && 7-27",
                   "category": "Junctions, Diverging",
                   "shape": "rect",
                   "type": "junction",
@@ -10584,13 +10648,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Double Wye"
                 },
                 {
                   "code": "SR5-21",
-                  "name": "Cross",
+                  "name": "Cross of the Type As = Ac, Diverging",
                   "title": "Cross of the Type As = Ac, Diverging",
-                  "citation": "Idelchik 1986, Diagrams 7-15, 7-17 & 7-29",
+                  "citation": "Idelchik 1986, Diagrams 7-15, 7-17 && 7-29",
                   "category": "Junctions, Diverging",
                   "shape": "rect",
                   "type": "junction",
@@ -10818,7 +10883,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Cross"
                 }
               ]
             },
@@ -10836,9 +10902,9 @@
                       "items": [
                         {
                           "code": "SR7-14",
-                          "name": "With Ductwork, Configuration 1",
+                          "name": "Plane Asymmetric Diffuser (Configuration 1) at Centrifugal",
                           "title": "Plane Asymmetric Diffuser (Configuration 1) at Centrifugal",
-                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-13)",
+                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-13",
                           "category": "Plane Asymmetric",
                           "shape": "rect",
                           "type": "fitting",
@@ -10976,13 +11042,14 @@
                               "si_decimals": 2,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With Ductwork, Configuration 1"
                         },
                         {
                           "code": "SR7-15",
-                          "name": "With Ductwork, Configuration 2",
+                          "name": "Plane Asymmetric Diffuser (Configuration 2) at Centrifugal",
                           "title": "Plane Asymmetric Diffuser (Configuration 2) at Centrifugal",
-                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-14)",
+                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-14",
                           "category": "Plane Asymmetric",
                           "shape": "rect",
                           "type": "fitting",
@@ -11120,13 +11187,14 @@
                               "si_decimals": 2,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With Ductwork, Configuration 2"
                         },
                         {
                           "code": "SR7-16",
-                          "name": "With Ductwork, Configuration 3",
+                          "name": "Plane Asymmetric Diffuser (Configuration 3) at Centrifugal",
                           "title": "Plane Asymmetric Diffuser (Configuration 3) at Centrifugal",
-                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-15)",
+                          "citation": "Fan Outlet with Ductwork (Idelchik 1986, Diagram 5-15",
                           "category": "Plane Asymmetric",
                           "shape": "rect",
                           "type": "fitting",
@@ -11264,13 +11332,14 @@
                               "si_decimals": 2,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "With Ductwork, Configuration 3"
                         },
                         {
                           "code": "SR7-2",
-                          "name": "Free Discharge",
-                          "title": "Plane Asymmetric Diffuser at Centrifugal Fan Outlet,",
-                          "citation": "Free Discharge (Idelchik 1986, Diagram 11-11)",
+                          "name": "Plane Asymmetric Diffuser at Centrifugal Fan Outlet",
+                          "title": "Plane Asymmetric Diffuser at Centrifugal Fan Outlet",
+                          "citation": "Free Discharge (Idelchik 1986, Diagram 11-11",
                           "category": "Plane Asymmetric",
                           "shape": "rect",
                           "type": "fitting",
@@ -11414,7 +11483,8 @@
                               "si_decimals": 2,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Free Discharge"
                         }
                       ]
                     }
@@ -11422,7 +11492,7 @@
                   "items": [
                     {
                       "code": "SR7-17",
-                      "name": "Pyramidal, with Ductwork",
+                      "name": "Pyramidal Diffuser at Centrifugal Fan Outlet with Ductwork",
                       "title": "Pyramidal Diffuser at Centrifugal Fan Outlet with Ductwork",
                       "citation": "Idelchik 1986, Diagram 5-16",
                       "category": "Duffuser at Centrifugal Fan Outlet",
@@ -11583,11 +11653,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Pyramidal, with Ductwork"
                     },
                     {
                       "code": "SR7-3",
-                      "name": "Pyramidal, Free Discharge",
+                      "name": "Pyramidal Diffuser at Centrifugal Fan Outlet, Free Discharge",
                       "title": "Pyramidal Diffuser at Centrifugal Fan Outlet, Free Discharge",
                       "citation": "Idelchik 1986, Diagram 11-11",
                       "category": "Duffuser at Centrifugal Fan Outlet",
@@ -11742,13 +11813,14 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Pyramidal, Free Discharge"
                     },
                     {
                       "code": "SR7-13",
-                      "name": "Plane Symmetric, with Ductwork",
+                      "name": "Plane Symmetric Diffuser at Centrifugal Fan Outlet with",
                       "title": "Plane Symmetric Diffuser at Centrifugal Fan Outlet with",
-                      "citation": "Ductwork (Idelchik 1986, Diagram 5-12)",
+                      "citation": "Ductwork (Idelchik 1986, Diagram 5-12",
                       "category": "Duffuser at Centrifugal Fan Outlet",
                       "shape": "rect",
                       "type": "fitting",
@@ -11886,7 +11958,8 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Plane Symmetric, with Ductwork"
                     }
                   ]
                 },
@@ -11896,7 +11969,7 @@
                   "items": [
                     {
                       "code": "SR7-9",
-                      "name": "DWDI, with Elbow, Position A",
+                      "name": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position A)",
                       "title": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position A)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12021,11 +12094,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "DWDI, with Elbow, Position A"
                     },
                     {
                       "code": "SR7-10",
-                      "name": "DWDI, with Elbow, Position B",
+                      "name": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position B)",
                       "title": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position B)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12150,11 +12224,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "DWDI, with Elbow, Position B"
                     },
                     {
                       "code": "SR7-11",
-                      "name": "DWDI, with Elbow, Position C",
+                      "name": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position C)",
                       "title": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position C)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12279,11 +12354,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "DWDI, with Elbow, Position C"
                     },
                     {
                       "code": "SR7-12",
-                      "name": "DWDI, with Elbow, Position D",
+                      "name": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position D)",
                       "title": "Fan Outlet, Centrifugal, DWDI, with Elbow (Position D)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12408,11 +12484,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "DWDI, with Elbow, Position D"
                     },
                     {
                       "code": "SR7-5",
-                      "name": "SWSI, with Elbow, Position A",
+                      "name": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position A)",
                       "title": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position A)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12537,11 +12614,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI, with Elbow, Position A"
                     },
                     {
                       "code": "SR7-6",
-                      "name": "SWSI, with Elbow, Position B",
+                      "name": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position B)",
                       "title": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position B)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12666,11 +12744,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI, with Elbow, Position B"
                     },
                     {
                       "code": "SR7-7",
-                      "name": "SWSI, with Elbow, Position C",
+                      "name": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position C)",
                       "title": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position C)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12795,11 +12874,12 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI, with Elbow, Position C"
                     },
                     {
                       "code": "SR7-8",
-                      "name": "SWSI, with Elbow, Position D",
+                      "name": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position D)",
                       "title": "Fan Outlet, Centrifugal, SWSI, with Elbow (Position D)",
                       "citation": "AMCA 1990, Fig. 8-5",
                       "category": "Fan Outlet, Centrifugal",
@@ -12924,7 +13004,8 @@
                           "si_decimals": 2,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI, with Elbow, Position D"
                     }
                   ]
                 }
@@ -12932,7 +13013,7 @@
               "items": [
                 {
                   "code": "SR7-1",
-                  "name": "Fan, Centrifugal, w/o Outlet Diffuser, Free Discharge",
+                  "name": "Fan, Centrifugal, without an Outlet Diffuser, Free Discharge",
                   "title": "Fan, Centrifugal, without an Outlet Diffuser, Free Discharge",
                   "citation": "AMCA 1990, Fig. 8-3",
                   "category": "Fan & System Interactions",
@@ -13036,7 +13117,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan, Centrifugal, w/o Outlet Diffuser, Free Discharge"
                 },
                 {
                   "code": "SR7-4",
@@ -13207,7 +13289,8 @@
                       "si_decimals": 2,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fan, Centrifugal, Discharging into a Plenum"
                 }
               ]
             }
@@ -13223,9 +13306,9 @@
               "items": [
                 {
                   "code": "SF4-1",
-                  "name": "Oval to Oval, Concentric & Eccentric",
+                  "name": "Transition, Flat Oval, Concentric && Eccentric, Supply Air Systems",
                   "title": "Transition, Flat Oval, Concentric && Eccentric, Supply Air Systems",
-                  "citation": "Zhang, Sun, Ford & Denny 2014",
+                  "citation": "Zhang, Sun, Ford && Denny 2014",
                   "category": "Transitions",
                   "shape": "oval",
                   "type": "transition",
@@ -13366,7 +13449,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Oval to Oval, Concentric & Eccentric"
                 }
               ]
             },
@@ -13376,9 +13460,9 @@
               "items": [
                 {
                   "code": "SF5-1",
-                  "name": "Tee, Flat Oval, Straight Body Branch",
+                  "name": "Tee, Flat Oval, Straight Body Branch, Diverging",
                   "title": "Tee, Flat Oval, Straight Body Branch, Diverging",
-                  "citation": "Gibbs & Idem 2012",
+                  "citation": "Gibbs && Idem 2012",
                   "category": "Junctions, Diverging",
                   "shape": "oval",
                   "type": "junction",
@@ -13558,13 +13642,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Tee, Flat Oval, Straight Body Branch"
                 },
                 {
                   "code": "SF5-2",
-                  "name": "Tee, Flat Oval, Conical Body Branch",
+                  "name": "Tee, Flat Oval, Conical Body Branch, Diverging",
                   "title": "Tee, Flat Oval, Conical Body Branch, Diverging",
-                  "citation": "Townsend et al. 1996; Idem & Khodabakhsh 1999",
+                  "citation": "Townsend et al. 1996; Idem && Khodabakhsh 1999",
                   "category": "Junctions, Diverging",
                   "shape": "oval",
                   "type": "junction",
@@ -13744,13 +13829,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Tee, Flat Oval, Conical Body Branch"
                 },
                 {
                   "code": "SF5-3",
-                  "name": "Wye, Flat Oval, 45 Degree, Straight Body Branch",
+                  "name": "Wye, Flat Oval, 45 Degree, Straight Body Branch, Diverging",
                   "title": "Wye, Flat Oval, 45 Degree, Straight Body Branch, Diverging",
-                  "citation": "Gibbs & Idem 2012",
+                  "citation": "Gibbs && Idem 2012",
                   "category": "Junctions, Diverging",
                   "shape": "oval",
                   "type": "junction",
@@ -13930,13 +14016,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Wye, Flat Oval, 45 Degree, Straight Body Branch"
                 },
                 {
                   "code": "SF5-4",
-                  "name": "Wye, Flat Oval, 45 Degree, Conical Body Branch",
+                  "name": "Wye, Flat Oval, 45 Degree, Conical Body Branch, Diverging",
                   "title": "Wye, Flat Oval, 45 Degree, Conical Body Branch, Diverging",
-                  "citation": "Townsend et al. 1996; Idem & Khodabakhsh 1999",
+                  "citation": "Townsend et al. 1996; Idem && Khodabakhsh 1999",
                   "category": "Junctions, Diverging",
                   "shape": "oval",
                   "type": "junction",
@@ -14116,7 +14203,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Wye, Flat Oval, 45 Degree, Conical Body Branch"
                 }
               ]
             }
@@ -14142,7 +14230,7 @@
                   "items": [
                     {
                       "code": "CD3-15",
-                      "name": "90 deg.",
+                      "name": "Elbow, Mitered, 90 Degree",
                       "title": "Elbow, Mitered, 90 Degree",
                       "citation": "UMC 1985, Report SRF1285",
                       "category": "Mitered",
@@ -14222,11 +14310,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg."
                     },
                     {
                       "code": "CD3-18",
-                      "name": "30 deg.",
+                      "name": "Elbow, Mitered, 30 Degree",
                       "title": "Elbow, Mitered, 30 Degree",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1 (Graph (a)]",
                       "category": "Mitered",
@@ -14306,11 +14395,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "30 deg."
                     },
                     {
                       "code": "CD3-19",
-                      "name": "22.5 deg.",
+                      "name": "Elbow, Mitered, 22.5 Degree",
                       "title": "Elbow, Mitered, 22.5 Degree",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Mitered",
@@ -14390,11 +14480,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "22.5 deg."
                     },
                     {
                       "code": "CD3-20",
-                      "name": "With Vanes, 90 deg.",
+                      "name": "Elbow, Mitered with Vanes, 90 Degree",
                       "title": "Elbow, Mitered with Vanes, 90 Degree",
                       "citation": "UMC 1985, Report SRF1285",
                       "category": "Mitered",
@@ -14474,11 +14565,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Vanes, 90 deg."
                     },
                     {
                       "code": "CD3-16",
-                      "name": "60 deg.",
+                      "name": "Elbow, Mitered, 60 Degree",
                       "title": "Elbow, Mitered, 60 Degree",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1), Graph (a)]",
                       "category": "Mitered",
@@ -14558,11 +14650,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "60 deg."
                     },
                     {
                       "code": "CD3-17",
-                      "name": "45 deg.",
+                      "name": "Elbow, Mitered, 45 Degree",
                       "title": "Elbow, Mitered, 45 Degree",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Mitered",
@@ -14642,7 +14735,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 deg."
                     }
                   ]
                 },
@@ -14652,7 +14746,7 @@
                   "items": [
                     {
                       "code": "CD3-1",
-                      "name": "90 deg., r/D = 1.5",
+                      "name": "Elbow, Die Stamped, 90 Degree, r/D = 1.5",
                       "title": "Elbow, Die Stamped, 90 Degree, r/D = 1.5",
                       "citation": "UMC 1985, Report SRF785",
                       "category": "Die Stamped",
@@ -14732,11 +14826,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg., r/D = 1.5"
                     },
                     {
                       "code": "CD3-2",
-                      "name": "90 deg., r/D = 1.0",
+                      "name": "Elbow, Die Stamped, 90 Degree, r/D = 1.0",
                       "title": "Elbow, Die Stamped, 90 Degree, r/D = 1.0",
                       "citation": "UMC 1985, Report SRF785",
                       "category": "Die Stamped",
@@ -14816,11 +14911,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg., r/D = 1.0"
                     },
                     {
                       "code": "CD3-3",
-                      "name": "45 deg., r/D = 1.5",
+                      "name": "Elbow, Die Stamped, 45 Degree, r/D = 1.5",
                       "title": "Elbow, Die Stamped, 45 Degree, r/D = 1.5",
                       "citation": "[UMC 1985, Report SRF785; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Die Stamped",
@@ -14900,11 +14996,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 deg., r/D = 1.5"
                     },
                     {
                       "code": "CD3-4",
-                      "name": "45 deg., r/D = 1.0",
+                      "name": "Elbow, Die Stamped, 45 Degree, r/D = 1.0",
                       "title": "Elbow, Die Stamped, 45 Degree, r/D = 1.0",
                       "citation": "[UMC 1985, Report SRF785; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Die Stamped",
@@ -14984,7 +15081,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 deg., r/D = 1.0"
                     }
                   ]
                 },
@@ -14994,7 +15092,7 @@
                   "items": [
                     {
                       "code": "CD3-5",
-                      "name": "90 deg.",
+                      "name": "Elbow, Pleated, 90 Degree, r/D = 1.5",
                       "title": "Elbow, Pleated, 90 Degree, r/D = 1.5",
                       "citation": "UMC 1989, Report SRS189",
                       "category": "Pleated",
@@ -15074,11 +15172,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg."
                     },
                     {
                       "code": "CD3-7",
-                      "name": "45 deg.",
+                      "name": "Elbow, Pleated, 45 Degree, r/D = 1.5",
                       "title": "Elbow, Pleated, 45 Degree, r/D = 1.5",
                       "citation": "UMC 1989, Report SRS189",
                       "category": "Pleated",
@@ -15158,7 +15257,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 deg."
                     }
                   ]
                 },
@@ -15168,7 +15268,7 @@
                   "items": [
                     {
                       "code": "CD3-14",
-                      "name": "3-Gore, 45 deg., r/D=1.5",
+                      "name": "Elbow, 3 Gore, 45 Degree, r/D = 1.5",
                       "title": "Elbow, 3 Gore, 45 Degree, r/D = 1.5",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Gored",
@@ -15248,11 +15348,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "3-Gore, 45 deg., r/D=1.5"
                     },
                     {
                       "code": "CD3-13",
-                      "name": "3-Gore, 60 deg., r/D=1.5",
+                      "name": "Elbow, 3 Gore, 60 Degree, r/D = 1.5",
                       "title": "Elbow, 3 Gore, 60 Degree, r/D = 1.5",
                       "citation": "[UMC 1985, Report SRF1285; Idelchik 1986, Diagram 6-1, Graph (a)]",
                       "category": "Gored",
@@ -15332,11 +15433,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "3-Gore, 60 deg., r/D=1.5"
                     },
                     {
                       "code": "CD3-12",
-                      "name": "3-Gore, 90 deg., r/D=0.75 to 2.0",
+                      "name": "Elbow, 3 Gore, 90 Degree, r/D=0.75 to 2.0",
                       "title": "Elbow, 3 Gore, 90 Degree, r/D=0.75 to 2.0",
                       "citation": "Locklin 1950, Fig. 10",
                       "category": "Gored",
@@ -15428,11 +15530,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "3-Gore, 90 deg., r/D=0.75 to 2.0"
                     },
                     {
                       "code": "CD3-9",
-                      "name": "5-Gore, 90 deg., r/D=1.5",
+                      "name": "Elbow, 5 Gore, 90 Degree, r/D = 1.5",
                       "title": "Elbow, 5 Gore, 90 Degree, r/D = 1.5",
                       "citation": "UMC 1985, Report SRF1285",
                       "category": "Gored",
@@ -15512,11 +15615,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "5-Gore, 90 deg., r/D=1.5"
                     },
                     {
                       "code": "CD3-21",
-                      "name": "5-Gore, 90 deg., r/D=1.0",
+                      "name": "Elbow, 5 Gore, 90 Degree, r/D = 1.0",
                       "title": "Elbow, 5 Gore, 90 Degree, r/D = 1.0",
                       "citation": "UMC 1985, Report SRF1285; Brooks 1993",
                       "category": "Gored",
@@ -15596,11 +15700,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "5-Gore, 90 deg., r/D=1.0"
                     },
                     {
                       "code": "CD3-10",
-                      "name": "7-Gore, 90 deg., r/D=2.5",
+                      "name": "Elbow, 7 Gore, 90 Degree, r/D = 2.5",
                       "title": "Elbow, 7 Gore, 90 Degree, r/D = 2.5",
                       "citation": "UMC 1985, Report SRF1285",
                       "category": "Gored",
@@ -15680,7 +15785,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "7-Gore, 90 deg., r/D=2.5"
                     }
                   ]
                 }
@@ -15688,7 +15794,7 @@
               "items": [
                 {
                   "code": "CD3-11",
-                  "name": "Flat Back, 90 deg.",
+                  "name": "Elbow, Flat-back, 90 Degree (UMC 1985, Report SRF1285)",
                   "title": "Elbow, Flat-back, 90 Degree (UMC 1985, Report SRF1285)",
                   "citation": "",
                   "category": "Elbows",
@@ -15768,7 +15874,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Flat Back, 90 deg."
                 }
               ]
             },
@@ -15900,7 +16007,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Screen (Only)"
                 },
                 {
                   "code": "CD6-2",
@@ -16038,7 +16146,8 @@
                       "si_decimals": 3,
                       "ip_decimals": 3
                     }
-                  ]
+                  ],
+                  "tree_label": "Perforated Plate, Thick"
                 },
                 {
                   "code": "CD6-3",
@@ -16155,7 +16264,8 @@
                       "si_decimals": 2,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Obstruction, Smooth Cylinder in Round Duct"
                 }
               ]
             },
@@ -16169,9 +16279,9 @@
                   "items": [
                     {
                       "code": "CD8-1",
-                      "name": "With Bullet, Std (High) Pres Drop",
-                      "title": "Silencer, Ducted, Double Wall with Bullet,",
-                      "citation": "Standard (High) Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Double Wall with Bullet",
+                      "title": "Silencer, Ducted, Double Wall with Bullet",
+                      "citation": "Standard (High) Pressure Drop (see Table below",
                       "category": "Silencer, Double Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16249,13 +16359,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet, Std (High) Pres Drop"
                     },
                     {
                       "code": "CD8-2",
-                      "name": "With Bullet & Tail Cone, Std (High) Pres Drop",
-                      "title": "Silencer, Ducted, Double Wall with Bullet and Tail Cone,",
-                      "citation": "Standard (High) Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Double Wall with Bullet and Tail Cone",
+                      "title": "Silencer, Ducted, Double Wall with Bullet and Tail Cone",
+                      "citation": "Standard (High) Pressure Drop (see Table below",
                       "category": "Silencer, Double Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16333,13 +16444,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet & Tail Cone, Std (High) Pres Drop"
                     },
                     {
                       "code": "CD8-3",
-                      "name": "With Bullet, Low Pres Drop",
-                      "title": "Silencer, Ducted, Double Wall with Bullet,",
-                      "citation": "Low Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Double Wall with Bullet",
+                      "title": "Silencer, Ducted, Double Wall with Bullet",
+                      "citation": "Low Pressure Drop (see Table below",
                       "category": "Silencer, Double Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16417,13 +16529,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet, Low Pres Drop"
                     },
                     {
                       "code": "CD8-4",
-                      "name": "With Bullet & Tail Cone, Low Pres Drop",
-                      "title": "Silencer, Ducted, Double Wall with Bullet and Tail Cone,",
-                      "citation": "Low Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Double Wall with Bullet and Tail Cone",
+                      "title": "Silencer, Ducted, Double Wall with Bullet and Tail Cone",
+                      "citation": "Low Pressure Drop (see Table below",
                       "category": "Silencer, Double Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16501,7 +16614,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet & Tail Cone, Low Pres Drop"
                     }
                   ]
                 },
@@ -16511,8 +16625,8 @@
                   "items": [
                     {
                       "code": "CD8-5",
-                      "name": "With Bullet, Std (High) Pres Drop",
-                      "title": "Silencer, Ducted, Single Wall with Bullet,",
+                      "name": "Silencer, Ducted, Single Wall with Bullet",
+                      "title": "Silencer, Ducted, Single Wall with Bullet",
                       "citation": "Standard (High) Pressure Drop",
                       "category": "Silencer, Single Wall",
                       "shape": "round",
@@ -16591,12 +16705,13 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet, Std (High) Pres Drop"
                     },
                     {
                       "code": "CD8-6",
-                      "name": "With Bullet & Tail Cone, Std (High) Pres Drop",
-                      "title": "Silencer, Ducted, Single Wall with Bullet and Tail Cone,",
+                      "name": "Silencer, Ducted, Single Wall with Bullet and Tail Cone",
+                      "title": "Silencer, Ducted, Single Wall with Bullet and Tail Cone",
                       "citation": "Standard (High) Pressure Drop",
                       "category": "Silencer, Single Wall",
                       "shape": "round",
@@ -16675,13 +16790,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet & Tail Cone, Std (High) Pres Drop"
                     },
                     {
                       "code": "CD8-7",
-                      "name": "With Bullet, Low Pres Drop",
-                      "title": "Silencer, Ducted, Single Wall with Bullet,",
-                      "citation": "Low Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Single Wall with Bullet",
+                      "title": "Silencer, Ducted, Single Wall with Bullet",
+                      "citation": "Low Pressure Drop (see Table below",
                       "category": "Silencer, Single Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16759,13 +16875,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet, Low Pres Drop"
                     },
                     {
                       "code": "CD8-8",
-                      "name": "With Bullet & Tail Cone, Low Pres Drop",
-                      "title": "Silencer, Ducted, Single Wall with Bullet and Tail Cone,",
-                      "citation": "Low Pressure Drop (see Table below)",
+                      "name": "Silencer, Ducted, Single Wall with Bullet and Tail Cone",
+                      "title": "Silencer, Ducted, Single Wall with Bullet and Tail Cone",
+                      "citation": "Low Pressure Drop (see Table below",
                       "category": "Silencer, Single Wall",
                       "shape": "round",
                       "type": "fitting",
@@ -16843,7 +16960,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "With Bullet & Tail Cone, Low Pres Drop"
                     }
                   ]
                 }
@@ -16947,7 +17065,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Butterfly"
                 },
                 {
                   "code": "CD9-2",
@@ -17043,13 +17162,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Gate"
                 },
                 {
                   "code": "CD9-3",
-                  "name": "Fire Damper, Curtain Type, Style C (Vertical Installation)",
+                  "name": "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
                   "title": "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
-                  "citation": "1-1/2 & 3 hour rated; For use in dynamic & static systems",
+                  "citation": "1-1/2 && 3 hour rated; For use in dynamic && static systems",
                   "category": "Dampers",
                   "shape": "round",
                   "type": "damper",
@@ -17127,13 +17247,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style C (Vertical Installation)"
                 },
                 {
                   "code": "CD9-4",
-                  "name": "Fire Damper, Curtain Type, Style C (Horizontal Installation)",
+                  "name": "Fire Damper, Curtain Type, Style C, Vertical Duct (Horizontal Installation)",
                   "title": "Fire Damper, Curtain Type, Style C, Vertical Duct (Horizontal Installation)",
-                  "citation": "1-1/2 & 3 hour rated; For use in dynamic & static systems",
+                  "citation": "1-1/2 && 3 hour rated; For use in dynamic && static systems",
                   "category": "Dampers",
                   "shape": "round",
                   "type": "damper",
@@ -17211,7 +17332,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style C (Horizontal Installation)"
                 }
               ]
             }
@@ -17219,7 +17341,7 @@
           "items": [
             {
               "code": "CD11-1",
-              "name": "Straight Duct",
+              "name": "Straight Duct, Round",
               "title": "Straight Duct, Round",
               "citation": "Colebrook 1939",
               "category": "Round",
@@ -17323,13 +17445,14 @@
                   "si_decimals": 0,
                   "ip_decimals": 2
                 }
-              ]
+              ],
+              "tree_label": "Straight Duct"
             },
             {
               "code": "CD11-2",
               "name": "Straight Duct, Flexible",
               "title": "Straight Duct, Flexible",
-              "citation": "(Abushakra 2004 and Culp 2011",
+              "citation": "Abushakra 2004 and Culp 2011",
               "category": "Round",
               "shape": "round",
               "type": "straight",
@@ -17440,7 +17563,8 @@
                   "si_decimals": 0,
                   "ip_decimals": 2
                 }
-              ]
+              ],
+              "tree_label": "Straight Duct, Flexible"
             }
           ]
         },
@@ -17458,7 +17582,7 @@
                   "items": [
                     {
                       "code": "CR3-1",
-                      "name": "Without Vanes",
+                      "name": "Elbow, Smooth Radius without Vanes",
                       "title": "Elbow, Smooth Radius without Vanes",
                       "citation": "Idelchik 1986, Diagram 6-1",
                       "category": "Smooth Radius",
@@ -17574,13 +17698,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Without Vanes"
                     },
                     {
                       "code": "CR3-3",
-                      "name": "One Splitter Vane",
+                      "name": "Elbow, Smooth Radius, One Splitter Vane",
                       "title": "Elbow, Smooth Radius, One Splitter Vane",
-                      "citation": "Locklin 1950; Madison & Parker 1936",
+                      "citation": "Locklin 1950; Madison && Parker 1936",
                       "category": "Smooth Radius",
                       "shape": "rect",
                       "type": "elbow",
@@ -17712,13 +17837,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "One Splitter Vane"
                     },
                     {
                       "code": "CR3-4",
-                      "name": "Two Splitter Vanes",
+                      "name": "Elbow, Smooth Radius, Two Splitter Vanes",
                       "title": "Elbow, Smooth Radius, Two Splitter Vanes",
-                      "citation": "Locklin 1950; Madison & Parker 1936",
+                      "citation": "Locklin 1950; Madison && Parker 1936",
                       "category": "Smooth Radius",
                       "shape": "rect",
                       "type": "elbow",
@@ -17859,13 +17985,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Two Splitter Vanes"
                     },
                     {
                       "code": "CR3-5",
-                      "name": "Three Splitter Vanes",
+                      "name": "Elbow, Smooth Radius, Three Splitter Vanes",
                       "title": "Elbow, Smooth Radius, Three Splitter Vanes",
-                      "citation": "Locklin 1950; Madison & Parker 1936",
+                      "citation": "Locklin 1950; Madison && Parker 1936",
                       "category": "Smooth Radius",
                       "shape": "rect",
                       "type": "elbow",
@@ -18015,7 +18142,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Three Splitter Vanes"
                     }
                   ]
                 },
@@ -18029,9 +18157,9 @@
                       "items": [
                         {
                           "code": "CR3-9",
-                          "name": "1 1/2-in. Vane Spacing",
+                          "name": "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
                           "title": "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
-                          "citation": "1 1/2-in. Vane Spacing (Brooks 1993)",
+                          "citation": "1 1/2-in. Vane Spacing (Brooks 1993",
                           "category": "Single-Thickness Vanes",
                           "shape": "rect",
                           "type": "elbow",
@@ -18121,13 +18249,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "1 1/2-in. Vane Spacing"
                         },
                         {
                           "code": "CR3-12",
-                          "name": "3 1/4-in. Vane Spacing",
+                          "name": "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
                           "title": "Elbow, Mitered, 90 Degree, Single-Thickness Vanes",
-                          "citation": "3 1/4-in. Vane Spacing (Brooks 1993)",
+                          "citation": "3 1/4-in. Vane Spacing (Brooks 1993",
                           "category": "Single-Thickness Vanes",
                           "shape": "rect",
                           "type": "elbow",
@@ -18235,7 +18364,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "3 1/4-in. Vane Spacing"
                         }
                       ]
                     },
@@ -18245,9 +18375,9 @@
                       "items": [
                         {
                           "code": "CR3-14",
-                          "name": "1 1/2-in. Vane Spacing",
+                          "name": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
                           "title": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
-                          "citation": "1 1/2-in. Vane Spacing (Brooks 1993)",
+                          "citation": "1 1/2-in. Vane Spacing (Brooks 1993",
                           "category": "Double-Thickness Vanes",
                           "shape": "rect",
                           "type": "elbow",
@@ -18355,13 +18485,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "1 1/2-in. Vane Spacing"
                         },
                         {
                           "code": "CR3-15",
-                          "name": "2 1/8-in. Vane Spacing",
+                          "name": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
                           "title": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
-                          "citation": "2 1/8-in. Vane Spacing (Rozell 1974)",
+                          "citation": "2 1/8-in. Vane Spacing (Rozell 1974",
                           "category": "Double-Thickness Vanes",
                           "shape": "rect",
                           "type": "elbow",
@@ -18469,13 +18600,14 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "2 1/8-in. Vane Spacing"
                         },
                         {
                           "code": "CR3-16",
-                          "name": "3 1/4-in. Vane Spacing",
+                          "name": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
                           "title": "Elbow, Mitered, 90 Degree, Double-Thickness Vanes",
-                          "citation": "3 1/4-in. Vane Spacing (Brooks 1993)",
+                          "citation": "3 1/4-in. Vane Spacing (Brooks 1993",
                           "category": "Double-Thickness Vanes",
                           "shape": "rect",
                           "type": "elbow",
@@ -18583,7 +18715,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "3 1/4-in. Vane Spacing"
                         }
                       ]
                     }
@@ -18591,7 +18724,7 @@
                   "items": [
                     {
                       "code": "CR3-6",
-                      "name": "Without Vanes",
+                      "name": "Elbow, Mitered (Idelchik 1986, Diagram 6-5)",
                       "title": "Elbow, Mitered (Idelchik 1986, Diagram 6-5)",
                       "citation": "",
                       "category": "Mitered",
@@ -18695,7 +18828,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Without Vanes"
                     }
                   ]
                 },
@@ -18705,7 +18839,7 @@
                   "items": [
                     {
                       "code": "CR3-2",
-                      "name": "Sharp Throat, Radius Heel",
+                      "name": "Elbow, Sharp Throat (r/W=0.5), Radius Heel, 90 Degree",
                       "title": "Elbow, Sharp Throat (r/W=0.5), Radius Heel, 90 Degree",
                       "citation": "Idelchik 1986, Diagram 6-1",
                       "category": "Other Elbows",
@@ -18797,11 +18931,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Sharp Throat, Radius Heel"
                     },
                     {
                       "code": "CR3-7",
-                      "name": "Rounded Throat, Sharp Heel",
+                      "name": "Elbow, Rounded Throat, Sharp Heel, 90 Degree",
                       "title": "Elbow, Rounded Throat, Sharp Heel, 90 Degree",
                       "citation": "Idelchik 1986, Diagram 6-8",
                       "category": "Other Elbows",
@@ -18905,11 +19040,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Rounded Throat, Sharp Heel"
                     },
                     {
                       "code": "CR3-8",
-                      "name": "Beveled Throat, Sharp Heel",
+                      "name": "Elbow, Beveled Throat, Sharp Heel, 90 Degree",
                       "title": "Elbow, Beveled Throat, Sharp Heel, 90 Degree",
                       "citation": "Idelchik 1986, Diagram 6-8",
                       "category": "Other Elbows",
@@ -19013,12 +19149,13 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Beveled Throat, Sharp Heel"
                     },
                     {
                       "code": "CR3-17",
-                      "name": "Offset, Z-shaped Mitered Elbows",
-                      "title": "Elbow,  Z-Shape",
+                      "name": "Elbow, Z-Shape",
+                      "title": "Elbow, Z-Shape",
                       "citation": "Idelchik 1986, Diagram 6-11",
                       "category": "Other Elbows",
                       "shape": "rect",
@@ -19121,7 +19258,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Offset, Z-shaped Mitered Elbows"
                     }
                   ]
                 }
@@ -19133,7 +19271,7 @@
               "items": [
                 {
                   "code": "CR6-1",
-                  "name": "Screen (Only)",
+                  "name": "Screen (Only) (Idelchik 1986, Diagrams 8-6 and 3-15)",
                   "title": "Screen (Only) (Idelchik 1986, Diagrams 8-6 and 3-15)",
                   "citation": "",
                   "category": "Obstructions",
@@ -19279,7 +19417,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Screen (Only)"
                 },
                 {
                   "code": "CR6-2",
@@ -19429,7 +19568,8 @@
                       "si_decimals": 3,
                       "ip_decimals": 3
                     }
-                  ]
+                  ],
+                  "tree_label": "Perforated Plate, Thick"
                 },
                 {
                   "code": "CR6-3",
@@ -19570,7 +19710,8 @@
                       "si_decimals": 3,
                       "ip_decimals": 3
                     }
-                  ]
+                  ],
+                  "tree_label": "Orifice, Thick-Edged"
                 },
                 {
                   "code": "CR6-4",
@@ -19699,7 +19840,8 @@
                       "si_decimals": 2,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Obstruction, Smooth Cylinder in Rectangular Duct"
                 }
               ]
             },
@@ -19713,7 +19855,7 @@
                   "items": [
                     {
                       "code": "CR8-1",
-                      "name": "Standard Pressure Drop",
+                      "name": "Silencer, Ducted, Standard Pressure Drop (see Table below)",
                       "title": "Silencer, Ducted, Standard Pressure Drop (see Table below)",
                       "citation": "",
                       "category": "Silencer",
@@ -19817,11 +19959,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Standard Pressure Drop"
                     },
                     {
                       "code": "CR8-2",
-                      "name": "Medium Pressure Drop",
+                      "name": "Silencer, Ducted, Medium Pressure Drop (see Table below)",
                       "title": "Silencer, Ducted, Medium Pressure Drop (see Table below)",
                       "citation": "",
                       "category": "Silencer",
@@ -19925,11 +20068,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Medium Pressure Drop"
                     },
                     {
                       "code": "CR8-3",
-                      "name": "Medium-Low Pressure Drop",
+                      "name": "Silencer, Ducted, Medium-Low Pressure Drop (see Table below)",
                       "title": "Silencer, Ducted, Medium-Low Pressure Drop (see Table below)",
                       "citation": "",
                       "category": "Silencer",
@@ -20033,11 +20177,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Medium-Low Pressure Drop"
                     },
                     {
                       "code": "CR8-4",
-                      "name": "Low Pressure Drop",
+                      "name": "Silencer, Ducted, Low Pressure Drop (see Table below)",
                       "title": "Silencer, Ducted, Low Pressure Drop (see Table below)",
                       "citation": "",
                       "category": "Silencer",
@@ -20141,7 +20286,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Low Pressure Drop"
                     }
                   ]
                 },
@@ -20151,7 +20297,7 @@
                   "items": [
                     {
                       "code": "CR8-5",
-                      "name": "Electric, Open Coil",
+                      "name": "Coil, Electric, Open Coil",
                       "title": "Coil, Electric, Open Coil",
                       "citation": "",
                       "category": "Coil",
@@ -20243,11 +20389,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Electric, Open Coil"
                     },
                     {
                       "code": "CR8-6",
-                      "name": "Electric, Finned Tubular",
+                      "name": "Coil, Electric, Finned Tubular",
                       "title": "Coil, Electric, Finned Tubular",
                       "citation": "",
                       "category": "Coil",
@@ -20339,11 +20486,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Electric, Finned Tubular"
                     },
                     {
                       "code": "CR8-7",
-                      "name": "Hot Water, One Row",
+                      "name": "Coil, Hot Water, One Row",
                       "title": "Coil, Hot Water, One Row",
                       "citation": "",
                       "category": "Coil",
@@ -20435,11 +20583,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Hot Water, One Row"
                     },
                     {
                       "code": "CR8-8",
-                      "name": "Hot Water, Two Row",
+                      "name": "Coil, Hot Water, Two Row",
                       "title": "Coil, Hot Water, Two Row",
                       "citation": "",
                       "category": "Coil",
@@ -20531,7 +20680,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Hot Water, Two Row"
                     }
                   ]
                 },
@@ -20541,7 +20691,7 @@
                   "items": [
                     {
                       "code": "CR8-9",
-                      "name": "Basic Assy & Attenuator",
+                      "name": "Terminal Control Unit, Basic Assembly and Attenuator",
                       "title": "Terminal Control Unit, Basic Assembly and Attenuator",
                       "citation": "",
                       "category": "Terminal Unit (Box)",
@@ -20621,11 +20771,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Basic Assy & Attenuator"
                     },
                     {
                       "code": "CR8-10",
-                      "name": "Basic Assy, One-Row Coil & Attenuator",
+                      "name": "Terminal Control Unit, Basic Assembly, One-Row Coil and Attenuator",
                       "title": "Terminal Control Unit, Basic Assembly, One-Row Coil and Attenuator",
                       "citation": "",
                       "category": "Terminal Unit (Box)",
@@ -20705,11 +20856,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Basic Assy, One-Row Coil & Attenuator"
                     },
                     {
                       "code": "CR8-11",
-                      "name": "Basic Assy, Two-Row Coil & Attenuator",
+                      "name": "Terminal Control Unit, Basic Assembly, Two-Row Coil and Attenuator",
                       "title": "Terminal Control Unit, Basic Assembly, Two-Row Coil and Attenuator",
                       "citation": "",
                       "category": "Terminal Unit (Box)",
@@ -20789,7 +20941,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Basic Assy, Two-Row Coil & Attenuator"
                     }
                   ]
                 }
@@ -20801,7 +20954,7 @@
               "items": [
                 {
                   "code": "CR9-1",
-                  "name": "Damper, Butterfly",
+                  "name": "Damper, Butterfly (Idelchik 1986, Diagram 9-17)",
                   "title": "Damper, Butterfly (Idelchik 1986, Diagram 9-17)",
                   "citation": "",
                   "category": "Dampers",
@@ -20905,7 +21058,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Butterfly"
                 },
                 {
                   "code": "CR9-2",
@@ -21013,13 +21167,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Gate"
                 },
                 {
                   "code": "CR9-3",
-                  "name": "Damper, Parallel & Opposed 3V Blades, Open",
+                  "name": "Damper, Parallel && Opposed 3V Blades, Open",
                   "title": "Damper, Parallel && Opposed 3V Blades, Open",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21109,13 +21264,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Parallel & Opposed 3V Blades, Open"
                 },
                 {
                   "code": "CR9-4",
-                  "name": "Damper, Parallel & Opposed Airfoil Blades, Open",
-                  "title": "Damper, Parallel && Opposed  Airfoil Blades, Open",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "name": "Damper, Parallel && Opposed Airfoil Blades, Open",
+                  "title": "Damper, Parallel && Opposed Airfoil Blades, Open",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21205,13 +21361,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Damper, Parallel & Opposed Airfoil Blades, Open"
                 },
                 {
                   "code": "CR9-5",
-                  "name": "Fire Damper, Curtain Type, Style A, Vertical Installation",
+                  "name": "Fire Damper, Curtain Type, Style A, Horizontal Duct (Vertical Installation)",
                   "title": "Fire Damper, Curtain Type, Style A, Horizontal Duct (Vertical Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamic & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamic && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21301,13 +21458,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style A, Vertical Installation"
                 },
                 {
                   "code": "CR9-6",
-                  "name": "Fire Damper, Curtain Type, Style B, Vertical Installation",
+                  "name": "Fire Damper, Curtain Type, Style B, Horizontal Duct (Vertical Installation)",
                   "title": "Fire Damper, Curtain Type, Style B, Horizontal Duct (Vertical Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamic & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamic && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21397,13 +21555,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style B, Vertical Installation"
                 },
                 {
                   "code": "CR9-7",
-                  "name": "Fire Damper, Curtain Type, Style C, Vertical Installation",
+                  "name": "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
                   "title": "Fire Damper, Curtain Type, Style C, Horizontal Duct (Vertical Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamic & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamic && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21493,13 +21652,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style C, Vertical Installation"
                 },
                 {
                   "code": "CR9-8",
-                  "name": "Fire Damper, Curtain Type, Style A, Horizontal Installation",
+                  "name": "Fire Damper, Curtain Type, Style A, Vertical Duct (Horizontal Installation)",
                   "title": "Fire Damper, Curtain Type, Style A, Vertical Duct (Horizontal Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamic & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamic && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21589,13 +21749,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style A, Horizontal Installation"
                 },
                 {
                   "code": "CR9-9",
-                  "name": "Fire Damper, Curtain Type, Style B, Horizontal Installation",
+                  "name": "Fire Damper, Curtain Type, Style B, Vertical Duct (Horizontal Installation)",
                   "title": "Fire Damper, Curtain Type, Style B, Vertical Duct (Horizontal Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamic & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamic && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21685,13 +21846,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style B, Horizontal Installation"
                 },
                 {
                   "code": "CR9-10",
-                  "name": "Fire Damper, Curtain Type, Style C, Horizontal Installation",
+                  "name": "Fire Damper, Curtain Type, Style C, Vertical Duct (Horiontal Installation)",
                   "title": "Fire Damper, Curtain Type, Style C, Vertical Duct (Horiontal Installation)",
-                  "citation": "1-1/2 & 3 Hour; For Use in Dynamoc & Static Systems",
+                  "citation": "1-1/2 && 3 Hour; For Use in Dynamoc && Static Systems",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21781,13 +21943,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire Damper, Curtain Type, Style C, Horizontal Installation"
                 },
                 {
                   "code": "CR9-11",
                   "name": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Vertical Installation",
-                  "title": "Fire/Smoke Damper, 3 Hour,  Airfoil Blades, Vertical Installation",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "title": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Vertical Installation",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21877,13 +22040,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Vertical Installation"
                 },
                 {
                   "code": "CR9-12",
                   "name": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Vertical Installation",
                   "title": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Vertical Installation",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -21973,13 +22137,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Vertical Installation"
                 },
                 {
                   "code": "CR9-13",
                   "name": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Horizontal Installation",
-                  "title": "Fire/Smoke Damper, 3 Hour,  Airfoil Blades, Horizontal Installation",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "title": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Horizontal Installation",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -22069,13 +22234,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire/Smoke Damper, 3 Hour, Airfoil Blades, Horizontal Installation"
                 },
                 {
                   "code": "CR9-14",
                   "name": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Horizontal Installation",
                   "title": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Horizontal Installation",
-                  "citation": "Van Becelaere & Sauer 2004",
+                  "citation": "Van Becelaere && Sauer 2004",
                   "category": "Dampers",
                   "shape": "rect",
                   "type": "damper",
@@ -22165,7 +22331,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Fire/Smoke Damper, 1-1/2 Hour, 3V Blades, Horizontal Installation"
                 }
               ]
             }
@@ -22173,7 +22340,7 @@
           "items": [
             {
               "code": "CR11-1",
-              "name": "Straight Duct",
+              "name": "Straight Duct, Rectangular",
               "title": "Straight Duct, Rectangular",
               "citation": "Huebscher 1948",
               "category": "Rectangular",
@@ -22289,7 +22456,8 @@
                   "si_decimals": 1,
                   "ip_decimals": 2
                 }
-              ]
+              ],
+              "tree_label": "Straight Duct"
             }
           ]
         },
@@ -22303,7 +22471,7 @@
               "items": [
                 {
                   "code": "CF3-1",
-                  "name": "5 Gore, Easy Bend, 90 deg.",
+                  "name": "Elbow, Flat Oval, 5 Gore, Easy Bend, 90 Degree",
                   "title": "Elbow, Flat Oval, 5 Gore, Easy Bend, 90 Degree",
                   "citation": "Kulkarni, Khaire and Idem 2009",
                   "category": "Elbows",
@@ -22404,13 +22572,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 1
                     }
-                  ]
+                  ],
+                  "tree_label": "5 Gore, Easy Bend, 90 deg."
                 },
                 {
                   "code": "CF3-2",
-                  "name": "5 Gore, Hard Bend, 90 deg.",
+                  "name": "Elbow, Flat Oval, 5 Gore, Hard Bend, 90 Degree",
                   "title": "Elbow, Flat Oval, 5 Gore, Hard Bend, 90 Degree",
-                  "citation": "Townsend et al. 1996 and Smith & Jones 1976",
+                  "citation": "Townsend et al. 1996 and Smith && Jones 1976",
                   "category": "Elbows",
                   "shape": "oval",
                   "type": "elbow",
@@ -22509,11 +22678,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 1
                     }
-                  ]
+                  ],
+                  "tree_label": "5 Gore, Hard Bend, 90 deg."
                 },
                 {
                   "code": "CF3-3",
-                  "name": "Mitered, Easy Bend (No Vanes), 90 deg.",
+                  "name": "Elbow, Flat Oval, Mitered, Easy Bend (No Vanes), 90 Degree",
                   "title": "Elbow, Flat Oval, Mitered, Easy Bend (No Vanes), 90 Degree",
                   "citation": "Kulkarni, Khaire and Idem 2009",
                   "category": "Elbows",
@@ -22605,11 +22775,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Mitered, Easy Bend (No Vanes), 90 deg."
                 },
                 {
                   "code": "CF3-4",
-                  "name": "Mitered, Hard Bend (No Vanes), 90 deg.",
+                  "name": "Elbow, Flat Oval, Mitered, Hard Bend (No Vanes), 90 Degree",
                   "title": "Elbow, Flat Oval, Mitered, Hard Bend (No Vanes), 90 Degree",
                   "citation": "Kulkarni, Khaire and Idem 2009",
                   "category": "Elbows",
@@ -22701,11 +22872,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Mitered, Hard Bend (No Vanes), 90 deg."
                 },
                 {
                   "code": "CF3-5",
-                  "name": "Mitered, Easy Bend with Vanes, 90 deg.",
+                  "name": "Elbow, Flat Oval, Mitered, Easy Bend with Vanes, 90 Degree",
                   "title": "Elbow, Flat Oval, Mitered, Easy Bend with Vanes, 90 Degree",
                   "citation": "Kulkarni, Khaire and Idem 2009",
                   "category": "Elbows",
@@ -22797,11 +22969,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Mitered, Easy Bend with Vanes, 90 deg."
                 },
                 {
                   "code": "CF3-6",
-                  "name": "Mitered, Hard Bend with Vanes, 90 Deg.",
+                  "name": "Elbow, Flat Oval, Mitered, Hard Bend with Vanes, 90 Degree",
                   "title": "Elbow, Flat Oval, Mitered, Hard Bend with Vanes, 90 Degree",
                   "citation": "Kulkarni, Khaire and Idem 2009",
                   "category": "Elbows",
@@ -22893,7 +23066,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Mitered, Hard Bend with Vanes, 90 Deg."
                 }
               ]
             }
@@ -22901,7 +23075,7 @@
           "items": [
             {
               "code": "CF11-1",
-              "name": "Straight Duct",
+              "name": "Straight Duct, Flat Oval",
               "title": "Straight Duct, Flat Oval",
               "citation": "Heyt and Diaz 1975; Townsend et al. 1994",
               "category": "Flat Oval",
@@ -23017,7 +23191,8 @@
                   "si_decimals": 0,
                   "ip_decimals": 2
                 }
-              ]
+              ],
+              "tree_label": "Straight Duct"
             }
           ]
         }
@@ -23168,7 +23343,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction, with Wall"
                 },
                 {
                   "code": "ED1-6",
@@ -23276,7 +23452,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Intake Hood"
                 },
                 {
                   "code": "ED1-7",
@@ -23381,7 +23558,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Orifice, Sharp-Edged"
                 },
                 {
                   "code": "ED1-1",
@@ -23489,7 +23667,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Duct Mounted in Wall"
                 },
                 {
                   "code": "ED1-2",
@@ -23582,11 +23761,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Bellmouth, Standard Radius"
                 },
                 {
                   "code": "ED1-3",
-                  "name": "Bellmouth (Standard Radius), with Wall",
+                  "name": "Bellmouth (Standard Radius) with Wall",
                   "title": "Bellmouth (Standard Radius) with Wall",
                   "citation": "Idelchik 1986, Diagram 3-4",
                   "category": "Entries",
@@ -23675,7 +23855,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Bellmouth (Standard Radius), with Wall"
                 },
                 {
                   "code": "ED1-4",
@@ -23810,7 +23991,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction"
                 },
                 {
                   "code": "ED1-8",
@@ -23903,7 +24085,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Bellmouth, Short Radius"
                 }
               ]
             },
@@ -23913,7 +24096,7 @@
               "items": [
                 {
                   "code": "ED2-1",
-                  "name": "Conical Diffuser, Round to Plenum",
+                  "name": "Conical Diffuser, Round to Plenum, Exhaust/Return Systems",
                   "title": "Conical Diffuser, Round to Plenum, Exhaust/Return Systems",
                   "citation": "Idelchik 1986, Diagram 5-8",
                   "category": "Plenums",
@@ -24065,7 +24248,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Diffuser, Round to Plenum"
                 }
               ]
             },
@@ -24075,9 +24259,9 @@
               "items": [
                 {
                   "code": "ED4-1",
-                  "name": "Round to Round",
+                  "name": "Transition, Round to Round, Exhaust/Return Systems",
                   "title": "Transition, Round to Round, Exhaust/Return Systems",
-                  "citation": "Idelchik 1986, Diagrams 5-2 & 5-22",
+                  "citation": "Idelchik 1986, Diagrams 5-2 && 5-22",
                   "category": "Transitions",
                   "shape": "round",
                   "type": "transition",
@@ -24215,11 +24399,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Round to Round"
                 },
                 {
                   "code": "ED4-2",
-                  "name": "Round to Rectangular",
+                  "name": "Transition, Round to Rectangular, Exhaust/Return Systems",
                   "title": "Transition, Round to Rectangular, Exhaust/Return Systems",
                   "citation": "Idelchik 1986, Diagram 5-27",
                   "category": "Transitions",
@@ -24380,7 +24565,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Round to Rectangular"
                 }
               ]
             },
@@ -24394,7 +24580,7 @@
                   "items": [
                     {
                       "code": "ED5-1",
-                      "name": "30 degree",
+                      "name": "Wye, 30 Degree, Converging",
                       "title": "Wye, 30 Degree, Converging",
                       "citation": "Sepsy 1973",
                       "category": "Wye",
@@ -24564,11 +24750,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "30 degree"
                     },
                     {
                       "code": "ED5-2",
-                      "name": "45 degree",
+                      "name": "Wye, 45 Degree, Converging",
                       "title": "Wye, 45 Degree, Converging",
                       "citation": "Sepsy 1973",
                       "category": "Wye",
@@ -24738,13 +24925,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 degree"
                     },
                     {
                       "code": "ED5-6",
-                      "name": "Capped Wye, Br with 45 deg. Elbow, Br 90 deg. to Main",
+                      "name": "Capped Wye, Branch with 45 Degree Elbow, Branch 90 Degrees",
                       "title": "Capped Wye, Branch with 45 Degree Elbow, Branch 90 Degrees",
-                      "citation": "to Main, Converging (UMC 1983, Report SRN1083)",
+                      "citation": "to Main, Converging (UMC 1983, Report SRN1083",
                       "category": "Wye",
                       "shape": "round",
                       "type": "junction",
@@ -24852,11 +25040,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Capped Wye, Br with 45 deg. Elbow, Br 90 deg. to Main"
                     },
                     {
                       "code": "ED5-9",
-                      "name": "Symmetrical Wye, 60 degree",
+                      "name": "Symmetrical Wye, 60 Degree, Db1 > or = Db2, Converging",
                       "title": "Symmetrical Wye, 60 Degree, Db1 > or = Db2, Converging",
                       "citation": "UMC 1985, Report SRF785E",
                       "category": "Wye",
@@ -25026,7 +25215,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Symmetrical Wye, 60 degree"
                     }
                   ]
                 },
@@ -25040,7 +25230,7 @@
                       "items": [
                         {
                           "code": "ED5-4",
-                          "name": "Without Vanes",
+                          "name": "Bullhead Tee without Vanes, Db1 > or = Db2, Converging",
                           "title": "Bullhead Tee without Vanes, Db1 > or = Db2, Converging",
                           "citation": "UMC 1985, Report SRF785E",
                           "category": "Bullhead",
@@ -25210,7 +25400,8 @@
                               "si_decimals": 0,
                               "ip_decimals": 2
                             }
-                          ]
+                          ],
+                          "tree_label": "Without Vanes"
                         }
                       ]
                     }
@@ -25218,7 +25409,7 @@
                   "items": [
                     {
                       "code": "ED5-3",
-                      "name": "Tee",
+                      "name": "Tee, Converging",
                       "title": "Tee, Converging",
                       "citation": "Sepsy 1973",
                       "category": "Tee",
@@ -25388,11 +25579,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Tee"
                     },
                     {
                       "code": "ED5-7",
-                      "name": "Capped",
+                      "name": "Capped Tee, Converging",
                       "title": "Capped Tee, Converging",
                       "citation": "UMC 1983, Report SRN1083",
                       "category": "Tee",
@@ -25502,7 +25694,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Capped"
                     }
                   ]
                 }
@@ -25510,7 +25703,7 @@
               "items": [
                 {
                   "code": "ED5-10",
-                  "name": "Double Wye",
+                  "name": "Double Wye, 45 Degree, Ab1 = Ab2, As = Ac, Converging",
                   "title": "Double Wye, 45 Degree, Ab1 = Ab2, As = Ac, Converging",
                   "citation": "Idelchik 1986, Diagram 7-27",
                   "category": "Junctions, Converging",
@@ -25716,11 +25909,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Double Wye"
                 },
                 {
                   "code": "ED5-11",
-                  "name": "Cross",
+                  "name": "Cross, Ab1 = Ab2, As = Ac, Converging",
                   "title": "Cross, Ab1 = Ab2, As = Ac, Converging",
                   "citation": "Idelchik 1986, Diagram 7-29",
                   "category": "Junctions, Converging",
@@ -25926,11 +26120,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Cross"
                 },
                 {
                   "code": "ED5-8",
-                  "name": "Heel-Tapped Elbow",
+                  "name": "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Converging",
                   "title": "Heel-Tapped Elbow, 90 Degree, r/Dc = 1.5, Converging",
                   "citation": "UMC 1985, Report SRF785E",
                   "category": "Junctions, Converging",
@@ -26100,7 +26295,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Heel-Tapped Elbow"
                 }
               ]
             },
@@ -26114,7 +26310,7 @@
                   "items": [
                     {
                       "code": "ED7-2",
-                      "name": "SWSI with 4-Gore Elbow",
+                      "name": "Fan Inlet, Centrifugal, SWSI, with 4-Gore Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, with 4-Gore Elbow",
                       "citation": "AMCA 1990, Fig. 9-5",
                       "category": "Fan Inlet, Centrifugal",
@@ -26218,11 +26414,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI with 4-Gore Elbow"
                     },
                     {
                       "code": "ED7-3",
-                      "name": "SWSI with 3-Gore Elbow",
+                      "name": "Fan Inlet, Centrifugal, SWSI, with 3-Gore Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, with 3-Gore Elbow",
                       "citation": "AMCA 1990, Fig. 9-5",
                       "category": "Fan Inlet, Centrifugal",
@@ -26326,11 +26523,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI with 3-Gore Elbow"
                     },
                     {
                       "code": "ED7-4",
-                      "name": "SWSI with Mitered Elbow",
+                      "name": "Fan Inlet, Centrifugal, SWSI, with Mitered Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, with Mitered Elbow",
                       "citation": "AMCA 1990, Fig. 9-5",
                       "category": "Fan Inlet, Centrifugal",
@@ -26422,7 +26620,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "SWSI with Mitered Elbow"
                     }
                   ]
                 },
@@ -26432,7 +26631,7 @@
                   "items": [
                     {
                       "code": "ED7-5",
-                      "name": "0.25 Hub-Tip Ratio, with 4-Gore Elbow",
+                      "name": "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with 4-Gore Elbow",
                       "title": "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with 4-Gore Elbow",
                       "citation": "AMCA 1990, Fig. 9-2",
                       "category": "Fan Inlet, Tubeaxial",
@@ -26524,11 +26723,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "0.25 Hub-Tip Ratio, with 4-Gore Elbow"
                     },
                     {
                       "code": "ED7-6",
-                      "name": "0.25 Hub-Tip Ratio, with Mitered Elbow",
+                      "name": "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with Mitered Elbow",
                       "title": "Fan Inlet, Tubeaxial, 0.25 Hub-Tip Ratio, with Mitered Elbow",
                       "citation": "AMCA 1990, Fig. 9-2",
                       "category": "Fan Inlet, Tubeaxial",
@@ -26620,11 +26820,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "0.25 Hub-Tip Ratio, with Mitered Elbow"
                     },
                     {
                       "code": "ED7-7",
-                      "name": "0.35 Hub-Tip Ratio, with Mitered Elbow",
+                      "name": "Fan Inlet, Tubeaxial, 0.35 Hub-Tip Ratio, with Mitered Elbow",
                       "title": "Fan Inlet, Tubeaxial, 0.35 Hub-Tip Ratio, with Mitered Elbow",
                       "citation": "AMCA 1990, Fig. 9-2",
                       "category": "Fan Inlet, Tubeaxial",
@@ -26716,7 +26917,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "0.35 Hub-Tip Ratio, with Mitered Elbow"
                     }
                   ]
                 },
@@ -26726,7 +26928,7 @@
                   "items": [
                     {
                       "code": "ED7-8",
-                      "name": "0.61 Hub-Tip Ratio, with 4-Gore Elbow",
+                      "name": "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with 4-Gore Elbow",
                       "title": "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with 4-Gore Elbow",
                       "citation": "AMCA 1990, Fig. 9-2",
                       "category": "Fan Inlet, Vaneaxial",
@@ -26818,11 +27020,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "0.61 Hub-Tip Ratio, with 4-Gore Elbow"
                     },
                     {
                       "code": "ED7-9",
-                      "name": "0.61 Hub-Tip Ratio, with Mitered Elbow",
+                      "name": "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with Mitered Elbow",
                       "title": "Fan Inlet, Vaneaxial, 0.61 Hub-Tip Ratio, with Mitered Elbow",
                       "citation": "AMCA 1990, Fig. 9-2",
                       "category": "Fan Inlet, Vaneaxial",
@@ -26914,7 +27117,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "0.61 Hub-Tip Ratio, with Mitered Elbow"
                     }
                   ]
                 }
@@ -26922,7 +27126,7 @@
               "items": [
                 {
                   "code": "ED7-1",
-                  "name": "Centrifugal Fan in Plenum or Cabinet",
+                  "name": "Centrifugal Fan Located in Plenum or Cabinet",
                   "title": "Centrifugal Fan Located in Plenum or Cabinet",
                   "citation": "AMCA 1990, Fig. 9-11",
                   "category": "Fan & System Interactions",
@@ -27014,7 +27218,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Centrifugal Fan in Plenum or Cabinet"
                 }
               ]
             },
@@ -27116,7 +27321,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Hood, Conical, Round Duct"
                 },
                 {
                   "code": "ED10-2",
@@ -27212,7 +27418,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Hood, Rectangular-Shaped, Tapered, Round Duct"
                 }
               ]
             }
@@ -27228,7 +27435,7 @@
               "items": [
                 {
                   "code": "ER1-1",
-                  "name": "Duct Mounted in Wall",
+                  "name": "Duct Mounted in Wall (Idelchik 1986, Diagram 3-1)",
                   "title": "Duct Mounted in Wall (Idelchik 1986, Diagram 3-1)",
                   "citation": "",
                   "category": "Entries",
@@ -27344,7 +27551,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Duct Mounted in Wall"
                 },
                 {
                   "code": "ER1-2",
@@ -27500,7 +27708,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction"
                 },
                 {
                   "code": "ER1-3",
@@ -27656,7 +27865,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction, with Wall"
                 }
               ]
             },
@@ -27666,7 +27876,7 @@
               "items": [
                 {
                   "code": "ER2-1",
-                  "name": "Bellmouth, Plenum to Round",
+                  "name": "Bellmouth, Plenum to Round, Exhaust/Return Systems",
                   "title": "Bellmouth, Plenum to Round, Exhaust/Return Systems",
                   "citation": "Idelchik 1986, Diagram 4-9",
                   "category": "Plenums",
@@ -27806,13 +28016,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Bellmouth, Plenum to Round"
                 },
                 {
                   "code": "ER2-2",
                   "name": "Conical Bellmouth/Sudden Contraction, Plenum to Round",
-                  "title": "Conical Bellmouth/Sudden Contraction, Plenum to Round,",
-                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 4-9)",
+                  "title": "Conical Bellmouth/Sudden Contraction, Plenum to Round",
+                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 4-9",
                   "category": "Plenums",
                   "shape": "rect",
                   "type": "exit",
@@ -27983,13 +28194,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Conical Bellmouth/Sudden Contraction, Plenum to Round"
                 },
                 {
                   "code": "ER2-3",
                   "name": "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum",
-                  "title": "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum,",
-                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-10)",
+                  "title": "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum",
+                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-10",
                   "category": "Plenums",
                   "shape": "rect",
                   "type": "exit",
@@ -28130,13 +28342,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Plain Diffuser (Two Sides Parallel), Rectangular to Plenum"
                 },
                 {
                   "code": "ER2-4",
                   "name": "Pyramidal Diffuser, Rectangular to Plenum",
-                  "title": "Pyramidal Diffuser, Rectangular to Plenum,",
-                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-9)",
+                  "title": "Pyramidal Diffuser, Rectangular to Plenum",
+                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-9",
                   "category": "Plenums",
                   "shape": "rect",
                   "type": "exit",
@@ -28289,7 +28502,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Pyramidal Diffuser, Rectangular to Plenum"
                 }
               ]
             },
@@ -28299,9 +28513,9 @@
               "items": [
                 {
                   "code": "ER3-1",
-                  "name": "Variable Inlet/Outlet Areas",
-                  "title": "Elbow, 90 Degree, Variable Inlet/Outlet Areas,",
-                  "citation": "Exhaust/ Return Systems (Idelchik 1986, Diagram 6-4)",
+                  "name": "Elbow, 90 Degree, Variable Inlet/Outlet Areas",
+                  "title": "Elbow, 90 Degree, Variable Inlet/Outlet Areas",
+                  "citation": "Exhaust/ Return Systems (Idelchik 1986, Diagram 6-4",
                   "category": "Elbows",
                   "shape": "rect",
                   "type": "elbow",
@@ -28421,7 +28635,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Variable Inlet/Outlet Areas"
                 }
               ]
             },
@@ -28431,9 +28646,9 @@
               "items": [
                 {
                   "code": "ER4-1",
-                  "name": "Rectangular, 2 Sides Parallel, Symmetrical",
-                  "title": "Transition, Rectangular, Two Sides Parallel, Symmetrical,",
-                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-5)",
+                  "name": "Transition, Rectangular, Two Sides Parallel, Symmetrical",
+                  "title": "Transition, Rectangular, Two Sides Parallel, Symmetrical",
+                  "citation": "Exhaust/Return Systems (Idelchik 1986, Diagram 5-5",
                   "category": "Transitions",
                   "shape": "rect",
                   "type": "transition",
@@ -28583,11 +28798,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Rectangular, 2 Sides Parallel, Symmetrical"
                 },
                 {
                   "code": "ER4-2",
-                  "name": "Pyramidal",
+                  "name": "Transition, Pyramidal, Exhaust/Return Systems",
                   "title": "Transition, Pyramidal, Exhaust/Return Systems",
                   "citation": "Idelchik 1986, Diagram 5-4",
                   "category": "Transitions",
@@ -28760,11 +28976,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Pyramidal"
                 },
                 {
                   "code": "ER4-3",
-                  "name": "Rectangular to Round",
+                  "name": "Transition, Rectangular to Round, Exhaust/Return Systems",
                   "title": "Transition, Rectangular to Round, Exhaust/Return Systems",
                   "citation": "Idelchik 1986, Diagram 5-27",
                   "category": "Transitions",
@@ -28925,7 +29142,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Rectangular to Round"
                 }
               ]
             },
@@ -28939,9 +29157,9 @@
                   "items": [
                     {
                       "code": "ER5-1",
-                      "name": "Smooth Rad., Br 90 deg. to Main",
+                      "name": "Smooth Radius Wye of the Type As + Ab > or = Ac, Branch 90",
                       "title": "Smooth Radius Wye of the Type As + Ab > or = Ac, Branch 90",
-                      "citation": "Degrees to Main, Converging (Idelchik 1986, Diagram 7-11)",
+                      "citation": "Degrees to Main, Converging (Idelchik 1986, Diagram 7-11",
                       "category": "Wye",
                       "shape": "rect",
                       "type": "junction",
@@ -29121,11 +29339,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Smooth Rad., Br 90 deg. to Main"
                     },
                     {
                       "code": "ER5-4",
-                      "name": "Dovetail",
+                      "name": "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Converging",
                       "title": "Wye, Symmetrical, Dovetail, Qb/Qc = 0.5, Converging",
                       "citation": "Idelchik 1986, Diagram 7-24",
                       "category": "Wye",
@@ -29283,11 +29502,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Dovetail"
                     },
                     {
                       "code": "ER5-6",
-                      "name": "Ab1+Ab2=Ac, 30 degree",
+                      "name": "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 30 Degree, Converging",
                       "title": "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 30 Degree, Converging",
                       "citation": "Idelchik 1986, Diagram 7-30",
                       "category": "Wye",
@@ -29457,11 +29677,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Ab1+Ab2=Ac, 30 degree"
                     },
                     {
                       "code": "ER5-7",
-                      "name": "Ab1+Ab2=Ac, 60 degree",
+                      "name": "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 60 Degree, Converging",
                       "title": "Symmetrical Wye Ab1 + Ab2 = Ac, Ab1 = Ab2, 60 Degree, Converging",
                       "citation": "Idelchik 1986, Diagram 7-30",
                       "category": "Wye",
@@ -29631,13 +29852,14 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Ab1+Ab2=Ac, 60 degree"
                     },
                     {
                       "code": "ER5-8",
-                      "name": "Ab1+Ab2=Ac, 90 degree",
-                      "title": "Symmetrical Wye of the Type Ab1 + Ab2 = Ac, Ab1 = Ab2,",
-                      "citation": "90 Degree, Converging (Idelchik 1986, Diagrams 7-30)",
+                      "name": "Symmetrical Wye of the Type Ab1 + Ab2 = Ac, Ab1 = Ab2",
+                      "title": "Symmetrical Wye of the Type Ab1 + Ab2 = Ac, Ab1 = Ab2",
+                      "citation": "90 Degree, Converging (Idelchik 1986, Diagrams 7-30",
                       "category": "Wye",
                       "shape": "rect",
                       "type": "junction",
@@ -29805,7 +30027,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Ab1+Ab2=Ac, 90 degree"
                     }
                   ]
                 },
@@ -29815,8 +30038,8 @@
                   "items": [
                     {
                       "code": "ER5-2",
-                      "name": "Round Tap, Rect. Main",
-                      "title": "Tee, Round Tap to Rectangular Main [Ab/As=Ab/Ac=0.5;  As/Ac], Converging",
+                      "name": "Tee, Round Tap to Rectangular Main [Ab/As=Ab/Ac=0.5; As/Ac], Converging",
+                      "title": "Tee, Round Tap to Rectangular Main [Ab/As=Ab/Ac=0.5; As/Ac], Converging",
                       "citation": "SMACNA 1990, Sepsy 1973",
                       "category": "Tee",
                       "shape": "rect",
@@ -29985,11 +30208,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Round Tap, Rect. Main"
                     },
                     {
                       "code": "ER5-3",
-                      "name": "45 degree Entry Branch",
+                      "name": "Tee, 45 Degree Entry Branch [Ab/As=Ab/Ac=0.5; As=Ac], Converging",
                       "title": "Tee, 45 Degree Entry Branch [Ab/As=Ab/Ac=0.5; As=Ac], Converging",
                       "citation": "SMACNA 1990, Sepsy 1973",
                       "category": "Tee",
@@ -30171,11 +30395,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "45 degree Entry Branch"
                     },
                     {
                       "code": "ER5-5",
-                      "name": "Bullhead, without Vanes",
+                      "name": "Bullhead Tee without Vanes, Converging",
                       "title": "Bullhead Tee without Vanes, Converging",
                       "citation": "Idelchik 1986, Diagram 7-23",
                       "category": "Tee",
@@ -30357,7 +30582,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "Bullhead, without Vanes"
                     }
                   ]
                 }
@@ -30365,7 +30591,7 @@
               "items": [
                 {
                   "code": "ER5-9",
-                  "name": "Double Wye",
+                  "name": "Double Wye of the Type As = Ac, Ab1 = Ab2, 45 Degree, Converging",
                   "title": "Double Wye of the Type As = Ac, Ab1 = Ab2, 45 Degree, Converging",
                   "citation": "Idelchik 1986, Diagram 7-27",
                   "category": "Junctions, Converging",
@@ -30583,11 +30809,12 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Double Wye"
                 },
                 {
                   "code": "ER5-10",
-                  "name": "Cross",
+                  "name": "Cross of the Type As = Ac, Ab1 = Ab2, Converging",
                   "title": "Cross of the Type As = Ac, Ab1 = Ab2, Converging",
                   "citation": "Idelchik 1986, Diagram 7-29",
                   "category": "Junctions, Converging",
@@ -30805,7 +31032,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Cross"
                 }
               ]
             },
@@ -30819,7 +31047,7 @@
                   "items": [
                     {
                       "code": "ER7-1",
-                      "name": "90 deg. Smooth Radius Elbow",
+                      "name": "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
                       "citation": "Square) (AMCA 1990, Fig. 9-6",
                       "category": "Fan Inlet, Centrifugal, SWSI",
@@ -30923,11 +31151,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg. Smooth Radius Elbow"
                     },
                     {
                       "code": "ER7-2",
-                      "name": "90 deg. Smooth Radius Elbow with Full Rad. Vanes",
+                      "name": "Fan Inlet, Centrifugal, SWSI, 90 Deg. Smooth Radius Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, 90 Deg. Smooth Radius Elbow",
                       "citation": "Square) with Fulll Radius Vanes (ACMA 1990, Fig. 9-6",
                       "category": "Fan Inlet, Centrifugal, SWSI",
@@ -31031,11 +31260,12 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg. Smooth Radius Elbow with Full Rad. Vanes"
                     },
                     {
                       "code": "ER7-3",
-                      "name": "90 deg. Smooth Radius Elbow with Short Vanes",
+                      "name": "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
                       "title": "Fan Inlet, Centrifugal, SWSI, 90 Degree Smooth Radius Elbow",
                       "citation": "Square) with Short Vanes (AMCA 1990, Fig. 9-6",
                       "category": "Fan Inlet, Centrifugal, SWSI",
@@ -31139,7 +31369,8 @@
                           "si_decimals": 0,
                           "ip_decimals": 2
                         }
-                      ]
+                      ],
+                      "tree_label": "90 deg. Smooth Radius Elbow with Short Vanes"
                     }
                   ]
                 }
@@ -31157,9 +31388,9 @@
               "items": [
                 {
                   "code": "EF4-1",
-                  "name": "Oval to Oval, Concentric & Eccentric",
+                  "name": "Transition, Flat Oval, Concentric && Eccentrix, Exhaust/Return Air Systems",
                   "title": "Transition, Flat Oval, Concentric && Eccentrix, Exhaust/Return Air Systems",
-                  "citation": "Zhang, Sun, Ford & Denny 2014",
+                  "citation": "Zhang, Sun, Ford && Denny 2014",
                   "category": "Transitions",
                   "shape": "oval",
                   "type": "transition",
@@ -31300,7 +31531,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Oval to Oval, Concentric & Eccentric"
                 }
               ]
             },
@@ -31310,9 +31542,9 @@
               "items": [
                 {
                   "code": "EF5-1",
-                  "name": "Tee, Flat Oval, Straight Body Branch",
+                  "name": "Tee, Flat Oval, Straight Body Branch, Converging",
                   "title": "Tee, Flat Oval, Straight Body Branch, Converging",
-                  "citation": "Kulkarni, Cui & Idem 2011",
+                  "citation": "Kulkarni, Cui && Idem 2011",
                   "category": "Junctions, Converging",
                   "shape": "oval",
                   "type": "junction",
@@ -31492,13 +31724,14 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Tee, Flat Oval, Straight Body Branch"
                 },
                 {
                   "code": "EF5-3",
-                  "name": "Wye, Flat Oval, 45 Degree, Straight Body Branch",
+                  "name": "Wye, Flat Oval, 45 Degree, Straight Body Branch, Converging",
                   "title": "Wye, Flat Oval, 45 Degree, Straight Body Branch, Converging",
-                  "citation": "Kulkarni, Cui & Idem 2011",
+                  "citation": "Kulkarni, Cui && Idem 2011",
                   "category": "Junctions, Converging",
                   "shape": "oval",
                   "type": "junction",
@@ -31678,7 +31911,8 @@
                       "si_decimals": 0,
                       "ip_decimals": 2
                     }
-                  ]
+                  ],
+                  "tree_label": "Wye, Flat Oval, 45 Degree, Straight Body Branch"
                 }
               ]
             }

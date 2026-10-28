@@ -3490,7 +3490,8 @@ body {
     border-color: #0369a1;
 }
 
-.btn-table-action.edit-prj:hover {
+.btn-table-action.edit-prj:hover,
+.btn-table-action.edit-fit:hover {
     background: #e0f2fe;
     border-color: #7dd3fc;
     color: #0369a1;
@@ -3793,8 +3794,20 @@ body {
 /* KPI Bar */
 .prj-kpi-bar {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+@media (max-width: 950px) {
+    .prj-kpi-bar {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .prj-kpi-bar {
+        grid-template-columns: 1fr;
+    }
 }
 
 .prj-kpi-card {
@@ -3836,6 +3849,156 @@ body {
     margin-top: 3px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
+}
+
+.kpi-sub-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-top: 3px;
+    display: inline-block;
+    letter-spacing: 0.2px;
+}
+
+/* Engineering Design Safety Margin Card */
+.prj-margin-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #ffffff;
+    border: 1px solid #bae6fd;
+    border-left: 4px solid #0284c7;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(2, 132, 199, 0.05);
+}
+
+.prj-margin-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.prj-margin-icon {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.prj-margin-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1px;
+}
+
+.prj-margin-desc {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.25;
+}
+
+.prj-margin-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.margin-chip-group {
+    display: inline-flex;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 2px;
+    border-radius: 6px;
+    gap: 2px;
+}
+
+.btn-margin-chip {
+    border: none;
+    background: transparent;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-margin-chip:hover {
+    color: #0f172a;
+    background: #e2e8f0;
+}
+
+.btn-margin-chip.active {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(2, 132, 199, 0.25);
+}
+
+.margin-input-wrap {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    gap: 5px;
+}
+
+.margin-input-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.input-margin-box {
+    width: 62px;
+    height: 28px;
+    padding: 3px 20px 3px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: right;
+    background: #ffffff;
+    transition: border-color 0.15s;
+}
+
+.input-margin-box:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+}
+
+.margin-unit-suffix {
+    position: absolute;
+    right: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    pointer-events: none;
+}
+
+@media (max-width: 900px) {
+    .prj-margin-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .prj-margin-right {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 /* Modal Schedule Tabs */
@@ -3937,6 +4100,7 @@ body {
     font-size: 12px;
     color: #0f172a;
     border-top: 2px solid #0284c7;
+    white-space: nowrap;
 }
 
 .text-right {
@@ -4021,14 +4185,21 @@ body {
 }
 
 .btn-table-action {
-    background: none;
+    background: #ffffff;
     border: 1px solid #cbd5e1;
-    border-radius: 3px;
-    padding: 2px 6px;
+    border-radius: 4px;
+    padding: 3px 6px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 500;
     color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
     transition: all 0.15s ease;
+    white-space: nowrap;
 }
 
 .btn-table-action:hover {
@@ -4054,7 +4225,40 @@ body {
 
 .prj-summary-footer-left {
     display: flex;
+    align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
+}
+
+.prj-report-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #1e293b;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.prj-report-opt:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.prj-report-opt input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: #0284c7;
+    width: 14px;
+    height: 14px;
+    margin: 0;
 }
 
 .btn-prj-footer {
@@ -4104,7 +4308,7 @@ body {
 /* Toast Notification */
 .prj-toast {
     position: fixed;
-    top: 24px;
+    bottom: 24px;
     right: 24px;
     background: #0f172a;
     color: #ffffff;
@@ -4118,12 +4322,13 @@ body {
     align-items: center;
     gap: 10px;
     border-left: 4px solid #10b981;
-    animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: toastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
 }
 
-@keyframes toastSlideIn {
-    from { transform: translateX(50px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+@keyframes toastSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 /* Print Stylesheet for Project Summary */

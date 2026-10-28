@@ -307,6 +307,19 @@ def update_project_route(project_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+@app.route("/api/projects/<project_id>/margin", methods=["POST", "PUT"])
+def update_project_margin_route(project_id):
+    """Update project design safety margin percentage"""
+    try:
+        data = request.get_json() or {}
+        margin_val = data.get("margin", data.get("design_margin", 10.0))
+        proj = project_manager.update_project_margin(project_id, margin_val)
+        if proj:
+            return jsonify({"status": "success", "data": proj})
+        return jsonify({"status": "error", "message": "Project not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 @app.route("/api/projects/<project_id>", methods=["DELETE"])
 def delete_project_route(project_id):
     """Delete a project"""
@@ -343,11 +356,14 @@ def delete_fitting_route(project_id, fitting_id):
 
 @app.route("/api/projects/<project_id>/fittings/<fitting_id>", methods=["PUT"])
 def update_fitting_route(project_id, fitting_id):
-    """Update fitting quantity in project"""
+    """Update fitting quantity or full calculation properties in project"""
     try:
         data = request.get_json() or {}
-        qty = data.get("qty", 1)
-        fit = project_manager.update_fitting_qty(project_id, fitting_id, qty)
+        if "inputs" in data or "dimensions" in data or "dp" in data:
+            fit = project_manager.update_fitting_in_project(project_id, fitting_id, data)
+        else:
+            qty = data.get("qty", 1)
+            fit = project_manager.update_fitting_qty(project_id, fitting_id, qty)
         if fit:
             return jsonify({"status": "success", "data": fit})
         return jsonify({"status": "error", "message": "Fitting not found"}), 404
@@ -425,7 +441,11 @@ def download_sizer_project_pdf_route(project_id):
         proj = project_manager.get_project(project_id)
         if not proj:
             return jsonify({"status": "error", "message": "Project not found"}), 404
-        pdf_bytes = pdf_report_generator.generate_sizer_project_pdf(project_id)
+        include_calc_param = request.args.get("calc", "1")
+        include_calculations = include_calc_param not in ("0", "false", "no", "False")
+        margin_param = request.args.get("margin")
+        margin_val = float(margin_param) if margin_param is not None and margin_param != "" else None
+        pdf_bytes = pdf_report_generator.generate_sizer_project_pdf(project_id, include_calculations=include_calculations, design_margin=margin_val)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', proj.get('code', 'PROJECT'))
         filename = f"{code_sanitized}_Duct_Sizing_Report.pdf"
         return send_file(
@@ -450,7 +470,11 @@ def download_project_pdf_route(project_id):
         proj = project_manager.get_project(project_id)
         if not proj:
             return jsonify({"status": "error", "message": "Project not found"}), 404
-        pdf_bytes = pdf_report_generator.generate_project_pdf(project_id)
+        include_calc_param = request.args.get("calc", "1")
+        include_calculations = include_calc_param not in ("0", "false", "no", "False")
+        margin_param = request.args.get("margin")
+        margin_val = float(margin_param) if margin_param is not None and margin_param != "" else None
+        pdf_bytes = pdf_report_generator.generate_project_pdf(project_id, include_calculations=include_calculations, design_margin=margin_val)
         code_sanitized = re.sub(r'[^a-zA-Z0-9_\-]', '_', proj.get('code', 'PROJECT'))
         filename = f"{code_sanitized}_DuctFit_Pro_Report.pdf"
         return send_file(

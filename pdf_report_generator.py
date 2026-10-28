@@ -153,6 +153,39 @@ import version_manager
 BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 BLUEPRINTS_DIR = os.path.join(BASE_DIR, "static", "blueprints")
 
+_OFFICIAL_MENU_CACHE = {}
+_OFFICIAL_CITATIONS_CACHE = {}
+
+def get_official_ashrae_meta(code):
+    """
+    Retrieves official Title1 (fitting name) and Title2 (citation) directly from the
+    official ASHRAE database table (ashrae_table_Menu.json).
+    """
+    global _OFFICIAL_MENU_CACHE, _OFFICIAL_CITATIONS_CACHE
+    if not _OFFICIAL_MENU_CACHE:
+        try:
+            menu_path = os.path.join(BASE_DIR, "ashrae_data", "ashrae_table_Menu.json")
+            if os.path.exists(menu_path):
+                import json
+                with open(menu_path, "r", encoding="utf-8-sig") as mf:
+                    menu = json.load(mf)
+                for m in menu:
+                    k = m.get("Key")
+                    if k:
+                        k_clean = k.strip().upper()
+                        t1 = (m.get("Title1") or "").strip().rstrip(",")
+                        t1 = re.sub(r"\s+", " ", t1).strip()
+                        if t1:
+                            _OFFICIAL_MENU_CACHE[k_clean] = t1
+                        t2 = (m.get("Title2") or "").strip()
+                        t2 = re.sub(r"^[(\s]+|[)\s]+$", "", t2).strip()
+                        if t2:
+                            _OFFICIAL_CITATIONS_CACHE[k_clean] = t2
+        except Exception as e:
+            print(f"Error loading ashrae_table_Menu.json: {e}")
+    c = (code or "").strip().upper()
+    return _OFFICIAL_MENU_CACHE.get(c), _OFFICIAL_CITATIONS_CACHE.get(c)
+
 class DuctfitNumberedCanvas(canvas.Canvas):
     """
     Two-pass canvas that adds running headers and page numbers
@@ -179,17 +212,12 @@ class DuctfitNumberedCanvas(canvas.Canvas):
         w, h = letter
         margin = 36 # 0.5 in margins
 
-        # --- Top Header Line ---
-        self.setStrokeColor(colors.HexColor("#334155"))
-        self.setLineWidth(0.75)
-        self.line(margin, h - 36, w - margin, h - 36)
-
         # Center Title & Project Meta
         cur_ver = version_manager.get_current_version()
         rep_title = getattr(self, "report_title", "DUCTFIT PRO — DUCT FITTING REPORT")
         self.setFont("Helvetica-Bold", 10)
         self.setFillColor(colors.HexColor("#0f172a"))
-        self.drawCentredString(w / 2.0, h - 48, rep_title)
+        self.drawCentredString(w / 2.0, h - 36, rep_title)
 
         proj_info = getattr(self, "project_info", None)
         if proj_info:
@@ -201,7 +229,12 @@ class DuctfitNumberedCanvas(canvas.Canvas):
             p_meta = f"Project: {p_code}{name_part}{client_part}"
             self.setFont("Helvetica-Bold", 7.5)
             self.setFillColor(colors.HexColor("#0284c7"))
-            self.drawCentredString(w / 2.0, h - 59, p_meta)
+            self.drawCentredString(w / 2.0, h - 47, p_meta)
+
+        # --- Top Header Line ---
+        self.setStrokeColor(colors.HexColor("#94a3b8"))
+        self.setLineWidth(0.75)
+        self.line(margin, h - 54, w - margin, h - 54)
 
 
 
@@ -317,7 +350,7 @@ def get_styles():
         parent=base["Normal"],
         fontName="Helvetica-Bold",
         fontSize=8,
-        leading=10.5,
+        leading=13.0,
         textColor=colors.HexColor("#0f172a")
     )
 
@@ -325,8 +358,8 @@ def get_styles():
         "StepCalcText",
         parent=base["Normal"],
         fontName="Helvetica",
-        fontSize=7,
-        leading=8.5,
+        fontSize=7.0,
+        leading=13.5,
         textColor=colors.HexColor("#334155")
     )
 
@@ -334,8 +367,8 @@ def get_styles():
         "TableHeaderCell",
         parent=base["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.2,
-        leading=9.0,
+        fontSize=7.0,
+        leading=8.5,
         textColor=colors.white
     )
 
@@ -499,7 +532,7 @@ def format_inputs_outputs_table(fit, data_calc, styles, unit_system="SI"):
             Paragraph(out_v, styles["cell_right"])
         ])
 
-    col_widths = [160, 95, 170, 95] # Total = 520pt (matches 8.5in - 2*36pt = 540pt printable)
+    col_widths = [165, 105, 165, 105] # Total = 540pt printable
     t = Table(table_data, colWidths=col_widths)
     t.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#000000")),
@@ -625,7 +658,7 @@ def format_sizer_inputs_outputs_table(seg, data_calc, styles, unit_system="SI"):
             Paragraph(out_v, styles["cell_right"])
         ])
 
-    col_widths = [160, 95, 170, 95] # 520pt total
+    col_widths = [165, 105, 165, 105] # Total = 540pt printable
     t = Table(table_data, colWidths=col_widths)
     t.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#000000")),
@@ -640,7 +673,190 @@ def format_sizer_inputs_outputs_table(seg, data_calc, styles, unit_system="SI"):
     return t
 
 
-def build_calculation_steps_table(steps, styles):
+import hashlib
+import tempfile
+import subprocess
+from PIL import Image as PILImage
+
+KATEX_CACHE_DIR = os.path.join(tempfile.gettempdir(), "ductfit_katex_cache")
+os.makedirs(KATEX_CACHE_DIR, exist_ok=True)
+
+def get_browser_executable():
+    paths = [
+        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+        r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+    ]
+    for p in paths:
+        if os.path.exists(p):
+            return p
+    return None
+
+def render_katex_cards_batch(cards_data):
+    """
+    Renders step-by-step substitution cards into pixel-perfect high-DPI PNGs
+    using KaTeX mathematical typesetting and headless Chrome/Edge.
+    Results are cached by content hash for instant subsequent renders.
+    """
+    if not cards_data:
+        return {}
+
+    browser_exe = get_browser_executable()
+    if not browser_exe:
+        print("[PDF Generator] No Chromium/Edge browser found for KaTeX card rendering.")
+        return {}
+
+    results = {}
+    cards_to_render = []
+
+    # Check cache first
+    for card in cards_data:
+        c_id = card["id"]
+        lines = card.get("lines") or []
+        content_key = f"{card.get('title', '')}::{'//'.join(lines)}"
+        chash = hashlib.md5(content_key.encode("utf-8")).hexdigest()
+        cached_path = os.path.join(KATEX_CACHE_DIR, f"card_{chash}.png")
+        if os.path.exists(cached_path) and os.path.getsize(cached_path) > 500:
+            results[c_id] = cached_path
+        else:
+            cards_to_render.append((card, cached_path))
+
+    if not cards_to_render:
+        return results
+
+    base_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))).replace('\\', '/')
+    katex_css = f"file:///{base_dir}/static/katex/katex.min.css"
+    katex_js = f"file:///{base_dir}/static/katex/katex.min.js"
+
+    # SVG pencil icon matching web UI
+    svg_pencil = '''<svg width="13" height="13" viewBox="0 0 24 24" fill="#f97316" stroke="#ea580c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:5px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>'''
+
+    html_cards = []
+    js_renders = []
+    for c_idx, (card, _) in enumerate(cards_to_render):
+        c_id = card["id"]
+        title = card.get("title", "SUBSTITUTION & STEP-BY-STEP EVALUATION")
+        lines = card.get("lines", [])
+        
+        lines_html = "".join([f'<div id="math_{c_idx}_{l_idx}" class="tb-derivation-line"></div>' for l_idx in range(len(lines))])
+        html_cards.append(f"""
+        <div id="{c_id}" class="tb-derivation-block">
+            <div class="tb-block-label">{svg_pencil} {title}</div>
+            <div class="tb-derivations-list">
+                {lines_html}
+            </div>
+        </div>
+        <div class="separator-line"></div>
+        """)
+        for l_idx, line in enumerate(lines):
+            line_escaped = str(line).replace('\\', '\\\\').replace('"', '\\"')
+            js_renders.append(f'katex.render("{line_escaped}", document.getElementById("math_{c_idx}_{l_idx}"), {{ displayMode: true, throwOnError: false }});')
+
+    total_est_height = max(1500, len(cards_to_render) * 220 + 300)
+
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{katex_css}">
+<script src="{katex_js}"></script>
+<style>
+body {{
+    margin: 0;
+    padding: 10px;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}}
+.tb-derivation-block {{
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #0284c7;
+    padding: 10px 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 820px;
+    margin: 0 0 10px 0;
+}}
+.tb-block-label {{
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #475569;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}}
+.tb-derivation-line {{
+    margin: 4px 0;
+    font-size: 13.5px;
+}}
+.katex-display {{
+    margin: 3px 0 !important;
+}}
+.separator-line {{
+    height: 4px;
+    background: #ff00ff;
+    width: 820px;
+    margin: 10px 0;
+}}
+</style>
+</head>
+<body>
+{"".join(html_cards)}
+<script>
+{chr(10).join(js_renders)}
+</script>
+</body>
+</html>
+"""
+
+    temp_html = os.path.join(KATEX_CACHE_DIR, "batch_render.html")
+    temp_png = os.path.join(KATEX_CACHE_DIR, "batch_render.png")
+    with open(temp_html, "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    try:
+        subprocess.run([
+            browser_exe,
+            '--headless=new',
+            '--disable-gpu',
+            '--force-device-scale-factor=2',
+            f'--screenshot={temp_png}',
+            f'--window-size=860,{total_est_height}',
+            temp_html
+        ], capture_output=True, timeout=25)
+
+        if not os.path.exists(temp_png):
+            return results
+
+        im = PILImage.open(temp_png)
+        h = im.size[1]
+        pix = im.load()
+        sep_ys = []
+        for y in range(h):
+            r, g, b = pix[200, y][:3]
+            if r > 240 and g < 30 and b > 240:
+                if not sep_ys or y > sep_ys[-1] + 10:
+                    sep_ys.append(y)
+
+        start_y = 20
+        for idx, sep_y in enumerate(sep_ys):
+            if idx >= len(cards_to_render):
+                break
+            card_data, save_path = cards_to_render[idx]
+            card_box = (20, start_y, 1660, sep_y - 20)
+            card_img = im.crop(card_box)
+            card_img.save(save_path)
+            results[card_data["id"]] = save_path
+            start_y = sep_y + 28
+    except Exception as e:
+        print(f"[PDF Generator] Error during batch KaTeX rendering: {e}")
+
+    return results
+
+
+def build_calculation_steps_table(steps, styles, rendered_cards=None):
     """
     Renders textbook-style engineering breakdown cards with:
     - Step number, title, and standard reference
@@ -687,27 +903,43 @@ def build_calculation_steps_table(steps, styles):
         param_text = " &nbsp;&bull;&nbsp; ".join(param_cells) if param_cells else ""
         param_p = Paragraph(f"<font color='#475569'><b>GIVEN / BOUNDARY CONDITIONS:</b></font><br/>{param_text}", styles["calc"]) if param_text else None
 
-        # 4. Derivation / Step-by-Step Substitution
-        derivs = s.get("derivation_latex") or []
-        if isinstance(derivs, str):
-            derivs = [derivs]
-        deriv_lines = []
-        if isinstance(derivs, list):
-            for d in derivs:
-                if d:
-                    deriv_lines.append(clean_pdf_text(d))
-        if not deriv_lines and s.get("substitution"):
-            for line in str(s.get("substitution")).split("\n"):
-                if line.strip():
-                    deriv_lines.append(clean_pdf_text(line))
-        deriv_text = "<br/>".join([f"&bull; {dl}" for dl in deriv_lines])
-        deriv_p = Paragraph(f"<font color='#0f172a'><b>STEP-BY-STEP SUBSTITUTION:</b></font><br/>{deriv_text}", styles["calc"]) if deriv_lines else None
+        # 4. Derivation / Step-by-Step Substitution (Authentic KaTeX Visual Card)
+        card_id = s.get("card_id")
+        deriv_flowable = None
+        if rendered_cards and card_id and card_id in rendered_cards:
+            img_path = rendered_cards[card_id]
+            if img_path and os.path.exists(img_path):
+                try:
+                    with PILImage.open(img_path) as pimg:
+                        pw, ph = pimg.size
+                    target_w = 528.0
+                    target_h = target_w * (ph / float(pw))
+                    deriv_flowable = Image(img_path, width=target_w, height=target_h)
+                except Exception as e:
+                    print(f"Error embedding KaTeX card image: {e}")
+                    deriv_flowable = None
+
+        if not deriv_flowable:
+            derivs = s.get("derivation_latex") or []
+            if isinstance(derivs, str):
+                derivs = [derivs]
+            deriv_lines = []
+            if isinstance(derivs, list):
+                for d in derivs:
+                    if d:
+                        deriv_lines.append(clean_pdf_text(d))
+            if not deriv_lines and s.get("substitution"):
+                for line in str(s.get("substitution")).split("\n"):
+                    if line.strip():
+                        deriv_lines.append(clean_pdf_text(line))
+            deriv_text = "<br/>".join([f"&bull; {dl}" for dl in deriv_lines])
+            deriv_flowable = Paragraph(f"<font color='#0f172a'><b>STEP-BY-STEP SUBSTITUTION:</b></font><br/>{deriv_text}", styles["calc"]) if deriv_lines else None
 
         # 5. Boxed Final Result Callout (Authentic textbook boxed answer)
         raw_res = s.get("result") or s.get("framed_result_latex") or s.get("result_latex") or ""
         res = clean_pdf_text(raw_res)
         res_p = Paragraph(f"<b>FINAL RESULT: &nbsp;&nbsp; <font size=9.5 color='#14532d'>{res}</font></b>", styles["formula"])
-        t_res = Table([[res_p]], colWidths=[510])
+        t_res = Table([[res_p]], colWidths=[528])
         t_res.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
             ('BOX', (0, 0), (-1, -1), 1.2, colors.HexColor("#16a34a")),
@@ -724,13 +956,13 @@ def build_calculation_steps_table(steps, styles):
         card_rows = [[hdr_p], [gov_p]]
         if param_p:
             card_rows.append([param_p])
-        if deriv_p:
-            card_rows.append([deriv_p])
+        if deriv_flowable:
+            card_rows.append([deriv_flowable])
         card_rows.append([t_res])
         if notes_p:
             card_rows.append([notes_p])
 
-        t_card = Table(card_rows, colWidths=[524])
+        t_card = Table(card_rows, colWidths=[540])
         t_card.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#fdfdfb")),
             ('BOX', (0, 0), (-1, -1), 0.75, colors.HexColor("#cbd5e1")),
@@ -748,7 +980,7 @@ def build_calculation_steps_table(steps, styles):
     return story
 
 
-def create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0):
+def create_enlarged_blueprint_image(code, max_w=480.0, max_h=310.0):
     """
     Loads and scales the technical CAD blueprint diagram to be prominently enlarged,
     preserving exact aspect ratio to match the official ASHRAE fitting report style.
@@ -783,7 +1015,7 @@ def create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0):
         return None
 
 
-def generate_project_pdf(project_id, output_path=None):
+def generate_project_pdf(project_id, output_path=None, include_calculations=True, design_margin=None):
     """
     Generates a master PDF report:
     - Page 1: Project Master Specification & Fitting Schedule Table
@@ -800,8 +1032,8 @@ def generate_project_pdf(project_id, output_path=None):
         pagesize=letter,
         leftMargin=36,
         rightMargin=36,
-        topMargin=64, # Space for running header
-        bottomMargin=42 # Space for running footer
+        topMargin=70, # Space for running header
+        bottomMargin=52 # Space for running footer
     )
 
     styles = get_styles()
@@ -849,7 +1081,7 @@ def generate_project_pdf(project_id, output_path=None):
         ]
     ]
 
-    t_spec = Table(spec_data, colWidths=[90, 180, 80, 170])
+    t_spec = Table(spec_data, colWidths=[90, 180, 90, 180])
     t_spec.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0369a1")),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
@@ -871,7 +1103,7 @@ def generate_project_pdf(project_id, output_path=None):
             Paragraph("<b>Loss Formulation:</b> &Delta;p<sub>t</sub> = C<sub>o</sub> &bull; p<sub>v</sub>", styles["cell"])
         ]
     ]
-    t_basis = Table(basis_data, colWidths=[175, 195, 150])
+    t_basis = Table(basis_data, colWidths=[180, 200, 160])
     t_basis.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0369a1")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
@@ -884,20 +1116,42 @@ def generate_project_pdf(project_id, output_path=None):
     story.append(t_basis)
     story.append(Spacer(1, 6))
 
-    # Calculate Totals
+    # Calculate Totals & Safety Margin
     total_qty = sum(int(f.get("qty", 1)) for f in fittings)
     cum_dp = sum(float(f.get("total_dp", f.get("dp", 0)) or 0) for f in fittings)
     max_dp = max((float(f.get("dp", 0) or 0) for f in fittings), default=0.0)
 
+    if design_margin is not None:
+        try:
+            design_margin_pct = max(0.0, float(design_margin))
+        except (ValueError, TypeError):
+            design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
+    else:
+        design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
+
+    margin_dp = cum_dp * (design_margin_pct / 100.0)
+    design_dp = cum_dp + margin_dp
+
     # KPI Statistics Row
-    kpi_data = [
-        [
-            Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
-            Paragraph(f"<b>CUMULATIVE TOTAL LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
-            Paragraph(f"<b>MAX SINGLE LOSS:</b> {max_dp:.1f} {dp_unit}", styles["cell_bold"])
+    if design_margin_pct > 0:
+        kpi_data = [
+            [
+                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
+                Paragraph(f"<b>SUBTOTAL LOSS (&Sigma;&Delta;P<sub>calc</sub>):</b> {cum_dp:.1f} {dp_unit}", styles["cell"]),
+                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", styles["cell"]),
+                Paragraph(f"<b>TOTAL FAN ESP (&Sigma;&Delta;P<sub>design</sub>):</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"])
+            ]
         ]
-    ]
-    t_kpi = Table(kpi_data, colWidths=[170, 200, 150])
+        t_kpi = Table(kpi_data, colWidths=[120, 140, 140, 140])
+    else:
+        kpi_data = [
+            [
+                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
+                Paragraph(f"<b>CUMULATIVE TOTAL LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
+                Paragraph(f"<b>MAX SINGLE LOSS:</b> {max_dp:.1f} {dp_unit}", styles["cell_bold"])
+            ]
+        ]
+        t_kpi = Table(kpi_data, colWidths=[180, 200, 160])
     t_kpi.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#166534")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
@@ -918,12 +1172,12 @@ def generate_project_pdf(project_id, output_path=None):
         Paragraph("<b>Fitting Description</b>", styles["hdr_cell"]),
         Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
         Paragraph("<b>Dimensions</b>", styles["hdr_cell"]),
-        Paragraph(f"<b>Q [{flow_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>V [{vel_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph("<b>Co / f</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>&Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph("<b>C<sub>o</sub> / f</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"]),
         Paragraph("<b>Qty</b>", styles["hdr_cell_center"]),
-        Paragraph(f"<b>Total &Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"])
+        Paragraph(f"<b>Total &Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"])
     ]
     sched_rows = [sched_headers]
 
@@ -935,11 +1189,17 @@ def generate_project_pdf(project_id, output_path=None):
         qty = int(fit.get("qty", 1) or 1)
         tot_dp = float(fit.get("total_dp", dp * qty) or 0)
 
+        code_val = fit.get("code", "-")
+        off_name, _ = get_official_ashrae_meta(code_val)
+        display_name = off_name or fit.get("name", "-")
+        if code_val and display_name.upper().startswith(code_val.upper()):
+            display_name = re.sub(r"^" + re.escape(code_val) + r"[\s:\-]+", "", display_name, flags=re.IGNORECASE).strip()
+
         sched_rows.append([
             Paragraph(str(idx + 1), styles["cell"]),
             Paragraph(f"<b>{fit.get('tag', f'FIT-{idx+1}')}</b>", styles["cell"]),
-            Paragraph(fit.get("code", "-"), styles["cell_bold"]),
-            Paragraph(fit.get("name", "-"), styles["cell"]),
+            Paragraph(code_val, styles["cell_bold"]),
+            Paragraph(display_name, styles["cell"]),
             Paragraph(fit.get("shape", "rect").upper(), styles["cell"]),
             Paragraph(fit.get("dimensions", "-"), styles["cell"]),
             Paragraph(f"{q:.0f}", styles["cell_right"]),
@@ -950,35 +1210,117 @@ def generate_project_pdf(project_id, output_path=None):
             Paragraph(f"<b>{tot_dp:.1f}</b>", styles["cell_right"])
         ])
 
-    # Summary Row
-    sched_rows.append([
-        "", "", "", Paragraph("<b>CUMULATIVE PROJECT PRESSURE LOSS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
-        "", "", "", "", "", "",
-        Paragraph(f"<b>{total_qty}</b>", styles["cell_right"]),
-        Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
-    ])
+    # Summary Rows with Design Safety Margin
+    margin_label = f"+{design_margin_pct:.0f}%" if design_margin_pct.is_integer() else f"+{design_margin_pct:.1f}%"
+    if design_margin_pct > 0:
+        sched_rows.append([
+            "", "", "", Paragraph("<b>SUBTOTAL CALCULATED LOSS (&Sigma;&Delta;P<sub>calc</sub>):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_qty}</b>", styles["cell_right"]),
+            Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        sched_rows.append([
+            "", "", "", Paragraph(f"<b>DESIGN SAFETY MARGIN ({margin_label}):</b>", styles["cell"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{margin_label}</b>", styles["cell_right"]),
+            Paragraph(f"<b>+{margin_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        sched_rows.append([
+            "", "", "", Paragraph("<b>TOTAL DESIGN PRESSURE LOSS / FAN ESP (&Sigma;&Delta;P<sub>design</sub>):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_qty}</b>", styles["cell_right"]),
+            Paragraph(f"<font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_right"])
+        ])
+        summary_style = [
+            ('ROWBACKGROUNDS', (0, 1), (-1, -4), [colors.white, colors.HexColor("#f8fafc")]),
+            ('BACKGROUND', (0, -3), (-1, -3), colors.HexColor("#f8fafc")),
+            ('LINEABOVE', (0, -3), (-1, -3), 1.2, colors.HexColor("#0f172a")),
+            ('SPAN', (0, -3), (2, -3)),
+            ('SPAN', (3, -3), (9, -3)),
+            ('BACKGROUND', (0, -2), (-1, -2), colors.HexColor("#f0f9ff")),
+            ('SPAN', (0, -2), (2, -2)),
+            ('SPAN', (3, -2), (9, -2)),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#dcfce7")),
+            ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#166534")),
+            ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#166534")),
+            ('SPAN', (0, -1), (2, -1)),
+            ('SPAN', (3, -1), (9, -1)),
+        ]
+    else:
+        sched_rows.append([
+            "", "", "", Paragraph("<b>CUMULATIVE PROJECT PRESSURE LOSS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_qty}</b>", styles["cell_right"]),
+            Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        summary_style = [
+            ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
+            ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
+            ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
+            ('SPAN', (0, -1), (2, -1)),
+            ('SPAN', (3, -1), (9, -1)),
+        ]
 
-    sched_widths = [22, 60, 48, 120, 36, 68, 36, 32, 36, 32, 24, 46] # 520pt total
+    sched_widths = [18, 54, 46, 110, 32, 60, 36, 32, 34, 32, 28, 58] # 540pt total
     t_sched = Table(sched_rows, colWidths=sched_widths, repeatRows=1)
-    t_sched.setStyle(TableStyle([
+    base_style = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#1e3a8a")),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#1e3a8a")),
         ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
-        ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
-        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
-        ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
-        ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
-        ('SPAN', (0, -1), (2, -1)),
-        ('SPAN', (3, -1), (9, -1)),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('TOPPADDING', (0, 0), (-1, -1), 3),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('RIGHTPADDING', (0, 0), (-1, -1), 3),
-    ]))
+    ]
+    t_sched.setStyle(TableStyle(base_style + summary_style))
     story.append(t_sched)
+
+    # =========================================================================
+    # PRE-CALCULATE ALL FITTING STEPS & BATCH RENDER KATEX CARDS
+    # =========================================================================
+    all_fit_cards = []
+    fit_calc_data = []
+    for idx, fit in enumerate(fittings):
+        f_code = fit.get("code", "CR11-1")
+        f_inputs = fit.get("inputs", {})
+        c_res = {}
+        f_steps = []
+        try:
+            if f_code.startswith("SIZE-"):
+                t_val = safe_num(f_inputs.get("target_hf"), 0.8 if is_si else 0.10)
+                q_v = safe_num(f_inputs.get("Q"), 300 if is_si else 636)
+                f_shape = fit.get("shape", "rect")
+                h_v = safe_num(f_inputs.get("H"), 300 if is_si else 12)
+                c_res = AshraeEngine.size_duct(
+                    Q_Lps=q_v, target_type="friction", target_val=t_val,
+                    shape=f_shape, fixed_dim=h_v, fixed_type="H" if h_v > 0 else "NONE", unit_system=unit_system
+                )
+            else:
+                c_res = AshraeEngine.calculate_fitting(f_code, f_inputs, unit_system)
+            f_steps = c_res.get("steps", [])
+        except Exception as e:
+            print(f"Error calculating steps for {f_code}: {e}")
+
+        if include_calculations:
+            for s_idx, s in enumerate(f_steps):
+                dl = s.get("derivation_latex") or []
+                if not dl and s.get("substitution"):
+                    dl = [line.strip() for line in str(s.get("substitution")).split("\n") if line.strip()]
+                if dl:
+                    cid = f"fit_{idx}_step_{s_idx}"
+                    s["card_id"] = cid
+                    all_fit_cards.append({
+                        "id": cid,
+                        "title": "SUBSTITUTION & STEP-BY-STEP EVALUATION",
+                        "lines": dl
+                    })
+        fit_calc_data.append((c_res, f_steps))
+
+    rendered_fit_cards = render_katex_cards_batch(all_fit_cards) if include_calculations else {}
 
     # =========================================================================
     # PAGES 2..N: DEDICATED SEPARATE PAGE FOR EVERY FITTING
@@ -987,34 +1329,22 @@ def generate_project_pdf(project_id, output_path=None):
         story.append(PageBreak())
 
         code = fit.get("code", "CR11-1")
-        name = fit.get("name", "Duct Section")
+        off_name, off_cit = get_official_ashrae_meta(code)
+        name = off_name or fit.get("name", "Duct Section")
+        if code and name.upper().startswith(code.upper()):
+            name = re.sub(r"^" + re.escape(code) + r"[\s:\-]+", "", name, flags=re.IGNORECASE).strip()
         tag = fit.get("tag", f"FIT-{idx+1}")
         inputs = fit.get("inputs", {})
 
-        # Compute or fetch step-by-step engineering breakdown
-        calc_res = {}
-        steps = []
-        try:
-            if code.startswith("SIZE-"):
-                # Sizing mode fitting
-                target_val = safe_num(inputs.get("target_hf"), 0.8 if is_si else 0.10)
-                q_val = safe_num(inputs.get("Q"), 300 if is_si else 636)
-                shape = fit.get("shape", "rect")
-                h_val = safe_num(inputs.get("H"), 300 if is_si else 12)
-                calc_res = AshraeEngine.size_duct(
-                    Q_Lps=q_val, target_type="friction", target_val=target_val,
-                    shape=shape, fixed_dim=h_val, fixed_type="H" if h_val > 0 else "NONE", unit_system=unit_system
-                )
-            else:
-                calc_res = AshraeEngine.calculate_fitting(code, inputs, unit_system)
-            steps = calc_res.get("steps", [])
-        except Exception as e:
-            print(f"Error calculating steps for {code}: {e}")
+        # Use pre-calculated steps
+        calc_res, steps = fit_calc_data[idx]
 
-        # Fitting Header (Page 1)
-        story.append(Paragraph(f"({code})  {name}", styles["title"]))
-        raw_cit = calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
-        citation = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "")
+        # Fitting Header (Page 1) - Exact ASHRAE format: CODE  TITLE (two spaces, NO parentheses)
+        header_title = f"{code}  {name}" if name else code
+        story.append(Paragraph(header_title, styles["title"]))
+        raw_cit = off_cit or calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
+        clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "").strip()
+        citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
         story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
         prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
@@ -1032,20 +1362,21 @@ def generate_project_pdf(project_id, output_path=None):
         if bp_img:
             story.append(bp_img)
 
-        # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page
-        story.append(PageBreak())
+        # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page (Optional)
+        if include_calculations:
+            story.append(PageBreak())
 
-        story.append(Paragraph(f"({code})  {name}", styles["title"]))
-        story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
-        subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
-        story.append(Paragraph(subhead_calc_text, styles["meta"]))
-        story.append(Spacer(1, 4))
+            story.append(Paragraph(header_title, styles["title"]))
+            story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
+            subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+            story.append(Paragraph(subhead_calc_text, styles["meta"]))
+            story.append(Spacer(1, 4))
 
-        steps_table_story = build_calculation_steps_table(steps, styles)
-        if isinstance(steps_table_story, list):
-            story.extend(steps_table_story)
-        else:
-            story.append(steps_table_story)
+            steps_table_story = build_calculation_steps_table(steps, styles, rendered_fit_cards)
+            if isinstance(steps_table_story, list):
+                story.extend(steps_table_story)
+            else:
+                story.append(steps_table_story)
 
     # Build the document
     doc.build(story, canvasmaker=make_project_canvas(DuctfitFittingCanvas, project))
@@ -1058,7 +1389,7 @@ def generate_project_pdf(project_id, output_path=None):
         return pdf_bytes
 
 
-def generate_sizer_project_pdf(project_id, output_path=None):
+def generate_sizer_project_pdf(project_id, output_path=None, include_calculations=True, design_margin=None):
     """
     Generates an official DuctFit Pro Duct Sizing Project Report:
     - Running header: DUCTFIT PRO — DUCT SIZING REPORT
@@ -1076,8 +1407,8 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         pagesize=letter,
         leftMargin=36,
         rightMargin=36,
-        topMargin=64,
-        bottomMargin=42
+        topMargin=70,
+        bottomMargin=52
     )
 
     styles = get_styles()
@@ -1125,7 +1456,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         ]
     ]
 
-    t_spec = Table(spec_data, colWidths=[90, 180, 80, 170])
+    t_spec = Table(spec_data, colWidths=[90, 180, 90, 180])
     t_spec.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0284c7")),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
@@ -1147,7 +1478,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
             Paragraph("<b>Friction Loss Model:</b> Darcy-Weisbach &amp; Colebrook (Eq. 21.19)", styles["cell"])
         ]
     ]
-    t_basis = Table(basis_data, colWidths=[175, 195, 150])
+    t_basis = Table(basis_data, colWidths=[180, 200, 160])
     t_basis.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0284c7")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0f9ff")),
@@ -1166,16 +1497,39 @@ def generate_sizer_project_pdf(project_id, output_path=None):
     cum_dp = sum(float(s.get("dp", 0) or 0) for s in segments)
     avg_fr = (cum_dp / total_length) if total_length > 0 else 0.0
 
+    if design_margin is not None:
+        try:
+            design_margin_pct = max(0.0, float(design_margin))
+        except (ValueError, TypeError):
+            design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
+    else:
+        design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
+
+    margin_dp = cum_dp * (design_margin_pct / 100.0)
+    design_dp = cum_dp + margin_dp
+
     # KPI Statistics Row
-    kpi_data = [
-        [
-            Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", styles["cell_bold"]),
-            Paragraph(f"<b>TOTAL RUN LENGTH:</b> {total_length:.1f} {len_unit}", styles["cell_bold"]),
-            Paragraph(f"<b>TOTAL DUCT LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
-            Paragraph(f"<b>AVG FRICTION:</b> {avg_fr:.2f} {fr_unit}", styles["cell_bold"])
+    if design_margin_pct > 0:
+        kpi_data = [
+            [
+                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", styles["cell_bold"]),
+                Paragraph(f"<b>TOTAL LENGTH:</b> {total_length:.1f} {len_unit}", styles["cell_bold"]),
+                Paragraph(f"<b>SUBTOTAL LOSS:</b> {cum_dp:.1f} {dp_unit}", styles["cell"]),
+                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", styles["cell"]),
+                Paragraph(f"<b>TOTAL DESIGN LOSS:</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"])
+            ]
         ]
-    ]
-    t_kpi = Table(kpi_data, colWidths=[110, 130, 170, 110])
+        t_kpi = Table(kpi_data, colWidths=[90, 105, 110, 115, 120])
+    else:
+        kpi_data = [
+            [
+                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", styles["cell_bold"]),
+                Paragraph(f"<b>TOTAL RUN LENGTH:</b> {total_length:.1f} {len_unit}", styles["cell_bold"]),
+                Paragraph(f"<b>TOTAL DUCT LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
+                Paragraph(f"<b>AVG FRICTION:</b> {avg_fr:.2f} {fr_unit}", styles["cell_bold"])
+            ]
+        ]
+        t_kpi = Table(kpi_data, colWidths=[115, 135, 175, 115])
     t_kpi.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0284c7")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0f9ff")),
@@ -1196,13 +1550,13 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         Paragraph("<b>Section / Room</b>", styles["hdr_cell"]),
         Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
         Paragraph("<b>Sized Dimensions</b>", styles["hdr_cell"]),
-        Paragraph(f"<b>Q [{flow_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>V [{vel_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>Eq. D<sub>e</sub> [{de_unit}]</b>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>Eq. D<sub>e</sub></b><br/><font size=5.5>[{de_unit}]</font>", styles["hdr_cell_right"]),
         Paragraph("<b>AR</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>Rate [{fr_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>L [{len_unit}]</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>&Delta;P [{dp_unit}]</b>", styles["hdr_cell_right"])
+        Paragraph(f"<b>Rate</b><br/><font size=5.5>[{fr_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>L</b><br/><font size=5.5>[{len_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"])
     ]
     sched_rows = [sched_headers]
 
@@ -1236,34 +1590,73 @@ def generate_sizer_project_pdf(project_id, output_path=None):
             "", "", "", "", "", "", "", "", ""
         ])
 
-    # Summary Row
-    sched_rows.append([
-        "", "", "", Paragraph("<b>CUMULATIVE DUCT RUN TOTALS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
-        "", "", "", "", "", "",
-        Paragraph(f"<b>{total_length:.1f} {len_unit}</b>", styles["cell_right"]),
-        Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
-    ])
+    # Summary Rows with Design Safety Margin
+    margin_label = f"+{design_margin_pct:.0f}%" if design_margin_pct.is_integer() else f"+{design_margin_pct:.1f}%"
+    if design_margin_pct > 0:
+        sched_rows.append([
+            "", "", "", Paragraph("<b>SUBTOTAL FRICTION LOSS (&Sigma;&Delta;P<sub>calc</sub>):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_length:.1f} {len_unit}</b>", styles["cell_right"]),
+            Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        sched_rows.append([
+            "", "", "", Paragraph(f"<b>DESIGN SAFETY MARGIN ({margin_label}):</b>", styles["cell"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{margin_label}</b>", styles["cell_right"]),
+            Paragraph(f"<b>+{margin_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        sched_rows.append([
+            "", "", "", Paragraph("<b>TOTAL SIZING DESIGN LOSS (&Sigma;&Delta;P<sub>design</sub>):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_length:.1f} {len_unit}</b>", styles["cell_right"]),
+            Paragraph(f"<font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_right"])
+        ])
+        summary_style = [
+            ('ROWBACKGROUNDS', (0, 1), (-1, -4), [colors.white, colors.HexColor("#f8fafc")]),
+            ('BACKGROUND', (0, -3), (-1, -3), colors.HexColor("#f8fafc")),
+            ('LINEABOVE', (0, -3), (-1, -3), 1.2, colors.HexColor("#0f172a")),
+            ('SPAN', (0, -3), (2, -3)),
+            ('SPAN', (3, -3), (9, -3)),
+            ('BACKGROUND', (0, -2), (-1, -2), colors.HexColor("#f0f9ff")),
+            ('SPAN', (0, -2), (2, -2)),
+            ('SPAN', (3, -2), (9, -2)),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#dcfce7")),
+            ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#166534")),
+            ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#166534")),
+            ('SPAN', (0, -1), (2, -1)),
+            ('SPAN', (3, -1), (9, -1)),
+        ]
+    else:
+        sched_rows.append([
+            "", "", "", Paragraph("<b>CUMULATIVE DUCT RUN TOTALS (&Sigma;&Delta;P):</b>", styles["cell_bold"]),
+            "", "", "", "", "", "",
+            Paragraph(f"<b>{total_length:.1f} {len_unit}</b>", styles["cell_right"]),
+            Paragraph(f"<b>{cum_dp:.1f} {dp_unit}</b>", styles["cell_right"])
+        ])
+        summary_style = [
+            ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
+            ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
+            ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
+            ('SPAN', (0, -1), (2, -1)),
+            ('SPAN', (3, -1), (9, -1)),
+        ]
 
-    sched_widths = [20, 50, 95, 34, 75, 40, 35, 40, 30, 43, 30, 48] # 520pt total
+    sched_widths = [18, 46, 82, 32, 70, 36, 34, 38, 26, 58, 36, 64] # 540pt total
     t_sched = Table(sched_rows, colWidths=sched_widths, repeatRows=1)
-    t_sched.setStyle(TableStyle([
+    base_style = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#0284c7")),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0284c7")),
         ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
-        ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#f8fafc")]),
-        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#f1f5f9")),
-        ('LINEABOVE', (0, -1), (-1, -1), 1.2, colors.HexColor("#0f172a")),
-        ('LINEBELOW', (0, -1), (-1, -1), 2.2, colors.HexColor("#0f172a")),
-        ('SPAN', (0, -1), (2, -1)),
-        ('SPAN', (3, -1), (9, -1)),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('TOPPADDING', (0, 0), (-1, -1), 3),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('RIGHTPADDING', (0, 0), (-1, -1), 3),
-    ]))
+    ]
+    t_sched.setStyle(TableStyle(base_style + summary_style))
     story.append(t_sched)
     story.append(Spacer(1, 12))
 
@@ -1289,7 +1682,7 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         ]
     ]
 
-    t_method = Table(method_data, colWidths=[255, 265])
+    t_method = Table(method_data, colWidths=[270, 270])
     t_method.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
@@ -1302,7 +1695,9 @@ def generate_sizer_project_pdf(project_id, output_path=None):
     ]))
     story.append(t_method)
 
-    # Detailed Step-by-Step Pages for each segment (Inputs/Outputs Table & Step Calculations ONLY, NO CAD Drawing)
+    # Pre-calculate steps and batch-render KaTeX cards for sizing segments
+    all_seg_cards = []
+    seg_calc_data = []
     for idx, seg in enumerate(segments):
         steps = seg.get("steps", [])
         calc_res = {}
@@ -1334,6 +1729,27 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         except Exception as e:
             print(f"Error computing sizing steps for {seg.get('tag')}: {e}")
 
+        if include_calculations:
+            for s_idx, s in enumerate(steps):
+                dl = s.get("derivation_latex") or []
+                if not dl and s.get("substitution"):
+                    dl = [line.strip() for line in str(s.get("substitution")).split("\n") if line.strip()]
+                if dl:
+                    cid = f"seg_{idx}_step_{s_idx}"
+                    s["card_id"] = cid
+                    all_seg_cards.append({
+                        "id": cid,
+                        "title": "SUBSTITUTION & STEP-BY-STEP EVALUATION",
+                        "lines": dl
+                    })
+        seg_calc_data.append((calc_res, steps))
+
+    rendered_seg_cards = render_katex_cards_batch(all_seg_cards) if include_calculations else {}
+
+    # Detailed Step-by-Step Pages for each segment (Inputs/Outputs Table & Step Calculations ONLY, NO CAD Drawing)
+    for idx, seg in enumerate(segments):
+        calc_res, steps = seg_calc_data[idx]
+
         story.append(PageBreak())
         tag = seg.get("tag", f"DS-{idx+1}")
         sec_name = seg.get("section_name", f"Section {idx+1}")
@@ -1350,13 +1766,14 @@ def generate_sizer_project_pdf(project_id, output_path=None):
         story.append(t_io)
         story.append(Spacer(1, 8))
 
-        # Step-by-Step Engineering Calculation Breakdown
-        story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
-        steps_table_story = build_calculation_steps_table(steps, styles)
-        if isinstance(steps_table_story, list):
-            story.extend(steps_table_story)
-        else:
-            story.append(steps_table_story)
+        # Step-by-Step Engineering Calculation Breakdown (Optional)
+        if include_calculations:
+            story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
+            steps_table_story = build_calculation_steps_table(steps, styles, rendered_seg_cards)
+            if isinstance(steps_table_story, list):
+                story.extend(steps_table_story)
+            else:
+                story.append(steps_table_story)
 
     # Build document
     doc.build(story, canvasmaker=make_project_canvas(DuctfitSizerCanvas, project))
@@ -1384,8 +1801,8 @@ def generate_calculation_pdf(calc_data, output_path=None):
         pagesize=letter,
         leftMargin=36,
         rightMargin=36,
-        topMargin=64,
-        bottomMargin=42
+        topMargin=70,
+        bottomMargin=52
     )
 
     styles = get_styles()
@@ -1433,10 +1850,18 @@ def generate_calculation_pdf(calc_data, output_path=None):
     if not steps and calc_data.get("steps"):
         steps = calc_data.get("steps")
 
-    # Fitting Header
-    story.append(Paragraph(f"({code})  {name}", styles["title"]))
-    raw_cit = calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
-    citation = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "")
+    # Fitting Header - Exact ASHRAE format: CODE  TITLE (two spaces, NO parentheses)
+    code = (code or "CR11-1").strip()
+    off_name, off_cit = get_official_ashrae_meta(code)
+    name = off_name or name or calc_data.get("name", "Duct Section")
+    if code and name.upper().startswith(code.upper()):
+        name = re.sub(r"^" + re.escape(code) + r"[\s:\-]+", "", name, flags=re.IGNORECASE).strip()
+
+    header_title = f"{code}  {name}" if name else code
+    story.append(Paragraph(header_title, styles["title"]))
+    raw_cit = off_cit or calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
+    clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "").strip()
+    citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
     story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
     if project:
@@ -1471,7 +1896,7 @@ def generate_calculation_pdf(calc_data, output_path=None):
     # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page
     story.append(PageBreak())
 
-    story.append(Paragraph(f"({code})  {name}", styles["title"]))
+    story.append(Paragraph(header_title, styles["title"]))
     story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
     if project:
         prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
@@ -1481,7 +1906,22 @@ def generate_calculation_pdf(calc_data, output_path=None):
     story.append(Paragraph(subhead_calc_text, styles["meta"]))
     story.append(Spacer(1, 8))
 
-    steps_table_story = build_calculation_steps_table(steps, styles)
+    # Batch render KaTeX cards for single calculation report
+    all_calc_cards = []
+    for s_idx, s in enumerate(steps):
+        dl = s.get("derivation_latex") or []
+        if not dl and s.get("substitution"):
+            dl = [line.strip() for line in str(s.get("substitution")).split("\n") if line.strip()]
+        if dl:
+            cid = f"single_calc_step_{s_idx}"
+            s["card_id"] = cid
+            all_calc_cards.append({
+                "id": cid,
+                "title": "SUBSTITUTION & STEP-BY-STEP EVALUATION",
+                "lines": dl
+            })
+    rendered_single_cards = render_katex_cards_batch(all_calc_cards)
+    steps_table_story = build_calculation_steps_table(steps, styles, rendered_single_cards)
     if isinstance(steps_table_story, list):
         story.extend(steps_table_story)
     else:

@@ -369,13 +369,21 @@
         tabSummarySizer: document.getElementById("tabSummarySizer"),
         viewSummaryFittings: document.getElementById("viewSummaryFittings"),
         viewSummarySizer: document.getElementById("viewSummarySizer"),
+        inputProjectDesignMargin: document.getElementById("inputProjectDesignMargin"),
+        marginPresetChips: document.getElementById("marginPresetChips"),
         kpiTotalFittings: document.getElementById("kpiTotalFittings"),
+        kpiSubtotalDp: document.getElementById("kpiSubtotalDp"),
         kpiTotalDp: document.getElementById("kpiTotalDp"),
+        kpiTotalDpLabel: document.getElementById("kpiTotalDpLabel"),
+        kpiTotalDpSub: document.getElementById("kpiTotalDpSub"),
         kpiMaxLoss: document.getElementById("kpiMaxLoss"),
         kpiTotalAirflow: document.getElementById("kpiTotalAirflow"),
         kpiSizerRuns: document.getElementById("kpiSizerRuns"),
         kpiSizerLength: document.getElementById("kpiSizerLength"),
+        kpiSizerSubtotalDp: document.getElementById("kpiSizerSubtotalDp"),
         kpiSizerTotalDp: document.getElementById("kpiSizerTotalDp"),
+        kpiSizerTotalDpLabel: document.getElementById("kpiSizerTotalDpLabel"),
+        kpiSizerTotalDpSub: document.getElementById("kpiSizerTotalDpSub"),
         kpiSizerAvgRate: document.getElementById("kpiSizerAvgRate"),
         tableProjectSchedule: document.getElementById("tableProjectSchedule"),
         tbodyProjectSchedule: document.getElementById("tbodyProjectSchedule"),
@@ -384,6 +392,7 @@
         tbodySizerSchedule: document.getElementById("tbodySizerSchedule"),
         tfootSizerSchedule: document.getElementById("tfootSizerSchedule"),
         btnDownloadFitductPdf: document.getElementById("btnDownloadFitductPdf"),
+        chkIncludeCalculations: document.getElementById("chkIncludeCalculations"),
         btnExportProjectCsv: document.getElementById("btnExportProjectCsv"),
         btnPrintProjectReport: document.getElementById("btnPrintProjectReport"),
         btnClearProjectFittings: document.getElementById("btnClearProjectFittings"),
@@ -557,7 +566,9 @@
             row.classList.add("selected");
         }
         // Full descriptive name & citation tooltip on row hover
-        row.title = `${item.code}: ${item.name}${item.citation ? ' (' + item.citation + ')' : ''}`;
+        const fullTitle = formatFittingTitle(item);
+        row.title = `${fullTitle}${item.citation ? ' (' + item.citation + ')' : ''}`;
+        row.dataset.search = `${item.code} ${item.name || ''} ${item.tree_label || item.label || ''} ${item.title || ''}`.toLowerCase();
 
         // Spacer
         const spacer = document.createElement("span");
@@ -570,11 +581,11 @@
         codeBadge.textContent = item.code;
         row.appendChild(codeBadge);
 
-        // Item Label
+        // Item Label - exact match with ASHRAE database tree label
         const label = document.createElement("span");
         label.className = "tree-label";
-        label.textContent = item.name;
-        label.title = item.name;
+        label.textContent = item.tree_label || item.label || item.name;
+        label.title = fullTitle;
         row.appendChild(label);
 
         row.addEventListener("click", (e) => {
@@ -610,8 +621,9 @@
 
         let matchCount = 0;
         allItems.forEach(leaf => {
-            const text = leaf.textContent.toLowerCase();
-            const match = text.includes(q);
+            const itemRow = leaf.querySelector(".tree-item-row");
+            const searchStr = itemRow ? (itemRow.dataset.search || itemRow.textContent.toLowerCase()) : leaf.textContent.toLowerCase();
+            const match = searchStr.includes(q);
             leaf.classList.toggle("hidden", !match);
 
             if (match) {
@@ -850,6 +862,9 @@
 
     // --- Select Fitting Model from Tree or Sizer ---
     function selectFitting(code) {
+        if (state.editingFitting && state.editingFitting.code !== code) {
+            state.editingFitting = null;
+        }
         state.activeCode = code;
         if (!code.startsWith("SIZE-")) {
             state.lastDirectCode = code;
@@ -922,7 +937,7 @@
         if (code === "SIZE-ROUND" || code === "SIZE-RECT" || code === "SIZE-AUTO") {
             return {
                 code: "SIZE-AUTO",
-                name: "Auto Duct Sizer (ASHRAE & McQuay Method)",
+                name: "Auto Duct Sizer",
                 citation: "ASHRAE Fundamentals, Ch. 21: Duct Design",
                 shape: "rect",
                 category: "Duct Sizing",
@@ -992,15 +1007,16 @@
         };
     }
 
-    // Helper: Safely format fitting code and name without trimming initial letters
+    // Helper: Safely format fitting code and name matching official ASHRAE format (e.g. "SD5-1  Wye, 45 Degree, Diverging")
     function formatFittingTitle(item) {
         if (!item) return "";
-        const code = item.code || "";
-        let name = (item.name || "").trim();
+        if (typeof item === "string") return item;
+        const code = (item.code || "").trim();
+        let name = (item.title || item.name || "").trim();
         if (code && name.toLowerCase().startsWith(code.toLowerCase())) {
             name = name.slice(code.length).replace(/^[\s:\-]+/, '');
         }
-        return code ? `${code} ${name}` : name;
+        return code ? (name ? `${code}  ${name}` : code) : name;
     }
 
     // --- Update AUTO/ENTERED badges in Sizer mode ---
@@ -1347,9 +1363,11 @@
 
         const cond = AIR_CONDITIONS[state.selectedAirConditionId] || AIR_CONDITIONS["comfort_return"];
         const Qm3s = u === "SI" ? Q / 1000.0 : Q * 0.0004719474;
-        const eMm = getNum("e") || (u === "SI" ? 0.21336 : 0.00070 * 304.8);
+        const rawE = getNum("e");
+        const eMm = !isNaN(rawE) ? (u === "SI" ? rawE : rawE * 304.8) : (u === "SI" ? 0.21336 : 0.00070 * 304.8);
         const eM = eMm / 1000.0;
-        const rho = getNum("rho") || (u === "SI" ? cond.density_si : cond.density_ip * 16.0185);
+        const rawRho = getNum("rho");
+        const rho = !isNaN(rawRho) ? (u === "SI" ? rawRho : rawRho * 16.018463) : cond.density_si;
         const muPas = cond.viscosity_pas;
         const rhoRef = 1.204;
         const densityCorr = (rho > 0) ? (rhoRef / rho) : 1.0;
@@ -1727,10 +1745,10 @@
         let inputs = [];
 
         if (isSizer) {
-            elements.displayFittingTitle.textContent = "Auto Duct Sizer (ASHRAE & McQuay Method)";
+            elements.displayFittingTitle.textContent = "Auto Duct Sizer";
             elements.displayFittingSubtitle.textContent = "ASHRAE Fundamentals, Ch. 21: Duct Design";
             elements.displayFittingCitation.textContent = "Colebrook-Darcy Friction (Eq. 19) & Huebscher Equivalent Diameter (Eq. 25)";
-            elements.sheetTitleText.textContent = "Auto Duct Sizer (ASHRAE & McQuay Method)";
+            elements.sheetTitleText.textContent = "Auto Duct Sizer";
             elements.sheetSubtitleText.textContent = "ASHRAE Fundamentals, Ch. 21: Duct Design";
 
             elements.lblOutF.textContent = "Friction Factor (f)";
@@ -1899,16 +1917,34 @@
                 let initialVal = "";
                 if (convertedValues && convertedValues[inp.id] !== undefined && convertedValues[inp.id] !== "") {
                     initialVal = convertedValues[inp.id];
-                    state.userRoughnessValue = initialVal;
+                    if (isSizer) {
+                        if (!state.userSizerValues) state.userSizerValues = {};
+                        state.userSizerValues[inp.id] = initialVal;
+                    } else {
+                        state.userRoughnessValue = initialVal;
+                    }
                 } else if (convertedValues && (inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"]) !== undefined && (inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"]) !== "") {
                     initialVal = inp.id === "ei" ? convertedValues["e"] : convertedValues["ei"];
-                    state.userRoughnessValue = initialVal;
-                } else if (isSizer && state.userSizerValues && state.userSizerValues[inp.id] !== undefined && state.userSizerValues[inp.id] !== null && state.userSizerValues[inp.id] !== "") {
-                    initialVal = state.userSizerValues[inp.id];
+                    if (isSizer) {
+                        if (!state.userSizerValues) state.userSizerValues = {};
+                        state.userSizerValues[inp.id] = initialVal;
+                    } else {
+                        state.userRoughnessValue = initialVal;
+                    }
+                } else if (isSizer) {
+                    if (state.userSizerValues && state.userSizerValues[inp.id] !== undefined && state.userSizerValues[inp.id] !== null && state.userSizerValues[inp.id] !== "") {
+                        initialVal = state.userSizerValues[inp.id];
+                    } else {
+                        // McQuay default roughness in Auto Duct Sizer mode (exact parity with density)
+                        const defRoughness = u === "SI" ? (inp.default_si !== undefined ? Number(inp.default_si).toFixed(3) : "0.213") : (inp.default_ip !== undefined ? Number(inp.default_ip).toFixed(4) : "0.0007");
+                        initialVal = defRoughness;
+                        if (!state.selectedRoughnessMaterial) {
+                            state.selectedRoughnessMaterial = "Galvanized Steel, Medium Roughness (McQuay Default)";
+                            state.activeRoughnessIndex = 6;
+                        }
+                    }
                 } else if (state.userRoughnessValue !== null && state.userRoughnessValue !== undefined && state.userRoughnessValue !== "") {
                     initialVal = state.userRoughnessValue;
-                } else if (isSizer) {
-                    initialVal = ""; // Nil / Blank on fresh load in Sizer mode
                 } else {
                     const defRoughness = u === "SI" ? (inp.default_si !== undefined ? Number(inp.default_si).toFixed(3) : "0.090") : (inp.default_ip !== undefined ? Number(inp.default_ip).toFixed(4) : "0.0003");
                     initialVal = defRoughness;
@@ -1936,7 +1972,7 @@
                         const isSi = state.unit === "SI";
                         const foundMat = ASHRAE_ROUGHNESS_MATERIALS.find(m => {
                             const val = parseFloat(isSi ? m.si : m.ip);
-                            return Math.abs(val - typed) < 0.00001;
+                            return Math.abs(val - typed) < 0.0005;
                         });
                         state.selectedRoughnessMaterial = foundMat ? foundMat.name : "Custom Roughness";
                     } else {
@@ -2180,9 +2216,13 @@
 
         if (fieldId === "e" || fieldId === "ei") {
             if (isSiToIp) {
+                // McQuay default roughness exact mapping
+                if (Math.abs(val - 0.213) < 0.001 || Math.abs(val - 0.21336) < 0.0001) return "0.0007";
                 const ft = val / 304.8;
                 return formatPrecise(ft, 5);
             } else {
+                // McQuay default roughness exact mapping
+                if (Math.abs(val - 0.0007) < 0.00005) return "0.213";
                 const mm = val * 304.8;
                 return formatPrecise(mm, 4);
             }
@@ -2348,7 +2388,7 @@
 
         const isSizer = state.mode === "sizer" || (state.activeCode && state.activeCode.startsWith("SIZE-"));
         const code = isSizer ? "SIZE-AUTO" : (state.activeCode || "CR11-1");
-        const fittingName = isSizer ? "Auto Duct Sizer (ASHRAE & McQuay Method)" : (state.activeItem?.name || elements.sheetTitleText?.textContent || code);
+        const fittingName = isSizer ? "Auto Duct Sizer" : (state.activeItem?.name || elements.sheetTitleText?.textContent || code);
 
         // Gather current inputs from table
         const inputs = {};
@@ -3221,7 +3261,7 @@
         if (matchedIdx === -1 && !isNaN(currentVal)) {
             matchedIdx = ASHRAE_ROUGHNESS_MATERIALS.findIndex(m => {
                 const v = parseFloat(isSi ? m.si : m.ip);
-                return Math.abs(v - currentVal) < 0.00001;
+                return Math.abs(v - currentVal) < 0.0005;
             });
             if (matchedIdx === -1) {
                 let minDiff = Infinity;
@@ -4042,21 +4082,16 @@
         if (!elements.calcFsTitleText) return;
         const isSizer = state.mode === "sizer" || (state.activeCode && state.activeCode.startsWith("SIZE-"));
         const code = isSizer ? "SIZE-AUTO" : (state.activeCode || "CR11-1");
-        let name = "";
         if (isSizer) {
-            name = "Auto Duct Sizer (ASHRAE & McQuay Method)";
-        } else if (state.activeData && state.activeData.title) {
-            name = state.activeData.title;
-        } else if (state.activeItem && state.activeItem.name) {
-            name = state.activeItem.name;
-        } else if (elements.sheetTitleText && elements.sheetTitleText.textContent) {
-            name = elements.sheetTitleText.textContent;
+            elements.calcFsTitleText.textContent = "Auto Duct Sizer";
+            if (elements.calcFsCitationText) elements.calcFsCitationText.textContent = "ASHRAE Fundamentals, Ch. 21: Duct Design";
         } else {
-            name = "ASHRAE Duct Fitting";
-        }
-        elements.calcFsTitleText.textContent = `${code} - ${name}`;
-        if (elements.calcFsCitationText) {
-            elements.calcFsCitationText.textContent = "(ASHRAE Fundamentals, Ch. 21)";
+            const item = state.activeItem || getFallbackItem(code);
+            elements.calcFsTitleText.textContent = formatFittingTitle(item || {code});
+            if (elements.calcFsCitationText) {
+                const cit = item?.citation || "(ASHRAE Fundamentals, Ch. 21)";
+                elements.calcFsCitationText.textContent = cit.startsWith("(") ? cit : `(${cit})`;
+            }
         }
     }
 
@@ -4129,10 +4164,8 @@
             elements.btnResetSizer.addEventListener("click", () => {
                 if (state.mode === "sizer") {
                     state.userSizerValues = {};
-                    elements.inputTableBody.querySelectorAll("input").forEach(inp => {
-                        inp.value = "";
-                    });
                     clearSizerOutputs();
+                    updateHeaderAndInputs();
                 } else {
                     state.userRoughnessValue = null;
                     elements.inputTableBody.querySelectorAll("input").forEach(inp => {
@@ -5081,7 +5114,7 @@
         const data = state.activeData || {};
         const item = state.activeItem || getFallbackItem(state.activeCode);
         const code = state.activeCode || "CR11-1";
-        const name = (item && item.name) ? item.name : code;
+        const name = (item && (item.title || item.name)) ? (item.title || item.name) : code;
         const u = state.unit;
         const isSizer = (state.mode === "sizer" || code.startsWith("SIZE-"));
 
@@ -5175,21 +5208,32 @@
             }
 
             if (elements.previewFittingName) {
-                elements.previewFittingName.textContent = `${code}: ${name}`;
+                elements.previewFittingName.textContent = formatFittingTitle(item || {code, name});
             }
             if (elements.previewFittingStats) {
                 elements.previewFittingStats.textContent = `ΔP = ${dp.toFixed(1)} ${dpUnit} | Flow = ${flow.toFixed(0)} ${flowUnit} | ${coeffType} = ${Number(coeff).toFixed(4)}`;
             }
 
-            const existingFittings = (state.activeProject && state.activeProject.fittings) ? state.activeProject.fittings.length : 0;
-            if (elements.inputFittingTag) {
-                elements.inputFittingTag.value = `${code}-F${String(existingFittings + 1).padStart(2, '0')}`;
-            }
-            if (elements.inputFittingQty) {
-                elements.inputFittingQty.value = "1";
-            }
-            if (elements.inputFittingNotes) {
-                elements.inputFittingNotes.value = "";
+            if (state.editingFitting && state.editingFitting.code === code) {
+                if (elements.addFittingDialogTitle) elements.addFittingDialogTitle.textContent = `Edit Fitting [${state.editingFitting.tag}]`;
+                if (elements.inputFittingTag) elements.inputFittingTag.value = state.editingFitting.tag;
+                if (elements.inputFittingQty) elements.inputFittingQty.value = String(state.editingFitting.qty || 1);
+                if (elements.inputFittingNotes) elements.inputFittingNotes.value = state.editingFitting.notes || "";
+                if (elements.btnConfirmAddFitting) elements.btnConfirmAddFitting.textContent = "💾 Update in Schedule";
+            } else {
+                state.editingFitting = null;
+                if (elements.addFittingDialogTitle) elements.addFittingDialogTitle.textContent = "Add to Project Schedule";
+                const existingFittings = (state.activeProject && state.activeProject.fittings) ? state.activeProject.fittings.length : 0;
+                if (elements.inputFittingTag) {
+                    elements.inputFittingTag.value = `${code}-F${String(existingFittings + 1).padStart(2, '0')}`;
+                }
+                if (elements.inputFittingQty) {
+                    elements.inputFittingQty.value = "1";
+                }
+                if (elements.inputFittingNotes) {
+                    elements.inputFittingNotes.value = "";
+                }
+                if (elements.btnConfirmAddFitting) elements.btnConfirmAddFitting.textContent = "➕ Confirm Add to Schedule";
             }
         }
 
@@ -5215,7 +5259,7 @@
         const data = state.activeData || {};
         const item = state.activeItem || getFallbackItem(state.activeCode);
         const code = state.activeCode || "CR11-1";
-        const name = (item && item.name) ? item.name : code;
+        const name = (item && (item.title || item.name)) ? (item.title || item.name) : code;
         const u = state.unit;
         const isSizer = (state.mode === "sizer" || code.startsWith("SIZE-"));
 
@@ -5353,23 +5397,33 @@
             };
 
             try {
-                const resp = await fetch(`/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings`, {
-                    method: "POST",
+                const isUpdating = state.editingFitting && state.editingFitting.id && (state.editingFitting.code === code);
+                const url = isUpdating
+                    ? `/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings/${encodeURIComponent(state.editingFitting.id)}`
+                    : `/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings`;
+                const method = isUpdating ? "PUT" : "POST";
+
+                const resp = await fetch(url, {
+                    method: method,
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
                 });
                 const res = await resp.json();
                 if (res.status === "success") {
                     closeAddFittingDialog();
+                    state.editingFitting = null;
                     await fetchActiveProjectDetails(state.activeProjectId);
                     updateProjectRibbonBadge();
-                    showPrjToast(`✓ Added ${code} [${tag}] to ${state.activeProject ? state.activeProject.code : 'Project'}!`);
+                    showPrjToast(isUpdating
+                        ? `✓ Updated ${code} [${tag}] in schedule!`
+                        : `✓ Added ${code} [${tag}] to ${state.activeProject ? state.activeProject.code : 'Project'}!`
+                    );
                 } else {
-                    alert(`Error: ${res.message || "Failed to add fitting"}`);
+                    alert(`Error: ${res.message || "Failed to save fitting"}`);
                 }
             } catch (err) {
-                console.error("Failed to add fitting to project:", err);
-                alert("Network error adding fitting.");
+                console.error("Failed to save fitting to project:", err);
+                alert("Network error saving fitting.");
             }
         }
     }
@@ -5419,6 +5473,18 @@
         if (elements.summaryValContractor) elements.summaryValContractor.textContent = p.contractor || "(Not specified)";
         if (elements.summaryValSubcontractor) elements.summaryValSubcontractor.textContent = p.subcontractor || "(Not specified)";
 
+        // Initialize Design Safety Margin
+        const marginVal = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
+        if (elements.inputProjectDesignMargin) {
+            elements.inputProjectDesignMargin.value = marginVal;
+        }
+        if (elements.marginPresetChips) {
+            elements.marginPresetChips.querySelectorAll(".btn-margin-chip").forEach(btn => {
+                const btnVal = parseFloat(btn.dataset.margin);
+                btn.classList.toggle("active", Math.abs(btnVal - marginVal) < 0.01);
+            });
+        }
+
         // Set initial view based on current app mode
         switchSummaryTab(state.mode === "sizer" ? "sizer" : "fittings");
 
@@ -5463,7 +5529,7 @@
                         <th style="width: 75px;" class="text-right">P<sub>v</sub> [${dpUnit}]</th>
                         <th style="width: 75px;" class="text-right">Co / f</th>
                         <th style="width: 80px;" class="text-right">ΔP [${dpUnit}]</th>
-                        <th style="width: 50px;" class="text-center">Qty</th>
+                        <th style="width: 65px;" class="text-center">Qty</th>
                         <th style="width: 90px;" class="text-right">Total ΔP [${dpUnit}]</th>
                         <th style="width: 80px;" class="text-center">Actions</th>
                     </tr>
@@ -5486,7 +5552,9 @@
             `;
             if (elements.tfootProjectSchedule) elements.tfootProjectSchedule.innerHTML = "";
             if (elements.kpiTotalFittings) elements.kpiTotalFittings.textContent = "0";
+            if (elements.kpiSubtotalDp) elements.kpiSubtotalDp.textContent = `0.0 ${dpUnit}`;
             if (elements.kpiTotalDp) elements.kpiTotalDp.textContent = `0.0 ${dpUnit}`;
+            if (elements.kpiTotalDpSub) elements.kpiTotalDpSub.classList.add("hidden");
             if (elements.kpiMaxLoss) elements.kpiMaxLoss.textContent = `0.0 ${dpUnit}`;
             if (elements.kpiTotalAirflow) elements.kpiTotalAirflow.textContent = "-";
             return;
@@ -5528,8 +5596,8 @@
                 <td class="num-cell text-center" style="font-weight: bold;">${qtyVal}</td>
                 <td class="num-cell text-right total-loss-val">${totDpVal.toFixed(1)}</td>
                 <td class="text-center">
-                    <div style="display: flex; gap: 4px; justify-content: center;">
-                        <button type="button" class="btn-table-action btn-load-fit" title="Load this fitting in calculator" data-fit-id="${fit.id}">🔍</button>
+                    <div style="display: inline-flex; gap: 4px; justify-content: center;">
+                        <button type="button" class="btn-table-action edit-fit btn-load-fit" title="Edit this Fitting" data-fit-id="${fit.id}">✏️</button>
                         <button type="button" class="btn-table-action delete btn-del-fit" title="Delete from schedule" data-fit-id="${fit.id}">🗑️</button>
                     </div>
                 </td>
@@ -5547,19 +5615,55 @@
             elements.tbodyProjectSchedule.appendChild(tr);
         });
 
+        const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
+        const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
+        const marginDp = cumulativeDp * (marginPct / 100.0);
+        const designDp = cumulativeDp + marginDp;
+
         if (elements.tfootProjectSchedule) {
-            elements.tfootProjectSchedule.innerHTML = `
-                <tr>
-                    <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px;">Cumulative Project Pressure Loss (∑ΔP):</td>
-                    <td class="text-center num-cell" style="font-size: 13px;">${totalQty}</td>
-                    <td class="text-right num-cell total-loss-val" style="font-size: 13px;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
-                    <td></td>
-                </tr>
-            `;
+            if (marginPct > 0) {
+                elements.tfootProjectSchedule.innerHTML = `
+                    <tr style="background: #f8fafc; border-top: 1.5px solid #cbd5e1; font-size: 12px; color: #475569;">
+                        <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap;">Subtotal Calculated Loss (∑ΔP<sub>calc</sub>):</td>
+                        <td class="text-center num-cell" style="font-weight: 700; white-space: nowrap;">${totalQty}</td>
+                        <td class="text-right num-cell" style="font-weight: 700; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f9ff; border-top: 1px dashed #93c5fd; font-size: 12px; color: #0369a1;">
+                        <td colspan="11" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin (+${marginStr}):</td>
+                        <td class="text-center num-cell" style="font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginStr}</td>
+                        <td class="text-right num-cell" style="font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
+                        <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Design Pressure Loss / Fan ESP (∑ΔP<sub>design</sub>):</td>
+                        <td class="text-center num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalQty}</td>
+                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${designDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                `;
+            } else {
+                elements.tfootProjectSchedule.innerHTML = `
+                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
+                        <td colspan="11" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Design Pressure Loss / Fan ESP (∑ΔP):</td>
+                        <td class="text-center num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalQty}</td>
+                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                `;
+            }
         }
 
         if (elements.kpiTotalFittings) elements.kpiTotalFittings.textContent = String(fittings.length);
-        if (elements.kpiTotalDp) elements.kpiTotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiSubtotalDp) elements.kpiSubtotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiTotalDp) elements.kpiTotalDp.textContent = `${designDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiTotalDpLabel) {
+            elements.kpiTotalDpLabel.textContent = marginPct > 0 ? "Total Design Loss / Fan ESP" : "Total Pressure Loss (∑ΔP)";
+        }
+        if (elements.kpiTotalDpSub) {
+            elements.kpiTotalDpSub.textContent = marginPct > 0 ? `incl. +${marginStr} Margin` : "No margin";
+            elements.kpiTotalDpSub.classList.toggle("hidden", marginPct === 0);
+        }
         if (elements.kpiMaxLoss) elements.kpiMaxLoss.textContent = `${maxSingleDp.toFixed(1)} ${dpUnit}`;
         if (elements.kpiTotalAirflow) elements.kpiTotalAirflow.textContent = primaryFlow;
     }
@@ -5615,7 +5719,9 @@
             if (elements.tfootSizerSchedule) elements.tfootSizerSchedule.innerHTML = "";
             if (elements.kpiSizerRuns) elements.kpiSizerRuns.textContent = "0";
             if (elements.kpiSizerLength) elements.kpiSizerLength.textContent = `0.0 ${lenUnit}`;
+            if (elements.kpiSizerSubtotalDp) elements.kpiSizerSubtotalDp.textContent = `0.0 ${dpUnit}`;
             if (elements.kpiSizerTotalDp) elements.kpiSizerTotalDp.textContent = `0.0 ${dpUnit}`;
+            if (elements.kpiSizerTotalDpSub) elements.kpiSizerTotalDpSub.classList.add("hidden");
             if (elements.kpiSizerAvgRate) elements.kpiSizerAvgRate.textContent = `0.80 ${frUnit}`;
             return;
         }
@@ -5664,21 +5770,56 @@
         });
 
         const avgRate = totalLength > 0 ? (cumulativeDp / totalLength) : 0.8;
+        const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
+        const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
+        const marginDp = cumulativeDp * (marginPct / 100.0);
+        const designDp = cumulativeDp + marginDp;
 
         if (elements.tfootSizerSchedule) {
-            elements.tfootSizerSchedule.innerHTML = `
-                <tr>
-                    <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px;">Cumulative Straight Duct Run Friction Loss (∑ΔP):</td>
-                    <td class="text-right num-cell" style="font-size: 13px; font-weight: 700;">${totalLength.toFixed(1)} ${lenUnit}</td>
-                    <td class="text-right num-cell total-loss-val" style="font-size: 13px;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
-                    <td></td>
-                </tr>
-            `;
+            if (marginPct > 0) {
+                elements.tfootSizerSchedule.innerHTML = `
+                    <tr style="background: #f8fafc; border-top: 1.5px solid #cbd5e1; font-size: 12px; color: #475569;">
+                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap;">Subtotal Friction Loss (∑ΔP<sub>calc</sub>):</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0f9ff; border-top: 1px dashed #93c5fd; font-size: 12px; color: #0369a1;">
+                        <td colspan="10" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin (+${marginStr}):</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginStr}</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
+                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Sizing Design Friction Loss (∑ΔP<sub>design</sub>):</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
+                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${designDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                `;
+            } else {
+                elements.tfootSizerSchedule.innerHTML = `
+                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
+                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Straight Duct Run Friction Loss (∑ΔP):</td>
+                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
+                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
+                        <td></td>
+                    </tr>
+                `;
+            }
         }
 
         if (elements.kpiSizerRuns) elements.kpiSizerRuns.textContent = String(segments.length);
         if (elements.kpiSizerLength) elements.kpiSizerLength.textContent = `${totalLength.toFixed(1)} ${lenUnit}`;
-        if (elements.kpiSizerTotalDp) elements.kpiSizerTotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiSizerSubtotalDp) elements.kpiSizerSubtotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiSizerTotalDp) elements.kpiSizerTotalDp.textContent = `${designDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiSizerTotalDpLabel) {
+            elements.kpiSizerTotalDpLabel.textContent = marginPct > 0 ? "Total Sizing Design Loss" : "Total Friction Loss (∑ΔP)";
+        }
+        if (elements.kpiSizerTotalDpSub) {
+            elements.kpiSizerTotalDpSub.textContent = marginPct > 0 ? `incl. +${marginStr} Margin` : "No margin";
+            elements.kpiSizerTotalDpSub.classList.toggle("hidden", marginPct === 0);
+        }
         if (elements.kpiSizerAvgRate) elements.kpiSizerAvgRate.textContent = `${avgRate.toFixed(2)} ${frUnit}`;
     }
 
@@ -5703,6 +5844,7 @@
     }
 
     function loadFittingFromSchedule(fit) {
+        state.editingFitting = fit;
         closeProjectSummaryModal();
         if (fit.unit_system && fit.unit_system !== state.unit) {
             setUnit(fit.unit_system);
@@ -5724,7 +5866,7 @@
                 });
                 calculate();
             }
-            showPrjToast(`🔍 Loaded ${fit.tag} (${fit.code}) into engineering calculator`);
+            showPrjToast(`✏️ Loaded ${fit.tag} (${fit.code}) into engineering calculator for editing`);
         }, 300);
     }
 
@@ -5836,7 +5978,18 @@
                 csv += `${dp.toFixed(1)}\n`;
             });
 
-            csv += `,,,,,,,,,TOTALS,${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
+            const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
+            const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
+            const marginDp = totLoss * (marginPct / 100.0);
+            const designDp = totLoss + marginDp;
+
+            csv += `,,,,,,,,,SUBTOTAL (Calculated Friction Loss),${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
+            if (marginPct > 0) {
+                csv += `,,,,,,,,,DESIGN SAFETY MARGIN (+${marginStr}),,+${marginDp.toFixed(1)}\n`;
+                csv += `,,,,,,,,,TOTAL SIZING DESIGN LOSS,,${designDp.toFixed(1)}\n`;
+            } else {
+                csv += `,,,,,,,,,TOTALS,${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
+            }
 
             const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
@@ -5893,7 +6046,18 @@
                 csv += `${csvEscape(fit.notes || '')}\n`;
             });
 
-            csv += `,,,,,,,,,,TOTALS,${totQty},${cumDp.toFixed(2)},\n`;
+            const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
+            const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
+            const marginDp = cumDp * (marginPct / 100.0);
+            const designDp = cumDp + marginDp;
+
+            csv += `,,,,,,,,,,SUBTOTAL (Calculated Loss),${totQty},${cumDp.toFixed(2)},\n`;
+            if (marginPct > 0) {
+                csv += `,,,,,,,,,,DESIGN SAFETY MARGIN (+${marginStr}),,+${marginDp.toFixed(2)},\n`;
+                csv += `,,,,,,,,,,TOTAL DESIGN FAN ESP,,${designDp.toFixed(2)},\n`;
+            } else {
+                csv += `,,,,,,,,,,TOTALS,${totQty},${cumDp.toFixed(2)},\n`;
+            }
 
             const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
@@ -5921,12 +6085,19 @@
             return;
         }
 
+        const includeCalcs = elements.chkIncludeCalculations ? (elements.chkIncludeCalculations.checked ? "1" : "0") : "1";
+        const marginVal = elements.inputProjectDesignMargin ? elements.inputProjectDesignMargin.value : (state.activeProject?.design_margin ?? 10);
+
         if (state.summaryTab === "sizer") {
-            showPrjToast("Generating official DuctFit Pro Duct Sizing Report (PDF)...");
-            window.location.href = `/api/projects/${encodeURIComponent(prjId)}/sizer-pdf`;
+            showPrjToast(includeCalcs === "1"
+                ? "Generating official DuctFit Pro Duct Sizing Report with calculations (PDF)..."
+                : "Generating official DuctFit Pro Duct Sizing Report without calculations (PDF)...");
+            window.location.href = `/api/projects/${encodeURIComponent(prjId)}/sizer-pdf?calc=${includeCalcs}&margin=${encodeURIComponent(marginVal)}`;
         } else {
-            showPrjToast("Generating official DuctFit Pro Duct Fitting Report (PDF)...");
-            window.location.href = `/api/projects/${encodeURIComponent(prjId)}/pdf`;
+            showPrjToast(includeCalcs === "1"
+                ? "Generating official DuctFit Pro Duct Fitting Report with calculations (PDF)..."
+                : "Generating official DuctFit Pro Duct Fitting Report without calculations (PDF)...");
+            window.location.href = `/api/projects/${encodeURIComponent(prjId)}/pdf?calc=${includeCalcs}&margin=${encodeURIComponent(marginVal)}`;
         }
     }
 
@@ -6113,6 +6284,60 @@
         }
         if (elements.btnClearProjectFittings) {
             elements.btnClearProjectFittings.addEventListener("click", clearProjectFittings);
+        }
+
+        // Project Design Safety Margin Listeners
+        let marginSaveTimeout = null;
+        function handleMarginChange(newMargin) {
+            if (!state.activeProjectId) return;
+            const val = Math.max(0, Math.min(100, parseFloat(newMargin) || 0));
+            if (state.activeProject) {
+                state.activeProject.design_margin = val;
+                renderProjectScheduleTable(state.activeProject);
+                renderSizerScheduleTable(state.activeProject);
+            }
+            if (elements.inputProjectDesignMargin && document.activeElement !== elements.inputProjectDesignMargin) {
+                elements.inputProjectDesignMargin.value = val;
+            }
+            if (elements.marginPresetChips) {
+                elements.marginPresetChips.querySelectorAll(".btn-margin-chip").forEach(btn => {
+                    const btnVal = parseFloat(btn.dataset.margin);
+                    btn.classList.toggle("active", Math.abs(btnVal - val) < 0.01);
+                });
+            }
+            if (marginSaveTimeout) clearTimeout(marginSaveTimeout);
+            marginSaveTimeout = setTimeout(async () => {
+                try {
+                    await fetch(`/api/projects/${encodeURIComponent(state.activeProjectId)}/margin`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ margin: val })
+                    });
+                } catch (err) {
+                    console.error("Failed to save project design margin:", err);
+                }
+            }, 350);
+        }
+
+        if (elements.inputProjectDesignMargin) {
+            elements.inputProjectDesignMargin.addEventListener("input", (e) => {
+                handleMarginChange(e.target.value);
+            });
+            elements.inputProjectDesignMargin.addEventListener("change", (e) => {
+                handleMarginChange(e.target.value);
+            });
+        }
+
+        if (elements.marginPresetChips) {
+            elements.marginPresetChips.addEventListener("click", (e) => {
+                const btn = e.target.closest(".btn-margin-chip");
+                if (!btn) return;
+                const val = parseFloat(btn.dataset.margin);
+                if (elements.inputProjectDesignMargin) {
+                    elements.inputProjectDesignMargin.value = val;
+                }
+                handleMarginChange(val);
+            });
         }
 
         // Global click to close combo dropdown

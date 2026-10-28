@@ -854,6 +854,32 @@
                     </div>
                 </div>
 
+                <!-- Engineering Design Safety Margin Sheet Card -->
+                <div class="prj-margin-card">
+                    <div class="prj-margin-left">
+                        <span class="prj-margin-icon">🛡️</span>
+                        <div class="prj-margin-text">
+                            <div class="prj-margin-title">Design Safety Margin (Fan Static Pressure Rating)</div>
+                            <div class="prj-margin-desc">Safety factor added to calculated subtotal loss for fan selection, field leakage &amp; duct uncertainties</div>
+                        </div>
+                    </div>
+                    <div class="prj-margin-right">
+                        <div class="margin-chip-group" id="marginPresetChips">
+                            <button type="button" class="btn-margin-chip" data-margin="0">0%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="5">5%</button>
+                            <button type="button" class="btn-margin-chip active" data-margin="10">10%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="15">15%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="20">20%</button>
+                            <button type="button" class="btn-margin-chip" data-margin="25">25%</button>
+                        </div>
+                        <div class="margin-input-wrap">
+                            <label for="inputProjectDesignMargin" class="margin-input-label">Margin:</label>
+                            <input type="number" id="inputProjectDesignMargin" class="input-margin-box" min="0" max="100" step="0.5" value="10" placeholder="10">
+                            <span class="margin-unit-suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- VIEW 1: Fitting Loss Schedule (ESP Calculation) -->
                 <div id="viewSummaryFittings" class="summary-schedule-view">
                     <!-- KPI Metric Tiles -->
@@ -862,9 +888,14 @@
                             <span class="kpi-num" id="kpiTotalFittings">0</span>
                             <span class="kpi-label">Fittings in Schedule</span>
                         </div>
+                        <div class="prj-kpi-card">
+                            <span class="kpi-num" id="kpiSubtotalDp">0.0 Pa</span>
+                            <span class="kpi-label">Subtotal Loss (∑ΔP<sub>calc</sub>)</span>
+                        </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiTotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Cumulative Pressure Loss (∑ΔP)</span>
+                            <span class="kpi-label" id="kpiTotalDpLabel">Total Design Loss / Fan ESP</span>
+                            <span class="kpi-sub-badge" id="kpiTotalDpSub">incl. +10% Margin</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiMaxLoss">0.0 Pa</span>
@@ -892,9 +923,9 @@
                                     <th style="width: 75px;" class="text-right">P<sub>v</sub> (Pa)</th>
                                     <th style="width: 75px;" class="text-right">Co / f</th>
                                     <th style="width: 80px;" class="text-right">ΔP (ea)</th>
-                                    <th style="width: 55px;" class="text-center">Qty</th>
+                                    <th style="width: 65px;" class="text-center">Qty</th>
                                     <th style="width: 90px;" class="text-right">Total ΔP</th>
-                                    <th style="width: 95px;" class="text-center">Actions</th>
+                                    <th style="width: 75px;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyProjectSchedule">
@@ -919,9 +950,14 @@
                             <span class="kpi-num" id="kpiSizerLength">0.0 m</span>
                             <span class="kpi-label">Total Duct Length</span>
                         </div>
+                        <div class="prj-kpi-card">
+                            <span class="kpi-num" id="kpiSizerSubtotalDp">0.0 Pa</span>
+                            <span class="kpi-label">Subtotal Friction Loss</span>
+                        </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiSizerTotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Straight Duct Friction Loss (∑ΔP)</span>
+                            <span class="kpi-label" id="kpiSizerTotalDpLabel">Total Sizing Design Loss</span>
+                            <span class="kpi-sub-badge" id="kpiSizerTotalDpSub">incl. +10% Margin</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiSizerAvgRate">0.80 Pa/m</span>
@@ -946,7 +982,7 @@
                                     <th style="width: 85px;" class="text-right">Friction Rate (&Delta;P<sub>f</sub>/L)</th>
                                     <th style="width: 75px;" class="text-right">Length (L)</th>
                                     <th style="width: 85px;" class="text-right">Loss (ΔP)</th>
-                                    <th style="width: 75px;" class="text-center">Actions</th>
+                                    <th style="width: 65px;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodySizerSchedule">
@@ -965,6 +1001,10 @@
                     <button type="button" class="btn-prj-footer btn-primary-report" id="btnDownloadFitductPdf" title="Download official DuctFit Pro PDF Report">
                         📄 Download Report (PDF)
                     </button>
+                    <label class="prj-report-opt" for="chkIncludeCalculations" title="Check to include step-by-step engineering calculation breakdown in the PDF report; uncheck to exclude it">
+                        <input type="checkbox" id="chkIncludeCalculations" checked>
+                        <span>Include Calculations</span>
+                    </label>
                     <button type="button" class="btn-prj-footer" id="btnExportProjectCsv" title="Export schedule to CSV / Excel spreadsheet">
                         📥 Export to CSV / Excel
                     </button>

@@ -143,6 +143,7 @@ def create_project(code, name, client="", contractor="", subcontractor="", notes
         "created_at": _get_timestamp(),
         "updated_at": _get_timestamp(),
         "unit_system": unit_system,
+        "design_margin": 10.0,
         "fittings": [],
         "duct_segments": []
     }
@@ -241,6 +242,41 @@ def update_fitting_qty(project_id, fitting_id, new_qty):
                         q = max(1, int(new_qty))
                         f["qty"] = q
                         f["total_dp"] = round(float(f.get("dp", 0)) * q, 2)
+                        p["updated_at"] = _get_timestamp()
+                        save_projects_data(data)
+                        return f
+                    except Exception:
+                        return None
+    return None
+
+def update_fitting_in_project(project_id, fitting_id, fitting_data):
+    data = get_projects_data()
+    for p in data.get("projects", []):
+        if p.get("id") == project_id:
+            for f in p.get("fittings", []):
+                if f.get("id") == fitting_id:
+                    try:
+                        dp_val = float(fitting_data.get("dp", f.get("dp", 0)))
+                        qty_val = int(fitting_data.get("qty", f.get("qty", 1)))
+                        total_dp_val = round(dp_val * qty_val, 2)
+                        
+                        if "tag" in fitting_data: f["tag"] = fitting_data["tag"]
+                        if "name" in fitting_data: f["name"] = fitting_data["name"]
+                        if "shape" in fitting_data: f["shape"] = fitting_data["shape"]
+                        if "dimensions" in fitting_data: f["dimensions"] = fitting_data["dimensions"]
+                        if "inputs" in fitting_data: f["inputs"] = fitting_data["inputs"]
+                        if "unit_system" in fitting_data: f["unit_system"] = fitting_data["unit_system"]
+                        if "Q" in fitting_data: f["Q"] = fitting_data["Q"]
+                        if "velocity" in fitting_data: f["velocity"] = fitting_data["velocity"]
+                        if "pv" in fitting_data: f["pv"] = fitting_data["pv"]
+                        if "f_or_Co" in fitting_data: f["f_or_Co"] = fitting_data["f_or_Co"]
+                        if "coeff_type" in fitting_data: f["coeff_type"] = fitting_data["coeff_type"]
+                        f["dp"] = dp_val
+                        f["qty"] = qty_val
+                        f["total_dp"] = total_dp_val
+                        if "De" in fitting_data: f["De"] = fitting_data["De"]
+                        if "notes" in fitting_data: f["notes"] = fitting_data["notes"]
+                        f["updated_at"] = _get_timestamp()
                         p["updated_at"] = _get_timestamp()
                         save_projects_data(data)
                         return f
@@ -347,15 +383,35 @@ def delete_project(project_id):
     return False
 
 def update_project(project_id, updates):
-    """Update project metadata (code, name, client, contractor, subcontractor, notes, unit_system)"""
+    """Update project metadata (code, name, client, contractor, subcontractor, notes, unit_system, design_margin)"""
     data = get_projects_data()
     for p in data.get("projects", []):
         if p.get("id") == project_id:
             for field in ["code", "name", "client", "contractor", "subcontractor", "notes", "unit_system"]:
                 if field in updates and updates[field] is not None:
                     p[field] = str(updates[field]).strip()
+            if "design_margin" in updates and updates["design_margin"] is not None:
+                try:
+                    p["design_margin"] = max(0.0, float(updates["design_margin"]))
+                except (ValueError, TypeError):
+                    p["design_margin"] = 0.0
             p["updated_at"] = _get_timestamp()
             save_projects_data(data)
             return p
     return None
+
+def update_project_margin(project_id, margin):
+    """Update design safety margin in percentage (e.g. 10.0 for 10%)"""
+    data = get_projects_data()
+    for p in data.get("projects", []):
+        if p.get("id") == project_id:
+            try:
+                p["design_margin"] = max(0.0, float(margin))
+            except (ValueError, TypeError):
+                p["design_margin"] = 0.0
+            p["updated_at"] = _get_timestamp()
+            save_projects_data(data)
+            return p
+    return None
+
 
