@@ -102,11 +102,36 @@ try {
     Write-Host "[WARNING] Could not auto-publish draft: $($_.Exception.Message)" -ForegroundColor Yellow
 }
 
-# 6. Copy new installer to Release-Pack
+# 6. Copy new installer to Release-Pack & Create ZIP bundle
 $builtInstaller = Join-Path (Get-Location) "dist\installer\DuctfitPro-Setup-$newVersion.exe"
 if (Test-Path $builtInstaller) {
     Get-ChildItem -Path "Release-Pack" -Filter "DuctfitPro-Setup-*.exe" | Remove-Item -Force -ErrorAction SilentlyContinue
     Copy-Item $builtInstaller -Destination "Release-Pack\" -Force
+
+    $zipPath = Join-Path (Get-Location) "dist\installer\Ductfit-Pro-v$newVersion-Setup.zip"
+    if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+    Write-Host "Creating ZIP bundle: $zipPath..." -ForegroundColor White
+    Compress-Archive -Path "Release-Pack\*" -DestinationPath $zipPath -Force
+
+    # Upload ZIP to GitHub Release assets
+    try {
+        $rel = (Invoke-RestMethod -Uri "https://api.github.com/repos/muhammadmusthafacv-arch/ductfit-pro-releases/releases" -Headers $ghHeaders) | Where-Object { $_.tag_name -eq "v$newVersion" }
+        if ($rel) {
+            $uploadBase = $rel.upload_url -replace '\{\?name,label\}', ''
+            $uploadUri = "$uploadBase`?name=Ductfit-Pro-v$newVersion-Setup.zip"
+            Write-Host "Uploading ZIP asset to GitHub release: $uploadUri" -ForegroundColor White
+            $zipBytes = [System.IO.File]::ReadAllBytes($zipPath)
+            $uploadHeaders = @{
+                'Authorization' = "token $env:GH_TOKEN"
+                'User-Agent' = 'DuctfitPro-Release-Script'
+                'Content-Type' = 'application/zip'
+            }
+            $null = Invoke-RestMethod -Uri $uploadUri -Method Post -Headers $uploadHeaders -Body $zipBytes
+            Write-Host "ZIP asset uploaded successfully!" -ForegroundColor Green
+        }
+    } catch {
+        Write-Host "[WARNING] Could not upload ZIP asset: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 
 Write-Host ""

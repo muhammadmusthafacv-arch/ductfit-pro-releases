@@ -1,7 +1,7 @@
 {
   "name": "ductfit-pro",
   "productName": "DuctFit Pro",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Professional ASHRAE Duct Fitting Loss Analysis & Auto Duct Sizer",
   "main": "electron/main.js",
   "author": {
