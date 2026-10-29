@@ -12,7 +12,8 @@ datas = [
     ('version.json', '.'),
     ('package.json', '.'),
     ('projects.json', '.'),
-    ('custom_templates.json', '.')
+    ('custom_templates.json', '.'),
+    ('ASHRAE_Duct_Fitting_Database_Master_Catalog.pdf', '.')
 ]
 
 hiddenimports = [

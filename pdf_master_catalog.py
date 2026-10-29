@@ -34,7 +34,7 @@ from reportlab.pdfgen import canvas
 
 import version_manager
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 TREE_FILE = os.path.join(BASE_DIR, "fittings_tree.json")
 EQUATION_FILE = os.path.join(BASE_DIR, "ashrae_data", "ashrae_table_Equation.json")
 BLUEPRINTS_DIR = os.path.join(BASE_DIR, "static", "blueprints")
@@ -776,7 +776,19 @@ def generate_master_catalog_pdf(output_path=None):
                 name = it.get("name", code)
                 cite = it.get("citation", "ASHRAE Database")
                 path_str = fit_info["path"]
-                bp_path = it.get("blueprint", "").lstrip("/")
+                bp_rel = (it.get("blueprint") or "").lstrip("/").replace("\\", "/")
+                candidate_paths = [
+                    os.path.join(BASE_DIR, bp_rel),
+                    os.path.join(BLUEPRINTS_DIR, f"{code}.png"),
+                    os.path.join(BASE_DIR, "static", "fittings_img", f"{code}.png"),
+                    os.path.join(os.path.dirname(os.path.abspath(__file__)), bp_rel),
+                    os.path.join(os.getcwd(), bp_rel),
+                ]
+                bp_path = None
+                for cp in candidate_paths:
+                    if cp and os.path.isfile(cp):
+                        bp_path = cp
+                        break
 
                 # 1. Header Bar
                 badge_html = f"<b>{code}</b>"

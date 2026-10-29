@@ -906,10 +906,14 @@ def download_master_catalog_pdf():
     """Download full 62-page Master ASHRAE Catalog with all 234 fittings and process flows"""
     try:
         pdf_filename = "ASHRAE_Duct_Fitting_Database_Master_Catalog.pdf"
-        pdf_path = os.path.join(os.path.dirname(__file__), pdf_filename)
+        pdf_path = os.path.join(BASE_DIR, pdf_filename)
         if not os.path.exists(pdf_path):
-            import pdf_master_catalog
-            pdf_master_catalog.generate_master_catalog_pdf()
+            src_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), pdf_filename)
+            if os.path.exists(src_path):
+                pdf_path = src_path
+            else:
+                import pdf_master_catalog
+                pdf_master_catalog.generate_master_catalog_pdf(pdf_path)
         return send_file(
             pdf_path,
             mimetype="application/pdf",

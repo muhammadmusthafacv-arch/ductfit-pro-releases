@@ -150,6 +150,8 @@
         btnCollapseAll: document.getElementById("btnCollapseAll"),
         treeViewContainer: document.getElementById("treeViewContainer"),
         catalogItemCount: document.getElementById("catalogItemCount"),
+        btnDownloadCatalogPdf: document.getElementById("btnDownloadCatalogPdf"),
+        btnSidebarMasterPdf: document.getElementById("btnSidebarMasterPdf"),
 
         // Top Navigation Bar
         btnModeDirect: document.getElementById("btnModeDirect"),
@@ -2476,6 +2478,37 @@
         }
     }
 
+    async function downloadMasterCatalogPdf(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        showPrjToast("Downloading Master ASHRAE Fitting Catalog PDF (234 Fittings)...");
+
+        try {
+            const response = await fetch("/api/catalog/pdf");
+            if (!response.ok) {
+                throw new Error("Server returned " + response.status);
+            }
+
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = "ASHRAE_Duct_Fitting_Database_Master_Catalog.pdf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(downloadUrl);
+
+            showPrjToast("📄 Master ASHRAE Catalog PDF downloaded successfully!");
+        } catch (err) {
+            console.error("Master catalog PDF download failed:", err);
+            window.location.href = "/api/catalog/pdf";
+        }
+    }
+
     async function calculate() {
         // Collect current inputs from table
         const inputs = {};
@@ -4308,6 +4341,14 @@
 
         // DuctFit Pro Fitting Catalog Area Enlarge & Resizer Logic
         initCatalogEnlargeControls();
+
+        // Master Catalog PDF Export buttons
+        if (elements.btnDownloadCatalogPdf) {
+            elements.btnDownloadCatalogPdf.addEventListener("click", downloadMasterCatalogPdf);
+        }
+        if (elements.btnSidebarMasterPdf) {
+            elements.btnSidebarMasterPdf.addEventListener("click", downloadMasterCatalogPdf);
+        }
 
         // Sizing Controls (Safe checks if banner is present)
         if (elements.sizeTargetType) {

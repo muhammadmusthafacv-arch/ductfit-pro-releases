@@ -246,13 +246,17 @@ function createMainWindow() {
     // Native Application Menu
     createMenu();
 
-    // Security: Open external links in user default browser
+    // Security: Open external links in user default browser, prevent unwanted popups
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (!url.startsWith(`http://127.0.0.1:${serverPort}`) && !url.startsWith(`http://localhost:${serverPort}`)) {
             shell.openExternal(url);
             return { action: 'deny' };
         }
-        return { action: 'allow' };
+        if (url.includes('/pdf') || url.includes('/api/')) {
+            mainWindow.webContents.downloadURL(url);
+            return { action: 'deny' };
+        }
+        return { action: 'deny' };
     });
 
     mainWindow.webContents.on('will-navigate', (event, url) => {
