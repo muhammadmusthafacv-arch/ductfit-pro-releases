@@ -375,6 +375,7 @@
         viewSummarySizer: document.getElementById("viewSummarySizer"),
         inputProjectDesignMargin: document.getElementById("inputProjectDesignMargin"),
         marginPresetChips: document.getElementById("marginPresetChips"),
+        prjMarginCard: document.getElementById("prjMarginCard"),
         kpiTotalFittings: document.getElementById("kpiTotalFittings"),
         kpiSubtotalDp: document.getElementById("kpiSubtotalDp"),
         kpiTotalDp: document.getElementById("kpiTotalDp"),
@@ -401,6 +402,15 @@
         btnPrintProjectReport: document.getElementById("btnPrintProjectReport"),
         btnClearProjectFittings: document.getElementById("btnClearProjectFittings"),
 
+        // Schedule Context Menu (Right Click on Fitting Row)
+        scheduleContextMenu: document.getElementById("scheduleContextMenu"),
+        ctxMenuTag: document.getElementById("ctxMenuTag"),
+        ctxMenuCode: document.getElementById("ctxMenuCode"),
+        ctxMenuDuplicate: document.getElementById("ctxMenuDuplicate"),
+        ctxMenuChangeQty: document.getElementById("ctxMenuChangeQty"),
+        ctxMenuEdit: document.getElementById("ctxMenuEdit"),
+        ctxMenuDelete: document.getElementById("ctxMenuDelete"),
+
         // Quick Add Fitting Dialog
         addFittingDialog: document.getElementById("addFittingDialog"),
         addFittingDialogTitle: document.getElementById("addFittingDialogTitle"),
@@ -410,6 +420,11 @@
         addFittingProjectTarget: document.getElementById("addFittingProjectTarget"),
         previewFittingName: document.getElementById("previewFittingName"),
         previewFittingStats: document.getElementById("previewFittingStats"),
+        groupFittingPath: document.getElementById("groupFittingPath"),
+        radPathMain: document.getElementById("radPathMain"),
+        radPathBranch: document.getElementById("radPathBranch"),
+        lblPathMain: document.getElementById("lblPathMain"),
+        lblPathBranch: document.getElementById("lblPathBranch"),
         inputFittingTag: document.getElementById("inputFittingTag"),
         groupFittingQty: document.getElementById("groupFittingQty"),
         inputFittingQty: document.getElementById("inputFittingQty"),
@@ -2088,7 +2103,10 @@
 
             // Listeners for calculate and bi-directional multi-way continuity solving
             inputEl.addEventListener("keypress", (e) => {
-                if (e.key === "Enter") calculate();
+                if (e.key === "Enter") {
+                    normalizeInputLeadingZero(inputEl);
+                    calculate();
+                }
             });
             inputEl.addEventListener("input", () => {
                 if (isSizer) {
@@ -2099,10 +2117,20 @@
                 debounceCalculate();
             });
             inputEl.addEventListener("change", () => {
+                normalizeInputLeadingZero(inputEl);
                 if (isSizer) {
                     if (!state.userSizerValues) state.userSizerValues = {};
                     state.userSizerValues[inp.id] = inputEl.value;
                 }
+            });
+            inputEl.addEventListener("blur", () => {
+                normalizeInputLeadingZero(inputEl);
+                if (isSizer) {
+                    if (!state.userSizerValues) state.userSizerValues = {};
+                    state.userSizerValues[inp.id] = inputEl.value;
+                }
+                checkRange(inputEl);
+                debounceCalculate();
             });
 
             tr.appendChild(tdLabel);
@@ -2113,7 +2141,43 @@
         updateFsHud();
     }
 
-        function formatAppDate(dateInput) {
+    // --- Automatic Leading Zero Normalization for Decimal Inputs (e.g. .546 -> 0.546) ---
+    function normalizeInputLeadingZero(el) {
+        if (!el || (el.tagName !== "INPUT" && el.tagName !== "TEXTAREA")) return;
+        if (el.type === "checkbox" || el.type === "radio" || el.type === "button" || el.type === "submit" || el.type === "file" || el.type === "reset") return;
+
+        let val = el.value ? el.value.trim() : "";
+        if (!val) return;
+
+        // If string starts with . or -. or +. (e.g. ".546", "-.546", "+.546")
+        if (/^[+-]?\.\d+([eE][+-]?\d+)?$/.test(val)) {
+            if (val.startsWith(".")) {
+                val = "0" + val;
+            } else if (val.startsWith("-.")) {
+                val = "-0." + val.slice(2);
+            } else if (val.startsWith("+.")) {
+                val = "0." + val.slice(2);
+            }
+            el.value = val;
+            return;
+        }
+
+        // For <input type="number">: In Chromium / Electron, typing ".546" sets internal JS value to "0.546",
+        // but Chromium's visual keyboard buffer retains ".546" on screen.
+        // Clearing and reassigning el.value forces Chromium to re-render the input with canonical "0.546".
+        if (el.type === "number") {
+            const numVal = el.value;
+            if (numVal && !isNaN(Number(numVal))) {
+                const num = parseFloat(numVal);
+                if (numVal.includes(".") && Math.abs(num) < 1) {
+                    el.value = "";
+                    el.value = numVal;
+                }
+            }
+        }
+    }
+
+    function formatAppDate(dateInput) {
         if (!dateInput) return "-";
         const d = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
         if (isNaN(d.getTime())) return String(dateInput);
@@ -2513,6 +2577,7 @@
         // Collect current inputs from table
         const inputs = {};
         elements.inputTableBody.querySelectorAll("input").forEach(inp => {
+            normalizeInputLeadingZero(inp);
             const raw = inp.value ? inp.value.trim() : "";
             if (raw !== "") {
                 const val = parseFloat(raw);
@@ -5195,19 +5260,23 @@
             }
         }
 
-        // Check currentInputs with smart priority for junctions:
+        // Always take the inlet flow rate of the fitting:
+        // Priority: Qc (common/inlet flow), Q (standard flow), Q1 (inlet flow), Qo, Qi, then Qb, Qs
         let val = undefined;
-        if (data && data.Pob_pa && data.pressure_loss_pa === Math.round(data.Pob_pa * 10) / 10 && currentInputs.Qb !== undefined) {
+        if (currentInputs.Qc !== undefined && !isNaN(currentInputs.Qc) && currentInputs.Qc > 0) {
+            val = currentInputs.Qc;
+        } else if (currentInputs.Q !== undefined && !isNaN(currentInputs.Q) && currentInputs.Q > 0) {
+            val = currentInputs.Q;
+        } else if (currentInputs.Q1 !== undefined && !isNaN(currentInputs.Q1) && currentInputs.Q1 > 0) {
+            val = currentInputs.Q1;
+        } else if (currentInputs.Qo !== undefined && !isNaN(currentInputs.Qo) && currentInputs.Qo > 0) {
+            val = currentInputs.Qo;
+        } else if (currentInputs.Qi !== undefined && !isNaN(currentInputs.Qi) && currentInputs.Qi > 0) {
+            val = currentInputs.Qi;
+        } else if (currentInputs.Qb !== undefined && !isNaN(currentInputs.Qb) && currentInputs.Qb > 0) {
             val = currentInputs.Qb;
-        } else if (data && data.Pos_pa && data.pressure_loss_pa === Math.round(data.Pos_pa * 10) / 10 && currentInputs.Qs !== undefined) {
+        } else if (currentInputs.Qs !== undefined && !isNaN(currentInputs.Qs) && currentInputs.Qs > 0) {
             val = currentInputs.Qs;
-        } else {
-            val = currentInputs.Qb !== undefined ? currentInputs.Qb :
-                 (currentInputs.Qc !== undefined ? currentInputs.Qc :
-                 (currentInputs.Q !== undefined ? currentInputs.Q :
-                 (currentInputs.Qo !== undefined ? currentInputs.Qo :
-                 (currentInputs.Q1 !== undefined ? currentInputs.Q1 :
-                 (currentInputs.Qs !== undefined ? currentInputs.Qs : undefined)))));
         }
 
         if (val !== undefined && !isNaN(val) && val > 0) {
@@ -5216,7 +5285,7 @@
 
         if (data && data.raw_env) {
             const re = data.raw_env;
-            const envQ = re.Qb || re.Qc || re.Q || re.Qo || re.Q1 || re.Qs;
+            const envQ = re.Qc || re.Q || re.Q1 || re.Qo || re.Qi || re.Qb || re.Qs;
             if (envQ !== undefined && !isNaN(envQ) && envQ > 0) {
                 return Number(envQ);
             }
@@ -5369,11 +5438,83 @@
             coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
             dimStr = getFittingDimensionString(currentInputs, data, u);
 
+            const raw = data.raw_env || {};
+            const hasDualPath = ((data.Pos_pa !== undefined || raw.Pos !== undefined) && (data.Pob_pa !== undefined || raw.Pob !== undefined)) ||
+                                (raw.Cs !== undefined && raw.Cb !== undefined);
+
+            function getPathValues(isBranch) {
+                let pDp = 0, pFlow = 0, pVel = 0, pPv = 0, pCoeff = 0, pCoeffType = "Co", pPathLabel = "";
+                if (isBranch) {
+                    const rawPob = u === "SI" ? (data.Pob_pa !== undefined ? data.Pob_pa : (raw.Pob !== undefined ? raw.Pob : 0))
+                                              : (data.Pob_in_wg !== undefined ? data.Pob_in_wg : ((raw.Pob || 0) / 249.0889));
+                    const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pob") : null;
+                    const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                    pDp = (dec === 0 && u === "SI") ? Math.round(rawPob) : rawPob;
+                    pFlow = currentInputs.Qb || raw.Qb || (u === "SI" ? (data.Q_Lps || 0) : (data.Q_cfm || 0));
+                    pVel = u === "SI" ? (data.Vb_ms || raw.Vb || data.velocity_ms || 0) : (data.Vb_fpm || (data.velocity_fpm || 0));
+                    pPv = u === "SI" ? (data.Pvb_pa !== undefined ? data.Pvb_pa : (raw.Pvb || 0)) : (data.Pvb_in_wg || 0);
+                    pCoeff = data.Cb !== undefined ? data.Cb : (raw.Cb || 0.5236);
+                    pCoeffType = "Cb";
+                    pPathLabel = " (Branch Run)";
+                } else {
+                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa || 0)))
+                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg || ((raw.Pos || 0) / 249.0889)));
+                    const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pos") : null;
+                    const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                    pDp = (dec === 0 && u === "SI") ? Math.round(rawPos) : rawPos;
+                    pFlow = getFittingFlowRate(currentInputs, data, u);
+                    pVel = u === "SI" ? (data.Vc_ms || data.Vs_ms || raw.Vc || raw.Vs || data.velocity_ms || 0) : (data.Vc_fpm || data.Vs_fpm || 0);
+                    pPv = u === "SI" ? (data.Pvc_pa !== undefined ? data.Pvc_pa : (data.Pvs_pa !== undefined ? data.Pvs_pa : (raw.Pvc || raw.Pvs || data.pv_pa || 0))) : (data.Pvc_in_wg || data.Pvs_in_wg || 0);
+                    pCoeff = data.Cs !== undefined ? data.Cs : (raw.Cs || data.loss_coeff_Co || 1.5);
+                    pCoeffType = "Cs";
+                    pPathLabel = " (Main Run)";
+                }
+                return { dp: pDp, flow: pFlow, vel: pVel, pv: pPv, coeff: pCoeff, coeffType: pCoeffType, pathLabel: pPathLabel };
+            }
+
+            if (hasDualPath && elements.groupFittingPath) {
+                elements.groupFittingPath.classList.remove("hidden");
+                if (elements.radPathMain) elements.radPathMain.checked = true;
+                if (elements.radPathBranch) elements.radPathBranch.checked = false;
+
+                const mVals = getPathValues(false);
+                const bVals = getPathValues(true);
+                if (elements.lblPathMain) {
+                    elements.lblPathMain.textContent = `Main Run (Straight): ΔP = ${Number(mVals.dp).toFixed(mVals.dp % 1 === 0 ? 0 : 1)} ${dpUnit}, ${mVals.coeffType} = ${Number(mVals.coeff).toFixed(2)}`;
+                }
+                if (elements.lblPathBranch) {
+                    elements.lblPathBranch.textContent = `Branch Run (Takeoff): ΔP = ${Number(bVals.dp).toFixed(bVals.dp % 1 === 0 ? 0 : 1)} ${dpUnit}, ${bVals.coeffType} = ${Number(bVals.coeff).toFixed(2)}`;
+                }
+
+                const onPathChange = () => {
+                    const isBr = elements.radPathBranch && elements.radPathBranch.checked;
+                    const vals = getPathValues(isBr);
+                    if (elements.previewFittingStats) {
+                        elements.previewFittingStats.textContent = `ΔP = ${Number(vals.dp).toFixed(1)} ${dpUnit} | Flow = ${Number(vals.flow).toFixed(0)} ${flowUnit} | ${vals.coeffType} = ${Number(vals.coeff).toFixed(4)}`;
+                    }
+                };
+                if (elements.radPathMain) elements.radPathMain.onchange = onPathChange;
+                if (elements.radPathBranch) elements.radPathBranch.onchange = onPathChange;
+
+                const initialVals = getPathValues(false);
+                dp = initialVals.dp;
+                flow = initialVals.flow;
+                vel = initialVals.vel;
+                coeff = initialVals.coeff;
+                coeffType = initialVals.coeffType;
+            } else {
+                if (elements.groupFittingPath) elements.groupFittingPath.classList.add("hidden");
+                const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Po") : null;
+                const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                let rawDp = u === "SI" ? (data.pressure_loss_pa || 0) : (data.pressure_loss_in_wg || 0);
+                dp = (dec === 0 && u === "SI") ? Math.round(rawDp) : rawDp;
+            }
+
             if (elements.previewFittingName) {
                 elements.previewFittingName.textContent = formatFittingTitle(item || {code, name});
             }
             if (elements.previewFittingStats) {
-                elements.previewFittingStats.textContent = `ΔP = ${dp.toFixed(1)} ${dpUnit} | Flow = ${flow.toFixed(0)} ${flowUnit} | ${coeffType} = ${Number(coeff).toFixed(4)}`;
+                elements.previewFittingStats.textContent = `ΔP = ${Number(dp).toFixed(1)} ${dpUnit} | Flow = ${Number(flow).toFixed(0)} ${flowUnit} | ${coeffType} = ${Number(coeff).toFixed(4)}`;
             }
 
             if (state.editingFitting && state.editingFitting.code === code) {
@@ -5503,22 +5644,63 @@
             });
 
             const dimStr = getFittingDimensionString(currentInputs, data, u);
-            const flow = getFittingFlowRate(currentInputs, data, u);
-            const vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
-            const pv = u === "SI" ? (data.pv_pa || 5.0) : (data.pv_in_wg || 0.02);
+            let flow = getFittingFlowRate(currentInputs, data, u);
+            let vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
+            let pv = u === "SI" ? (data.pv_pa || 5.0) : (data.pv_in_wg || 0.02);
 
             let coeff = (data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
                         ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15));
             let coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
 
-            const dp = u === "SI" ? (data.pressure_loss_pa || 2.5) : (data.pressure_loss_in_wg || 0.01);
+            let dp = u === "SI" ? (data.pressure_loss_pa || 2.5) : (data.pressure_loss_in_wg || 0.01);
+            let pathSuffix = "";
+
+            const raw = data.raw_env || {};
+            const hasDualPath = ((data.Pos_pa !== undefined || raw.Pos !== undefined) && (data.Pob_pa !== undefined || raw.Pob !== undefined)) ||
+                                (raw.Cs !== undefined && raw.Cb !== undefined);
+
+            if (hasDualPath) {
+                const isBranch = elements.radPathBranch && elements.radPathBranch.checked;
+                if (isBranch) {
+                    const rawPob = u === "SI" ? (data.Pob_pa !== undefined ? data.Pob_pa : (raw.Pob !== undefined ? raw.Pob : 0))
+                                              : (data.Pob_in_wg !== undefined ? data.Pob_in_wg : ((raw.Pob || 0) / 249.0889));
+                    const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pob") : null;
+                    const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                    dp = (dec === 0 && u === "SI") ? Math.round(rawPob) : (Math.round(rawPob * 10) / 10);
+                    flow = currentInputs.Qb || raw.Qb || flow;
+                    vel = u === "SI" ? (data.Vb_ms || raw.Vb || vel) : (data.Vb_fpm || 0);
+                    pv = u === "SI" ? (data.Pvb_pa !== undefined ? data.Pvb_pa : (raw.Pvb || pv)) : (data.Pvb_in_wg || 0);
+                    coeff = data.Cb !== undefined ? data.Cb : (raw.Cb || coeff);
+                    coeffType = "Cb";
+                    pathSuffix = " (Branch Run)";
+                } else {
+                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa || 0)))
+                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg || ((raw.Pos || 0) / 249.0889)));
+                    const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pos") : null;
+                    const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                    dp = (dec === 0 && u === "SI") ? Math.round(rawPos) : (Math.round(rawPos * 10) / 10);
+                    vel = u === "SI" ? (data.Vc_ms || data.Vs_ms || raw.Vc || raw.Vs || vel) : (data.Vc_fpm || data.Vs_fpm || 0);
+                    pv = u === "SI" ? (data.Pvc_pa !== undefined ? data.Pvc_pa : (data.Pvs_pa !== undefined ? data.Pvs_pa : (raw.Pvc || raw.Pvs || pv))) : (data.Pvc_in_wg || data.Pvs_in_wg || 0);
+                    coeff = data.Cs !== undefined ? data.Cs : (raw.Cs || coeff);
+                    coeffType = "Cs";
+                    pathSuffix = " (Main Run)";
+                }
+            } else {
+                const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Po") : null;
+                const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
+                if (dec === 0 && u === "SI") {
+                    dp = Math.round(dp);
+                }
+            }
+
+            const fittingNameWithSuffix = (hasDualPath && pathSuffix && !name.includes(pathSuffix.trim())) ? `${name}${pathSuffix}` : name;
             const tag = (elements.inputFittingTag && elements.inputFittingTag.value.trim()) || `${code}-01`;
             const qty = parseInt((elements.inputFittingQty && elements.inputFittingQty.value) || "1", 10) || 1;
             const notes = (elements.inputFittingNotes ? elements.inputFittingNotes.value.trim() : "");
 
             const payload = {
                 code: code,
-                name: name,
+                name: fittingNameWithSuffix,
                 shape: (item && item.shape) ? item.shape : "rect",
                 category: (item && item.category) ? item.category : "Fittings",
                 dimensions: dimStr,
@@ -5582,6 +5764,10 @@
         if (elements.viewSummarySizer) {
             elements.viewSummarySizer.classList.toggle("hidden", tabName !== "sizer");
         }
+        if (elements.prjMarginCard) {
+            // Safety Margin is strictly for fitting loss analysis (ESP), not required for auto duct sizer
+            elements.prjMarginCard.classList.toggle("hidden", tabName === "sizer");
+        }
 
         if (elements.btnDownloadFitductPdf) {
             elements.btnDownloadFitductPdf.textContent = tabName === "sizer" ? "📄 Download Duct Sizing Report (PDF)" : "📄 Download Duct Fitting Report (PDF)";
@@ -5639,6 +5825,7 @@
     }
 
     function closeProjectSummaryModal() {
+        closeScheduleContextMenu();
         if (elements.projectSummaryModal) {
             elements.projectSummaryModal.classList.add("hidden");
         }
@@ -6408,17 +6595,40 @@
                 <td class="num-cell text-right">${pvCell}</td>
                 <td class="num-cell text-right" title="${isCustom ? 'Manufacturer Data' : (fit.coeff_type || 'Co')}">${coeffCell}</td>
                 <td class="num-cell text-right loss-val">${dpVal.toFixed(1)}</td>
-                <td class="num-cell text-center" style="font-weight: bold;">${qtyVal}</td>
+                <td class="num-cell text-center cell-qty" style="padding: 2px 4px;">
+                    <div class="prj-qty-stepper" draggable="false">
+                        <input type="number" 
+                               class="prj-qty-input" 
+                               value="${qtyVal}" 
+                               min="1" 
+                               max="999" 
+                               step="1" 
+                               data-fit-id="${fit.id}"
+                               draggable="false"
+                               title="Type quantity or click ▲ / ▼">
+                        <div class="prj-qty-arrows" draggable="false">
+                            <button type="button" class="btn-qty-arrow btn-qty-up" data-fit-id="${fit.id}" title="Increase quantity (▲)" tabindex="-1">▲</button>
+                            <button type="button" class="btn-qty-arrow btn-qty-down" data-fit-id="${fit.id}" title="Decrease quantity (▼)" tabindex="-1">▼</button>
+                        </div>
+                    </div>
+                </td>
                 <td class="num-cell text-right total-loss-val">${totDpVal.toFixed(1)}</td>
                 <td class="text-center">
                     <div style="display: inline-flex; gap: 3px; align-items: center; justify-content: center;">
                         <button type="button" class="btn-table-action btn-row-up" title="Move row up" ${idx === 0 ? 'disabled' : ''} data-row-idx="${idx}">▲</button>
                         <button type="button" class="btn-table-action btn-row-down" title="Move row down" ${idx === fittings.length - 1 ? 'disabled' : ''} data-row-idx="${idx}">▼</button>
+                        <button type="button" class="btn-table-action btn-dup-fit" title="Duplicate fitting (append exact copy to end of schedule)" data-fit-id="${fit.id}">📋</button>
                         <button type="button" class="btn-table-action edit-fit ${isCustom ? 'btn-edit-custom-fit' : 'btn-load-fit'}" title="${isCustom ? 'Edit this Custom Fitting' : 'Edit this Fitting in Calculator'}" data-fit-id="${fit.id}">✏️</button>
                         <button type="button" class="btn-table-action delete btn-del-fit" title="Delete from schedule" data-fit-id="${fit.id}">🗑️</button>
                     </div>
                 </td>
             `;
+
+            // Right-click context menu on fitting row
+            tr.title = "Right-click on this fitting to duplicate, edit, or delete";
+            tr.addEventListener("contextmenu", (e) => {
+                openScheduleContextMenu(e, fit);
+            });
 
             // Action button handlers
             const btnUp = tr.querySelector(".btn-row-up");
@@ -6428,6 +6638,11 @@
             const btnDown = tr.querySelector(".btn-row-down");
             if (btnDown && idx < fittings.length - 1) {
                 btnDown.addEventListener("click", () => reorderScheduleRows(idx, idx + 1));
+            }
+
+            const btnDup = tr.querySelector(".btn-dup-fit");
+            if (btnDup) {
+                btnDup.addEventListener("click", () => duplicateFittingInSchedule(fit.id));
             }
 
             const btnEditCustom = tr.querySelector(".btn-edit-custom-fit");
@@ -6443,6 +6658,71 @@
             const btnDel = tr.querySelector(".btn-del-fit");
             if (btnDel) {
                 btnDel.addEventListener("click", () => deleteFittingFromSchedule(fit.id));
+            }
+
+            // Inline Qty edit & stepper handlers
+            const stepperWrap = tr.querySelector(".prj-qty-stepper");
+            const inpQty = tr.querySelector(".prj-qty-input");
+            const btnUpQty = tr.querySelector(".btn-qty-up");
+            const btnDownQty = tr.querySelector(".btn-qty-down");
+
+            if (stepperWrap) {
+                stepperWrap.addEventListener("mousedown", (e) => e.stopPropagation());
+                stepperWrap.addEventListener("click", (e) => e.stopPropagation());
+                stepperWrap.addEventListener("dragstart", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                stepperWrap.addEventListener("contextmenu", (e) => e.stopPropagation());
+            }
+
+            if (inpQty) {
+                inpQty.addEventListener("focus", () => inpQty.select());
+
+                inpQty.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        inpQty.blur();
+                    } else if (e.key === "Escape") {
+                        e.preventDefault();
+                        inpQty.value = String(fit.qty || 1);
+                        inpQty.blur();
+                    }
+                });
+
+                inpQty.addEventListener("change", async () => {
+                    let newQty = parseInt(inpQty.value, 10);
+                    if (isNaN(newQty) || newQty < 1) {
+                        newQty = 1;
+                        inpQty.value = "1";
+                    }
+                    if (newQty === Number(fit.qty || 1)) return;
+
+                    await updateFittingQtyInline(fit.id, newQty);
+                });
+            }
+
+            if (btnUpQty) {
+                btnUpQty.addEventListener("click", async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const currentQ = parseInt(inpQty ? inpQty.value : fit.qty, 10) || 1;
+                    const nextQ = currentQ + 1;
+                    if (inpQty) inpQty.value = String(nextQ);
+                    await updateFittingQtyInline(fit.id, nextQ);
+                });
+            }
+
+            if (btnDownQty) {
+                btnDownQty.addEventListener("click", async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const currentQ = parseInt(inpQty ? inpQty.value : fit.qty, 10) || 1;
+                    if (currentQ <= 1) return;
+                    const nextQ = currentQ - 1;
+                    if (inpQty) inpQty.value = String(nextQ);
+                    await updateFittingQtyInline(fit.id, nextQ);
+                });
             }
 
             // Drag and drop listeners
@@ -6647,55 +6927,27 @@
         });
 
         const avgRate = totalLength > 0 ? (cumulativeDp / totalLength) : 0.8;
-        const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
-        const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
-        const marginDp = cumulativeDp * (marginPct / 100.0);
-        const designDp = cumulativeDp + marginDp;
 
         if (elements.tfootSizerSchedule) {
-            if (marginPct > 0) {
-                elements.tfootSizerSchedule.innerHTML = `
-                    <tr style="background: #f8fafc; border-top: 1.5px solid #cbd5e1; font-size: 12px; color: #475569;">
-                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap;">Subtotal Friction Loss (∑ΔP<sub>calc</sub>):</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
-                        <td></td>
-                    </tr>
-                    <tr style="background: #f0f9ff; border-top: 1px dashed #93c5fd; font-size: 12px; color: #0369a1;">
-                        <td colspan="10" style="text-align: right; font-weight: 600; white-space: nowrap;">Design Safety Margin:</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginStr}</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 700; color: #0284c7; white-space: nowrap;">+${marginDp.toFixed(1)} ${dpUnit}</td>
-                        <td></td>
-                    </tr>
-                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
-                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Sizing Design Friction Loss (∑ΔP<sub>design</sub>):</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
-                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${designDp.toFixed(1)} ${dpUnit}</td>
-                        <td></td>
-                    </tr>
-                `;
-            } else {
-                elements.tfootSizerSchedule.innerHTML = `
-                    <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
-                        <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Straight Duct Run Friction Loss (∑ΔP):</td>
-                        <td class="text-right num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
-                        <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
-                        <td></td>
-                    </tr>
-                `;
-            }
+            elements.tfootSizerSchedule.innerHTML = `
+                <tr style="background: #f0fdf4; border-top: 2px solid #16a34a; border-bottom: 2.5px solid #16a34a; color: #166534;">
+                    <td colspan="10" style="text-align: right; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12.5px; font-weight: 800; white-space: nowrap;">Total Straight Duct Run Friction Loss (∑ΔP):</td>
+                    <td class="text-right num-cell" style="font-size: 13px; font-weight: 800; white-space: nowrap;">${totalLength.toFixed(1)} ${lenUnit}</td>
+                    <td class="text-right num-cell" style="font-size: 14px; color: #15803d; font-weight: 800; white-space: nowrap;">${cumulativeDp.toFixed(1)} ${dpUnit}</td>
+                    <td></td>
+                </tr>
+            `;
         }
 
         if (elements.kpiSizerRuns) elements.kpiSizerRuns.textContent = String(segments.length);
         if (elements.kpiSizerLength) elements.kpiSizerLength.textContent = `${totalLength.toFixed(1)} ${lenUnit}`;
         if (elements.kpiSizerSubtotalDp) elements.kpiSizerSubtotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
-        if (elements.kpiSizerTotalDp) elements.kpiSizerTotalDp.textContent = `${designDp.toFixed(1)} ${dpUnit}`;
+        if (elements.kpiSizerTotalDp) elements.kpiSizerTotalDp.textContent = `${cumulativeDp.toFixed(1)} ${dpUnit}`;
         if (elements.kpiSizerTotalDpLabel) {
-            elements.kpiSizerTotalDpLabel.textContent = marginPct > 0 ? "Total Sizing Design Loss" : "Total Friction Loss (∑ΔP)";
+            elements.kpiSizerTotalDpLabel.textContent = "Total Friction Loss (∑ΔP)";
         }
         if (elements.kpiSizerTotalDpSub) {
-            elements.kpiSizerTotalDpSub.textContent = marginPct > 0 ? `incl. +${marginStr} Margin` : "No margin";
-            elements.kpiSizerTotalDpSub.classList.toggle("hidden", marginPct === 0);
+            elements.kpiSizerTotalDpSub.classList.add("hidden");
         }
         if (elements.kpiSizerAvgRate) elements.kpiSizerAvgRate.textContent = `${avgRate.toFixed(2)} ${frUnit}`;
     }
@@ -6749,6 +7001,111 @@
             }
             showPrjToast(`✏️ Loaded ${fit.tag} (${fit.code}) into engineering calculator for editing`);
         }, 300);
+    }
+
+    // Schedule Right-Click Context Menu State & Methods
+    let activeContextFit = null;
+
+    function openScheduleContextMenu(e, fit) {
+        if (!fit || !elements.scheduleContextMenu) return;
+        e.preventDefault();
+        e.stopPropagation();
+        activeContextFit = fit;
+
+        if (elements.ctxMenuTag) {
+            elements.ctxMenuTag.textContent = fit.tag || fit.code || "FITTING";
+        }
+        if (elements.ctxMenuCode) {
+            elements.ctxMenuCode.textContent = fit.code || "";
+        }
+
+        const menu = elements.scheduleContextMenu;
+        menu.classList.remove("hidden");
+
+        const menuWidth = 240;
+        const menuHeight = 170;
+        let x = e.clientX;
+        let y = e.clientY;
+
+        if (x + menuWidth > window.innerWidth - 10) {
+            x = window.innerWidth - menuWidth - 10;
+        }
+        if (y + menuHeight > window.innerHeight - 10) {
+            y = window.innerHeight - menuHeight - 10;
+        }
+
+        menu.style.left = `${Math.max(10, x)}px`;
+        menu.style.top = `${Math.max(10, y)}px`;
+    }
+
+    function closeScheduleContextMenu() {
+        if (elements.scheduleContextMenu) {
+            elements.scheduleContextMenu.classList.add("hidden");
+        }
+        activeContextFit = null;
+    }
+
+    async function updateFittingQtyInline(fittingId, newQty) {
+        if (!state.activeProjectId || !fittingId) return;
+        const q = Math.max(1, parseInt(newQty, 10) || 1);
+
+        try {
+            const resp = await fetch(`/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings/${encodeURIComponent(fittingId)}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ qty: q })
+            });
+            const res = await resp.json();
+            if (res.status === "success") {
+                await fetchActiveProjectDetails(state.activeProjectId);
+                renderProjectScheduleTable(state.activeProject);
+                updateProjectRibbonBadge();
+                const tagStr = (res.data && res.data.tag) ? res.data.tag : "Fitting";
+                showPrjToast(`✓ Updated [${tagStr}] quantity to ${q}`);
+            } else {
+                alert(`Error updating quantity: ${res.message || "Failed to update"}`);
+                if (state.activeProject) renderProjectScheduleTable(state.activeProject);
+            }
+        } catch (err) {
+            console.error("Failed to update fitting quantity inline:", err);
+            alert("Network error updating quantity.");
+            if (state.activeProject) renderProjectScheduleTable(state.activeProject);
+        }
+    }
+
+    async function duplicateFittingInSchedule(fittingId) {
+        if (!state.activeProjectId || !fittingId) return;
+
+        try {
+            const resp = await fetch(`/api/projects/${encodeURIComponent(state.activeProjectId)}/fittings/${encodeURIComponent(fittingId)}/duplicate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+            const res = await resp.json();
+            if (res.status === "success") {
+                await fetchActiveProjectDetails(state.activeProjectId);
+                renderProjectScheduleTable(state.activeProject);
+                updateProjectRibbonBadge();
+                const newTag = res.data?.tag || "fitting";
+                showPrjToast(`📋 Duplicated ${newTag} to the end of schedule`);
+
+                // Smoothly scroll the newly duplicated row into view at the end of the schedule
+                setTimeout(() => {
+                    const rows = elements.tbodyProjectSchedule?.querySelectorAll("tr");
+                    if (rows && rows.length > 0) {
+                        const lastRow = rows[rows.length - 1];
+                        lastRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        lastRow.classList.add("row-highlight-pulse");
+                        setTimeout(() => lastRow.classList.remove("row-highlight-pulse"), 1600);
+                    }
+                }, 60);
+            } else {
+                alert(res.message || "Failed to duplicate fitting.");
+            }
+        } catch (err) {
+            console.error("Failed to duplicate fitting:", err);
+            alert("Failed to duplicate fitting.");
+        }
     }
 
     async function deleteFittingFromSchedule(fittingId) {
@@ -6859,18 +7216,7 @@
                 csv += `${dp.toFixed(1)}\n`;
             });
 
-            const marginPct = (p.design_margin !== undefined && p.design_margin !== null) ? Number(p.design_margin) : 10.0;
-            const marginStr = `${marginPct % 1 === 0 ? marginPct.toFixed(0) : marginPct.toFixed(1)}%`;
-            const marginDp = totLoss * (marginPct / 100.0);
-            const designDp = totLoss + marginDp;
-
-            csv += `,,,,,,,,,SUBTOTAL (Calculated Friction Loss),${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
-            if (marginPct > 0) {
-                csv += `,,,,,,,,,DESIGN SAFETY MARGIN,+${marginStr},+${marginDp.toFixed(1)}\n`;
-                csv += `,,,,,,,,,TOTAL SIZING DESIGN LOSS,,${designDp.toFixed(1)}\n`;
-            } else {
-                csv += `,,,,,,,,,TOTALS,${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
-            }
+            csv += `,,,,,,,,,TOTAL STRAIGHT DUCT RUN LOSS (∑ΔP),${totLength.toFixed(1)},${totLoss.toFixed(1)}\n`;
 
             const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
@@ -7199,11 +7545,7 @@
         if (elements.selectCustomTemplate) {
             elements.selectCustomTemplate.addEventListener("change", applySelectedTemplate);
         }
-        if (elements.modalCustomFitting) {
-            elements.modalCustomFitting.addEventListener("click", (e) => {
-                if (e.target === elements.modalCustomFitting) closeCustomFittingModal();
-            });
-        }
+        // Notice: Clicking outside modalCustomFitting intentionally disabled to prevent accidental closure
         if (elements.btnClearProjectFittings) {
             elements.btnClearProjectFittings.addEventListener("click", clearProjectFittings);
         }
@@ -7262,6 +7604,58 @@
             });
         }
 
+        // Schedule Context Menu Listeners (Right Click on Any Fitting)
+        if (elements.ctxMenuDuplicate) {
+            elements.ctxMenuDuplicate.addEventListener("click", () => {
+                const fitId = activeContextFit ? activeContextFit.id : null;
+                closeScheduleContextMenu();
+                if (fitId) duplicateFittingInSchedule(fitId);
+            });
+        }
+        if (elements.ctxMenuChangeQty) {
+            elements.ctxMenuChangeQty.addEventListener("click", () => {
+                const fit = activeContextFit;
+                closeScheduleContextMenu();
+                if (!fit) return;
+                const newQStr = prompt(`Enter new quantity for [${fit.tag || fit.code}]:`, fit.qty || 1);
+                if (newQStr !== null) {
+                    const newQ = parseInt(newQStr, 10);
+                    if (!isNaN(newQ) && newQ >= 1) {
+                        updateFittingQtyInline(fit.id, newQ);
+                    }
+                }
+            });
+        }
+        if (elements.ctxMenuEdit) {
+            elements.ctxMenuEdit.addEventListener("click", () => {
+                const fit = activeContextFit;
+                closeScheduleContextMenu();
+                if (fit) {
+                    if (fit.is_custom || fit.source === "custom") {
+                        openCustomFittingModal(fit);
+                    } else {
+                        loadFittingFromSchedule(fit);
+                    }
+                }
+            });
+        }
+        if (elements.ctxMenuDelete) {
+            elements.ctxMenuDelete.addEventListener("click", () => {
+                const fitId = activeContextFit ? activeContextFit.id : null;
+                closeScheduleContextMenu();
+                if (fitId) deleteFittingFromSchedule(fitId);
+            });
+        }
+
+        // Global dismiss for context menu on outside click, window resize or scroll
+        document.addEventListener("click", (e) => {
+            if (elements.scheduleContextMenu && !elements.scheduleContextMenu.contains(e.target)) {
+                closeScheduleContextMenu();
+            }
+        });
+        window.addEventListener("scroll", closeScheduleContextMenu, true);
+        window.addEventListener("resize", closeScheduleContextMenu);
+
         // Global click to close combo dropdown
         document.addEventListener("click", (e) => {
             if (elements.prjSearchCombo && !elements.prjSearchCombo.contains(e.target)) {
@@ -7271,6 +7665,10 @@
 
         window.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
+                if (elements.scheduleContextMenu && !elements.scheduleContextMenu.classList.contains("hidden")) {
+                    closeScheduleContextMenu();
+                    return;
+                }
                 closePrjComboDropdown();
                 if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
                     closeAllProjectsModal();
@@ -7293,7 +7691,9 @@
             }
         });
 
-        [elements.newProjectModal, elements.addFittingDialog, elements.projectSummaryModal, elements.allProjectsModal, elements.editProjectModal, elements.modalCustomFitting].forEach(m => {
+        // Allow outside overlay clicks only for read-only / project navigation modals;
+        // input dialogs ('Add Custom Fitting' & 'Add to Schedule') remain open until user clicks 'Add to Schedule' or 'Cancel'
+        [elements.newProjectModal, elements.projectSummaryModal, elements.allProjectsModal, elements.editProjectModal].forEach(m => {
             if (m) {
                 m.addEventListener("click", (e) => {
                     if (e.target === m) {
@@ -7302,6 +7702,18 @@
                 });
             }
         });
+
+        // Global listener: Automatically add leading zero to decimal numbers (e.g. .546 -> 0.546) on blur / focusout for all input cells
+        document.addEventListener("focusout", (e) => {
+            if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
+                normalizeInputLeadingZero(e.target);
+            }
+        });
+        document.addEventListener("blur", (e) => {
+            if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
+                normalizeInputLeadingZero(e.target);
+            }
+        }, true);
     }
 
 
@@ -7310,6 +7722,7 @@
     window.setMode = setMode;
     window.calculate = calculate;
     window.clearFittingOutputs = clearFittingOutputs;
+    window.normalizeInputLeadingZero = normalizeInputLeadingZero;
     window.appState = state;
 
     // Startup

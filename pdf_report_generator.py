@@ -1695,16 +1695,10 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
     cum_dp = sum(float(s.get("dp", 0) or 0) for s in segments)
     avg_fr = (cum_dp / total_length) if total_length > 0 else 0.0
 
-    if design_margin is not None:
-        try:
-            design_margin_pct = max(0.0, float(design_margin))
-        except (ValueError, TypeError):
-            design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
-    else:
-        design_margin_pct = float(project.get("design_margin", 10.0) or 0.0)
-
-    margin_dp = cum_dp * (design_margin_pct / 100.0)
-    design_dp = cum_dp + margin_dp
+    # Design safety margin is not required for Auto Duct Sizer (only applied to fitting loss / ESP)
+    design_margin_pct = 0.0
+    margin_dp = 0.0
+    design_dp = cum_dp
 
     # KPI Statistics Row
     if design_margin_pct > 0:

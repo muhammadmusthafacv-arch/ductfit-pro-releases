@@ -856,7 +856,7 @@
                 </div>
 
                 <!-- Engineering Design Safety Margin Sheet Card -->
-                <div class="prj-margin-card">
+                <div class="prj-margin-card" id="prjMarginCard">
                     <div class="prj-margin-left">
                         <span class="prj-margin-icon">🛡️</span>
                         <div class="prj-margin-text">
@@ -937,7 +937,7 @@
                                     <th style="width: 75px;" class="text-right">P<sub>v</sub> (Pa)</th>
                                     <th style="width: 75px;" class="text-right">Co / f</th>
                                     <th style="width: 80px;" class="text-right">ΔP (ea)</th>
-                                    <th style="width: 65px;" class="text-center">Qty</th>
+                                    <th style="width: 75px;" class="text-center">Qty</th>
                                     <th style="width: 90px;" class="text-right">Total ΔP</th>
                                     <th style="width: 75px;" class="text-center">Actions</th>
                                 </tr>
@@ -954,8 +954,8 @@
 
                 <!-- VIEW 2: Auto Duct Sizer Schedule (Duct Sizing Analysis) -->
                 <div id="viewSummarySizer" class="summary-schedule-view hidden">
-                    <!-- Sizer KPI Metric Tiles -->
-                    <div class="prj-kpi-bar">
+                    <!-- Sizer KPI Metric Tiles (Safety Margin Not Required for Auto Duct Sizer) -->
+                    <div class="prj-kpi-bar kpi-4-cols">
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiSizerRuns">0</span>
                             <span class="kpi-label">Sized Duct Runs</span>
@@ -964,14 +964,9 @@
                             <span class="kpi-num" id="kpiSizerLength">0.0 m</span>
                             <span class="kpi-label">Total Duct Length</span>
                         </div>
-                        <div class="prj-kpi-card">
-                            <span class="kpi-num" id="kpiSizerSubtotalDp">0.0 Pa</span>
-                            <span class="kpi-label">Subtotal Friction Loss</span>
-                        </div>
                         <div class="prj-kpi-card highlight">
                             <span class="kpi-num" id="kpiSizerTotalDp">0.0 Pa</span>
-                            <span class="kpi-label" id="kpiSizerTotalDpLabel">Total Sizing Design Loss</span>
-                            <span class="kpi-sub-badge" id="kpiSizerTotalDpSub">incl. +10% Margin</span>
+                            <span class="kpi-label" id="kpiSizerTotalDpLabel">Total Friction Loss (∑ΔP)</span>
                         </div>
                         <div class="prj-kpi-card">
                             <span class="kpi-num" id="kpiSizerAvgRate">0.80 Pa/m</span>
@@ -1039,6 +1034,44 @@
         </div>
     </div>
 
+    <!-- Custom Context Menu for Project Schedule Table (Right Click on Any Fitting) -->
+    <div id="scheduleContextMenu" class="schedule-context-menu hidden">
+        <div class="context-menu-header">
+            <span class="context-menu-item-tag" id="ctxMenuTag">FITTING</span>
+            <span class="context-menu-item-code" id="ctxMenuCode"></span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <button type="button" class="context-menu-item" id="ctxMenuDuplicate">
+            <span class="ctx-icon">📋</span>
+            <div class="ctx-text-wrap">
+                <span class="ctx-label">Duplicate Fitting</span>
+                <span class="ctx-sub">Add exact duplicate to end of schedule</span>
+            </div>
+        </button>
+        <button type="button" class="context-menu-item" id="ctxMenuChangeQty">
+            <span class="ctx-icon">🔢</span>
+            <div class="ctx-text-wrap">
+                <span class="ctx-label">Change Quantity</span>
+                <span class="ctx-sub">Edit fitting quantity directly</span>
+            </div>
+        </button>
+        <button type="button" class="context-menu-item" id="ctxMenuEdit">
+            <span class="ctx-icon">✏️</span>
+            <div class="ctx-text-wrap">
+                <span class="ctx-label">Edit Fitting</span>
+                <span class="ctx-sub">Modify dimensions or calculation</span>
+            </div>
+        </button>
+        <div class="context-menu-divider"></div>
+        <button type="button" class="context-menu-item context-menu-item-danger" id="ctxMenuDelete">
+            <span class="ctx-icon">🗑️</span>
+            <div class="ctx-text-wrap">
+                <span class="ctx-label">Delete Fitting</span>
+                <span class="ctx-sub">Remove from project schedule</span>
+            </div>
+        </button>
+    </div>
+
     <!-- Quick Add Fitting / Duct Section Dialog -->
     <div id="addFittingDialog" class="modal-overlay hidden" role="dialog" aria-labelledby="addFittingDialogTitle" aria-modal="true">
         <div class="modal-card modal-card-sm">
@@ -1058,6 +1091,20 @@
                     <div class="preview-fitting-stats" id="previewFittingStats">Loss: - | Flow: - | Co: -</div>
                 </div>
                 <div class="prj-form-grid" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
+                    <!-- Flow Path Selector for Junctions (Tees/Wyes) -->
+                    <div class="prj-form-group prj-col-span-2 hidden" id="groupFittingPath">
+                        <label class="prj-label" style="font-weight: 700; color: #0f172a; margin-bottom: 6px;">Flow Calculation Path <span class="req">*</span></label>
+                        <div style="display: flex; gap: 16px; padding: 8px 12px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px;">
+                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: #0f172a;">
+                                <input type="radio" name="fittingFlowPath" id="radPathMain" value="main" checked>
+                                <span id="lblPathMain">Main Run (Straight-Through)</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: #475569;">
+                                <input type="radio" name="fittingFlowPath" id="radPathBranch" value="branch">
+                                <span id="lblPathBranch">Branch Run (Takeoff)</span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="prj-form-group">
                         <label for="inputFittingTag" class="prj-label">Item Mark / Tag <span class="req">*</span></label>
                         <input type="text" id="inputFittingTag" class="prj-input">

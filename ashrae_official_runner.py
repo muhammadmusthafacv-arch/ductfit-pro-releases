@@ -721,15 +721,28 @@ class OfficialAshraeEngine:
                     env[k_sub] = 0.0
             f_val = 0.0
         else:
-            Co = env.get('Co', env.get('Cb', env.get('Cb1', env.get('Cs', env.get('Cp', 0.0)))))
+            # Consistent selection of primary flow path (Main vs Branch)
+            # When both Main (Pos/Cs) and Branch (Pob/Cb) exist (e.g. Tees & Wyes),
+            # default to the Main Run (Straight-Through) for single-path summary metrics.
+            if 'Pos' in env and 'Pob' in env:
+                Po = env.get('Pos', 0.0)
+                Co = env.get('Cs', 0.0)
+            elif 'Pos' in env:
+                Po = env.get('Pos', 0.0)
+                Co = env.get('Cs', 0.0)
+            elif 'Pob' in env:
+                Po = env.get('Pob', env.get('Pob1', 0.0))
+                Co = env.get('Cb', env.get('Cb1', 0.0))
+            else:
+                Po = env.get('Po', env.get('Pos', env.get('Pob', env.get('Pob1', 0.0))))
+                Co = env.get('Co', env.get('Cs', env.get('Cb', env.get('Cb1', env.get('Cp', 0.0)))))
             if isinstance(Co, str): Co = 0.0
             f_val = env.get('f', Co)
             if isinstance(f_val, str): f_val = 0.0
         
-        # Velocity and velocity pressure
-        Vo = env.get('Vo', env.get('V', env.get('Vc', env.get('Vb', env.get('Vb1', 0.0)))))
-        Pvo = env.get('Pvo', env.get('Pv', env.get('Pvc', env.get('Pvb', env.get('Pvb1', 0.0)))))
-        Po = env.get('Po', env.get('Pob', env.get('Pob1', env.get('Pos', 0.0))))
+        # Velocity and velocity pressure (prioritize Common/Main over Branch)
+        Vo = env.get('Vo', env.get('V', env.get('Vc', env.get('Vs', env.get('Vb', env.get('Vb1', 0.0))))))
+        Pvo = env.get('Pvo', env.get('Pv', env.get('Pvc', env.get('Pvs', env.get('Pvb', env.get('Pvb1', 0.0))))))
         
         # Pressure conversions
         if is_ip:
@@ -798,16 +811,23 @@ class OfficialAshraeEngine:
             res['Pvs_pa'] = float(val if not is_ip else val * 249.0889)
             res['Pvs_in_wg'] = float(val if is_ip else val / 249.0889)
 
-        # Determine governing flow rate Q (in L/s for SI, cfm for IP)
+        # Determine inlet flow rate Q (in L/s for SI, cfm for IP)
+        # Always taken at the inlet of the fitting (e.g. Qc for junctions, Q, Q1, Qo, Qi)
         flow_val = 0.0
-        if 'Po' in env and 'Q' in env:
-            flow_val = env.get('Q', env.get('Qo', 0.0))
-        elif 'Pob' in env and Po == env.get('Pob'):
-            flow_val = env.get('Qb', env.get('Qb1', env.get('Qc', env.get('Q', 0.0))))
-        elif 'Pos' in env and Po == env.get('Pos'):
-            flow_val = env.get('Qs', env.get('Qc', env.get('Q', 0.0)))
+        if 'Qc' in env and env['Qc'] > 0:
+            flow_val = env['Qc']
+        elif 'Q' in env and env['Q'] > 0:
+            flow_val = env['Q']
+        elif 'Q1' in env and env['Q1'] > 0:
+            flow_val = env['Q1']
+        elif 'Qo' in env and env['Qo'] > 0:
+            flow_val = env['Qo']
+        elif 'Qi' in env and env['Qi'] > 0:
+            flow_val = env['Qi']
+        elif 'Qb' in env and env['Qb'] > 0:
+            flow_val = env['Qb']
         else:
-            flow_val = env.get('Q', env.get('Qo', env.get('Qc', env.get('Q1', env.get('Qb', 0.0)))))
+            flow_val = env.get('Qs', 0.0)
 
         if is_ip:
             q_cfm = float(flow_val)

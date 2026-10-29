@@ -371,6 +371,17 @@ def update_fitting_route(project_id, fitting_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+@app.route("/api/projects/<project_id>/fittings/<fitting_id>/duplicate", methods=["POST"])
+def duplicate_fitting_route(project_id, fitting_id):
+    """Duplicate an existing fitting and append to the end of the schedule"""
+    try:
+        new_fit = project_manager.duplicate_fitting_in_project(project_id, fitting_id)
+        if not new_fit:
+            return jsonify({"status": "error", "message": "Fitting not found"}), 404
+        return jsonify({"status": "success", "data": new_fit})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 @app.route("/api/projects/<project_id>/fittings/reorder", methods=["POST"])
 def reorder_fittings_route(project_id):
     """Reorder fittings in project schedule (Move Up/Down or Drag & Drop)"""

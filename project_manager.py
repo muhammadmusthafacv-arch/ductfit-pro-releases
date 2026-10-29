@@ -271,6 +271,43 @@ def add_fitting_to_project(project_id, fitting_data):
     save_projects_data(data)
     return fitting_record
 
+def duplicate_fitting_in_project(project_id, fitting_id):
+    """
+    Duplicates an existing fitting by fitting_id, copying all its engineering properties,
+    and appends the exact duplicate to the end of the project schedule with a new unique id and re-sequenced tag.
+    """
+    data = get_projects_data()
+    target_project = None
+    for p in data.get("projects", []):
+        if p.get("id") == project_id:
+            target_project = p
+            break
+
+    if not target_project:
+        return None
+
+    fittings = target_project.setdefault("fittings", [])
+    source_fit = None
+    for f in fittings:
+        if f.get("id") == fitting_id:
+            source_fit = f
+            break
+
+    if not source_fit:
+        return None
+
+    import copy
+    new_fit = copy.deepcopy(source_fit)
+    new_id = f"fit_{int(time.time()*1000)}_{len(fittings) + 1}"
+    new_fit["id"] = new_id
+    new_fit["item_no"] = len(fittings) + 1
+    new_fit["added_at"] = _get_timestamp()
+    fittings.append(new_fit)
+    renumber_fittings(fittings)
+    target_project["updated_at"] = _get_timestamp()
+    save_projects_data(data)
+    return new_fit
+
 def delete_fitting_from_project(project_id, fitting_id):
     data = get_projects_data()
     for p in data.get("projects", []):
