@@ -2648,7 +2648,8 @@
                 alertEl.innerHTML = `<strong>ℹ️ Engineering Advisory:</strong> ${escapeHtml(d.engineering_advisory)}`;
                 alertEl.className = "ashrae-range-alert visible engineering-advisory-alert";
             } else if (d && d.out_of_range_warnings && d.out_of_range_warnings.length > 0) {
-                alertEl.innerHTML = `<strong>⚠️ ASHRAE Limit Notice:</strong> ${escapeHtml(d.out_of_range_warnings.join(" "))}`;
+                const uniqueWarnings = Array.from(new Set(d.out_of_range_warnings.map(s => String(s).trim()))).filter(Boolean);
+                alertEl.innerHTML = `<strong>⚠️ ASHRAE Limit Notice:</strong> ${escapeHtml(uniqueWarnings.join(" "))}`;
                 alertEl.className = "ashrae-range-alert visible";
             } else {
                 alertEl.innerHTML = "";
@@ -5182,6 +5183,100 @@
         }
     }
 
+    // --- Helper Functions to extract accurate Flow Rate and Dimensions ---
+    function getFittingFlowRate(currentInputs, data, u) {
+        const isSI = (u === "SI");
+        if (data) {
+            if (isSI && data.Q_Lps !== undefined && !isNaN(data.Q_Lps) && data.Q_Lps > 0) {
+                return Number(data.Q_Lps);
+            }
+            if (!isSI && data.Q_cfm !== undefined && !isNaN(data.Q_cfm) && data.Q_cfm > 0) {
+                return Number(data.Q_cfm);
+            }
+        }
+
+        // Check currentInputs with smart priority for junctions:
+        let val = undefined;
+        if (data && data.Pob_pa && data.pressure_loss_pa === Math.round(data.Pob_pa * 10) / 10 && currentInputs.Qb !== undefined) {
+            val = currentInputs.Qb;
+        } else if (data && data.Pos_pa && data.pressure_loss_pa === Math.round(data.Pos_pa * 10) / 10 && currentInputs.Qs !== undefined) {
+            val = currentInputs.Qs;
+        } else {
+            val = currentInputs.Qb !== undefined ? currentInputs.Qb :
+                 (currentInputs.Qc !== undefined ? currentInputs.Qc :
+                 (currentInputs.Q !== undefined ? currentInputs.Q :
+                 (currentInputs.Qo !== undefined ? currentInputs.Qo :
+                 (currentInputs.Q1 !== undefined ? currentInputs.Q1 :
+                 (currentInputs.Qs !== undefined ? currentInputs.Qs : undefined)))));
+        }
+
+        if (val !== undefined && !isNaN(val) && val > 0) {
+            return Number(val);
+        }
+
+        if (data && data.raw_env) {
+            const re = data.raw_env;
+            const envQ = re.Qb || re.Qc || re.Q || re.Qo || re.Q1 || re.Qs;
+            if (envQ !== undefined && !isNaN(envQ) && envQ > 0) {
+                return Number(envQ);
+            }
+        }
+
+        return isSI ? 500 : 1059;
+    }
+
+    function getFittingDimensionString(currentInputs, data, u) {
+        const isSI = (u === "SI");
+        const lenUnit = isSI ? "mm" : "in.";
+
+        // 1. Rectangular with H and W / Wc / W1 / Wo
+        const h = currentInputs.H !== undefined ? currentInputs.H : (currentInputs.H1 !== undefined ? currentInputs.H1 : currentInputs.Ho);
+        const w = currentInputs.W !== undefined ? currentInputs.W : 
+                  (currentInputs.Wc !== undefined ? currentInputs.Wc : 
+                  (currentInputs.W1 !== undefined ? currentInputs.W1 : currentInputs.Wo));
+        
+        if (h !== undefined && w !== undefined && !isNaN(h) && !isNaN(w)) {
+            let s = `${w} × ${h} ${lenUnit}`;
+            if (currentInputs.Wb !== undefined && !isNaN(currentInputs.Wb)) {
+                s += ` (Br: ${currentInputs.Wb}×${h})`;
+            }
+            return s;
+        }
+
+        // 2. Round with D / Dc / D1 / Do
+        const d = currentInputs.D !== undefined ? currentInputs.D : 
+                  (currentInputs.Dc !== undefined ? currentInputs.Dc : 
+                  (currentInputs.D1 !== undefined ? currentInputs.D1 : currentInputs.Do));
+        if (d !== undefined && !isNaN(d)) {
+            let s = `Ø ${d} ${lenUnit}`;
+            if (currentInputs.Db !== undefined && !isNaN(currentInputs.Db)) {
+                s += ` (Br: Ø ${currentInputs.Db})`;
+            } else if (currentInputs.D2 !== undefined && !isNaN(currentInputs.D2)) {
+                s += ` / Ø ${currentInputs.D2}`;
+            }
+            return s;
+        }
+
+        // 3. Flat Oval with A and a
+        if (currentInputs.A !== undefined && currentInputs.a !== undefined && !isNaN(currentInputs.A)) {
+            return `${currentInputs.A} × ${currentInputs.a} ${lenUnit} (Flat Oval)`;
+        }
+
+        // 4. Fallback to data shapes if present
+        if (data && data.rectangular && data.rectangular.W_mm && data.rectangular.H_mm) {
+            return isSI ? `${data.rectangular.W_mm} × ${data.rectangular.H_mm} mm` : `${(data.rectangular.W_mm/25.4).toFixed(0)} × ${(data.rectangular.H_mm/25.4).toFixed(0)} in.`;
+        }
+        if (data && data.round && (data.round.D_nom_mm || data.round.D_exact_mm)) {
+            const dVal = data.round.D_nom_mm || Math.round(data.round.D_exact_mm);
+            return isSI ? `Ø ${dVal} mm` : `Ø ${(dVal/25.4).toFixed(0)} in.`;
+        }
+        if (data && data.De_mm) {
+            return isSI ? `Eq. Ø ${Math.round(data.De_mm)} mm` : `Eq. Ø ${(data.De_mm/25.4).toFixed(1)} in.`;
+        }
+
+        return "Standard";
+    }
+
     // --- Add Current Calculation (Fitting or Sized Duct) to Project ---
     function openAddFittingDialog() {
         if (!state.activeProjectId) {
@@ -5260,30 +5355,19 @@
             if (elements.groupSizerLength) elements.groupSizerLength.classList.add("hidden");
             if (elements.lblFittingNotes) elements.lblFittingNotes.textContent = "Installation Notes / Location (Optional)";
 
-            dp = u === "SI" ? (data.pressure_loss_pa || 0) : (data.pressure_loss_in_wg || 0);
-            flow = u === "SI" ? (data.Q_Lps || 500) : (data.Q_cfm || 1059);
-            vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
-
-            if (data.f !== undefined && data.C === undefined) {
-                coeff = data.f;
-                coeffType = "f";
-            } else {
-                coeff = (data.C !== undefined && data.C !== null) ? data.C : 0.15;
-                coeffType = "Co";
-            }
-
             const currentInputs = {};
             elements.inputTableBody.querySelectorAll("input").forEach(inp => {
-                currentInputs[inp.dataset.fieldId] = parseFloat(inp.value);
+                const v = parseFloat(inp.value);
+                if (!isNaN(v)) currentInputs[inp.dataset.fieldId] = v;
             });
 
-            if (currentInputs.H && currentInputs.W) {
-                dimStr = u === "SI" ? `${currentInputs.W} × ${currentInputs.H} mm` : `${currentInputs.W} × ${currentInputs.H} in.`;
-            } else if (currentInputs.D) {
-                dimStr = u === "SI" ? `Ø ${currentInputs.D} mm` : `Ø ${currentInputs.D} in.`;
-            } else {
-                dimStr = "Standard";
-            }
+            dp = u === "SI" ? (data.pressure_loss_pa || 0) : (data.pressure_loss_in_wg || 0);
+            flow = getFittingFlowRate(currentInputs, data, u);
+            vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
+            coeff = (data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
+                    ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15));
+            coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
+            dimStr = getFittingDimensionString(currentInputs, data, u);
 
             if (elements.previewFittingName) {
                 elements.previewFittingName.textContent = formatFittingTitle(item || {code, name});
@@ -5414,41 +5498,18 @@
             // Add Fitting to project.fittings
             const currentInputs = {};
             elements.inputTableBody.querySelectorAll("input").forEach(inp => {
-                currentInputs[inp.dataset.fieldId] = parseFloat(inp.value);
+                const v = parseFloat(inp.value);
+                if (!isNaN(v)) currentInputs[inp.dataset.fieldId] = v;
             });
 
-            let dimStr = "";
-            if (currentInputs.H && currentInputs.W) {
-                dimStr = `${currentInputs.W} × ${currentInputs.H} mm`;
-            } else if (currentInputs.D) {
-                dimStr = `Ø ${currentInputs.D} mm`;
-            } else if (data.rectangular && data.rectangular.W_mm && data.rectangular.H_mm) {
-                dimStr = `${data.rectangular.W_mm} × ${data.rectangular.H_mm} mm`;
-            } else if (data.round && (data.round.D_nom_mm || data.round.D_exact_mm)) {
-                const dVal = data.round.D_nom_mm || Math.round(data.round.D_exact_mm);
-                dimStr = `Ø ${dVal} mm`;
-            } else if (data.De_mm) {
-                dimStr = `Eq. Ø ${Math.round(data.De_mm)} mm`;
-            } else {
-                dimStr = "Standard";
-            }
-
-            const flow = u === "SI" ? (data.Q_Lps || currentInputs.Q || 300) : (data.Q_cfm || currentInputs.Q || 636);
+            const dimStr = getFittingDimensionString(currentInputs, data, u);
+            const flow = getFittingFlowRate(currentInputs, data, u);
             const vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
             const pv = u === "SI" ? (data.pv_pa || 5.0) : (data.pv_in_wg || 0.02);
 
-            let coeff = 0;
-            let coeffType = "Co";
-            if (data.C !== undefined && data.C !== null) {
-                coeff = data.C;
-                coeffType = "Co";
-            } else if (data.f !== undefined) {
-                coeff = data.f;
-                coeffType = "f";
-            } else {
-                coeff = 0.15;
-                coeffType = "Co";
-            }
+            let coeff = (data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
+                        ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15));
+            let coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
 
             const dp = u === "SI" ? (data.pressure_loss_pa || 2.5) : (data.pressure_loss_in_wg || 0.01);
             const tag = (elements.inputFittingTag && elements.inputFittingTag.value.trim()) || `${code}-01`;

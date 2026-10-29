@@ -797,6 +797,27 @@ class OfficialAshraeEngine:
             val = float(env['Pvs'])
             res['Pvs_pa'] = float(val if not is_ip else val * 249.0889)
             res['Pvs_in_wg'] = float(val if is_ip else val / 249.0889)
+
+        # Determine governing flow rate Q (in L/s for SI, cfm for IP)
+        flow_val = 0.0
+        if 'Po' in env and 'Q' in env:
+            flow_val = env.get('Q', env.get('Qo', 0.0))
+        elif 'Pob' in env and Po == env.get('Pob'):
+            flow_val = env.get('Qb', env.get('Qb1', env.get('Qc', env.get('Q', 0.0))))
+        elif 'Pos' in env and Po == env.get('Pos'):
+            flow_val = env.get('Qs', env.get('Qc', env.get('Q', 0.0)))
+        else:
+            flow_val = env.get('Q', env.get('Qo', env.get('Qc', env.get('Q1', env.get('Qb', 0.0)))))
+
+        if is_ip:
+            q_cfm = float(flow_val)
+            q_lps = float(flow_val) / 2.11888
+        else:
+            q_lps = float(flow_val)
+            q_cfm = float(flow_val) * 2.11888
+
+        res["Q_Lps"] = round(q_lps, 1)
+        res["Q_cfm"] = round(q_cfm, 1)
             
         if key == 'SD5-23':
             res['engineering_advisory'] = (
@@ -804,9 +825,15 @@ class OfficialAshraeEngine:
                 "Notice on Legacy ASHRAE Software: Legacy ASHRAE database software (AshraeDuct.mdb) contains a known fixed-width column import erratum in TableDetail at Q/Qc = 0.4-0.5 where numbers were concatenated across columns (3.28 to 53.28, 2.88 to 92.88), yielding an artificial non-physical Cb1 = 66.64. DuctFit Pro preserves the true physical laboratory test values."
             )
 
-        res["steps"] = self.generate_steps(key, norm_inputs, res, unit_system, out_of_range_warnings)
-        if out_of_range_warnings:
-            res["out_of_range_warnings"] = out_of_range_warnings
+        # Deduplicate warnings while preserving order
+        unique_warnings = []
+        for w in out_of_range_warnings:
+            if w not in unique_warnings:
+                unique_warnings.append(w)
+
+        res["steps"] = self.generate_steps(key, norm_inputs, res, unit_system, unique_warnings)
+        if unique_warnings:
+            res["out_of_range_warnings"] = unique_warnings
         return res
 
     def generate_steps(self, key, inputs, res, unit_system="SI", out_of_range_warnings=None):
