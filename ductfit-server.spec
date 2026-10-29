@@ -10,6 +10,7 @@ datas = [
     ('ashrae_extracted', 'ashrae_extracted'),
     ('ashrae_data', 'ashrae_data'),
     ('version.json', '.'),
+    ('package.json', '.'),
     ('projects.json', '.'),
     ('custom_templates.json', '.')
 ]

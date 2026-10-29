@@ -1,8 +1,8 @@
 {
-  "version": "1.060",
+  "version": "1.0.6",
   "major": 1,
   "minor": 0,
-  "patch": 60,
+  "patch": 6,
   "total_updates": 60,
   "total_user_requests": 81,
   "baseline_version": "1.000",
@@ -149,7 +149,7 @@
     {
       "version": "1.023",
       "timestamp": "2026-10-22 08:53:13",
-      "description": "Harmonized thermodynamic density (ρ) and viscosity (μ) with ASHRAE Fundamentals",
+      "description": "Harmonized thermodynamic density (\u03c1) and viscosity (\u03bc) with ASHRAE Fundamentals",
       "request_index": 44
     },
     {

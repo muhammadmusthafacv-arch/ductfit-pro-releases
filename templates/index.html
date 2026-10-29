@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DuctFit Pro v{{ version|default('1.060') }} - ASHRAE Fundamentals (Ch. 21)</title>
+    <title>DuctFit Pro v{{ version|default('1.0.5') }} - ASHRAE Fundamentals (Ch. 21)</title>
     <link rel="icon" type="image/x-icon" href="/static/icon.ico">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/katex/katex.min.css">
@@ -64,7 +64,7 @@
                 <div class="nav-left">
                     <img src="/static/icon.png" alt="DuctFit Pro Logo" class="app-brand-logo">
                     <span class="app-brand">DuctFit Pro</span>
-                    <span class="app-version-badge" id="appVersionBadge">v{{ version|default('1.060') }}</span>
+                    <span class="app-version-badge" id="appVersionBadge">v{{ version|default('1.0.5') }}</span>
                     <span class="app-badge" id="appHandbookBadge">ASHRAE Fundamentals (Ch. 21)</span>
                 </div>
 
@@ -397,7 +397,7 @@
                                 <span>Display Values in Drawing</span>
                             </label>
                         </div>
-                        <div class="footer-right" id="footerVersion">DuctFit Pro Version {{ version|default('1.060') }} &bull; ASHRAE Fundamentals (Ch. 21)</div>
+                        <div class="footer-right" id="footerVersion">DuctFit Pro Version {{ version|default('1.0.5') }} &bull; ASHRAE Fundamentals (Ch. 21)</div>
                     </div>
                 </div>
             </div>
@@ -1230,5 +1230,19 @@
     <script src="/static/katex/katex.min.js"></script>
     <script src="/static/katex/auto-render.min.js"></script>
     <script src="/static/js/app.js"></script>
+    <script>
+        // Dynamically ensure version strictly matches Electron package/app version
+        if (window.electronAPI && typeof window.electronAPI.getVersion === 'function') {
+            window.electronAPI.getVersion().then(function(ver) {
+                if (ver) {
+                    document.title = 'DuctFit Pro v' + ver + ' - ASHRAE Fundamentals (Ch. 21)';
+                    var badge = document.getElementById('appVersionBadge');
+                    if (badge) badge.textContent = 'v' + ver;
+                    var footer = document.getElementById('footerVersion');
+                    if (footer) footer.innerHTML = 'DuctFit Pro Version ' + ver + ' &bull; ASHRAE Fundamentals (Ch. 21)';
+                }
+            }).catch(function() {});
+        }
+    </script>
 </body>
 </html>
