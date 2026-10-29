@@ -135,6 +135,18 @@ if (Test-Path $builtInstaller) {
 }
 
 Write-Host ""
+# 7. Git commit and push to master and main
+Write-Host "[4/4] Synchronizing GitHub repository branches..." -ForegroundColor White
+try {
+    git add -A
+    git commit -m "chore(release): publish v$newVersion" -q
+    git push origin master
+    git push origin master:main
+    Write-Host "Git branches (master and main) synchronized on GitHub!" -ForegroundColor Green
+} catch {
+    Write-Host "[WARNING] Git push encountered error: $($_.Exception.Message)" -ForegroundColor Yellow
+}
+
 Write-Host "==========================================================" -ForegroundColor Green
 Write-Host " SUCCESS! Ductfit Pro v$newVersion has been published!   " -ForegroundColor Green
 Write-Host " Installers are live on GitHub Releases.                 " -ForegroundColor Green

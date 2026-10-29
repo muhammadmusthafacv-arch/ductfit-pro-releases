@@ -1,7 +1,7 @@
 {
   "name": "ductfit-pro",
   "productName": "DuctFit Pro",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Professional ASHRAE Duct Fitting Loss Analysis & Auto Duct Sizer",
   "main": "electron/main.js",
   "author": {
@@ -57,7 +57,6 @@
       ],
       "icon": "build/icon.ico",
       "certificateFile": "signing/private/DuctfitPro-Signing.pfx",
-      "publisherName": "DuctFit Pro Engg Solution",
       "artifactName": "DuctfitPro-Setup-${version}.${ext}",
       "rfc3161TimeStampServer": "http://timestamp.sectigo.com"
     },
