@@ -64,7 +64,6 @@
                 <div class="nav-left">
                     <img src="/static/icon.png" alt="DuctFit Pro Logo" class="app-brand-logo">
                     <span class="app-brand">DuctFit Pro</span>
-                    <span class="app-version-badge" id="appVersionBadge">v{{ version|default('1.0.5') }}</span>
                     <span class="app-badge" id="appHandbookBadge">ASHRAE Fundamentals (Ch. 21)</span>
                 </div>
 
@@ -1236,8 +1235,6 @@
             window.electronAPI.getVersion().then(function(ver) {
                 if (ver) {
                     document.title = 'DuctFit Pro v' + ver + ' - ASHRAE Fundamentals (Ch. 21)';
-                    var badge = document.getElementById('appVersionBadge');
-                    if (badge) badge.textContent = 'v' + ver;
                     var footer = document.getElementById('footerVersion');
                     if (footer) footer.innerHTML = 'DuctFit Pro Version ' + ver + ' &bull; ASHRAE Fundamentals (Ch. 21)';
                 }
