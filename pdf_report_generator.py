@@ -6,6 +6,9 @@ def clean_pdf_text(text):
     if not isinstance(text, str):
         text = str(text)
 
+    # Clean legacy escaped double ampersands
+    text = text.replace("&&", "&")
+
     # 1. LaTeX cleanup
     text = text.replace(r'\left(', '(').replace(r'\right)', ')')
     text = text.replace(r'\left[', '[').replace(r'\right]', ']')
@@ -212,29 +215,17 @@ class DuctfitNumberedCanvas(canvas.Canvas):
         w, h = letter
         margin = 36 # 0.5 in margins
 
-        # Center Title & Project Meta
+        # Center Title
         cur_ver = version_manager.get_current_version()
         rep_title = getattr(self, "report_title", "DUCTFIT PRO — DUCT FITTING REPORT")
         self.setFont("Helvetica-Bold", 10)
         self.setFillColor(colors.HexColor("#0f172a"))
         self.drawCentredString(w / 2.0, h - 36, rep_title)
 
-        proj_info = getattr(self, "project_info", None)
-        if proj_info:
-            p_code = proj_info.get("code", "")
-            p_name = proj_info.get("name", "")
-            p_client = proj_info.get("client", "")
-            name_part = f" - {p_name}" if p_name else ""
-            client_part = f" • Client: {p_client}" if p_client else ""
-            p_meta = f"Project: {p_code}{name_part}{client_part}"
-            self.setFont("Helvetica-Bold", 7.5)
-            self.setFillColor(colors.HexColor("#0284c7"))
-            self.drawCentredString(w / 2.0, h - 47, p_meta)
-
         # --- Top Header Line ---
         self.setStrokeColor(colors.HexColor("#94a3b8"))
         self.setLineWidth(0.75)
-        self.line(margin, h - 54, w - margin, h - 54)
+        self.line(margin, h - 48, w - margin, h - 48)
 
 
 
@@ -315,6 +306,12 @@ def get_styles():
         spaceAfter=3
     )
 
+    h2_center_style = ParagraphStyle(
+        "SectionH2Center",
+        parent=h2_style,
+        alignment=1 # Center
+    )
+
     cell_style = ParagraphStyle(
         "TableCell",
         parent=base["Normal"],
@@ -389,6 +386,7 @@ def get_styles():
         "subtitle": subtitle_style,
         "meta": meta_style,
         "h2": h2_style,
+        "h2_center": h2_center_style,
         "cell": cell_style,
         "cell_bold": cell_bold,
         "cell_right": cell_right,
@@ -1133,7 +1131,6 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     # PAGE 1: MASTER PROJECT SUMMARY & DUCT FITTING SCHEDULE
     # =========================================================================
     story.append(Paragraph("PROJECT DUCT FITTING SCHEDULE &amp; ENGINEERING ANALYSIS", styles["title"]))
-    story.append(Paragraph("ASHRAE Fundamentals, Ch. 21: Duct Design", styles["subtitle"]))
     story.append(Spacer(1, 8))
 
     # Project Specification Box
@@ -1157,7 +1154,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
             Paragraph(project.get("subcontractor") or "(Not specified)", styles["cell"])
         ],
         [
-            Paragraph("<b>Standard Edition:</b>", styles["cell_bold"]),
+            Paragraph("<b>Standard &amp; Edition:</b>", styles["cell_bold"]),
             Paragraph("ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
             Paragraph("<b>Date Generated:</b>", styles["cell_bold"]),
             Paragraph(datetime.now().strftime("%d-%B-%Y"), styles["cell"])
@@ -1182,11 +1179,10 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     basis_data = [
         [
             Paragraph("<b>Working Fluid:</b> Standard Dry Air (&rho; = 1.204 kg/m&sup3;)" if is_si else "<b>Working Fluid:</b> Standard Dry Air (&rho; = 0.075 lbm/ft&sup3;)", styles["cell"]),
-            Paragraph("<b>Design Standard:</b> ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
             Paragraph("<b>Loss Formulation:</b> &Delta;p<sub>t</sub> = C<sub>o</sub> &bull; p<sub>v</sub>", styles["cell"])
         ]
     ]
-    t_basis = Table(basis_data, colWidths=[180, 200, 160])
+    t_basis = Table(basis_data, colWidths=[270, 270])
     t_basis.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0369a1")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
@@ -1257,21 +1253,21 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     story.append(Spacer(1, 10))
 
     # Master Schedule Table
-    story.append(Paragraph("<b>MASTER DUCT FITTING SCHEDULE (ASHRAE FITTING DATABASE MODEL)</b>", styles["h2"]))
+    story.append(Paragraph("<b>MASTER DUCT FITTING SCHEDULE (ASHRAE FITTING DATABASE MODEL)</b>", styles["h2_center"]))
 
     sched_headers = [
         Paragraph("<b>#</b>", styles["hdr_cell_center"]),
-        Paragraph("<b>Tag / Mark</b>", styles["hdr_cell"]),
+        Paragraph("<b>Tag / Mark</b>", styles["hdr_cell_center"]),
         Paragraph("<b>Code</b>", styles["hdr_cell_center"]),
-        Paragraph("<b>Fitting Description</b>", styles["hdr_cell"]),
+        Paragraph("<b>Fitting Description</b>", styles["hdr_cell_center"]),
         Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
-        Paragraph("<b>Dimensions</b>", styles["hdr_cell"]),
-        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph("<b>C<sub>o</sub> / f</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"]),
+        Paragraph("<b>Dimensions</b>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph("<b>C<sub>o</sub> / f</b>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_center"]),
         Paragraph("<b>Qty</b>", styles["hdr_cell_center"]),
-        Paragraph(f"<b>Total &Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"])
+        Paragraph(f"<b>Total &Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_center"])
     ]
     sched_rows = [sched_headers]
 
@@ -1379,6 +1375,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     base_style = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#1e3a8a")),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#1e3a8a")),
         ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
@@ -1457,7 +1454,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
             story.append(Paragraph(header_title, styles["title"]))
             story.append(Paragraph("<i>(Equipment / Component Pressure Loss &mdash; Certified Manufacturer Data)</i>", styles["subtitle"]))
 
-            subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>Manufacturer Laboratory Rating</b>"
+            subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
             story.append(Paragraph(subhead_text, styles["meta"]))
             story.append(Spacer(1, 10))
 
@@ -1566,12 +1563,13 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         # Fitting Header (Page 1) - Exact ASHRAE format: CODE  TITLE (two spaces, NO parentheses)
         header_title = f"{code}  {name}" if name else code
         story.append(Paragraph(header_title, styles["title"]))
-        raw_cit = off_cit or calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
-        clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "").strip()
-        citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
-        story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
+        raw_cit = off_cit or calc_res.get("citation") or ""
+        clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "").replace("2021 ASHRAE Handbook—Fundamentals", "").replace("ASHRAE Fundamentals, Ch. 21: Duct Design", "").replace("ASHRAE Fundamentals, Ch. 21", "").replace("2021 ", "").strip()
+        if clean_cit and clean_cit not in ["()", ""]:
+            citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
+            story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
-        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+        subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
         story.append(Paragraph(subhead_text, styles["meta"]))
         story.append(Spacer(1, 6))
 
@@ -1605,7 +1603,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
 
             story.append(Paragraph(header_title, styles["title"]))
             story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
-            subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+            subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
             story.append(Paragraph(subhead_calc_text, styles["meta"]))
             story.append(Spacer(1, 4))
 
@@ -1662,7 +1660,6 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
 
     # Master Header
     story.append(Paragraph("PROJECT DUCT SIZING SCHEDULE &amp; ENGINEERING ANALYSIS", styles["title"]))
-    story.append(Paragraph("ASHRAE Fundamentals, Ch. 21: Equal Friction &amp; Velocity Sizing Methods", styles["subtitle"]))
     story.append(Spacer(1, 8))
 
     # Project Specification Box
@@ -1686,7 +1683,7 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
             Paragraph(project.get("subcontractor") or "(Not specified)", styles["cell"])
         ],
         [
-            Paragraph("<b>Design Standard:</b>", styles["cell_bold"]),
+            Paragraph("<b>Standard &amp; Edition:</b>", styles["cell_bold"]),
             Paragraph("ANSI / ASHRAE Fundamentals (Ch. 21)", styles["cell"]),
             Paragraph("<b>Date Generated:</b>", styles["cell_bold"]),
             Paragraph(datetime.now().strftime("%d-%B-%Y"), styles["cell"])
@@ -1783,22 +1780,22 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
     story.append(Spacer(1, 10))
 
     # Master Duct Sizing Schedule Table
-    story.append(Paragraph("<b>MASTER SIZED DUCT SCHEDULE (EQUAL FRICTION / VELOCITY METHODS)</b>", styles["h2"]))
+    story.append(Paragraph("<b>MASTER SIZED DUCT SCHEDULE (EQUAL FRICTION / VELOCITY METHODS)</b>", styles["h2_center"]))
 
     de_unit = "mm" if is_si else "in."
     sched_headers = [
         Paragraph("<b>#</b>", styles["hdr_cell_center"]),
-        Paragraph("<b>Tag / Ref</b>", styles["hdr_cell"]),
-        Paragraph("<b>Section / Room</b>", styles["hdr_cell"]),
+        Paragraph("<b>Tag / Ref</b>", styles["hdr_cell_center"]),
+        Paragraph("<b>Section / Room</b>", styles["hdr_cell_center"]),
         Paragraph("<b>Shape</b>", styles["hdr_cell_center"]),
-        Paragraph("<b>Sized Dimensions</b>", styles["hdr_cell"]),
-        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>Eq. D<sub>e</sub></b><br/><font size=5.5>[{de_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph("<b>AR</b>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>Rate</b><br/><font size=5.5>[{fr_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>L</b><br/><font size=5.5>[{len_unit}]</font>", styles["hdr_cell_right"]),
-        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_right"])
+        Paragraph("<b>Sized Dimensions</b>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>Q</b><br/><font size=5.5>[{flow_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>V</b><br/><font size=5.5>[{vel_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>Eq. D<sub>e</sub></b><br/><font size=5.5>[{de_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph("<b>AR</b>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>Rate</b><br/><font size=5.5>[{fr_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>L</b><br/><font size=5.5>[{len_unit}]</font>", styles["hdr_cell_center"]),
+        Paragraph(f"<b>&Delta;P</b><br/><font size=5.5>[{dp_unit}]</font>", styles["hdr_cell_center"])
     ]
     sched_rows = [sched_headers]
 
@@ -1889,6 +1886,7 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
     base_style = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#0284c7")),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0284c7")),
         ('LINEBELOW', (0, 0), (-1, 0), 1.5, colors.HexColor("#0f172a")),
@@ -2101,15 +2099,16 @@ def generate_calculation_pdf(calc_data, output_path=None):
 
     header_title = f"{code}  {name}" if name else code
     story.append(Paragraph(header_title, styles["title"]))
-    raw_cit = off_cit or calc_res.get("citation") or "(ASHRAE Fundamentals, Ch. 21: Duct Design)"
-    clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "ASHRAE Fundamentals, Ch. 21: Duct Design").replace("2021 ASHRAE Handbook—Fundamentals", "ASHRAE Fundamentals, Ch. 21").replace("2021 ", "").strip()
-    citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
-    story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
+    raw_cit = off_cit or calc_res.get("citation") or ""
+    clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "").replace("2021 ASHRAE Handbook—Fundamentals", "").replace("ASHRAE Fundamentals, Ch. 21: Duct Design", "").replace("ASHRAE Fundamentals, Ch. 21", "").replace("2021 ", "").strip()
+    if clean_cit and clean_cit not in ["()", ""]:
+        citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
+        story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
     if project:
-        subhead_text = f"Project: <b>{project.get('code')} - {project.get('name')}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+        subhead_text = f"Project: <b>{project.get('code')} - {project.get('name')}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
     else:
-        subhead_text = f"<b>DuctFit Pro Engineering Calculation Sheet</b> &bull; Standard: <b>ASHRAE Fundamentals, Ch. 21 ({unit_system})</b> &bull; Fluid: Standard Dry Air"
+        subhead_text = f"<b>DuctFit Pro Engineering Calculation Sheet</b> &bull; Fluid: Standard Dry Air"
     story.append(Paragraph(subhead_text, styles["meta"]))
     story.append(Spacer(1, 6))
 
@@ -2156,9 +2155,9 @@ def generate_calculation_pdf(calc_data, output_path=None):
     story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
     if project:
         prj_name_part = f" - {project.get('name')}" if project.get('name') else ""
-        subhead_calc_text = f"Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b> &bull; Standard: <b>ASHRAE Fundamentals (Ch. 21)</b>"
+        subhead_calc_text = f"Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
     else:
-        subhead_calc_text = f"Standard: <b>ASHRAE Fundamentals, Ch. 21 ({unit_system})</b> &bull; Engineering Formulation &amp; Substitution"
+        subhead_calc_text = f"Engineering Formulation &amp; Substitution"
     story.append(Paragraph(subhead_calc_text, styles["meta"]))
     story.append(Spacer(1, 8))
 

@@ -512,11 +512,29 @@
     }
 
     // --- Load Catalog Tree from Backend ---
+    function sanitizeTreeStrings(node) {
+        if (!node) return;
+        if (node.name) node.name = node.name.replace(/&&/g, '&');
+        if (node.title) node.title = node.title.replace(/&&/g, '&');
+        if (node.citation) node.citation = node.citation.replace(/&&/g, '&');
+        if (Array.isArray(node.items)) {
+            node.items.forEach(it => {
+                if (it.name) it.name = it.name.replace(/&&/g, '&');
+                if (it.title) it.title = it.title.replace(/&&/g, '&');
+                if (it.citation) it.citation = it.citation.replace(/&&/g, '&');
+            });
+        }
+        if (Array.isArray(node.children)) {
+            node.children.forEach(child => sanitizeTreeStrings(child));
+        }
+    }
+
     async function loadFittingsTree() {
         try {
             const resp = await fetch("/api/tree");
             const res = await resp.json();
             if (res.status === "success") {
+                sanitizeTreeStrings(res.data);
                 state.catalogTree = res.data;
                 renderTreeView(res.data);
                 const total = countTreeItems(res.data);
@@ -1069,12 +1087,13 @@
     // Helper: Safely format fitting code and name matching official ASHRAE format (e.g. "SD5-1  Wye, 45 Degree, Diverging")
     function formatFittingTitle(item) {
         if (!item) return "";
-        if (typeof item === "string") return item;
+        if (typeof item === "string") return item.replace(/&&/g, '&');
         const code = (item.code || "").trim();
         let name = (item.title || item.name || "").trim();
         if (code && name.toLowerCase().startsWith(code.toLowerCase())) {
             name = name.slice(code.length).replace(/^[\s:\-]+/, '');
         }
+        name = name.replace(/&&/g, '&');
         return code ? (name ? `${code}  ${name}` : code) : name;
     }
 
@@ -1891,14 +1910,15 @@
             // Fitting Loss Analysis mode
             const fullTitle = formatFittingTitle(item);
             elements.displayFittingTitle.textContent = fullTitle;
-            elements.displayFittingSubtitle.textContent = item.citation ? `(${item.citation})` : "";
+            const cleanCit = item.citation ? item.citation.replace(/&&/g, '&') : "";
+            elements.displayFittingSubtitle.textContent = cleanCit ? `(${cleanCit})` : "";
             
             const crumbs = getItemHierarchyBreadcrumb(state.catalogTree, item.code);
             const crumbStr = crumbs && crumbs.length > 0 ? crumbs.join(" > ") : (item.category ? `Category: ${item.category}` : "ASHRAE Fundamentals, Ch. 21");
-            elements.displayFittingCitation.textContent = crumbStr;
+            elements.displayFittingCitation.textContent = crumbStr.replace(/&&/g, '&');
 
             elements.sheetTitleText.textContent = fullTitle;
-            elements.sheetSubtitleText.textContent = item.citation ? `(${item.citation})` : "";
+            elements.sheetSubtitleText.textContent = cleanCit ? `(${cleanCit})` : "";
 
             if (elements.rowOutSized) elements.rowOutSized.classList.add("hidden");
 
