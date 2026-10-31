@@ -23,18 +23,21 @@ FILES_TO_RESTORE = [
     "version_manager.py",
     "version.json",
     "projects.json",
+    "custom_templates.json",
     "fittings_tree.json",
     "USER_DIRECTIVES.md",
     "README.md",
     "requirements.txt",
     "run_app.bat",
-    "package.json"
+    "package.json",
+    "ductfit-server.spec"
 ]
 
 DIRS_TO_RESTORE = [
     "templates",
     "static",
-    "ashrae_data"
+    "ashrae_data",
+    "electron"
 ]
 
 def restore():
@@ -42,7 +45,7 @@ def restore():
         print(f"Error: Locked backup directory '{BACKUP_DIR}' not found!")
         sys.exit(1)
 
-    print("Restoring Ductfit Pro to Locked Default Stage (Baseline 28-Oct-2026)...")
+    print("Restoring Ductfit Pro to Locked Default Stage (Baseline v1.0.12, 31-Oct-2026)...")
 
     for f in FILES_TO_RESTORE:
         src = os.path.join(BACKUP_DIR, f)
