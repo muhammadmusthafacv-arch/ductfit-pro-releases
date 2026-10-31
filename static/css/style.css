@@ -4990,3 +4990,193 @@ input[type="number"],
 }
 
 
+
+/* ==========================================================================
+   Project Archive & Retrieval (Safety Backup & Offline Sharing)
+   ========================================================================== */
+
+.btn-prj-import {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border: 1px solid #0369a1 !important;
+    font-weight: 600 !important;
+}
+
+.btn-prj-import:hover {
+    background: #0369a1 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(2, 132, 199, 0.25);
+}
+
+.btn-archive-share {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0369a1 !important;
+    font-weight: 600 !important;
+}
+
+.btn-archive-share:hover {
+    background: #0369a1 !important;
+    color: #ffffff !important;
+}
+
+.btn-table-archive {
+    background: #f0fdf4 !important;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0 !important;
+    font-weight: 600 !important;
+}
+
+.btn-table-archive:hover {
+    background: #dcfce7 !important;
+    color: #14532d !important;
+    border-color: #86efac !important;
+}
+
+.import-conflict-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    color: #92400e;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.import-conflict-banner .conflict-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.import-preview-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+
+.import-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.import-preview-badge {
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.import-preview-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.import-preview-code {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    background: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.import-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 16px;
+    font-size: 13px;
+}
+
+.import-preview-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.import-preview-label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.import-preview-value {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.import-mode-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.import-mode-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 2px;
+}
+
+.import-radio-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.import-radio-label:hover {
+    border-color: #0284c7;
+    background: #f0f9ff;
+}
+
+.import-radio-label.active {
+    border-color: #0284c7;
+    background: #f0f9ff;
+    box-shadow: 0 0 0 1px #0284c7;
+}
+
+.import-radio-label input[type="radio"] {
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.import-radio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+}
+
+.import-radio-content strong {
+    color: #0f172a;
+    font-size: 13px;
+}
+
+.import-radio-content span {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.3;
+}

@@ -342,6 +342,14 @@
         btnClearFilterAllProjects: document.getElementById("btnClearFilterAllProjects"),
         allProjectsCount: document.getElementById("allProjectsCount"),
         tbodyAllProjects: document.getElementById("tbodyAllProjects"),
+        btnAllProjectsImport: document.getElementById("btnAllProjectsImport"),
+        btnComboImportProject: document.getElementById("btnComboImportProject"),
+        fileInputProjectArchive: document.getElementById("fileInputProjectArchive"),
+        btnArchiveActiveProjectSummary: document.getElementById("btnArchiveActiveProjectSummary"),
+        modalImportArchive: document.getElementById("modalImportArchive"),
+        btnCloseImportArchiveModal: document.getElementById("btnCloseImportArchiveModal"),
+        btnCancelImportArchive: document.getElementById("btnCancelImportArchive"),
+        btnConfirmImportArchive: document.getElementById("btnConfirmImportArchive"),
 
         // Edit Project Modal
         editProjectModal: document.getElementById("editProjectModal"),
@@ -5047,6 +5055,7 @@
                 <td style="font-size: 11px; color: #64748b;">${escapeHtml(modDate)}</td>
                 <td class="text-center">
                     <div style="display: inline-flex; gap: 6px;">
+                        <button type="button" class="btn-table-action btn-table-archive btn-archive-prj" data-prj-id="${p.id}" title="Archive / Share this project for safety backup or collaboration (.dfp file)">📦 Archive</button>
                         <button type="button" class="btn-table-action edit-prj btn-edit-prj" data-prj-id="${p.id}" title="Edit project specifications">✏️ Edit</button>
                         <button type="button" class="btn-table-action delete btn-del-prj" data-prj-id="${p.id}" title="Permanently delete project">🗑️ Delete</button>
                     </div>
@@ -5066,6 +5075,11 @@
                 btnEdit.addEventListener("click", () => openEditProjectModal(p.id));
             }
 
+            const btnArchive = tr.querySelector(".btn-archive-prj");
+            if (btnArchive) {
+                btnArchive.addEventListener("click", () => downloadProjectArchive(p.id));
+            }
+
             const btnDel = tr.querySelector(".btn-del-prj");
             if (btnDel) {
                 btnDel.addEventListener("click", () => confirmDeleteProject(p.id));
@@ -5073,6 +5087,278 @@
 
             elements.tbodyAllProjects.appendChild(tr);
         });
+    }
+
+    // =========================================================================
+    // Project Archive, Retrieval & Sharing (Safety Backup & Collaboration)
+    // =========================================================================
+
+    function showToastNotification(msg, duration = 3500) {
+        showPrjToast(msg);
+    }
+
+    async function downloadProjectArchive(projectId) {
+        const pid = projectId || state.activeProjectId;
+        if (!pid) {
+            showPrjToast("⚠️ Please select an active project first.");
+            return;
+        }
+        const prj = (state.projects && state.projects.find(p => p.id === pid)) || state.activeProject;
+        const prjCode = prj ? (prj.code || pid) : pid;
+        const prjName = prj ? (prj.name || "Project") : "Project";
+        const cleanCode = String(prjCode).replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+        const cleanName = String(prjName).replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+        const defaultFilename = `${cleanCode}_${cleanName}.dfp`;
+
+        // Priority 1: Native Electron Desktop Save Dialog
+        if (window.electronAPI && typeof window.electronAPI.saveProjectFile === "function") {
+            try {
+                showPrjToast(`📦 Generating project archive for "${cleanCode}"...`);
+                const resp = await fetch(`/api/projects/${encodeURIComponent(pid)}/archive`);
+                if (!resp.ok) {
+                    showPrjToast("❌ Failed to fetch project archive from server.");
+                    return;
+                }
+                const archiveJson = await resp.text();
+                const result = await window.electronAPI.saveProjectFile({
+                    defaultPath: defaultFilename,
+                    filters: [
+                        { name: "DuctFit Project Archive (*.dfp)", extensions: ["dfp"] },
+                        { name: "JSON Document (*.json)", extensions: ["json"] },
+                        { name: "All Files (*.*)", extensions: ["*"] }
+                    ],
+                    data: archiveJson
+                });
+
+                if (result && result.success) {
+                    showPrjToast(`✅ Archive saved successfully to:\n${result.filePath}`);
+                } else if (result && result.error) {
+                    showPrjToast(`❌ Failed to save file: ${result.error}`);
+                }
+                return;
+            } catch (err) {
+                console.error("Electron archive save error:", err);
+                showPrjToast(`❌ Error saving archive: ${err.message}`);
+                return;
+            }
+        }
+
+        // Priority 2: Modern Browser File System Access API (Prompts native Save As dialog directly)
+        if (typeof window.showSaveFilePicker === "function") {
+            try {
+                const fileHandle = await window.showSaveFilePicker({
+                    suggestedName: defaultFilename,
+                    types: [{
+                        description: "DuctFit Project Archive (*.dfp)",
+                        accept: { "application/json": [".dfp", ".json"] }
+                    }]
+                });
+
+                showPrjToast(`💾 Generating archive "${defaultFilename}"...`);
+                const resp = await fetch(`/api/projects/${encodeURIComponent(pid)}/archive`);
+                if (!resp.ok) {
+                    showPrjToast("❌ Failed to fetch project archive from server.");
+                    return;
+                }
+                const archiveJson = await resp.text();
+                const writable = await fileHandle.createWritable();
+                await writable.write(archiveJson);
+                await writable.close();
+                showPrjToast(`✅ Project archive saved: ${defaultFilename}`);
+                return;
+            } catch (pickerErr) {
+                if (pickerErr && pickerErr.name === "AbortError") {
+                    // User canceled the Save dialog
+                    return;
+                }
+                console.warn("showSaveFilePicker not permitted or failed, falling back to direct download:", pickerErr);
+                // Fall through to standard download fallback
+            }
+        }
+
+        // Priority 3: Fallback Standard Browser Download (Triggers browser download manager / Save As)
+        try {
+            showPrjToast(`📦 Downloading archive "${defaultFilename}"...`);
+            const a = document.createElement("a");
+            a.href = `/api/projects/${encodeURIComponent(pid)}/archive`;
+            a.download = defaultFilename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showPrjToast(`✅ Project archive downloaded: ${defaultFilename}`);
+        } catch (downloadErr) {
+            console.error("Standard download error:", downloadErr);
+            window.location.href = `/api/projects/${encodeURIComponent(pid)}/archive`;
+        }
+    }
+
+    async function triggerProjectImport() {
+        // In Electron, open native Windows file dialog
+        if (window.electronAPI && typeof window.electronAPI.openProjectFile === "function") {
+            try {
+                const result = await window.electronAPI.openProjectFile();
+                if (result && result.canceled) return;
+                if (result && result.success && result.content) {
+                    await processArchiveText(result.content);
+                    return;
+                }
+            } catch (err) {
+                console.warn("electron openProjectFile error, falling back to file input:", err);
+            }
+        }
+        if (elements.fileInputProjectArchive) {
+            elements.fileInputProjectArchive.click();
+        }
+    }
+
+    async function processArchiveText(text) {
+        try {
+            showToastNotification("📥 Inspecting project archive...", 2000);
+            let archiveData;
+            try {
+                archiveData = JSON.parse(text);
+            } catch (err) {
+                showToastNotification("❌ Invalid archive file. Content must be valid JSON.", 4000);
+                return;
+            }
+
+            const resp = await fetch("/api/projects/validate-archive", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ archive: archiveData })
+            });
+            const res = await resp.json();
+            if (res.status !== "success" || !res.data || !res.data.valid) {
+                showToastNotification("❌ " + (res.data && res.data.error ? res.data.error : (res.message || "Invalid archive format")), 4000);
+                return;
+            }
+
+            state.pendingArchiveData = archiveData;
+            state.pendingArchiveSummary = res.data.summary;
+            openImportArchiveModal(res.data);
+        } catch (err) {
+            console.error("Archive import error:", err);
+            showToastNotification("❌ Failed to process archive: " + err.message, 4000);
+        }
+    }
+
+    async function handleProjectArchiveFileSelect(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        e.target.value = "";
+        try {
+            const text = await file.text();
+            await processArchiveText(text);
+        } catch (err) {
+            console.error("Archive file read error:", err);
+            showToastNotification("❌ Failed to read archive file: " + err.message, 4000);
+        }
+    }
+
+    function openImportArchiveModal(valData) {
+        if (!elements.modalImportArchive) return;
+        const summary = valData.summary || {};
+        const conflict = valData.conflict_info || {};
+        const banner = document.getElementById("importConflictNotice");
+        const codeSpan = document.getElementById("conflictProjectCode");
+        const modeGroup = document.getElementById("importModeSelectionGroup");
+
+        if (valData.has_conflict) {
+            if (banner) banner.classList.remove("hidden");
+            if (codeSpan) codeSpan.textContent = conflict.existing_code || summary.code;
+            if (modeGroup) modeGroup.classList.remove("hidden");
+        } else {
+            if (banner) banner.classList.add("hidden");
+            if (modeGroup) modeGroup.classList.add("hidden");
+        }
+
+        const elUnit = document.getElementById("importPreviewUnit");
+        if (elUnit) elUnit.textContent = summary.unit_system || "SI";
+        const elTitle = document.getElementById("importPreviewTitle");
+        if (elTitle) elTitle.textContent = summary.name || "Project";
+        const elCode = document.getElementById("importPreviewCode");
+        if (elCode) elCode.textContent = summary.code || "PRJ";
+        const elClient = document.getElementById("importPreviewClient");
+        if (elClient) elClient.textContent = summary.client || "-";
+        const elContractor = document.getElementById("importPreviewContractor");
+        if (elContractor) elContractor.textContent = summary.contractor || "-";
+        const elFittings = document.getElementById("importPreviewFittings");
+        if (elFittings) elFittings.textContent = String(summary.fittings_count || 0);
+        const elSizer = document.getElementById("importPreviewSizerRuns");
+        if (elSizer) elSizer.textContent = String(summary.duct_segments_count || 0);
+        const elDp = document.getElementById("importPreviewDp");
+        if (elDp) elDp.textContent = `${summary.total_dp || 0} ${summary.unit_system === "IP" ? "in. wg" : "Pa"}`;
+        const elMargin = document.getElementById("importPreviewMargin");
+        if (elMargin) elMargin.textContent = `+${summary.design_margin || 0}%`;
+
+        const radioCopy = document.querySelector('input[name="importConflictMode"][value="copy"]');
+        if (radioCopy) radioCopy.checked = true;
+        updateImportRadioHighlight();
+
+        elements.modalImportArchive.classList.remove("hidden");
+    }
+
+    function closeImportArchiveModal() {
+        if (elements.modalImportArchive) {
+            elements.modalImportArchive.classList.add("hidden");
+        }
+        state.pendingArchiveData = null;
+        state.pendingArchiveSummary = null;
+    }
+
+    function updateImportRadioHighlight() {
+        const radios = document.querySelectorAll('input[name="importConflictMode"]');
+        radios.forEach(r => {
+            const lbl = r.closest(".import-radio-label");
+            if (lbl) lbl.classList.toggle("active", r.checked);
+        });
+    }
+
+    async function confirmImportArchive() {
+        if (!state.pendingArchiveData) {
+            closeImportArchiveModal();
+            return;
+        }
+        const checkedRadio = document.querySelector('input[name="importConflictMode"]:checked');
+        const mode = checkedRadio ? checkedRadio.value : "copy";
+        const archiveData = state.pendingArchiveData;
+
+        if (elements.btnConfirmImportArchive) {
+            elements.btnConfirmImportArchive.disabled = true;
+            elements.btnConfirmImportArchive.textContent = "Retrieving Project...";
+        }
+
+        try {
+            const resp = await fetch("/api/projects/import-archive", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    archive: archiveData,
+                    conflict_resolution: mode
+                })
+            });
+            const res = await resp.json();
+            if (res.status === "success" && res.data) {
+                closeImportArchiveModal();
+                await initProjectManager();
+                await switchActiveProject(res.data.id);
+                const actionTxt = mode === "overwrite" ? "updated & replaced" : "retrieved as new project";
+                showToastNotification(`✅ Project "${res.data.code}" ${actionTxt} successfully!`, 4000);
+                if (elements.allProjectsModal && !elements.allProjectsModal.classList.contains("hidden")) {
+                    renderAllProjectsTable(elements.inputFilterAllProjects ? elements.inputFilterAllProjects.value : "");
+                }
+            } else {
+                showToastNotification("❌ " + (res.message || "Failed to import project"), 4000);
+            }
+        } catch (err) {
+            console.error("Confirm import error:", err);
+            showToastNotification("❌ Error importing project: " + err.message, 4000);
+        } finally {
+            if (elements.btnConfirmImportArchive) {
+                elements.btnConfirmImportArchive.disabled = false;
+                elements.btnConfirmImportArchive.textContent = "📥 Retrieve & Open Project";
+            }
+        }
     }
 
     function openEditProjectModal(projectId) {
@@ -7459,6 +7745,33 @@
                 openNewProjectModal();
             });
         }
+        if (elements.btnAllProjectsImport) {
+            elements.btnAllProjectsImport.addEventListener("click", triggerProjectImport);
+        }
+        if (elements.btnComboImportProject) {
+            elements.btnComboImportProject.addEventListener("click", triggerProjectImport);
+        }
+        if (elements.fileInputProjectArchive) {
+            elements.fileInputProjectArchive.addEventListener("change", handleProjectArchiveFileSelect);
+        }
+        if (elements.btnArchiveActiveProjectSummary) {
+            elements.btnArchiveActiveProjectSummary.addEventListener("click", () => {
+                downloadProjectArchive(state.activeProjectId);
+            });
+        }
+        if (elements.btnCloseImportArchiveModal) {
+            elements.btnCloseImportArchiveModal.addEventListener("click", closeImportArchiveModal);
+        }
+        if (elements.btnCancelImportArchive) {
+            elements.btnCancelImportArchive.addEventListener("click", closeImportArchiveModal);
+        }
+        if (elements.btnConfirmImportArchive) {
+            elements.btnConfirmImportArchive.addEventListener("click", confirmImportArchive);
+        }
+        const conflictRadios = document.querySelectorAll('input[name="importConflictMode"]');
+        conflictRadios.forEach(r => {
+            r.addEventListener("change", updateImportRadioHighlight);
+        });
         if (elements.inputFilterAllProjects) {
             elements.inputFilterAllProjects.addEventListener("input", (e) => {
                 renderAllProjectsTable(e.target.value);

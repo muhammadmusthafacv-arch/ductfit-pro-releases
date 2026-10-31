@@ -3,7 +3,7 @@ import sys
 import json
 import math
 import time
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file, Response
 from ashrae_engine import AshraeEngine
 from version_manager import get_current_version, get_version_data
 
@@ -13,6 +13,7 @@ app = Flask(
     static_folder=os.path.join(BASE_DIR, "static"),
     template_folder=os.path.join(BASE_DIR, "templates")
 )
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 def safe_float(val, default=0.0):
     if val is None:
@@ -329,6 +330,58 @@ def delete_project_route(project_id):
         if ok:
             return jsonify({"status": "success", "data": project_manager.list_projects()})
         return jsonify({"status": "error", "message": "Project not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/projects/<project_id>/archive", methods=["GET"])
+def export_project_archive_route(project_id):
+    """Export self-contained project archive package (.dfp) for backup, safety, or sharing"""
+    try:
+        archive_data, filename = project_manager.export_project_archive(project_id)
+        if not archive_data:
+            return jsonify({"status": "error", "message": "Project not found"}), 404
+        content = json.dumps(archive_data, indent=2, ensure_ascii=False)
+        resp = Response(content, mimetype="application/json")
+        resp.headers["Content-Disposition"] = f'attachment; filename="{filename}"'
+        resp.headers["Content-Type"] = "application/json; charset=utf-8"
+        return resp
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/projects/validate-archive", methods=["POST"])
+def validate_project_archive_route():
+    """Validate an uploaded archive file before importing and inspect for conflicts"""
+    try:
+        if "file" in request.files:
+            uploaded_file = request.files["file"]
+            raw_content = uploaded_file.read().decode("utf-8")
+            archive_data = json.loads(raw_content)
+        else:
+            data = request.get_json() or {}
+            archive_data = data.get("archive") or data
+
+        result = project_manager.validate_project_archive(archive_data)
+        return jsonify({"status": "success", "data": result})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/projects/import-archive", methods=["POST"])
+def import_project_archive_route():
+    """Import a project archive into workspace with chosen conflict resolution ('copy' or 'overwrite')"""
+    try:
+        conflict_resolution = "copy"
+        if "file" in request.files:
+            uploaded_file = request.files["file"]
+            conflict_resolution = request.form.get("conflict_resolution", "copy")
+            raw_content = uploaded_file.read().decode("utf-8")
+            archive_data = json.loads(raw_content)
+        else:
+            data = request.get_json() or {}
+            conflict_resolution = data.get("conflict_resolution", "copy")
+            archive_data = data.get("archive") or data
+
+        imported_project = project_manager.import_project_archive(archive_data, conflict_resolution=conflict_resolution)
+        return jsonify({"status": "success", "data": imported_project, "message": "Project restored/imported successfully"})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 

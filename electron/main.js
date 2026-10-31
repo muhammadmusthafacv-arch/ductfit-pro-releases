@@ -246,6 +246,13 @@ function createMainWindow() {
     // Native Application Menu
     createMenu();
 
+    // Native Windows Save Dialog for downloads
+    mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
+        item.setSaveDialogOptions({
+            defaultPath: item.getFilename()
+        });
+    });
+
     // Security: Open external links in user default browser, prevent unwanted popups
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (!url.startsWith(`http://127.0.0.1:${serverPort}`) && !url.startsWith(`http://localhost:${serverPort}`)) {
@@ -435,6 +442,50 @@ function initAutoUpdater() {
 
 // IPC Handlers
 ipcMain.handle('app:version', () => app.getVersion());
+
+ipcMain.handle('dialog:save-file', async (event, { defaultPath, filters, data }) => {
+    try {
+        const result = await dialog.showSaveDialog(mainWindow, {
+            title: 'Archive / Save DuctFit Project',
+            defaultPath: defaultPath || 'Project_Archive.dfp',
+            filters: filters || [
+                { name: 'DuctFit Project Archive (*.dfp)', extensions: ['dfp'] },
+                { name: 'JSON Document (*.json)', extensions: ['json'] },
+                { name: 'All Files (*.*)', extensions: ['*'] }
+            ]
+        });
+        if (result.canceled || !result.filePath) {
+            return { canceled: true };
+        }
+        fs.writeFileSync(result.filePath, data, 'utf8');
+        return { success: true, filePath: result.filePath };
+    } catch (err) {
+        log.error('Failed to save project file:', err);
+        return { success: false, error: err.message };
+    }
+});
+
+ipcMain.handle('dialog:open-file', async () => {
+    try {
+        const result = await dialog.showOpenDialog(mainWindow, {
+            title: 'Retrieve / Open Archived DuctFit Project',
+            filters: [
+                { name: 'DuctFit Project Archive (*.dfp, *.ductfit, *.json)', extensions: ['dfp', 'ductfit', 'json'] },
+                { name: 'All Files (*.*)', extensions: ['*'] }
+            ],
+            properties: ['openFile']
+        });
+        if (result.canceled || !result.filePaths || result.filePaths.length === 0) {
+            return { canceled: true };
+        }
+        const filePath = result.filePaths[0];
+        const content = fs.readFileSync(filePath, 'utf8');
+        return { success: true, filePath, content };
+    } catch (err) {
+        log.error('Failed to open project file:', err);
+        return { success: false, error: err.message };
+    }
+});
 
 // Lifecycle Handlers
 app.on('second-instance', () => {

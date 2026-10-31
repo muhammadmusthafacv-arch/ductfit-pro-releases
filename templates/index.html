@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DuctFit Pro v{{ version|default('1.0.5') }} - ASHRAE Fundamentals (Ch. 21)</title>
     <link rel="icon" type="image/x-icon" href="/static/icon.ico">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=1.0.12_archive">
     <link rel="stylesheet" href="/static/katex/katex.min.css">
 </head>
 <body>
@@ -110,6 +110,9 @@
                                 <!-- Populated dynamically -->
                             </div>
                             <div class="prj-combo-footer">
+                                <button type="button" class="btn-combo-footer-action" id="btnComboImportProject" title="Retrieve an archived project or open a shared project (.dfp)">
+                                    <span>📥</span> Retrieve / Import
+                                </button>
                                 <button type="button" class="btn-combo-footer-action" id="btnComboNewProject">
                                     <span>➕</span> Add New Project
                                 </button>
@@ -613,6 +616,10 @@
                     </div>
                 </div>
                 <div class="modal-header-actions" style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="btn-prj-action btn-prj-import" id="btnAllProjectsImport" title="Retrieve an archived project or open a shared project (.dfp)">
+                        <span class="btn-icon">📥</span> Retrieve / Import Project
+                    </button>
+                    <input type="file" id="fileInputProjectArchive" accept=".dfp,.ductfit,.json" style="display: none;">
                     <button type="button" class="btn-prj-action btn-prj-new" id="btnAllProjectsCreateNew" title="Create a new HVAC project">
                         <span class="btn-icon">➕</span> Add New Project
                     </button>
@@ -772,6 +779,92 @@
                 <div class="prj-modal-actions">
                     <button type="button" id="btnCancelNewProject" class="modal-btn modal-btn-secondary">Cancel</button>
                     <button type="button" id="btnSaveNewProject" class="modal-btn modal-btn-primary">💾 Save &amp; Select Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Archive Import & Conflict Resolution Modal -->
+    <div id="modalImportArchive" class="modal-overlay hidden" role="dialog" aria-labelledby="modalImportArchiveTitle" aria-modal="true">
+        <div class="modal-card modal-card-md">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">📥</span>
+                    <div>
+                        <h2 id="modalImportArchiveTitle" class="modal-title">Retrieve / Import Project</h2>
+                        <p class="modal-subtitle">Review project specifications &amp; choose retrieval action</p>
+                    </div>
+                </div>
+                <button type="button" id="btnCloseImportArchiveModal" class="modal-close-btn" title="Close (Esc)">&times;</button>
+            </div>
+
+            <div class="modal-body prj-modal-body">
+                <div id="importConflictNotice" class="import-conflict-banner hidden">
+                    <span class="conflict-icon">⚠️</span>
+                    <div>
+                        <strong>Existing Project Detected:</strong>
+                        <span>A project with code <strong id="conflictProjectCode"></strong> already exists in your workspace. Choose how you want to handle this below.</span>
+                    </div>
+                </div>
+
+                <div class="import-preview-card">
+                    <div class="import-preview-header">
+                        <span class="import-preview-badge" id="importPreviewUnit">SI</span>
+                        <h3 class="import-preview-title" id="importPreviewTitle">Project Name</h3>
+                        <span class="import-preview-code" id="importPreviewCode">PRJ-001</span>
+                    </div>
+                    <div class="import-preview-grid">
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Client:</span>
+                            <span class="import-preview-value" id="importPreviewClient">-</span>
+                        </div>
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Contractor:</span>
+                            <span class="import-preview-value" id="importPreviewContractor">-</span>
+                        </div>
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Total Fittings:</span>
+                            <span class="import-preview-value" id="importPreviewFittings">0</span>
+                        </div>
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Sized Runs:</span>
+                            <span class="import-preview-value" id="importPreviewSizerRuns">0</span>
+                        </div>
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Calculated Loss:</span>
+                            <span class="import-preview-value" id="importPreviewDp">0.0 Pa</span>
+                        </div>
+                        <div class="import-preview-field">
+                            <span class="import-preview-label">Safety Margin:</span>
+                            <span class="import-preview-value" id="importPreviewMargin">+0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="import-mode-selection hidden" id="importModeSelectionGroup">
+                    <div class="import-mode-title">Conflict Resolution Mode:</div>
+                    <label class="import-radio-label active" id="lblImportModeCopy">
+                        <input type="radio" name="importConflictMode" value="copy" checked>
+                        <div class="import-radio-content">
+                            <strong>Import as New Copy (Safe &amp; Recommended)</strong>
+                            <span>Creates a fresh project copy with an updated unique code without overwriting existing work.</span>
+                        </div>
+                    </label>
+                    <label class="import-radio-label" id="lblImportModeOverwrite">
+                        <input type="radio" name="importConflictMode" value="overwrite">
+                        <div class="import-radio-content">
+                            <strong>Overwrite Existing Project</strong>
+                            <span>Replaces your local project with the latest version from this archive file.</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-footer-ref">Project Security &bull; Offline Interoperability</div>
+                <div class="prj-modal-actions">
+                    <button type="button" id="btnCancelImportArchive" class="modal-btn modal-btn-secondary">Cancel</button>
+                    <button type="button" id="btnConfirmImportArchive" class="modal-btn modal-btn-primary">📥 Retrieve &amp; Open Project</button>
                 </div>
             </div>
         </div>
@@ -1016,6 +1109,9 @@
                     </label>
                     <button type="button" class="btn-prj-footer" id="btnAddCustomFittingFooter" title="Add custom / manufacturer equipment (VAV box, inline fan, attenuator, etc.)">
                         ➕ Add Custom Fitting
+                    </button>
+                    <button type="button" class="btn-prj-footer btn-archive-share" id="btnArchiveActiveProjectSummary" title="Archive / Share this project for safety backup or collaboration (.dfp file)">
+                        📦 Archive / Share Project
                     </button>
                     <button type="button" class="btn-prj-footer" id="btnExportProjectCsv" title="Export schedule to CSV / Excel spreadsheet">
                         📥 Export to CSV / Excel
@@ -1278,7 +1374,7 @@
 
     <script src="/static/katex/katex.min.js"></script>
     <script src="/static/katex/auto-render.min.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v=1.0.12_archive"></script>
     <script>
         // Dynamically ensure version strictly matches Electron package/app version
         if (window.electronAPI && typeof window.electronAPI.getVersion === 'function') {

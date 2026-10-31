@@ -553,4 +553,232 @@ def update_project_margin(project_id, margin):
             return p
     return None
 
+def export_project_archive(project_id):
+    """
+    Exports a self-contained, portable project archive package (.dfp).
+    Contains project metadata, full fitting schedule, Auto Duct Sizer runs,
+    design margins, and custom equipment templates for offline backup or sharing.
+    """
+    project = get_project(project_id)
+    if not project:
+        return None, None
+
+    clean_code = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', str(project.get("code") or "PRJ").strip())
+    clean_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', str(project.get("name") or "Project").strip())
+    filename = f"{clean_code}_{clean_name}.dfp"
+
+    # Gather user-saved custom equipment templates if any
+    custom_templates = []
+    templates_file = os.path.join(os.path.dirname(__file__), "custom_templates.json")
+    user_data = os.environ.get("DUCTFIT_USER_DATA")
+    if user_data and os.path.exists(os.path.join(user_data, "custom_templates.json")):
+        templates_file = os.path.join(user_data, "custom_templates.json")
+
+    if os.path.exists(templates_file):
+        try:
+            with open(templates_file, "r", encoding="utf-8") as f:
+                raw_t = json.load(f)
+                if isinstance(raw_t, list):
+                    custom_templates = raw_t
+        except Exception:
+            pass
+
+    archive = {
+        "file_format": "ductfit_project_archive",
+        "file_version": "1.0",
+        "app_name": "DuctFit Pro",
+        "exported_at": _get_timestamp(),
+        "project": project,
+        "custom_templates": custom_templates
+    }
+    return archive, filename
+
+def validate_project_archive(archive_data):
+    """
+    Validates the structure of a project archive (.dfp / .json)
+    and checks whether it conflicts with an existing project in the workspace.
+    """
+    if not isinstance(archive_data, dict):
+        return {"valid": False, "error": "Invalid file format: content must be a JSON object."}
+
+    # Allow both wrapped archive package or direct project entity
+    if archive_data.get("file_format") == "ductfit_project_archive" and "project" in archive_data:
+        project_obj = archive_data["project"]
+    elif "fittings" in archive_data or "code" in archive_data:
+        project_obj = archive_data
+    else:
+        return {"valid": False, "error": "Unrecognized project archive file structure."}
+
+    if not isinstance(project_obj, dict):
+        return {"valid": False, "error": "Missing valid project data structure."}
+
+    code = str(project_obj.get("code") or "").strip()
+    name = str(project_obj.get("name") or "").strip()
+    if not code:
+        return {"valid": False, "error": "Project Code is missing in archive."}
+
+    data = get_projects_data()
+    existing_by_code = None
+    existing_by_id = None
+
+    for p in data.get("projects", []):
+        if p.get("code", "").strip().lower() == code.lower():
+            existing_by_code = p
+        if p.get("id") == project_obj.get("id"):
+            existing_by_id = p
+
+    has_conflict = existing_by_code is not None or existing_by_id is not None
+    conflict_project = existing_by_code or existing_by_id
+
+    fittings = project_obj.get("fittings", [])
+    duct_segments = project_obj.get("duct_segments", [])
+    total_dp = sum(float(f.get("total_dp", f.get("dp", 0)) or 0) for f in fittings)
+
+    return {
+        "valid": True,
+        "project": project_obj,
+        "summary": {
+            "id": project_obj.get("id"),
+            "code": code,
+            "name": name,
+            "client": project_obj.get("client", ""),
+            "contractor": project_obj.get("contractor", ""),
+            "subcontractor": project_obj.get("subcontractor", ""),
+            "unit_system": project_obj.get("unit_system", "SI"),
+            "design_margin": float(project_obj.get("design_margin", 0.0) or 0.0),
+            "fittings_count": len(fittings),
+            "duct_segments_count": len(duct_segments),
+            "total_dp": round(total_dp, 2),
+            "notes": project_obj.get("notes", ""),
+            "exported_at": archive_data.get("exported_at", _get_timestamp())
+        },
+        "has_conflict": has_conflict,
+        "conflict_info": {
+            "existing_id": conflict_project.get("id") if conflict_project else None,
+            "existing_code": conflict_project.get("code") if conflict_project else None,
+            "existing_name": conflict_project.get("name") if conflict_project else None,
+            "existing_fittings_count": len(conflict_project.get("fittings", [])) if conflict_project else 0
+        } if has_conflict else None
+    }
+
+def import_project_archive(archive_data, conflict_resolution="copy"):
+    """
+    Imports an archived project (.dfp) into DuctFit Pro.
+    - If conflict_resolution == 'overwrite': updates existing matching project in place.
+    - If conflict_resolution == 'copy' (or no conflict): generates fresh unique IDs and imports as distinct project.
+    Sets the imported project as the active project.
+    """
+    val = validate_project_archive(archive_data)
+    if not val.get("valid"):
+        raise ValueError(val.get("error", "Invalid archive data"))
+
+    project_obj = val["project"]
+    data = get_projects_data()
+    projects = data.get("projects", [])
+
+    existing_idx = None
+    for idx, p in enumerate(projects):
+        if p.get("id") == project_obj.get("id") or p.get("code", "").strip().lower() == str(project_obj.get("code")).strip().lower():
+            existing_idx = idx
+            break
+
+    if existing_idx is not None and conflict_resolution == "overwrite":
+        # Overwrite existing project
+        target_id = projects[existing_idx]["id"]
+        project_obj["id"] = target_id
+        project_obj["updated_at"] = _get_timestamp()
+        if not project_obj.get("created_at"):
+            project_obj["created_at"] = projects[existing_idx].get("created_at", _get_timestamp())
+        project_obj["fittings"] = renumber_fittings(project_obj.get("fittings", []))
+        projects[existing_idx] = project_obj
+        data["active_project_id"] = target_id
+        final_project = project_obj
+    else:
+        # Create as new project / separate copy
+        ts = int(time.time() * 1000)
+        new_id = f"prj_{ts}"
+        base_code = str(project_obj.get("code") or "PRJ").strip()
+        base_name = str(project_obj.get("name") or "Imported Project").strip()
+
+        # Ensure unique code if duplicate
+        new_code = base_code
+        if any(p.get("code", "").strip().lower() == new_code.lower() for p in projects):
+            suffix_num = 1
+            while any(p.get("code", "").strip().lower() == f"{base_code} (Copy {suffix_num})".lower() for p in projects):
+                suffix_num += 1
+            new_code = f"{base_code} (Copy)" if suffix_num == 1 else f"{base_code} (Copy {suffix_num})"
+            base_name = f"{base_name} (Retrieved)"
+
+        project_obj["id"] = new_id
+        project_obj["code"] = new_code
+        project_obj["name"] = base_name
+        project_obj["created_at"] = _get_timestamp()
+        project_obj["updated_at"] = _get_timestamp()
+
+        # Regenerate fitting IDs to prevent cross-project ID collisions
+        fittings = project_obj.get("fittings", [])
+        for i, f in enumerate(fittings):
+            f["id"] = f"fit_{ts}_{i+1}"
+        project_obj["fittings"] = renumber_fittings(fittings)
+
+        # Regenerate duct segment IDs if present
+        segments = project_obj.get("duct_segments", [])
+        for i, s in enumerate(segments):
+            s["id"] = f"seg_{ts}_{i+1}"
+        project_obj["duct_segments"] = segments
+
+        projects.insert(0, project_obj)
+        data["active_project_id"] = new_id
+        final_project = project_obj
+
+    data["projects"] = projects
+    save_projects_data(data)
+
+    # Merge custom templates if included
+    if isinstance(archive_data, dict):
+        custom_templates = archive_data.get("custom_templates")
+        if isinstance(custom_templates, list) and custom_templates:
+            _merge_custom_templates(custom_templates)
+
+    return final_project
+
+def _merge_custom_templates(templates_to_merge):
+    """Safely merges custom templates into custom_templates.json without duplicate IDs"""
+    templates_file = os.path.join(os.path.dirname(__file__), "custom_templates.json")
+    user_data = os.environ.get("DUCTFIT_USER_DATA")
+    if user_data:
+        templates_file = os.path.join(user_data, "custom_templates.json")
+
+    existing_templates = []
+    if os.path.exists(templates_file):
+        try:
+            with open(templates_file, "r", encoding="utf-8") as f:
+                d = json.load(f)
+                if isinstance(d, list):
+                    existing_templates = d
+        except Exception:
+            existing_templates = []
+
+    existing_ids = {t.get("id") for t in existing_templates if isinstance(t, dict) and t.get("id")}
+    existing_codes = {t.get("code", "").lower() for t in existing_templates if isinstance(t, dict) and t.get("code")}
+
+    modified = False
+    for t in templates_to_merge:
+        if isinstance(t, dict) and t.get("name") and t.get("code"):
+            t_id = t.get("id")
+            t_code = t.get("code", "").lower()
+            if t_id not in existing_ids and t_code not in existing_codes:
+                existing_templates.append(t)
+                existing_ids.add(t_id)
+                existing_codes.add(t_code)
+                modified = True
+
+    if modified:
+        try:
+            with open(templates_file, "w", encoding="utf-8") as f:
+                json.dump(existing_templates, f, indent=2)
+        except Exception as e:
+            print(f"Error saving merged templates: {e}")
+
+
 
