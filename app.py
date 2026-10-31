@@ -605,6 +605,19 @@ DEFAULT_CUSTOM_TEMPLATES = [
         "remarks": "High-overpressure impulse blast isolation damper"
     },
     {
+        "id": "tpl_gastight_damper",
+        "name": "Gas-Tight Damper",
+        "code": "GTD-1",
+        "shape": "RECT",
+        "dimensions": "600 × 600 mm",
+        "dp": 40.0,
+        "Q": 1200.0,
+        "velocity": 3.3,
+        "mfr": "Halton",
+        "model": "UTG Gas-Tight",
+        "remarks": "Zero-leakage gas-tight isolation damper (EN 1751 Class 4 / ISO 15138)"
+    },
+    {
         "id": "tpl_damper",
         "name": "Motorized Fire & Smoke Damper",
         "code": "FSD-1",

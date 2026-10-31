@@ -5430,12 +5430,17 @@
                 if (!isNaN(v)) currentInputs[inp.dataset.fieldId] = v;
             });
 
-            dp = u === "SI" ? (data.pressure_loss_pa || 0) : (data.pressure_loss_in_wg || 0);
+            dp = u === "SI" 
+                ? (data.pressure_loss_pa !== undefined && data.pressure_loss_pa !== null ? data.pressure_loss_pa : 0) 
+                : (data.pressure_loss_in_wg !== undefined && data.pressure_loss_in_wg !== null ? data.pressure_loss_in_wg : 0);
             flow = getFittingFlowRate(currentInputs, data, u);
             vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
-            coeff = (data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
-                    ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15));
-            coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
+            const isStraight = ["CR11-1", "CD11-1", "CF11-1", "CD11-2"].includes(code);
+            coeff = isStraight && data.f !== undefined
+                ? data.f
+                : ((data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
+                  ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15)));
+            coeffType = isStraight ? "f" : (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
             dimStr = getFittingDimensionString(currentInputs, data, u);
 
             const raw = data.raw_env || {};
@@ -5457,8 +5462,8 @@
                     pCoeffType = "Cb";
                     pPathLabel = " (Branch Run)";
                 } else {
-                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa || 0)))
-                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg || ((raw.Pos || 0) / 249.0889)));
+                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa !== undefined ? data.pressure_loss_pa : 0)))
+                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg !== undefined ? data.pressure_loss_in_wg : ((raw.Pos !== undefined ? raw.Pos : 0) / 249.0889)));
                     const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pos") : null;
                     const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
                     pDp = (dec === 0 && u === "SI") ? Math.round(rawPos) : rawPos;
@@ -5580,9 +5585,9 @@
                 dimStr = "Sized Section";
             }
 
-            const flow = u === "SI" ? (data.Q_Lps || 300) : (data.Q_cfm || 636);
-            const vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
-            const fr = u === "SI" ? (data.friction_rate_pa_m || 0.8) : (data.friction_rate_in_100ft || 0.1);
+            const flow = u === "SI" ? (data.Q_Lps !== undefined ? data.Q_Lps : 300) : (data.Q_cfm !== undefined ? data.Q_cfm : 636);
+            const vel = u === "SI" ? (data.velocity_ms !== undefined ? data.velocity_ms : 3.0) : (data.velocity_fpm !== undefined ? data.velocity_fpm : 600);
+            const fr = u === "SI" ? (data.friction_rate_pa_m !== undefined ? data.friction_rate_pa_m : 0.8) : (data.friction_rate_in_100ft !== undefined ? data.friction_rate_in_100ft : 0.1);
             const lengthVal = parseFloat((elements.inputSizerLength && elements.inputSizerLength.value) || "1.0") || 1.0;
             const tag = (elements.inputFittingTag && elements.inputFittingTag.value.trim()) || "DS-01";
             const sectionName = (elements.inputFittingNotes && elements.inputFittingNotes.value.trim()) || `Duct Run ${tag}`;
@@ -5648,11 +5653,16 @@
             let vel = u === "SI" ? (data.velocity_ms || 3.0) : (data.velocity_fpm || 600);
             let pv = u === "SI" ? (data.pv_pa || 5.0) : (data.pv_in_wg || 0.02);
 
-            let coeff = (data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
-                        ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15));
-            let coeffType = (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
+            const isStraight = ["CR11-1", "CD11-1", "CF11-1", "CD11-2"].includes(code);
+            let coeff = isStraight && data.f !== undefined
+                ? data.f
+                : ((data.loss_coeff_Co !== undefined && data.loss_coeff_Co !== null) ? data.loss_coeff_Co :
+                  ((data.C !== undefined && data.C !== null) ? data.C : (data.f || 0.15)));
+            let coeffType = isStraight ? "f" : (data.coeff_type || (data.f !== undefined && data.C === undefined ? "f" : "Co"));
 
-            let dp = u === "SI" ? (data.pressure_loss_pa || 2.5) : (data.pressure_loss_in_wg || 0.01);
+            let dp = u === "SI" 
+                ? (data.pressure_loss_pa !== undefined && data.pressure_loss_pa !== null ? data.pressure_loss_pa : 0) 
+                : (data.pressure_loss_in_wg !== undefined && data.pressure_loss_in_wg !== null ? data.pressure_loss_in_wg : 0);
             let pathSuffix = "";
 
             const raw = data.raw_env || {};
@@ -5674,8 +5684,8 @@
                     coeffType = "Cb";
                     pathSuffix = " (Branch Run)";
                 } else {
-                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa || 0)))
-                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg || ((raw.Pos || 0) / 249.0889)));
+                    const rawPos = u === "SI" ? (data.Pos_pa !== undefined ? data.Pos_pa : (raw.Pos !== undefined ? raw.Pos : (data.pressure_loss_pa !== undefined ? data.pressure_loss_pa : 0)))
+                                              : (data.Pos_in_wg !== undefined ? data.Pos_in_wg : (data.pressure_loss_in_wg !== undefined ? data.pressure_loss_in_wg : ((raw.Pos !== undefined ? raw.Pos : 0) / 249.0889)));
                     const outSpec = (item && item.output_details) ? item.output_details.find(od => od.variable === "Pos") : null;
                     const dec = (outSpec && u === "SI") ? outSpec.si_decimals : ((outSpec && u === "IP") ? outSpec.ip_decimals : null);
                     dp = (dec === 0 && u === "SI") ? Math.round(rawPos) : (Math.round(rawPos * 10) / 10);
@@ -6044,6 +6054,18 @@
             mfr: "Temet",
             model: "BDA / BLD-1",
             remarks: "High-overpressure impulse blast isolation damper"
+        },
+        tpl_gastight_damper: {
+            code: "GTD-1",
+            name: "Gas-Tight Damper",
+            shape: "RECT",
+            dimensions: "600 × 600 mm",
+            dp: 40.0,
+            Q: 1200.0,
+            velocity: 3.3,
+            mfr: "Halton",
+            model: "UTG Gas-Tight",
+            remarks: "Zero-leakage gas-tight isolation damper (EN 1751 Class 4 / ISO 15138)"
         },
         tpl_damper: {
             code: "FSD-1",
@@ -6499,7 +6521,7 @@
         let totalQty = 0;
         let cumulativeDp = 0;
         let maxSingleDp = 0;
-        let primaryFlow = "-";
+        let maxAirflow = 0;
 
         if (fittings.length === 0) {
             elements.tbodyProjectSchedule.innerHTML = `
@@ -6544,7 +6566,7 @@
             totalQty += qtyVal;
             cumulativeDp += totDpVal;
             if (dpVal > maxSingleDp) maxSingleDp = dpVal;
-            if (idx === 0 && qVal > 0) primaryFlow = `${qVal.toFixed(0)} ${flowUnit}`;
+            if (qVal > maxAirflow) maxAirflow = qVal;
 
             const shapeClass = (fit.shape || "rect").toLowerCase();
 
@@ -6560,7 +6582,7 @@
                 descHtml = `
                     <div class="fit-name-row">
                         <span style="font-weight: 600; color: #0f172a;">${escapeHtml(fit.name || cleanCode)}</span>
-                        <span class="badge-mfr-data" title="Manufacturer laboratory certified pressure loss (Non-ASHRAE)">MFR DATA</span>
+                        <span class="badge-mfr-data" title="Manufacturer laboratory certified pressure loss (Non-ASHRAE)">MANUFACTURER DATA</span>
                     </div>
                     ${subDetails ? `<div class="cell-sub-detail">${subDetails}</div>` : ''}
                 `;
@@ -6822,7 +6844,7 @@
             elements.kpiTotalDpSub.classList.toggle("hidden", marginPct === 0);
         }
         if (elements.kpiMaxLoss) elements.kpiMaxLoss.textContent = `${maxSingleDp.toFixed(1)} ${dpUnit}`;
-        if (elements.kpiTotalAirflow) elements.kpiTotalAirflow.textContent = primaryFlow;
+        if (elements.kpiTotalAirflow) elements.kpiTotalAirflow.textContent = maxAirflow > 0 ? `${maxAirflow.toFixed(0)} ${flowUnit}` : "-";
     }
 
     function renderSizerScheduleTable(p) {

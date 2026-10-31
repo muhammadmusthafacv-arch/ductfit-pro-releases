@@ -140,7 +140,7 @@ from datetime import datetime
 
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether, Flowable
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
@@ -1034,10 +1034,39 @@ def build_calculation_steps_table(steps, styles, rendered_cards=None):
     return story
 
 
+class CenteredBlueprintFlowable(Flowable):
+    """
+    Vertically and horizontally centers the technical CAD blueprint diagram
+    in the remaining available space on the page between the inputs/outputs table
+    and the running footer, eliminating bottom empty whitespace.
+    """
+    def __init__(self, img_flowable):
+        super().__init__()
+        self.img = img_flowable
+        self.width = img_flowable.drawWidth
+        self.height = img_flowable.drawHeight
+
+    def wrap(self, availWidth, availHeight):
+        self.avail_w = availWidth
+        self.avail_h = availHeight
+        if availHeight < self.height:
+            return availWidth, self.height
+        return availWidth, availHeight
+
+    def draw(self):
+        img_w = self.img.drawWidth
+        img_h = self.img.drawHeight
+        free_space = max(0, self.avail_h - img_h)
+        x = max(0, (self.avail_w - img_w) / 2.0)
+        y = free_space / 2.0
+        self.img.drawOn(self.canv, x, y)
+
+
 def create_enlarged_blueprint_image(code, max_w=480.0, max_h=310.0):
     """
     Loads and scales the technical CAD blueprint diagram to be prominently enlarged,
-    preserving exact aspect ratio to match the official ASHRAE fitting report style.
+    preserving exact aspect ratio to match the official ASHRAE fitting report style,
+    and returns a CenteredBlueprintFlowable that centers the diagram on the page.
     """
     img_path = os.path.join(BLUEPRINTS_DIR, f"{code}.png")
     if not os.path.exists(img_path) and code == "SIZE-AUTO":
@@ -1063,7 +1092,7 @@ def create_enlarged_blueprint_image(code, max_w=480.0, max_h=310.0):
 
         img = Image(img_path, width=target_w, height=target_h)
         img.hAlign = 'CENTER'
-        return img
+        return CenteredBlueprintFlowable(img)
     except Exception as e:
         print(f"Error scaling blueprint image for {code}: {e}")
         return None
@@ -1187,29 +1216,40 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
     design_dp = cum_dp + margin_dp
 
     # KPI Statistics Row
+    kpi_cell = ParagraphStyle(
+        "KpiCellFit", parent=styles["cell"],
+        fontSize=6.8, leading=8.6
+    )
+    kpi_cell_bold = ParagraphStyle(
+        "KpiCellBoldFit", parent=styles["cell_bold"],
+        fontSize=6.8, leading=8.6
+    )
+
     if design_margin_pct > 0:
         kpi_data = [
             [
-                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
-                Paragraph(f"<b>SUBTOTAL LOSS (&Sigma;&Delta;P<sub>calc</sub>):</b> {cum_dp:.1f} {dp_unit}", styles["cell"]),
-                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", styles["cell"]),
-                Paragraph(f"<b>TOTAL FAN ESP (&Sigma;&Delta;P<sub>design</sub>):</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"])
+                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", kpi_cell_bold),
+                Paragraph(f"<b>SUBTOTAL LOSS (&Sigma;&Delta;P<sub>calc</sub>):</b> {cum_dp:.1f} {dp_unit}", kpi_cell),
+                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", kpi_cell),
+                Paragraph(f"<b>TOTAL FAN ESP (&Sigma;&Delta;P<sub>design</sub>):</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", kpi_cell_bold)
             ]
         ]
-        t_kpi = Table(kpi_data, colWidths=[120, 140, 140, 140])
+        t_kpi = Table(kpi_data, colWidths=[110, 136, 138, 156])
     else:
         kpi_data = [
             [
-                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", styles["cell_bold"]),
-                Paragraph(f"<b>CUMULATIVE TOTAL LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
-                Paragraph(f"<b>MAX SINGLE LOSS:</b> {max_dp:.1f} {dp_unit}", styles["cell_bold"])
+                Paragraph(f"<b>TOTAL FITTINGS:</b> {len(fittings)} ({total_qty} pcs)", kpi_cell_bold),
+                Paragraph(f"<b>CUMULATIVE TOTAL LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", kpi_cell_bold),
+                Paragraph(f"<b>MAX SINGLE LOSS:</b> {max_dp:.1f} {dp_unit}", kpi_cell_bold)
             ]
         ]
-        t_kpi = Table(kpi_data, colWidths=[180, 200, 160])
+        t_kpi = Table(kpi_data, colWidths=[160, 220, 160])
     t_kpi.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#166534")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 2.5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 2.5),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
     ]))
@@ -1253,7 +1293,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
             q_str = f"{q:.0f}" if q > 0 else "N/A"
             v_str = f"{v:.1f}" if v > 0 else "N/A"
             coeff_str = "N/A"
-            name_cell = Paragraph(f"{display_name} <font size=6 color='#7c3aed'><b>[MFR]</b></font>", styles["cell"])
+            name_cell = Paragraph(f"{display_name} <font size=6 color='#7c3aed'><b>[MANUFACTURER DATA]</b></font>", styles["cell"])
         else:
             off_name, _ = get_official_ashrae_meta(code_val)
             display_name = off_name or fit.get("name", "-")
@@ -1538,10 +1578,10 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
         t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
         story.append(t_io)
-        story.append(Spacer(1, 6))
 
         advisory_msg = calc_res.get("engineering_advisory")
         if advisory_msg:
+            story.append(Spacer(1, 10))
             adv_p = Paragraph(f"<font color='#1e40af'><b>ENGINEERING ADVISORY NOTICE:</b></font><br/>{clean_pdf_text(advisory_msg)}", styles["calc"])
             t_adv = Table([[adv_p]], colWidths=[540])
             t_adv.setStyle(TableStyle([
@@ -1553,7 +1593,6 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
                 ('RIGHTPADDING', (0, 0), (-1, -1), 8),
             ]))
             story.append(t_adv)
-            story.append(Spacer(1, 6))
 
         # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
         bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)
@@ -1701,24 +1740,33 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
     design_dp = cum_dp
 
     # KPI Statistics Row
+    kpi_cell = ParagraphStyle(
+        "KpiCellAds", parent=styles["cell"],
+        fontSize=6.8, leading=8.6
+    )
+    kpi_cell_bold = ParagraphStyle(
+        "KpiCellBoldAds", parent=styles["cell_bold"],
+        fontSize=6.8, leading=8.6
+    )
+
     if design_margin_pct > 0:
         kpi_data = [
             [
-                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", styles["cell_bold"]),
-                Paragraph(f"<b>TOTAL LENGTH:</b> {total_length:.1f} {len_unit}", styles["cell_bold"]),
-                Paragraph(f"<b>SUBTOTAL LOSS:</b> {cum_dp:.1f} {dp_unit}", styles["cell"]),
-                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", styles["cell"]),
-                Paragraph(f"<b>TOTAL DESIGN LOSS:</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"])
+                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", kpi_cell_bold),
+                Paragraph(f"<b>TOTAL LENGTH:</b> {total_length:.1f} {len_unit}", kpi_cell_bold),
+                Paragraph(f"<b>SUBTOTAL LOSS:</b> {cum_dp:.1f} {dp_unit}", kpi_cell),
+                Paragraph(f"<b>SAFETY MARGIN:</b> +{design_margin_pct:.1f}% (+{margin_dp:.1f} {dp_unit})", kpi_cell),
+                Paragraph(f"<b>TOTAL DESIGN LOSS:</b> <font color='#166534'><b>{design_dp:.1f} {dp_unit}</b></font>", kpi_cell_bold)
             ]
         ]
         t_kpi = Table(kpi_data, colWidths=[90, 105, 110, 115, 120])
     else:
         kpi_data = [
             [
-                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", styles["cell_bold"]),
-                Paragraph(f"<b>TOTAL RUN LENGTH:</b> {total_length:.1f} {len_unit}", styles["cell_bold"]),
-                Paragraph(f"<b>TOTAL DUCT LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", styles["cell_bold"]),
-                Paragraph(f"<b>AVG FRICTION:</b> {avg_fr:.2f} {fr_unit}", styles["cell_bold"])
+                Paragraph(f"<b>SIZED RUNS:</b> {total_segments} sections", kpi_cell_bold),
+                Paragraph(f"<b>TOTAL RUN LENGTH:</b> {total_length:.1f} {len_unit}", kpi_cell_bold),
+                Paragraph(f"<b>TOTAL DUCT LOSS (&Sigma;&Delta;P):</b> <font color='#166534'><b>{cum_dp:.1f} {dp_unit}</b></font>", kpi_cell_bold),
+                Paragraph(f"<b>AVG FRICTION:</b> {avg_fr:.2f} {fr_unit}", kpi_cell_bold)
             ]
         ]
         t_kpi = Table(kpi_data, colWidths=[115, 135, 175, 115])
@@ -1726,6 +1774,8 @@ def generate_sizer_project_pdf(project_id, output_path=None, include_calculation
         ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#0284c7")),
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0f9ff")),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 2.5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 2.5),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
     ]))
@@ -2078,10 +2128,10 @@ def generate_calculation_pdf(calc_data, output_path=None):
     # Inputs & Outputs 4-Column Table (Authentic AFA.pdf style)
     t_io = format_inputs_outputs_table(fit, calc_res, styles, unit_system)
     story.append(t_io)
-    story.append(Spacer(1, 6))
 
     advisory_msg = calc_res.get("engineering_advisory")
     if advisory_msg:
+        story.append(Spacer(1, 10))
         adv_p = Paragraph(f"<font color='#1e40af'><b>ENGINEERING ADVISORY NOTICE:</b></font><br/>{clean_pdf_text(advisory_msg)}", styles["calc"])
         t_adv = Table([[adv_p]], colWidths=[540])
         t_adv.setStyle(TableStyle([
@@ -2093,7 +2143,6 @@ def generate_calculation_pdf(calc_data, output_path=None):
             ('RIGHTPADDING', (0, 0), (-1, -1), 8),
         ]))
         story.append(t_adv)
-        story.append(Spacer(1, 6))
 
     # Blueprint Image (Enlarged, exact visual match to ASHRAE report)
     bp_img = create_enlarged_blueprint_image(code, max_w=480.0, max_h=340.0)
