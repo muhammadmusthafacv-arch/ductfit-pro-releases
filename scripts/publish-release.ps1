@@ -143,6 +143,13 @@ try {
     git push origin master
     git push origin master:main
     Write-Host "Git branches (master and main) synchronized on GitHub!" -ForegroundColor Green
+
+    # 8. Synchronize web deployment repository
+    $syncWebScript = Join-Path (Get-Location) "scripts\sync-web.ps1"
+    if (Test-Path $syncWebScript) {
+        Write-Host "Synchronizing web deployment repository..." -ForegroundColor White
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $syncWebScript -CommitMessage "chore(release): sync v$newVersion to web"
+    }
 } catch {
     Write-Host "[WARNING] Git push encountered error: $($_.Exception.Message)" -ForegroundColor Yellow
 }
