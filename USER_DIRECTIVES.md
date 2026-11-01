@@ -19,8 +19,11 @@
   - "and make this is the dafault stage , when ever i asked you to make or go back to default , you have to come back at this stage . so remember this stage" (28-Oct-2026).
   - "lock this stage, when ever i asked you to come to locked satge you have to return to this stage" & "remembrer this satge , and when ever i asked you to come to the default page you have to come back and make it the application at this stage".
   - "make this as the default stage , and update the backup , when ever i asked you to go back back to default you have to come back at this stage" (31-Oct-2026, v1.0.12).
-- **Baseline Version**: **v1.0.12** (Git tag `DEFAULT_STAGE` / `LOCKED_DEFAULT_STAGE`, commit `233ed6c`).
+  - "make this stage as defauslt stage , if in asked you to reset or go back to default you have to make to this stage ." (01-Nov-2026, v1.0.15).
+- **Baseline Version**: **v1.0.15** (Git tags `DEFAULT_STAGE` / `LOCKED_DEFAULT_STAGE`, commit `410c736`).
 - **Trigger Phrasing**: Whenever the user asks to:
+  - "reset"
+  - "reset to default"
   - "go back to default"
   - "make or go back to default"
   - "come back at this stage"
@@ -34,6 +37,16 @@
   2. Execute `python restore_to_locked_stage.py` (or `git checkout LOCKED_DEFAULT_STAGE` / `git checkout DEFAULT_STAGE`).
   3. Restart the background Flask server daemon on Port 5052 (`python -u app.py`).
   4. Ensure all features of this locked default stage are fully intact:
+     - **Clean Ampersand Presentation (`&&` $\to$ `&`) Across UI, Catalogs & Reports**:
+       - Complete eradication of legacy Win32/MFC double-escaped ampersands (`&&`) from `fittings_tree.json`, `ashrae_table_Menu.json`, active projects, and dynamic PDF generation.
+       - Fitting titles (e.g. `Damper, Parallel & Opposed 3V Blades, Open`), citations (e.g. `Van Becelaere & Sauer 2004`), and blueprints always render clean single `&`.
+     - **Project Archive & Share Export/Import**:
+       - Full project archive `.ductfit` bundle export with native file picker dialog and seamless restore/import capability.
+     - **Polished PDF Engineering Reports**:
+       - Removed repeating `Project: ... • Client: ...` running header line across all report pages.
+       - Removed `ASHRAE Fundamentals, Ch. 21: Duct Design` subtitle from fluid banner.
+       - Cleaned specification label to `Standard & Edition:`.
+       - Centered schedule table column headers and master fitting schedule section titles.
      - **Centered Blueprint CAD Diagrams Across PDF Reports**:
        - Blueprint technical drawings are dynamically and vertically centered in the lower area of each fitting sheet between the table and footer, eliminating bottom empty whitespace.
      - **Gas-Tight Damper Preset**:

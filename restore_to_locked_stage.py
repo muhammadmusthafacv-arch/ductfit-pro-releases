@@ -45,7 +45,7 @@ def restore():
         print(f"Error: Locked backup directory '{BACKUP_DIR}' not found!")
         sys.exit(1)
 
-    print("Restoring Ductfit Pro to Locked Default Stage (Baseline v1.0.12, 31-Oct-2026)...")
+    print("Restoring Ductfit Pro to Locked Default Stage (Baseline v1.0.15, 01-Nov-2026)...")
 
     for f in FILES_TO_RESTORE:
         src = os.path.join(BACKUP_DIR, f)
