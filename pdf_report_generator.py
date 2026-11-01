@@ -177,17 +177,19 @@ def get_official_ashrae_meta(code):
                     if k:
                         k_clean = k.strip().upper()
                         t1 = (m.get("Title1") or "").strip().rstrip(",")
-                        t1 = re.sub(r"\s+", " ", t1).strip()
+                        t1 = re.sub(r"\s+", " ", t1).strip().replace("&&", "&")
                         if t1:
                             _OFFICIAL_MENU_CACHE[k_clean] = t1
                         t2 = (m.get("Title2") or "").strip()
-                        t2 = re.sub(r"^[(\s]+|[)\s]+$", "", t2).strip()
+                        t2 = re.sub(r"^[(\s]+|[)\s]+$", "", t2).strip().replace("&&", "&")
                         if t2:
                             _OFFICIAL_CITATIONS_CACHE[k_clean] = t2
         except Exception as e:
             print(f"Error loading ashrae_table_Menu.json: {e}")
     c = (code or "").strip().upper()
-    return _OFFICIAL_MENU_CACHE.get(c), _OFFICIAL_CITATIONS_CACHE.get(c)
+    t1_val = _OFFICIAL_MENU_CACHE.get(c)
+    t2_val = _OFFICIAL_CITATIONS_CACHE.get(c)
+    return (t1_val.replace("&&", "&") if t1_val else None, t2_val.replace("&&", "&") if t2_val else None)
 
 class DuctfitNumberedCanvas(canvas.Canvas):
     """
@@ -1289,12 +1291,13 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
             q_str = f"{q:.0f}" if q > 0 else "N/A"
             v_str = f"{v:.1f}" if v > 0 else "N/A"
             coeff_str = "N/A"
-            name_cell = Paragraph(f"{display_name} <font size=6 color='#7c3aed'><b>[MANUFACTURER DATA]</b></font>", styles["cell"])
+            name_cell = Paragraph(f"{display_name.replace('&&', '&')} <font size=6 color='#7c3aed'><b>[MANUFACTURER DATA]</b></font>", styles["cell"])
         else:
             off_name, _ = get_official_ashrae_meta(code_val)
             display_name = off_name or fit.get("name", "-")
             if code_val and display_name.upper().startswith(code_val.upper()):
                 display_name = re.sub(r"^" + re.escape(code_val) + r"[\s:\-]+", "", display_name, flags=re.IGNORECASE).strip()
+            display_name = display_name.replace("&&", "&")
             shape_str = fit.get("shape", "rect").upper()
             dim_str = fit.get("dimensions", "-")
             q_str = f"{q:.0f}"
@@ -1449,9 +1452,9 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
 
         if is_custom:
             # Custom / Manufacturer Equipment Page
-            name = fit.get("name", "Custom Equipment")
-            header_title = f"{code}  {name}"
-            story.append(Paragraph(header_title, styles["title"]))
+            name = fit.get("name", "Custom Equipment").replace("&&", "&")
+            header_title = f"{code}  {name}".replace("&&", "&")
+            story.append(Paragraph(header_title.replace("&&", "&"), styles["title"]))
             story.append(Paragraph("<i>(Equipment / Component Pressure Loss &mdash; Certified Manufacturer Data)</i>", styles["subtitle"]))
 
             subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
@@ -1555,6 +1558,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         name = off_name or fit.get("name", "Duct Section")
         if code and name.upper().startswith(code.upper()):
             name = re.sub(r"^" + re.escape(code) + r"[\s:\-]+", "", name, flags=re.IGNORECASE).strip()
+        name = name.replace("&&", "&")
         inputs = fit.get("inputs", {})
 
         # Use pre-calculated steps
@@ -1562,11 +1566,14 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
 
         # Fitting Header (Page 1) - Exact ASHRAE format: CODE  TITLE (two spaces, NO parentheses)
         header_title = f"{code}  {name}" if name else code
-        story.append(Paragraph(header_title, styles["title"]))
+        header_title = header_title.replace("&&", "&")
+        story.append(Paragraph(header_title.replace("&&", "&"), styles["title"]))
         raw_cit = off_cit or calc_res.get("citation") or ""
         clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "").replace("2021 ASHRAE Handbook—Fundamentals", "").replace("ASHRAE Fundamentals, Ch. 21: Duct Design", "").replace("ASHRAE Fundamentals, Ch. 21", "").replace("2021 ", "").strip()
+        clean_cit = clean_cit.replace("&&", "&")
         if clean_cit and clean_cit not in ["()", ""]:
             citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
+            citation = citation.replace("&&", "&")
             story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
         subhead_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
@@ -1601,7 +1608,7 @@ def generate_project_pdf(project_id, output_path=None, include_calculations=True
         if include_calculations:
             story.append(PageBreak())
 
-            story.append(Paragraph(header_title, styles["title"]))
+            story.append(Paragraph(header_title.replace("&&", "&"), styles["title"]))
             story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
             subhead_calc_text = f"<b>Item #{idx+1}</b> &bull; Mark / Tag: <b>{tag}</b> &bull; Project: <b>{project.get('code')}{prj_name_part}</b> &bull; Client: <b>{project.get('client') or 'N/A'}</b>"
             story.append(Paragraph(subhead_calc_text, styles["meta"]))
@@ -2096,13 +2103,17 @@ def generate_calculation_pdf(calc_data, output_path=None):
     name = off_name or name or calc_data.get("name", "Duct Section")
     if code and name.upper().startswith(code.upper()):
         name = re.sub(r"^" + re.escape(code) + r"[\s:\-]+", "", name, flags=re.IGNORECASE).strip()
+    name = name.replace("&&", "&")
 
     header_title = f"{code}  {name}" if name else code
-    story.append(Paragraph(header_title, styles["title"]))
+    header_title = header_title.replace("&&", "&")
+    story.append(Paragraph(header_title.replace("&&", "&"), styles["title"]))
     raw_cit = off_cit or calc_res.get("citation") or ""
     clean_cit = raw_cit.replace("2021 ASHRAE Handbook—Fundamentals Chapter 21: Duct Design", "").replace("2021 ASHRAE Handbook—Fundamentals", "").replace("ASHRAE Fundamentals, Ch. 21: Duct Design", "").replace("ASHRAE Fundamentals, Ch. 21", "").replace("2021 ", "").strip()
+    clean_cit = clean_cit.replace("&&", "&")
     if clean_cit and clean_cit not in ["()", ""]:
         citation = f"({clean_cit})" if not clean_cit.startswith("(") else clean_cit
+        citation = citation.replace("&&", "&")
         story.append(Paragraph(f"<i>{citation}</i>", styles["subtitle"]))
 
     if project:
@@ -2151,7 +2162,7 @@ def generate_calculation_pdf(calc_data, output_path=None):
     # Page 2: Step-by-Step Engineering Calculation Breakdown on separate page
     story.append(PageBreak())
 
-    story.append(Paragraph(header_title, styles["title"]))
+    story.append(Paragraph(header_title.replace("&&", "&"), styles["title"]))
     story.append(Paragraph("<b>STEP-BY-STEP ENGINEERING CALCULATION BREAKDOWN</b>", styles["h2"]))
     if project:
         prj_name_part = f" - {project.get('name')}" if project.get('name') else ""

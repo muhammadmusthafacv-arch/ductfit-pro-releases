@@ -47,6 +47,30 @@ def cleanup_sample_projects(data):
         return True
     return False
 
+def sanitize_project_strings(obj):
+    """Recursively clean legacy Win32 escaped double ampersands (&& -> &)."""
+    if isinstance(obj, dict):
+        changed = False
+        res = {}
+        for k, v in obj.items():
+            cleaned, sub_changed = sanitize_project_strings(v)
+            res[k] = cleaned
+            if sub_changed:
+                changed = True
+        return res, changed
+    elif isinstance(obj, list):
+        changed = False
+        res = []
+        for v in obj:
+            cleaned, sub_changed = sanitize_project_strings(v)
+            res.append(cleaned)
+            if sub_changed:
+                changed = True
+        return res, changed
+    elif isinstance(obj, str) and "&&" in obj:
+        return obj.replace("&&", "&"), True
+    return obj, False
+
 def get_projects_data():
     projects_file = get_projects_file()
     if not os.path.exists(projects_file):
@@ -59,8 +83,11 @@ def get_projects_data():
             if not isinstance(data, dict) or "projects" not in data:
                 data = get_default_project_data()
                 save_projects_data(data)
-            elif cleanup_sample_projects(data):
-                save_projects_data(data)
+            else:
+                data, changed = sanitize_project_strings(data)
+                cleaned_samples = cleanup_sample_projects(data)
+                if changed or cleaned_samples:
+                    save_projects_data(data)
             return data
     except Exception as e:
         print(f"Error loading {projects_file}: {e}")
